@@ -1,6 +1,6 @@
 {
-    "name": "Prechac This",
-    "short_name": "Prechac This",
+    "name": "PrechacThis",
+    "short_name": "PrechacThis",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

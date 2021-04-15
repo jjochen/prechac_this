@@ -1,4 +1,4 @@
-# Prechac This
+# PrechacThis App
 
 [![Very Good Ventures][logo]][very_good_ventures_link]
 
@@ -35,7 +35,7 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 $ flutter run --flavor production --target lib/main_production.dart
 ```
 
-_\*Prechac This works on iOS, Android, and Web._
+_\*PrechacThis works on iOS, Android, and Web._
 
 ---
 
