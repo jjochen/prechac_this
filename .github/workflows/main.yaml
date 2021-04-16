@@ -1,26 +1,61 @@
 name: prechac_this
 
-on: [pull_request, push]
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  schedule:
+    - cron: '0 9 * * 5'
+
+  workflow_dispatch:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        directory:
+          [
+            '.',
+            'packages/pattern_repository',
+          ]
+      fail-fast: false
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.4.0
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: Install flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: stable
+
+      - name: Print Flutter/Dart version
+        working-directory: ${{ matrix.directory }}
+        run: flutter --version
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.directory }}
         run: flutter packages get
 
-      - name: Format
-        run: flutter format --set-exit-if-changed lib test
+      - name: Verify formatting
+        working-directory: ${{ matrix.directory }}
+        run: flutter format --dry-run --set-exit-if-changed .
 
-      - name: Analyze
-        run: flutter analyze lib test
+      - name: Analyze project source
+        working-directory: ${{ matrix.directory }}
+        run: flutter analyze
 
       - name: Run tests
+        working-directory: ${{ matrix.directory }}
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
 
-      - name: Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          path_to_write_report: '${{ matrix.directory }}/coverage/codecov_report.txt'
+          verbose: true

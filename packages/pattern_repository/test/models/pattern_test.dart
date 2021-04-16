@@ -23,5 +23,17 @@ void main() {
         ]),
       );
     });
+
+    test('uses stringify', () {
+      expect(
+        Pattern([
+          Multiplex([
+            SimpleThrow.placeholder(),
+            SimpleThrow(height: 4.5, passingIndex: 1),
+          ]),
+        ]).toString(),
+        'Pattern([Multiplex([SimpleThrow(null, null), SimpleThrow(4.5, 1)])])',
+      );
+    });
   });
 }

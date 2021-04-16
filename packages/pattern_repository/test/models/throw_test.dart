@@ -12,6 +12,13 @@ void main() {
       });
     });
 
+    test('uses stringify', () {
+      expect(
+        SimpleThrow(height: 4.5, passingIndex: 1).toString(),
+        'SimpleThrow(4.5, 1)',
+      );
+    });
+
     group('Placeholder', () {
       test('supports value comparisons', () {
         expect(
