@@ -10,13 +10,38 @@ void main() {
           SimpleThrow(height: 4.5, passingIndex: 1),
         );
       });
-    });
 
-    test('uses stringify', () {
-      expect(
-        SimpleThrow(height: 4.5, passingIndex: 1).toString(),
-        'SimpleThrow(4.5, 1)',
-      );
+      test('has correct string representation', () {
+        expect(
+          SimpleThrow(height: 42.25, passingIndex: 1).toString(),
+          '42.25p1',
+        );
+
+        expect(
+          SimpleThrow(height: 4, passingIndex: 0).toString(),
+          '4',
+        );
+
+        // expect(
+        //   SimpleThrow(height: 4 / 3, passingIndex: 2).toString(),
+        //   '1.3p2',
+        // );
+
+        // expect(
+        //   SimpleThrow(height: 5 / 3, passingIndex: 1).toString(),
+        //   '1.6p1',
+        // );
+
+        expect(
+          SimpleThrow(height: null, passingIndex: 1).toString(),
+          '_p1',
+        );
+
+        expect(
+          SimpleThrow(height: 1, passingIndex: null).toString(),
+          '1p_',
+        );
+      });
     });
 
     group('Placeholder', () {
@@ -33,6 +58,13 @@ void main() {
           SimpleThrow(height: null, passingIndex: null),
         );
       });
+
+      test('has correct string representation', () {
+        expect(
+          SimpleThrow.placeholder().toString(),
+          '_',
+        );
+      });
     });
 
     group('Multiplex Throw', () {
@@ -46,6 +78,16 @@ void main() {
             SimpleThrow.placeholder(),
             SimpleThrow(height: 4.5, passingIndex: 1),
           ]),
+        );
+      });
+
+      test('has correct string representation', () {
+        expect(
+          Multiplex([
+            SimpleThrow(height: 4.5, passingIndex: 1),
+            SimpleThrow.placeholder(),
+          ]).toString(),
+          '[4.5p1, _]',
         );
       });
     });

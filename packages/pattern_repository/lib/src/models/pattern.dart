@@ -11,5 +11,8 @@ class Pattern extends Equatable {
   List<Object?> get props => [sequence];
 
   @override
-  bool? get stringify => true;
+  String toString() {
+    final components = sequence.map((e) => e.toString());
+    return '${components.join(', ')}';
+  }
 }
