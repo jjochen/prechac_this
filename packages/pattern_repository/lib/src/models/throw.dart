@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:sprintf/sprintf.dart';
 
-abstract class Throw extends Equatable {
-  @override
-  bool? get stringify => true;
-}
+abstract class Throw extends Equatable {}
 
 class SimpleThrow extends Throw {
   SimpleThrow({
@@ -18,6 +16,34 @@ class SimpleThrow extends Throw {
 
   @override
   List<Object?> get props => [height, passingIndex];
+
+  @override
+  String toString() {
+    if (this == SimpleThrow.placeholder()) {
+      return '_';
+    }
+    return _heightString() + _passingIndexString();
+  }
+
+  String _heightString() {
+    final height = this.height;
+    if (height == null) {
+      return '_';
+    }
+
+    return sprintf('%.4g', [height]);
+  }
+
+  String _passingIndexString() {
+    switch (passingIndex) {
+      case null:
+        return 'p_';
+      case 0:
+        return '';
+      default:
+        return 'p$passingIndex';
+    }
+  }
 }
 
 class Multiplex extends Throw {
@@ -27,4 +53,10 @@ class Multiplex extends Throw {
 
   @override
   List<Object?> get props => [throws];
+
+  @override
+  String toString() {
+    final components = throws.map((e) => e.toString());
+    return '[${components.join(', ')}]';
+  }
 }
