@@ -32,5 +32,23 @@ void main() {
             ])),
       );
     });
+
+    test('has correct string representation', () {
+      expect(
+        Constraints(
+            numberOfJugglers: 2,
+            numberOfObjects: 4,
+            maxHeight: 4,
+            minNumberOfPasses: 1,
+            maxNumberOfPasses: 2,
+            pattern: Pattern([
+              SimpleThrow(height: 4),
+              SimpleThrow.placeholder(),
+              SimpleThrow(height: 1),
+              SimpleThrow.placeholder(),
+            ])).toString(),
+        'Constraints(2, 4, 4, 1, 2, 4, _, 1, _)',
+      );
+    });
   });
 }
