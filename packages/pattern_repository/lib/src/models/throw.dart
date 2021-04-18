@@ -3,13 +3,32 @@ import 'package:sprintf/sprintf.dart';
 
 abstract class Throw extends Equatable {}
 
-class SimpleThrow extends Throw {
-  SimpleThrow({
+class Self extends Throw {
+  Self({
     required this.height,
-    this.passingIndex = 0,
   });
 
-  SimpleThrow.placeholder() : this(height: null, passingIndex: null);
+  final int? height;
+
+  @override
+  List<Object?> get props => [height];
+
+  @override
+  String toString() {
+    final height = this.height;
+    if (height == null) {
+      return '_';
+    }
+
+    return height.toString();
+  }
+}
+
+class Pass extends Throw {
+  Pass({
+    required this.height,
+    required this.passingIndex,
+  });
 
   final double? height;
   final int? passingIndex;
@@ -19,13 +38,10 @@ class SimpleThrow extends Throw {
 
   @override
   String toString() {
-    if (this == SimpleThrow.placeholder()) {
-      return '_';
-    }
-    return _heightString() + _passingIndexString();
+    return '${heightToString()}p${passingIndexToString()}';
   }
 
-  String _heightString() {
+  String heightToString() {
     final height = this.height;
     if (height == null) {
       return '_';
@@ -34,29 +50,37 @@ class SimpleThrow extends Throw {
     return sprintf('%.4g', [height]);
   }
 
-  String _passingIndexString() {
-    switch (passingIndex) {
-      case null:
-        return 'p_';
-      case 0:
-        return '';
-      default:
-        return 'p$passingIndex';
+  String passingIndexToString() {
+    final passingIndex = this.passingIndex;
+    if (passingIndex == null) {
+      return '_';
     }
+
+    return passingIndex.toString();
   }
 }
 
-class Multiplex extends Throw {
-  Multiplex(this.throws);
+// class Multiplex extends Throw {
+//   Multiplex(this.throws);
 
-  final List<SimpleThrow> throws;
+//   final List<Throw> throws;
 
+//   @override
+//   List<Object?> get props => [throws];
+
+//   @override
+//   String toString() {
+//     final components = throws.map((simpleThrow) => simpleThrow.toString());
+//     return '[${components.join(', ')}]';
+//   }
+// }
+
+class Placeholder extends Throw {
   @override
-  List<Object?> get props => [throws];
+  List<Object?> get props => [];
 
   @override
   String toString() {
-    final components = throws.map((e) => e.toString());
-    return '[${components.join(', ')}]';
+    return '_';
   }
 }

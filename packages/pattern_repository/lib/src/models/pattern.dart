@@ -15,4 +15,8 @@ class Pattern extends Equatable {
     final components = sequence.map((e) => e.toString());
     return '${components.join(', ')}';
   }
+
+  int get period {
+    return sequence.length;
+  }
 }

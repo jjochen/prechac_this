@@ -3,23 +3,39 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Throw', () {
-    group('SimpleThrow', () {
+    group('Self', () {
       test('supports value comparisons', () {
         expect(
-          SimpleThrow(height: 4.5, passingIndex: 1),
-          SimpleThrow(height: 4.5, passingIndex: 1),
+          Self(height: 4),
+          Self(height: 4),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          SimpleThrow(height: 42.25, passingIndex: 1).toString(),
-          '42.25p1',
+          Self(height: 42).toString(),
+          '42',
         );
 
         expect(
-          SimpleThrow(height: 4, passingIndex: 0).toString(),
-          '4',
+          Self(height: null).toString(),
+          '_',
+        );
+      });
+    });
+
+    group('Pass', () {
+      test('supports value comparisons', () {
+        expect(
+          Pass(height: 4.5, passingIndex: 1),
+          Pass(height: 4.5, passingIndex: 1),
+        );
+      });
+
+      test('has correct string representation', () {
+        expect(
+          Pass(height: 42.25, passingIndex: 1).toString(),
+          '42.25p1',
         );
 
         // expect(
@@ -33,12 +49,12 @@ void main() {
         // );
 
         expect(
-          SimpleThrow(height: null, passingIndex: 1).toString(),
+          Pass(height: null, passingIndex: 1).toString(),
           '_p1',
         );
 
         expect(
-          SimpleThrow(height: 1, passingIndex: null).toString(),
+          Pass(height: 1, passingIndex: null).toString(),
           '1p_',
         );
       });
@@ -47,49 +63,42 @@ void main() {
     group('Placeholder', () {
       test('supports value comparisons', () {
         expect(
-          SimpleThrow.placeholder(),
-          SimpleThrow.placeholder(),
-        );
-      });
-
-      test('equivalent to throw with null object', () {
-        expect(
-          SimpleThrow.placeholder(),
-          SimpleThrow(height: null, passingIndex: null),
+          Placeholder(),
+          Placeholder(),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          SimpleThrow.placeholder().toString(),
+          Placeholder().toString(),
           '_',
         );
       });
     });
 
-    group('Multiplex Throw', () {
-      test('supports value comparisons', () {
-        expect(
-          Multiplex([
-            SimpleThrow.placeholder(),
-            SimpleThrow(height: 4.5, passingIndex: 1),
-          ]),
-          Multiplex([
-            SimpleThrow.placeholder(),
-            SimpleThrow(height: 4.5, passingIndex: 1),
-          ]),
-        );
-      });
+    // group('Multiplex Throw', () {
+    //   test('supports value comparisons', () {
+    //     expect(
+    //       Multiplex([
+    //         Placeholder(),
+    //         SimpleThrow(height: 4.5, passingIndex: 1),
+    //       ]),
+    //       Multiplex([
+    //         Placeholder(),
+    //         SimpleThrow(height: 4.5, passingIndex: 1),
+    //       ]),
+    //     );
+    //   });
 
-      test('has correct string representation', () {
-        expect(
-          Multiplex([
-            SimpleThrow(height: 4.5, passingIndex: 1),
-            SimpleThrow.placeholder(),
-          ]).toString(),
-          '[4.5p1, _]',
-        );
-      });
-    });
+    //   test('has correct string representation', () {
+    //     expect(
+    //       Multiplex([
+    //         SimpleThrow(height: 4.5, passingIndex: 1),
+    //         Placeholder(),
+    //       ]).toString(),
+    //       '[4.5p1, _]',
+    //     );
+    //   });
+    // });
   });
 }

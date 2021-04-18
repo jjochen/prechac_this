@@ -6,20 +6,14 @@ void main() {
     test('supports value comparisons', () {
       expect(
         Pattern([
-          SimpleThrow(height: 4),
-          SimpleThrow.placeholder(),
-          Multiplex([
-            SimpleThrow.placeholder(),
-            SimpleThrow(height: 4.5, passingIndex: 1),
-          ]),
+          Self(height: 4),
+          Placeholder(),
+          Pass(height: 4.5, passingIndex: 1),
         ]),
         Pattern([
-          SimpleThrow(height: 4),
-          SimpleThrow.placeholder(),
-          Multiplex([
-            SimpleThrow.placeholder(),
-            SimpleThrow(height: 4.5, passingIndex: 1),
-          ]),
+          Self(height: 4),
+          Placeholder(),
+          Pass(height: 4.5, passingIndex: 1),
         ]),
       );
     });
@@ -27,14 +21,11 @@ void main() {
     test('has correct string representation', () {
       expect(
         Pattern([
-          SimpleThrow(height: 4),
-          SimpleThrow.placeholder(),
-          Multiplex([
-            SimpleThrow.placeholder(),
-            SimpleThrow(height: 4.5, passingIndex: 1),
-          ]),
+          Self(height: 4),
+          Placeholder(),
+          Pass(height: 4.5, passingIndex: 1),
         ]).toString(),
-        '4, _, [_, 4.5p1]',
+        '4, _, 4.5p1',
       );
     });
   });
