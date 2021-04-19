@@ -94,4 +94,13 @@ class PatternRepository {
     final selfHeight = (passHeight - (prechator * passingIndex)).round();
     return Self(height: selfHeight);
   }
+
+  List<int> missingLandingSites() {
+    var sites = List<int>.generate(pattern.period, (int index) => index);
+    final existingSites = landingSites();
+    for (final site in existingSites) {
+      sites.remove(site);
+    }
+    return sites;
+  }
 }
