@@ -1,106 +1,54 @@
 import 'dart:async';
 
+import 'package:pattern_repository/src/engine/engine.dart';
+
 import 'models/models.dart';
 
 class PatternRepository {
-  PatternRepository({
-    required this.numberOfJugglers,
-    required this.numberOfObjects,
-    required this.maxHeight,
-    required this.minNumberOfPasses,
-    required this.maxNumberOfPasses,
-    required this.pattern,
-  });
-
-  final int numberOfJugglers;
-  final int numberOfObjects;
-  final int maxHeight;
-  final int minNumberOfPasses;
-  final int maxNumberOfPasses;
-  final Pattern pattern;
-
-  Stream<List<Pattern>> patterns() {
-    return Stream.fromIterable([
-      [
-        Pattern([
-          Self(height: 4),
-          Pass(height: 2, passingIndex: 1),
-          Self(height: 1),
-          Pass(height: 1, passingIndex: 1),
-        ])
-      ]
-    ]);
-  }
-
-// TODO: use rational
-  double prechator() {
-    return pattern.period / numberOfJugglers;
-  }
-
-  List<int> landingSites() {
-    final period = pattern.period;
-    return pattern.sequence.asMap().entries.map((entry) {
-      return _landingSite(
-        aThrow: entry.value,
-        position: entry.key,
-        period: period,
-      );
-    }).toList();
-  }
-
-  int _landingSite({
-    required Throw aThrow,
-    required int position,
+  Stream<List<Pattern>> patterns({
+    required int numberOfJugglers,
     required int period,
+    required int numberOfObjects,
+    required int maxHeight,
+    int? minNumberOfPasses,
+    int? maxNumberOfPasses,
   }) {
-    int? height;
-
-    if (aThrow is Self) {
-      height = aThrow.height;
-    }
-
-    if (aThrow is Pass) {
-      height = _equivalentSelfHeight(aThrow)?.height;
-    }
-
-    return _calculateLandingSite(
-      height: height,
-      position: position,
+    final engine = Engine(
+      numberOfJugglers: numberOfJugglers,
       period: period,
+      numberOfObjects: numberOfObjects,
+      maxHeight: maxHeight,
+      minNumberOfPasses: minNumberOfPasses,
+      maxNumberOfPasses: maxNumberOfPasses,
     );
+    return engine.patterns();
   }
 
-  int _calculateLandingSite({
-    required int? height,
-    required int position,
-    required int period,
-  }) {
-    if (height == null) {
-      return -1;
-    }
+  // Pattern prechacThisThrow({
+  //   required Pattern pattern,
+  //   required int index,
+  //   required PrechacDirection direction,
+  //   required int numberOfJugglers,
+  // }) {
+  //   return pattern;
+  //   final oldThrow = pattern.throwAtIndex(index);
+  //   final oldHeight = oldThrow.height;
+  //   final oldPassingIndex = oldThrow.passingIndex;
+  //   final prechator = pattern.period / numberOfJugglers;
+  //   if (oldHeight == null || oldPassingIndex == null) {
+  //     // TODO: throw exception
+  //     // maybe separate Throw and Throw
+  //     return pattern;
+  //   }
 
-    return (position + height) % period;
-  }
+  //   double newHeight;
+  //   double newPassingIndex;
 
-  Self? _equivalentSelfHeight(Pass pass) {
-    final passingIndex = pass.passingIndex;
-    final passHeight = pass.height;
-
-    if (passHeight == null || passingIndex == null) {
-      return null;
-    }
-
-    final prechator = this.prechator();
-    final selfHeight = (passHeight - (prechator * passingIndex)).round();
-    return Self(height: selfHeight);
-  }
-
-  List<int> missingLandingSites() {
-    var sites = List<int>.generate(pattern.period, (int index) => index);
-    final existingSites = landingSites();
-    for (final site in existingSites) {
-      sites.remove(site);
-    }
-    return sites;
-  }
+  //   final newHeight = oldHeight + prechator;
+  //   final newPassingIndex =
+  //   return pattern.copyWithThow(
+  //     newThrow: newThrow,
+  //     index: index,
+  //   );
+  // }
 }

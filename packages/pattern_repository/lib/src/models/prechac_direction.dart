@@ -1,0 +1,1 @@
+enum PrechacDirection { up, down }
