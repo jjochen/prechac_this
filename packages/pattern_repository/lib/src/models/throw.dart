@@ -1,34 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:sprintf/sprintf.dart';
 
-abstract class Throw extends Equatable {}
-
-class Self extends Throw {
-  Self({
-    required this.height,
-  });
-
-  final int? height;
-
-  @override
-  List<Object?> get props => [height];
-
-  @override
-  String toString() {
-    final height = this.height;
-    if (height == null) {
-      return '_';
-    }
-
-    return height.toString();
-  }
-}
-
-class Pass extends Throw {
-  Pass({
+class Throw extends Equatable {
+  Throw({
     required this.height,
     required this.passingIndex,
   });
+
+  factory Throw.self({required int? height}) => Throw(
+        height: height?.toDouble(),
+        passingIndex: 0,
+      );
+
+  factory Throw.placeholder() => Throw(
+        height: null,
+        passingIndex: null,
+      );
 
   final double? height;
   final int? passingIndex;
@@ -36,8 +23,28 @@ class Pass extends Throw {
   @override
   List<Object?> get props => [height, passingIndex];
 
+  bool get isSelf {
+    return passingIndex != null && passingIndex == 0;
+  }
+
+  bool get isPass {
+    return passingIndex != null && passingIndex != 0;
+  }
+
+  bool get isPlaceholder {
+    return passingIndex == null && height == null;
+  }
+
   @override
   String toString() {
+    if (isPlaceholder) {
+      return '_';
+    }
+
+    if (isSelf) {
+      return heightToString();
+    }
+
     return '${heightToString()}p${passingIndexToString()}';
   }
 
@@ -57,30 +64,5 @@ class Pass extends Throw {
     }
 
     return passingIndex.toString();
-  }
-}
-
-// class Multiplex extends Throw {
-//   Multiplex(this.throws);
-
-//   final List<Throw> throws;
-
-//   @override
-//   List<Object?> get props => [throws];
-
-//   @override
-//   String toString() {
-//     final components = throws.map((simpleThrow) => simpleThrow.toString());
-//     return '[${components.join(', ')}]';
-//   }
-// }
-
-class Placeholder extends Throw {
-  @override
-  List<Object?> get props => [];
-
-  @override
-  String toString() {
-    return '_';
   }
 }

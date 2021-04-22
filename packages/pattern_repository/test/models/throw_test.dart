@@ -1,24 +1,24 @@
-import 'package:pattern_repository/pattern_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pattern_repository/src/models/throw.dart';
 
 void main() {
   group('Throw', () {
     group('Self', () {
       test('supports value comparisons', () {
         expect(
-          Self(height: 4),
-          Self(height: 4),
+          Throw.self(height: 4),
+          Throw.self(height: 4),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          Self(height: 42).toString(),
+          Throw.self(height: 42).toString(),
           '42',
         );
 
         expect(
-          Self(height: null).toString(),
+          Throw.self(height: null).toString(),
           '_',
         );
       });
@@ -27,34 +27,34 @@ void main() {
     group('Pass', () {
       test('supports value comparisons', () {
         expect(
-          Pass(height: 4.5, passingIndex: 1),
-          Pass(height: 4.5, passingIndex: 1),
+          Throw(height: 4.5, passingIndex: 1),
+          Throw(height: 4.5, passingIndex: 1),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          Pass(height: 42.25, passingIndex: 1).toString(),
+          Throw(height: 42.25, passingIndex: 1).toString(),
           '42.25p1',
         );
 
         // expect(
-        //   SimpleThrow(height: 4 / 3, passingIndex: 2).toString(),
+        //   Throw(height: 4 / 3, passingIndex: 2).toString(),
         //   '1.3p2',
         // );
 
         // expect(
-        //   SimpleThrow(height: 5 / 3, passingIndex: 1).toString(),
+        //   Throw(height: 5 / 3, passingIndex: 1).toString(),
         //   '1.6p1',
         // );
 
         expect(
-          Pass(height: null, passingIndex: 1).toString(),
+          Throw(height: null, passingIndex: 1).toString(),
           '_p1',
         );
 
         expect(
-          Pass(height: 1, passingIndex: null).toString(),
+          Throw(height: 1, passingIndex: null).toString(),
           '1p_',
         );
       });
@@ -63,42 +63,17 @@ void main() {
     group('Placeholder', () {
       test('supports value comparisons', () {
         expect(
-          Placeholder(),
-          Placeholder(),
+          Throw.placeholder(),
+          Throw.placeholder(),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          Placeholder().toString(),
+          Throw.placeholder().toString(),
           '_',
         );
       });
     });
-
-    // group('Multiplex Throw', () {
-    //   test('supports value comparisons', () {
-    //     expect(
-    //       Multiplex([
-    //         Placeholder(),
-    //         SimpleThrow(height: 4.5, passingIndex: 1),
-    //       ]),
-    //       Multiplex([
-    //         Placeholder(),
-    //         SimpleThrow(height: 4.5, passingIndex: 1),
-    //       ]),
-    //     );
-    //   });
-
-    //   test('has correct string representation', () {
-    //     expect(
-    //       Multiplex([
-    //         SimpleThrow(height: 4.5, passingIndex: 1),
-    //         Placeholder(),
-    //       ]).toString(),
-    //       '[4.5p1, _]',
-    //     );
-    //   });
-    // });
   });
 }
