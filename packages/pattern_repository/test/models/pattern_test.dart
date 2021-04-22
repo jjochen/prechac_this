@@ -54,4 +54,20 @@ void main() {
       );
     });
   });
+
+  test('copyWithThrow returns correct pattern', () {
+    final pattern = Pattern([
+      Throw.self(height: 4),
+      Throw.placeholder(),
+      Throw(height: 4.5, passingIndex: 1),
+    ]);
+    expect(
+      pattern.copyWithThow(newThrow: Throw.self(height: 2), index: 1),
+      Pattern([
+        Throw.self(height: 4),
+        Throw.self(height: 2),
+        Throw(height: 4.5, passingIndex: 1),
+      ]),
+    );
+  });
 }
