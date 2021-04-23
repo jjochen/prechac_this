@@ -20,11 +20,20 @@ class Engine {
 
   Stream<List<Pattern>> fillConstraint({required Pattern pattern}) {
     // * constraint pattern as input
+    //   > 4 _ 1 _p1
     // * calculate missing landing sites
+    //   > 1, 2
     // * permutate missing landing sites
-    // * fill in minimal selfs
-    // * prechac up/down to correct number of objects and passes
-    //   (pass height might be lower then minimal self!)
+    //   > 1, 2; 2, 1
+    // * for each landing site: calculate all possible throws
+    //   (fitting all throw constraints)
+    //   > 1 (at 1): 0, 2p1, 4
+    //   > 2 (at 3): 1p
+    //   > 2 (at 1): 1, 3p1
+    //   > 1 (at 3): 4p1
+    // * combine with correct number of objects and passes
+    //   > 4 2p1 1 1p1
+    //   (second permutation has too many objects)
 
     return Stream.fromIterable([
       [
