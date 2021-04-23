@@ -71,7 +71,7 @@ void main() {
 
       test('fetches empty stream of numbers', () async {
         await expectLater(
-            engine.patterns(),
+            engine.fillConstraint(pattern: pattern),
             emitsInOrder([
               [
                 Pattern([

@@ -18,7 +18,7 @@ class Engine {
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
 
-  Stream<List<Pattern>> patterns() {
+  Stream<List<Pattern>> fillConstraint({required Pattern pattern}) {
     // * constraint pattern as input
     // * calculate missing landing sites
     // * permutate missing landing sites

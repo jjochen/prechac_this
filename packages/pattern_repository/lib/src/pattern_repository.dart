@@ -21,7 +21,13 @@ class PatternRepository {
       minNumberOfPasses: minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses,
     );
-    return engine.patterns();
+    final pattern = Pattern([
+      Throw.placeholder(),
+      Throw.placeholder(),
+      Throw.placeholder(),
+      Throw.placeholder(),
+    ]);
+    return engine.fillConstraint(pattern: pattern);
   }
 
   // Pattern prechacThisThrow({
