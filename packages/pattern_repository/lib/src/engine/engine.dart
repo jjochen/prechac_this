@@ -19,6 +19,13 @@ class Engine {
   final int maxNumberOfPasses;
 
   Stream<List<Pattern>> patterns() {
+    // * constraint pattern as input
+    // * calculate missing landing sites
+    // * permutate missing landing sites
+    // * fill in minimal selfs
+    // * prechac up/down to correct number of objects and passes
+    //   (pass height might be lower then minimal self!)
+
     return Stream.fromIterable([
       [
         Pattern([
