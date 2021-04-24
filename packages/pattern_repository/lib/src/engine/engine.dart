@@ -1,4 +1,5 @@
 import 'package:fraction/fraction.dart';
+import 'package:trotter/trotter.dart';
 
 import '../models/models.dart';
 
@@ -53,7 +54,32 @@ class Engine {
     return Fraction(period, numberOfJugglers);
   }
 
-  List<int> landingSites(Pattern pattern) {
+  Iterable<List<int>> permutationsOfPossibleLandingSites(Pattern pattern) {
+    final allSites = List<int>.generate(pattern.period, (int index) => index);
+    final existingSites = _landingSites(pattern);
+    final missingSites =
+        allSites.where((element) => !existingSites.contains(element)).toList();
+    final numberOfMissingSites = missingSites.length;
+    final permutationsOfMissingSites =
+        Permutations(numberOfMissingSites, missingSites);
+
+    return permutationsOfMissingSites()
+        .map((missing) => _fillMissingSites(existingSites, missing));
+  }
+
+  List<int> _fillMissingSites(List<int> existing, List<int> missing) {
+    return existing.map((site) {
+      if (site < 0) {
+        final first = missing.first;
+        missing.removeAt(0);
+        return first;
+      } else {
+        return site;
+      }
+    }).toList();
+  }
+
+  List<int> _landingSites(Pattern pattern) {
     return pattern.mapIndexedThrows((index, indexedThrow) {
       return _landingSite(
         aThrow: indexedThrow,
@@ -78,18 +104,9 @@ class Engine {
         (height - (prechator * passingIndex.toFraction())).reduce();
 
     if (!wholeHeight.isWhole) {
-      throw Exception('not a valid throw: $aThrow');
+      throw Exception('not a valid self height: $wholeHeight');
     }
 
     return (position + wholeHeight.numerator) % period;
-  }
-
-  List<int> missingLandingSites(Pattern pattern) {
-    var sites = List<int>.generate(pattern.period, (int index) => index);
-    final existingSites = landingSites(pattern);
-    for (final site in existingSites) {
-      sites.remove(site);
-    }
-    return sites;
   }
 }

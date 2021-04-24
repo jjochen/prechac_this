@@ -23,17 +23,12 @@ void main() {
         ]);
       });
 
-      test('calculates landing sites', () {
+      test('calculates permutations of missing landing sites', () {
         expect(
-          engine.landingSites(pattern),
-          [0, 1, -1, 2],
-        );
-      });
-
-      test('calculates missing landing sites', () {
-        expect(
-          engine.missingLandingSites(pattern),
-          [3],
+          engine.permutationsOfPossibleLandingSites(pattern).toList(),
+          [
+            [0, 1, 3, 2],
+          ],
         );
       });
     });
@@ -56,21 +51,17 @@ void main() {
         ]);
       });
 
-      test('calculates landing sites', () {
+      test('calculates permutations of missing landing sites', () {
         expect(
-          engine.landingSites(pattern),
-          [0, -1, 3, -1],
+          engine.permutationsOfPossibleLandingSites(pattern).toList(),
+          [
+            [0, 1, 3, 2],
+            [0, 2, 3, 1],
+          ],
         );
       });
 
-      test('calculates missing landing sites', () {
-        expect(
-          engine.missingLandingSites(pattern),
-          [1, 2],
-        );
-      });
-
-      test('fetches empty stream of numbers', () async {
+      test('finds correct patterns', () async {
         await expectLater(
             engine.fillConstraint(pattern: pattern),
             emitsInOrder([
