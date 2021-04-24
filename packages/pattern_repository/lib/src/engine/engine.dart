@@ -1,3 +1,5 @@
+import 'package:fraction/fraction.dart';
+
 import '../models/models.dart';
 
 class Engine {
@@ -39,17 +41,16 @@ class Engine {
       [
         Pattern([
           Throw.self(height: 4),
-          Throw(height: 2, passingIndex: 1),
+          Throw.pass(height: 2),
           Throw.self(height: 1),
-          Throw(height: 1, passingIndex: 1),
+          Throw.pass(height: 1),
         ])
       ]
     ]);
   }
 
-// TODO: use rational
-  double prechator() {
-    return period / numberOfJugglers;
+  Fraction get prechator {
+    return Fraction(period, numberOfJugglers);
   }
 
   List<int> landingSites(Pattern pattern) {
@@ -67,46 +68,20 @@ class Engine {
     required int position,
     required int period,
   }) {
-    double? height;
-
-    if (aThrow.isSelf) {
-      height = aThrow.height;
-    }
-
-    if (aThrow.isPass) {
-      height = _equivalentSelf(aThrow)?.height;
-    }
-
-    return _calculateLandingSite(
-      height: height?.toInt(),
-      position: position,
-      period: period,
-    );
-  }
-
-  int _calculateLandingSite({
-    required int? height,
-    required int position,
-    required int period,
-  }) {
-    if (height == null) {
+    final height = aThrow.height;
+    final passingIndex = aThrow.passingIndex;
+    if (height == null || passingIndex == null) {
       return -1;
     }
 
-    return (position + height) % period;
-  }
+    final wholeHeight =
+        (height - (prechator * passingIndex.toFraction())).reduce();
 
-  Throw? _equivalentSelf(Throw aThrow) {
-    final passingIndex = aThrow.passingIndex;
-    final passHeight = aThrow.height;
-
-    if (passHeight == null || passingIndex == null) {
-      return null;
+    if (!wholeHeight.isWhole) {
+      throw Exception('not a valid throw: $aThrow');
     }
 
-    final prechator = this.prechator();
-    final selfHeight = (passHeight - (prechator * passingIndex)).round();
-    return Throw.self(height: selfHeight);
+    return (position + wholeHeight.numerator) % period;
   }
 
   List<int> missingLandingSites(Pattern pattern) {

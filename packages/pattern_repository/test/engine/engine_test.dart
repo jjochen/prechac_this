@@ -1,3 +1,4 @@
+import 'package:fraction/fraction.dart';
 import 'package:pattern_repository/pattern_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pattern_repository/src/engine/engine.dart';
@@ -16,9 +17,9 @@ void main() {
         );
         pattern = Pattern([
           Throw.self(height: 4),
-          Throw(height: 4 / 3, passingIndex: 1),
+          Throw(height: Fraction(4, 3), passingIndex: 1),
           Throw.placeholder(),
-          Throw(height: 5 / 3, passingIndex: 2),
+          Throw(height: Fraction(5, 3), passingIndex: 2),
         ]);
       });
 
@@ -76,9 +77,9 @@ void main() {
               [
                 Pattern([
                   Throw.self(height: 4),
-                  Throw(height: 2, passingIndex: 1),
+                  Throw.pass(height: 2),
                   Throw.self(height: 1),
-                  Throw(height: 1, passingIndex: 1),
+                  Throw.pass(height: 1),
                 ]),
               ]
             ]));

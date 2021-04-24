@@ -23,9 +23,9 @@ void main() {
               [
                 Pattern([
                   Throw.self(height: 4),
-                  Throw(height: 2, passingIndex: 1),
+                  Throw.pass(height: 2),
                   Throw.self(height: 1),
-                  Throw(height: 1, passingIndex: 1),
+                  Throw.pass(height: 1),
                 ]),
               ]
             ]));

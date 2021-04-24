@@ -27,14 +27,14 @@ void main() {
     group('Pass', () {
       test('supports value comparisons', () {
         expect(
-          Throw(height: 4.5, passingIndex: 1),
-          Throw(height: 4.5, passingIndex: 1),
+          Throw.pass(height: 4.5),
+          Throw.pass(height: 4.5),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          Throw(height: 42.25, passingIndex: 1).toString(),
+          Throw.pass(height: 42.25).toString(),
           '42.25p1',
         );
 
@@ -44,17 +44,17 @@ void main() {
         // );
 
         // expect(
-        //   Throw(height: 5 / 3, passingIndex: 1).toString(),
+        //   Throw(height: 5 / 3).toString(),
         //   '1.6p1',
         // );
 
         expect(
-          Throw(height: null, passingIndex: 1).toString(),
+          Throw.pass(height: null).toString(),
           '_p1',
         );
 
         expect(
-          Throw(height: 1, passingIndex: null).toString(),
+          Throw.pass(height: 1, passingIndex: null).toString(),
           '1p_',
         );
       });

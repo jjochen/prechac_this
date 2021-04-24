@@ -8,12 +8,12 @@ void main() {
         Pattern([
           Throw.self(height: 4),
           Throw.placeholder(),
-          Throw(height: 4.5, passingIndex: 1),
+          Throw.pass(height: 4.5),
         ]),
         Pattern([
           Throw.self(height: 4),
           Throw.placeholder(),
-          Throw(height: 4.5, passingIndex: 1),
+          Throw.pass(height: 4.5),
         ]),
       );
     });
@@ -23,7 +23,7 @@ void main() {
         Pattern([
           Throw.self(height: 4),
           Throw.placeholder(),
-          Throw(height: 4.5, passingIndex: 1),
+          Throw.pass(height: 4.5),
         ]).toString(),
         '4, _, 4.5p1',
       );
@@ -33,11 +33,11 @@ void main() {
       final pattern = Pattern([
         Throw.self(height: 4),
         Throw.placeholder(),
-        Throw(height: 4.5, passingIndex: 1),
+        Throw.pass(height: 4.5),
       ]);
       expect(
         pattern.throwAtIndex(2),
-        Throw(height: 4.5, passingIndex: 1),
+        Throw.pass(height: 4.5),
       );
     });
 
@@ -45,9 +45,10 @@ void main() {
       final pattern = Pattern([
         Throw.self(height: 4),
         Throw.placeholder(),
-        Throw(height: 4.5, passingIndex: 1),
+        Throw.pass(height: 4.5),
       ]);
-      final heights = pattern.map((element) => element.height).toList();
+      final heights =
+          pattern.map((element) => element.height?.toDouble()).toList();
       expect(
         heights,
         [4, null, 4.5],
@@ -59,14 +60,14 @@ void main() {
     final pattern = Pattern([
       Throw.self(height: 4),
       Throw.placeholder(),
-      Throw(height: 4.5, passingIndex: 1),
+      Throw.pass(height: 4.5),
     ]);
     expect(
       pattern.copyWithThow(newThrow: Throw.self(height: 2), index: 1),
       Pattern([
         Throw.self(height: 4),
         Throw.self(height: 2),
-        Throw(height: 4.5, passingIndex: 1),
+        Throw.pass(height: 4.5),
       ]),
     );
   });
