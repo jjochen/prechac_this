@@ -6,7 +6,6 @@ import 'package:pattern_repository/src/engine/engine.dart';
 void main() {
   group('Engine', () {
     group('4 1.3p1 _ 1.6p2', () {
-      late Pattern pattern;
       late Engine engine;
       setUp(() {
         engine = Engine(
@@ -14,21 +13,6 @@ void main() {
           period: 4,
           numberOfObjects: 4,
           maxHeight: 4,
-        );
-        pattern = Pattern([
-          Throw.self(height: 4),
-          Throw(height: Fraction(4, 3), passingIndex: 1),
-          Throw.placeholder(),
-          Throw(height: Fraction(5, 3), passingIndex: 2),
-        ]);
-      });
-
-      test('calculates permutations of missing landing sites', () {
-        expect(
-          engine.permutationsOfPossibleLandingSites(pattern).toList(),
-          [
-            [0, 1, 3, 2],
-          ],
         );
       });
 
@@ -69,16 +53,6 @@ void main() {
           Throw.self(height: 1),
           Throw.placeholder(),
         ]);
-      });
-
-      test('calculates permutations of missing landing sites', () {
-        expect(
-          engine.permutationsOfPossibleLandingSites(pattern).toList(),
-          [
-            [0, 1, 3, 2],
-            [0, 2, 3, 1],
-          ],
-        );
       });
 
       test('finds correct patterns', () async {
