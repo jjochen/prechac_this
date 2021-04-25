@@ -31,6 +31,26 @@ void main() {
           ],
         );
       });
+
+      test('calculates possible throws for given height', () {
+        final constraint = Throw(height: Fraction(5, 3), passingIndex: null);
+        expect(
+          engine.possibleThrows(
+              throwConstraint: constraint, landingSite: 2, index: 3),
+          [
+            Throw(height: Fraction(5, 3), passingIndex: 2),
+          ],
+        );
+      });
+
+      test('calculates possible throws for given passing index', () {
+        final constraint = Throw(height: null, passingIndex: 1);
+        expect(
+          engine.possibleThrows(
+              throwConstraint: constraint, landingSite: 2, index: 3),
+          [],
+        );
+      });
     });
 
     group('4 _ 1 _', () {
