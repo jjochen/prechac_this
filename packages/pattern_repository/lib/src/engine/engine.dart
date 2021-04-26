@@ -22,8 +22,8 @@ class Engine {
   final int maxNumberOfPasses;
 
 // TODO: rename
-  Stream<List<Pattern>> fillConstraints(
-      {required PatternConstraints patternConstraints}) {
+  Stream<List<Pattern>> fillConstraint(
+      {required PatternConstraint patternConstraint}) {
     // * constraint pattern as input
     //   > 4 _ 1 _p1
     // * calculate missing landing sites
@@ -31,7 +31,7 @@ class Engine {
     // * permutate missing landing sites
     //   > 1, 2; 2, 1
     // * for each landing site: calculate all possible throws
-    //   (fitting all throw constraints)
+    //   (fitting all throw constraint)
     //   > 1 (at 1): 0, 2p1, 4
     //   > 2 (at 3): 1p
     //   > 2 (at 1): 1, 3p1
@@ -57,12 +57,12 @@ class Engine {
   }
 
   List<Throw> possibleThrows({
-    required ThrowConstraints throwConstraints,
+    required ThrowConstraint throwConstraint,
     required int landingSite,
     required int index,
   }) {
-    final height = throwConstraints.height;
-    final passingIndex = throwConstraints.passingIndex;
+    final height = throwConstraint.height;
+    final passingIndex = throwConstraint.passingIndex;
     if (height != null && passingIndex != null) {
       return [Throw(height: height, passingIndex: passingIndex)];
     }
@@ -83,7 +83,7 @@ class Engine {
         passingIndex: possiblePassingIndex,
       );
       if (possibleThrow.isValid() &&
-          possibleThrow.satisfiesConstraints(throwConstraints)) {
+          possibleThrow.satisfiesConstraint(throwConstraint)) {
         results.add(possibleThrow);
       }
       possibleHeight += prechator;

@@ -1,11 +1,11 @@
 import 'package:fraction/fraction.dart';
 import 'package:trotter/trotter.dart';
 
-import '../models/pattern_constraints.dart';
+import '../models/pattern_constraint.dart';
 import 'landing_sites.dart';
-import 'prechac_throw_constraints.dart';
+import 'prechac_throw_constraint.dart';
 
-extension PrechacPatternConstraints on PatternConstraints {
+extension PrechacPatternConstraint on PatternConstraint {
   Iterable<List<int>> permutationsOfPossibleLandingSites({
     required Fraction prechator,
   }) {
@@ -23,8 +23,8 @@ extension PrechacPatternConstraints on PatternConstraints {
   List<int> landingSites({
     required Fraction prechator,
   }) {
-    return mapIndexedThrowConstraints((index, indexedThrowConstraints) {
-      return indexedThrowConstraints.landingSite(
+    return mapIndexedThrowConstraint((index, indexedThrowConstraint) {
+      return indexedThrowConstraint.landingSite(
         position: index,
         period: period,
         prechator: prechator,

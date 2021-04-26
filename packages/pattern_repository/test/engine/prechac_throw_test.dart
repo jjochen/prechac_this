@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
 
 import 'package:pattern_repository/src/models/throw.dart';
-import 'package:pattern_repository/src/models/throw_constraints.dart';
+import 'package:pattern_repository/src/models/throw_constraint.dart';
 import 'package:pattern_repository/src/engine/prechac_throw.dart';
 
 void main() {
@@ -52,15 +52,15 @@ void main() {
     test('Throw satisfies placeholder constraint', () {
       expect(
         Throw.self(height: 4)
-            .satisfiesConstraints(ThrowConstraints.placeholder()),
+            .satisfiesConstraint(ThrowConstraint.placeholder()),
         isTrue,
       );
     });
 
     test('Throw satisfies constraint for given height', () {
       expect(
-        Throw.self(height: 4).satisfiesConstraints(
-          ThrowConstraints(
+        Throw.self(height: 4).satisfiesConstraint(
+          ThrowConstraint(
             height: 4.toFraction(),
             passingIndex: null,
           ),
@@ -71,8 +71,8 @@ void main() {
 
     test('Throw does not satisfy constraint with wrong height', () {
       expect(
-        Throw.self(height: 4).satisfiesConstraints(
-          ThrowConstraints(
+        Throw.self(height: 4).satisfiesConstraint(
+          ThrowConstraint(
             height: 3.toFraction(),
             passingIndex: null,
           ),
@@ -83,8 +83,8 @@ void main() {
 
     test('Throw satisfies constraint for given passingIndex', () {
       expect(
-        Throw.self(height: 4).satisfiesConstraints(
-          ThrowConstraints(
+        Throw.self(height: 4).satisfiesConstraint(
+          ThrowConstraint(
             height: null,
             passingIndex: 0,
           ),
@@ -95,8 +95,8 @@ void main() {
 
     test('Throw does not satisfy constraint with wrong passing index', () {
       expect(
-        Throw.self(height: 4).satisfiesConstraints(
-          ThrowConstraints(
+        Throw.self(height: 4).satisfiesConstraint(
+          ThrowConstraint(
             height: null,
             passingIndex: 2,
           ),

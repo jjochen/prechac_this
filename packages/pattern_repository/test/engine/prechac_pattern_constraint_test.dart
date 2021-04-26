@@ -1,24 +1,24 @@
 import 'package:fraction/fraction.dart';
 import 'package:pattern_repository/pattern_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pattern_repository/src/engine/prechac_pattern_constraints.dart';
+import 'package:pattern_repository/src/engine/prechac_pattern_constraint.dart';
 
 void main() {
-  group('PrechacPatternConstraints', () {
+  group('PrechacPatternConstraint', () {
     group('4 1.3p1 _ 1.6p2', () {
-      late PatternConstraints patternConstraints;
+      late PatternConstraint patternConstraint;
       setUp(() {
-        patternConstraints = PatternConstraints([
-          ThrowConstraints.self(height: 4),
-          ThrowConstraints(height: Fraction(4, 3), passingIndex: 1),
-          ThrowConstraints.placeholder(),
-          ThrowConstraints(height: Fraction(5, 3), passingIndex: 2),
+        patternConstraint = PatternConstraint([
+          ThrowConstraint.self(height: 4),
+          ThrowConstraint(height: Fraction(4, 3), passingIndex: 1),
+          ThrowConstraint.placeholder(),
+          ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
         ]);
       });
 
       test('calculates permutations of missing landing sites', () {
         expect(
-          patternConstraints
+          patternConstraint
               .permutationsOfPossibleLandingSites(prechator: Fraction(4, 3))
               .toList(),
           [
@@ -29,19 +29,19 @@ void main() {
     });
 
     group('4 _ 1 _', () {
-      late PatternConstraints patternConstraints;
+      late PatternConstraint patternConstraint;
       setUp(() {
-        patternConstraints = PatternConstraints([
-          ThrowConstraints.self(height: 4),
-          ThrowConstraints.placeholder(),
-          ThrowConstraints.self(height: 1),
-          ThrowConstraints.placeholder(),
+        patternConstraint = PatternConstraint([
+          ThrowConstraint.self(height: 4),
+          ThrowConstraint.placeholder(),
+          ThrowConstraint.self(height: 1),
+          ThrowConstraint.placeholder(),
         ]);
       });
 
       test('calculates permutations of missing landing sites', () {
         expect(
-          patternConstraints
+          patternConstraint
               .permutationsOfPossibleLandingSites(prechator: Fraction(4, 2))
               .toList(),
           [

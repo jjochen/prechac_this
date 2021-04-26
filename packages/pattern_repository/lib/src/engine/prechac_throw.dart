@@ -1,7 +1,7 @@
 import 'package:fraction/fraction.dart';
 
 import '../models/throw.dart';
-import '../models/throw_constraints.dart';
+import '../models/throw_constraint.dart';
 
 extension PrechacThrow on Throw {
   bool isValid() {
@@ -36,9 +36,9 @@ extension PrechacThrow on Throw {
     return true;
   }
 
-  bool satisfiesConstraints(ThrowConstraints throwConstraints) {
-    return passingIndexSatisfiesConstraint(throwConstraints.passingIndex) &&
-        heightSatisfiesConstraint(throwConstraints.height);
+  bool satisfiesConstraint(ThrowConstraint throwConstraint) {
+    return passingIndexSatisfiesConstraint(throwConstraint.passingIndex) &&
+        heightSatisfiesConstraint(throwConstraint.height);
   }
 
   bool heightSatisfiesConstraint(Fraction? heightConstraint) {

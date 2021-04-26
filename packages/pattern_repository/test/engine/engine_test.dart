@@ -17,10 +17,10 @@ void main() {
       });
 
       test('calculates possible throws', () {
-        final constraints = ThrowConstraints.placeholder();
+        final constraint = ThrowConstraint.placeholder();
         expect(
           engine.possibleThrows(
-              throwConstraints: constraints, landingSite: 3, index: 2),
+              throwConstraint: constraint, landingSite: 3, index: 2),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
             Throw.self(height: 3),
@@ -29,11 +29,11 @@ void main() {
       });
 
       test('calculates possible throws for given height', () {
-        final constraints =
-            ThrowConstraints(height: Fraction(5, 3), passingIndex: null);
+        final constraint =
+            ThrowConstraint(height: Fraction(5, 3), passingIndex: null);
         expect(
           engine.possibleThrows(
-              throwConstraints: constraints, landingSite: 2, index: 3),
+              throwConstraint: constraint, landingSite: 2, index: 3),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -41,20 +41,20 @@ void main() {
       });
 
       test('calculates possible throws for given passing index', () {
-        final constraints = ThrowConstraints(height: null, passingIndex: 1);
+        final constraint = ThrowConstraint(height: null, passingIndex: 1);
         expect(
           engine.possibleThrows(
-              throwConstraints: constraints, landingSite: 2, index: 3),
+              throwConstraint: constraint, landingSite: 2, index: 3),
           [],
         );
       });
 
       test('calculates possible throws for given passing index and height', () {
-        final constraints =
-            ThrowConstraints(height: Fraction(5, 3), passingIndex: 2);
+        final constraint =
+            ThrowConstraint(height: Fraction(5, 3), passingIndex: 2);
         expect(
           engine.possibleThrows(
-              throwConstraints: constraints, landingSite: 2, index: 3),
+              throwConstraint: constraint, landingSite: 2, index: 3),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -63,7 +63,7 @@ void main() {
     });
 
     group('4 _ 1 _', () {
-      late PatternConstraints patternConstraints;
+      late PatternConstraint patternConstraint;
       late Engine engine;
       setUp(() {
         engine = Engine(
@@ -72,17 +72,17 @@ void main() {
           numberOfObjects: 4,
           maxHeight: 4,
         );
-        patternConstraints = PatternConstraints([
-          ThrowConstraints.self(height: 4),
-          ThrowConstraints.placeholder(),
-          ThrowConstraints.self(height: 1),
-          ThrowConstraints.placeholder(),
+        patternConstraint = PatternConstraint([
+          ThrowConstraint.self(height: 4),
+          ThrowConstraint.placeholder(),
+          ThrowConstraint.self(height: 1),
+          ThrowConstraint.placeholder(),
         ]);
       });
 
       test('finds correct patterns', () async {
         await expectLater(
-            engine.fillConstraints(patternConstraints: patternConstraints),
+            engine.fillConstraint(patternConstraint: patternConstraint),
             emitsInOrder([
               [
                 Pattern([

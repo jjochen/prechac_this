@@ -2,27 +2,27 @@ import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 import 'package:sprintf/sprintf.dart';
 
-class ThrowConstraints extends Equatable {
-  ThrowConstraints({
+class ThrowConstraint extends Equatable {
+  ThrowConstraint({
     required this.height,
     required this.passingIndex,
   });
 
-  factory ThrowConstraints.pass({
+  factory ThrowConstraint.pass({
     required double? height,
     int? passingIndex = 1,
   }) =>
-      ThrowConstraints(
+      ThrowConstraint(
         height: height?.toFraction(),
         passingIndex: passingIndex,
       );
 
-  factory ThrowConstraints.self({required int? height}) => ThrowConstraints(
+  factory ThrowConstraint.self({required int? height}) => ThrowConstraint(
         height: height?.toFraction(),
         passingIndex: 0,
       );
 
-  factory ThrowConstraints.placeholder() => ThrowConstraints(
+  factory ThrowConstraint.placeholder() => ThrowConstraint(
         height: null,
         passingIndex: null,
       );
