@@ -27,7 +27,7 @@ class PatternRepository {
       Throw.placeholder(),
       Throw.placeholder(),
     ]);
-    return engine.fillConstraint(pattern: pattern);
+    return engine.fillConstraints(pattern: pattern);
   }
 
   // Pattern prechacThisThrow({

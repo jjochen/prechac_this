@@ -20,7 +20,7 @@ void main() {
         final constraint = Throw.placeholder();
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+              throwConstraints: constraint, landingSite: 3, index: 2),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
             Throw.self(height: 3),
@@ -32,7 +32,7 @@ void main() {
         final constraint = Throw(height: Fraction(5, 3), passingIndex: null);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+              throwConstraints: constraint, landingSite: 2, index: 3),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -43,7 +43,7 @@ void main() {
         final constraint = Throw(height: null, passingIndex: 1);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+              throwConstraints: constraint, landingSite: 2, index: 3),
           [],
         );
       });
@@ -52,7 +52,7 @@ void main() {
         final constraint = Throw(height: Fraction(5, 3), passingIndex: 2);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+              throwConstraints: constraint, landingSite: 2, index: 3),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -80,7 +80,7 @@ void main() {
 
       test('finds correct patterns', () async {
         await expectLater(
-            engine.fillConstraint(pattern: pattern),
+            engine.fillConstraints(pattern: pattern),
             emitsInOrder([
               [
                 Pattern([

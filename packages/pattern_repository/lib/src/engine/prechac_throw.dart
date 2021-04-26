@@ -24,10 +24,10 @@ extension PrechacThrow on Throw {
     return (position + wholeHeight.numerator) % period;
   }
 
-  bool satisfiesConstraints(Throw throwConstraint) {
+  bool satisfiesConstraints(Throw throwConstraints) {
     return isValid() &&
-        passingIndexSatisfiesConstraints(throwConstraint.passingIndex) &&
-        heightSatisfiesConstraints(throwConstraint.height);
+        passingIndexSatisfiesConstraint(throwConstraints.passingIndex) &&
+        heightSatisfiesConstraint(throwConstraints.height);
   }
 
   bool isValid() {
@@ -74,7 +74,7 @@ extension PrechacThrow on Throw {
     return true;
   }
 
-  bool heightSatisfiesConstraints(Fraction? heightConstraint) {
+  bool heightSatisfiesConstraint(Fraction? heightConstraint) {
     final height = this.height;
     if (height == null || heightConstraint == null) {
       return true;
@@ -83,7 +83,7 @@ extension PrechacThrow on Throw {
     return height == heightConstraint;
   }
 
-  bool passingIndexSatisfiesConstraints(passingIndexConstraint) {
+  bool passingIndexSatisfiesConstraint(int? passingIndexConstraint) {
     final passingIndex = this.passingIndex;
     if (passingIndex == null || passingIndexConstraint == null) {
       return true;

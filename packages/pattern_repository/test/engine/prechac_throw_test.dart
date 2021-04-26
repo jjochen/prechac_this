@@ -39,5 +39,17 @@ void main() {
         throwsException,
       );
     });
+
+    test('throws an error when calculating landing site with invalid throw',
+        () {
+      expect(
+        () => Throw(height: Fraction(5, 3), passingIndex: 1).landingSite(
+          position: 4,
+          period: 4,
+          prechator: Fraction(4, 3),
+        ),
+        throwsException,
+      );
+    });
   });
 }
