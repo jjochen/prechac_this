@@ -35,6 +35,17 @@ void main() {
           [],
         );
       });
+
+      test('calculates possible throws for given passing index and height', () {
+        final constraint = Throw(height: Fraction(5, 3), passingIndex: 2);
+        expect(
+          engine.possibleThrows(
+              throwConstraint: constraint, landingSite: 2, index: 3),
+          [
+            Throw(height: Fraction(5, 3), passingIndex: 2),
+          ],
+        );
+      });
     });
 
     group('4 _ 1 _', () {

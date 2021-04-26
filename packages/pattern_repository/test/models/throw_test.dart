@@ -22,6 +22,20 @@ void main() {
           '_',
         );
       });
+
+      test('isSelf returns true', () {
+        expect(
+          Throw.self(height: 4).isSelf,
+          true,
+        );
+      });
+
+      test('isPass returns false', () {
+        expect(
+          Throw.self(height: 4).isPass,
+          false,
+        );
+      });
     });
 
     group('Pass', () {
@@ -56,6 +70,20 @@ void main() {
         expect(
           Throw.pass(height: 1, passingIndex: null).toString(),
           '1p_',
+        );
+      });
+
+      test('isSelf returns false', () {
+        expect(
+          Throw.pass(height: 4).isSelf,
+          false,
+        );
+      });
+
+      test('isPass returns true', () {
+        expect(
+          Throw.pass(height: 4).isPass,
+          true,
         );
       });
     });
