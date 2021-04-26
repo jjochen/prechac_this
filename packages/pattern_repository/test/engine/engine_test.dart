@@ -16,6 +16,18 @@ void main() {
         );
       });
 
+      test('calculates possible throws', () {
+        final constraint = Throw.placeholder();
+        expect(
+          engine.possibleThrows(
+              throwConstraint: constraint, landingSite: 3, index: 2),
+          [
+            Throw(height: Fraction(5, 3), passingIndex: 2),
+            Throw.self(height: 3),
+          ],
+        );
+      });
+
       test('calculates possible throws for given height', () {
         final constraint = Throw(height: Fraction(5, 3), passingIndex: null);
         expect(

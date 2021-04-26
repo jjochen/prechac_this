@@ -45,6 +45,10 @@ extension PrechacThrow on Throw {
       return false;
     }
 
+    if (height < 0.toFraction()) {
+      return false;
+    }
+
     if (height > 0.toFraction() && height < 1.toFraction()) {
       return false;
     }
