@@ -24,7 +24,7 @@ class Pattern with EquatableMixin, IterableMixin<Throw> {
   @override
   Iterator<Throw> get iterator => _sequence.iterator;
 
-  Iterable<E> mapIndexedThrows<E>(E Function(int index, Throw item) f) sync* {
+  Iterable<E> mapIndexedThrow<E>(E Function(int index, Throw item) f) sync* {
     var index = 0;
 
     for (final item in _sequence) {
@@ -37,7 +37,7 @@ class Pattern with EquatableMixin, IterableMixin<Throw> {
     return _sequence[index];
   }
 
-  Pattern copyWithThow({
+  Pattern copyWithThrow({
     required Throw newThrow,
     required int index,
   }) {

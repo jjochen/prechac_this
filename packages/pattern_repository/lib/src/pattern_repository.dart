@@ -21,26 +21,26 @@ class PatternRepository {
       minNumberOfPasses: minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses,
     );
-    final pattern = Pattern([
-      Throw.placeholder(),
-      Throw.placeholder(),
-      Throw.placeholder(),
-      Throw.placeholder(),
+    final patternConstraints = PatternConstraints([
+      ThrowConstraints.placeholder(),
+      ThrowConstraints.placeholder(),
+      ThrowConstraints.placeholder(),
+      ThrowConstraints.placeholder(),
     ]);
-    return engine.fillConstraints(pattern: pattern);
+    return engine.fillConstraints(patternConstraints: patternConstraints);
   }
 
-  // Pattern prechacThisThrow({
+  // Pattern prechacThisThrowConstraints({
   //   required Pattern pattern,
   //   required int index,
   //   required PrechacDirection direction,
   //   required int numberOfJugglers,
   // }) {
   //   return pattern;
-  //   final oldThrow = pattern.throwAtIndex(index);
-  //   final oldHeight = oldThrow.height;
-  //   final oldPassingIndex = oldThrow.passingIndex;
-  //   final prechator = pattern.period / numberOfJugglers;
+  //   final oldThrow = patternConstraints.throwConstraintsAtIndex(index);
+  //   final oldHeight = oldThrowConstraints.height;
+  //   final oldPassingIndex = oldThrowConstraints.passingIndex;
+  //   final prechator = patternConstraints.period / numberOfJugglers;
   //   if (oldHeight == null || oldPassingIndex == null) {
   //     // TODO: throw exception
   //     // maybe separate Throw and Throw
@@ -52,8 +52,8 @@ class PatternRepository {
 
   //   final newHeight = oldHeight + prechator;
   //   final newPassingIndex =
-  //   return pattern.copyWithThow(
-  //     newThrow: newThrow,
+  //   return patternConstraints.copyWithThrowConstraint(
+  //     newThrowConstraints: newThrowConstraints,
   //     index: index,
   //   );
   // }

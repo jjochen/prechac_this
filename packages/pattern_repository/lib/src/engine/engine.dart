@@ -21,7 +21,9 @@ class Engine {
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
 
-  Stream<List<Pattern>> fillConstraints({required Pattern pattern}) {
+// TODO: rename
+  Stream<List<Pattern>> fillConstraints(
+      {required PatternConstraints patternConstraints}) {
     // * constraint pattern as input
     //   > 4 _ 1 _p1
     // * calculate missing landing sites
@@ -55,14 +57,14 @@ class Engine {
   }
 
   List<Throw> possibleThrows({
-    required Throw throwConstraints,
+    required ThrowConstraints throwConstraints,
     required int landingSite,
     required int index,
   }) {
     final height = throwConstraints.height;
     final passingIndex = throwConstraints.passingIndex;
     if (height != null && passingIndex != null) {
-      return [throwConstraints];
+      return [Throw(height: height, passingIndex: passingIndex)];
     }
 
     final int negativeSelfHeight;
@@ -72,7 +74,7 @@ class Engine {
       negativeSelfHeight = period - landingSite - index;
     }
 
-    var possibleThrows = <Throw>[];
+    var results = <Throw>[];
     var possibleHeight = negativeSelfHeight.toFraction();
     var possiblePassingIndex = 0;
     while (possibleHeight <= maxHeight.toFraction()) {
@@ -80,12 +82,13 @@ class Engine {
         height: possibleHeight.reduce(),
         passingIndex: possiblePassingIndex,
       );
-      if (possibleThrow.satisfiesConstraints(throwConstraints)) {
-        possibleThrows.add(possibleThrow);
+      if (possibleThrow.isValid() &&
+          possibleThrow.satisfiesConstraints(throwConstraints)) {
+        results.add(possibleThrow);
       }
       possibleHeight += prechator;
       possiblePassingIndex = (possiblePassingIndex + 1) % numberOfJugglers;
     }
-    return possibleThrows;
+    return results;
   }
 }

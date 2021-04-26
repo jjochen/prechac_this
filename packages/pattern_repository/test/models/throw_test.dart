@@ -16,11 +16,6 @@ void main() {
           Throw.self(height: 42).toString(),
           '42',
         );
-
-        expect(
-          Throw.self(height: null).toString(),
-          '_',
-        );
       });
 
       test('isSelf returns true', () {
@@ -61,16 +56,6 @@ void main() {
         //   Throw(height: 5 / 3).toString(),
         //   '1.6p1',
         // );
-
-        expect(
-          Throw.pass(height: null).toString(),
-          '_p1',
-        );
-
-        expect(
-          Throw.pass(height: 1, passingIndex: null).toString(),
-          '1p_',
-        );
       });
 
       test('isSelf returns false', () {
@@ -84,22 +69,6 @@ void main() {
         expect(
           Throw.pass(height: 4).isPass,
           true,
-        );
-      });
-    });
-
-    group('Placeholder', () {
-      test('supports value comparisons', () {
-        expect(
-          Throw.placeholder(),
-          Throw.placeholder(),
-        );
-      });
-
-      test('has correct string representation', () {
-        expect(
-          Throw.placeholder().toString(),
-          '_',
         );
       });
     });
