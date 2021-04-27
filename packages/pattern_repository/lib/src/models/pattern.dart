@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:equatable/equatable.dart';
+import 'package:fraction/fraction.dart';
 
 import 'throw.dart';
 
@@ -19,6 +20,25 @@ class Pattern with EquatableMixin, IterableMixin<Throw> {
 
   int get period {
     return _sequence.length;
+  }
+
+  Fraction averageNumberOfObjectsPerJuggler() {
+    var sumOfHeights = 0.toFraction();
+    for (var aThrow in this) {
+      sumOfHeights += aThrow.height;
+    }
+
+    return (sumOfHeights / Fraction(period)).reduce();
+  }
+
+  int numberOfPasses() {
+    var numberOfPasses = 0;
+    for (var aThrow in this) {
+      if (aThrow.isPass) {
+        numberOfPasses++;
+      }
+    }
+    return numberOfPasses;
   }
 
   @override
