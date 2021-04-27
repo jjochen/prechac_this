@@ -5,7 +5,7 @@ import 'package:pattern_repository/src/engine/engine.dart';
 import 'models/models.dart';
 
 class PatternRepository {
-  Stream<List<Pattern>> patterns({
+  Stream<Pattern> patterns({
     required int numberOfJugglers,
     required int period,
     required int numberOfObjects,

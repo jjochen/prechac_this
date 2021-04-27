@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'package:fraction/fraction.dart';
+import 'package:async/async.dart';
 
 import '../models/models.dart';
 import 'prechac_throw.dart';
+import 'prechac_pattern_constraint.dart';
+import '../core/core.dart';
 
 class Engine {
   Engine({
@@ -22,7 +26,7 @@ class Engine {
   final int maxNumberOfPasses;
 
 // TODO: rename
-  Stream<List<Pattern>> fillConstraint(
+  Stream<Pattern> fillConstraint(
       {required PatternConstraint patternConstraint}) {
     // * constraint pattern as input
     //   > 4 _ 1 _p1
@@ -31,7 +35,7 @@ class Engine {
     // * permutate missing landing sites
     //   > 1, 2; 2, 1
     // * for each landing site: calculate all possible throws
-    //   (fitting all throw constraint)
+    //   (fitting all throw constraints)
     //   > 1 (at 1): 0, 2p1, 4
     //   > 2 (at 3): 1p
     //   > 2 (at 1): 1, 3p1
@@ -40,16 +44,28 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
-    return Stream.fromIterable([
-      [
-        Pattern([
-          Throw.self(height: 4),
-          Throw.pass(height: 2),
-          Throw.self(height: 1),
-          Throw.pass(height: 1),
-        ])
-      ]
-    ]);
+    var streams = <Stream<Pattern>>[];
+    final permutations = patternConstraint.permutationsOfPossibleLandingSites(
+        prechator: prechator);
+    for (final landingSites in permutations) {
+      final bagsOfPossibleThrows =
+          patternConstraint.mapIndexedThrowConstraint((index, throwConstraint) {
+        final landingSite = landingSites[index];
+        return possibleThrows(
+          throwConstraint: throwConstraint,
+          landingSite: landingSite,
+          index: index,
+        );
+      }).toList();
+
+      final cartesianProduct =
+          CartesianProductIterable<Throw>(bagsOfPossibleThrows)
+              .map((throwSequence) => Pattern(throwSequence))
+              .where((pattern) => true); // TODO: satisfies constraints
+      streams.add(Stream.fromIterable(cartesianProduct));
+    }
+
+    return StreamGroup.merge(streams);
   }
 
   Fraction get prechator {
