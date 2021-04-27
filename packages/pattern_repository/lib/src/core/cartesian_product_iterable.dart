@@ -8,7 +8,9 @@ class CartesianProductIterable<E> extends Iterable<List<E>> {
 
 class CartesianProductIterator<E> extends Iterator<List<E>> {
   CartesianProductIterator(this.lists)
-      : indeces = List<int>.generate(lists.length, (index) => 0),
+      : indeces = List<int>.generate(lists.length, (index) {
+          return index == lists.length - 1 ? -1 : 0;
+        }),
         lengths =
             List<int>.generate(lists.length, (index) => lists[index].length);
 

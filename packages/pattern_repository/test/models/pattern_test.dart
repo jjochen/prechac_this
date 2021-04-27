@@ -72,4 +72,28 @@ void main() {
       ]),
     );
   });
+
+  test('number of passes calculated correctly', () {
+    final pattern = Pattern([
+      Throw.self(height: 4),
+      Throw(height: 4.toFraction(), passingIndex: 3),
+      Throw.pass(height: 4.5),
+    ]);
+    expect(
+      pattern.numberOfPasses(),
+      2,
+    );
+  });
+
+  test('average number of objects calculated correctly', () {
+    final pattern = Pattern([
+      Throw.self(height: 4),
+      Throw(height: (3.5).toFraction(), passingIndex: 3),
+      Throw.pass(height: 4.5),
+    ]);
+    expect(
+      pattern.averageNumberOfObjectsPerJuggler(),
+      4.toFraction(),
+    );
+  });
 }
