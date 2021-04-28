@@ -1,16 +1,32 @@
 import 'dart:collection';
-import 'package:equatable/equatable.dart';
+
 import 'package:fraction/fraction.dart';
 
+import '../core/core.dart';
 import 'throw.dart';
 
-class Pattern with EquatableMixin, IterableMixin<Throw> {
+class Pattern with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
   const Pattern(this._sequence);
 
   final List<Throw> _sequence;
 
   @override
-  List<Object?> get props => [_sequence];
+  int compareTo(Pattern other) {
+    final periodComparator = period.compareTo(other.period);
+    if (periodComparator != 0) {
+      return periodComparator;
+    }
+
+    var index = 0;
+    for (var thisThrow in this) {
+      final otherThrow = other.throwAtIndex(index);
+      final throwComparator = thisThrow.compareTo(otherThrow);
+      if (throwComparator != 0) {
+        return throwComparator;
+      }
+    }
+    return 0;
+  }
 
   @override
   String toString() {
@@ -29,6 +45,23 @@ class Pattern with EquatableMixin, IterableMixin<Throw> {
     }
 
     return (sumOfHeights / Fraction(period)).reduce();
+  }
+
+  Pattern normalize() {
+    return allRotations()
+        .reduce((value, element) => element > value ? element : value);
+  }
+
+  Pattern rotate([int numberOfThrows = 1]) {
+    return Pattern(_sequence.rotate(numberOfThrows));
+  }
+
+  List<Pattern> allRotations() {
+    var rotations = <Pattern>[];
+    for (var i = 0; i < period; i++) {
+      rotations.add(rotate(i));
+    }
+    return rotations;
   }
 
   int numberOfPasses() {

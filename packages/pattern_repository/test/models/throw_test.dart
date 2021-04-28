@@ -3,6 +3,27 @@ import 'package:pattern_repository/src/models/throw.dart';
 
 void main() {
   group('Throw', () {
+    test('supports comparison of heights', () {
+      expect(
+        Throw.self(height: 3) < Throw.self(height: 4),
+        isTrue,
+      );
+    });
+
+    test('supports comparison of passing index', () {
+      expect(
+        Throw.self(height: 4) < Throw.pass(height: 4),
+        isTrue,
+      );
+    });
+
+    test('compares height first', () {
+      expect(
+        Throw.pass(height: 3) < Throw.self(height: 4),
+        isTrue,
+      );
+    });
+
     group('Self', () {
       test('supports value comparisons', () {
         expect(

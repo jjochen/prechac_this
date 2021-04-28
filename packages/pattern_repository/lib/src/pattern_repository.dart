@@ -22,9 +22,9 @@ class PatternRepository {
       maxNumberOfPasses: maxNumberOfPasses,
     );
     final patternConstraint = PatternConstraint([
+      ThrowConstraint.self(height: 4),
       ThrowConstraint.placeholder(),
-      ThrowConstraint.placeholder(),
-      ThrowConstraint.placeholder(),
+      ThrowConstraint.self(height: 1),
       ThrowConstraint.placeholder(),
     ]);
     return engine.fillConstraint(patternConstraint: patternConstraint);

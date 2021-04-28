@@ -18,8 +18,8 @@ class CartesianProductIterator<E> extends Iterator<List<E>> {
   final List<int> indeces;
   final List<int> lengths;
 
+  @override
   bool moveNext() {
-    var index = 0;
     return _moveNextAtIndex(lists.length - 1);
   }
 
@@ -40,6 +40,7 @@ class CartesianProductIterator<E> extends Iterator<List<E>> {
     }
   }
 
+  @override
   List<E> get current {
     var elements = <E>[];
     var indexOfList = 0;

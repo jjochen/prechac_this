@@ -9,7 +9,7 @@ void main() {
     });
 
     group('4 _ 1 _', () {
-      test('fetches empty stream of numbers', () async {
+      test('emits stream of patterns', () async {
         await expectLater(
             patternRepository.patterns(
               numberOfJugglers: 2,
@@ -20,14 +20,12 @@ void main() {
               maxNumberOfPasses: 2,
             ),
             emitsInOrder([
-              [
-                Pattern([
-                  Throw.self(height: 4),
-                  Throw.pass(height: 2),
-                  Throw.self(height: 1),
-                  Throw.pass(height: 1),
-                ]),
-              ]
+              Pattern([
+                Throw.self(height: 4),
+                Throw.pass(height: 2),
+                Throw.self(height: 1),
+                Throw.pass(height: 1),
+              ]),
             ]));
       });
     });

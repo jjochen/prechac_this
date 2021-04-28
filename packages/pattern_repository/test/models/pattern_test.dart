@@ -4,6 +4,33 @@ import 'package:fraction/fraction.dart';
 
 void main() {
   group('Pattern', () {
+    test('supports comparison of length', () {
+      expect(
+        Pattern([
+              Throw.self(height: 4),
+            ]) <
+            Pattern([
+              Throw.self(height: 4),
+              Throw.pass(height: 4.5),
+            ]),
+        isTrue,
+      );
+    });
+
+    test('supports comparison of throws', () {
+      expect(
+        Pattern([
+              Throw.self(height: 4),
+              Throw.pass(height: 4.5),
+            ]) <
+            Pattern([
+              Throw.pass(height: 4.5),
+              Throw.self(height: 4),
+            ]),
+        isTrue,
+      );
+    });
+
     test('supports value comparisons', () {
       expect(
         Pattern([
@@ -15,6 +42,62 @@ void main() {
           Throw.self(height: 4),
           Throw(height: 4.toFraction(), passingIndex: 3),
           Throw.pass(height: 4.5),
+        ]),
+      );
+    });
+
+    test('rotates pattern', () {
+      expect(
+        Pattern([
+          Throw.self(height: 4),
+          Throw(height: 4.toFraction(), passingIndex: 3),
+          Throw.pass(height: 4.5),
+        ]).rotate(),
+        Pattern([
+          Throw(height: 4.toFraction(), passingIndex: 3),
+          Throw.pass(height: 4.5),
+          Throw.self(height: 4),
+        ]),
+      );
+    });
+
+    test('allRotations returns list with all rotations', () {
+      expect(
+          Pattern([
+            Throw.self(height: 4),
+            Throw(height: 4.toFraction(), passingIndex: 3),
+            Throw.pass(height: 4.5),
+          ]).allRotations(),
+          [
+            Pattern([
+              Throw.self(height: 4),
+              Throw(height: 4.toFraction(), passingIndex: 3),
+              Throw.pass(height: 4.5),
+            ]),
+            Pattern([
+              Throw(height: 4.toFraction(), passingIndex: 3),
+              Throw.pass(height: 4.5),
+              Throw.self(height: 4),
+            ]),
+            Pattern([
+              Throw.pass(height: 4.5),
+              Throw.self(height: 4),
+              Throw(height: 4.toFraction(), passingIndex: 3),
+            ]),
+          ]);
+    });
+
+    test('normalize rotates highest throw first', () {
+      expect(
+        Pattern([
+          Throw.self(height: 4),
+          Throw(height: 4.toFraction(), passingIndex: 3),
+          Throw.pass(height: 4.5),
+        ]).normalize(),
+        Pattern([
+          Throw.pass(height: 4.5),
+          Throw.self(height: 4),
+          Throw(height: 4.toFraction(), passingIndex: 3),
         ]),
       );
     });
@@ -55,45 +138,45 @@ void main() {
         [4, 4, 4.5],
       );
     });
-  });
 
-  test('copyWithThrow returns correct pattern', () {
-    final pattern = Pattern([
-      Throw.self(height: 4),
-      Throw(height: 4.toFraction(), passingIndex: 3),
-      Throw.pass(height: 4.5),
-    ]);
-    expect(
-      pattern.copyWithThrow(newThrow: Throw.self(height: 2), index: 1),
-      Pattern([
+    test('copyWithThrow returns correct pattern', () {
+      final pattern = Pattern([
         Throw.self(height: 4),
-        Throw.self(height: 2),
+        Throw(height: 4.toFraction(), passingIndex: 3),
         Throw.pass(height: 4.5),
-      ]),
-    );
-  });
+      ]);
+      expect(
+        pattern.copyWithThrow(newThrow: Throw.self(height: 2), index: 1),
+        Pattern([
+          Throw.self(height: 4),
+          Throw.self(height: 2),
+          Throw.pass(height: 4.5),
+        ]),
+      );
+    });
 
-  test('number of passes calculated correctly', () {
-    final pattern = Pattern([
-      Throw.self(height: 4),
-      Throw(height: 4.toFraction(), passingIndex: 3),
-      Throw.pass(height: 4.5),
-    ]);
-    expect(
-      pattern.numberOfPasses(),
-      2,
-    );
-  });
+    test('number of passes calculated correctly', () {
+      final pattern = Pattern([
+        Throw.self(height: 4),
+        Throw(height: 4.toFraction(), passingIndex: 3),
+        Throw.pass(height: 4.5),
+      ]);
+      expect(
+        pattern.numberOfPasses(),
+        2,
+      );
+    });
 
-  test('average number of objects calculated correctly', () {
-    final pattern = Pattern([
-      Throw.self(height: 4),
-      Throw(height: (3.5).toFraction(), passingIndex: 3),
-      Throw.pass(height: 4.5),
-    ]);
-    expect(
-      pattern.averageNumberOfObjectsPerJuggler(),
-      4.toFraction(),
-    );
+    test('average number of objects calculated correctly', () {
+      final pattern = Pattern([
+        Throw.self(height: 4),
+        Throw(height: (3.5).toFraction(), passingIndex: 3),
+        Throw.pass(height: 4.5),
+      ]);
+      expect(
+        pattern.averageNumberOfObjectsPerJuggler(),
+        4.toFraction(),
+      );
+    });
   });
 }

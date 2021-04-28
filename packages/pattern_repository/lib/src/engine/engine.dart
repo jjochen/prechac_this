@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'package:fraction/fraction.dart';
-import 'package:async/async.dart';
 
-import '../models/models.dart';
-import 'prechac_throw.dart';
-import 'prechac_pattern_constraint.dart';
+import 'package:async/async.dart';
+import 'package:fraction/fraction.dart';
+
 import '../core/core.dart';
+import '../models/models.dart';
+import 'prechac_pattern.dart';
+import 'prechac_pattern_constraint.dart';
+import 'prechac_throw.dart';
 
 class Engine {
   Engine({
@@ -61,7 +63,13 @@ class Engine {
       final cartesianProduct =
           CartesianProductIterable<Throw>(bagsOfPossibleThrows)
               .map((throwSequence) => Pattern(throwSequence))
-              .where((pattern) => true); // TODO: satisfies constraints
+              .where((pattern) => pattern.isValid(
+                    minNumberOfPasses: minNumberOfPasses,
+                    maxNumberOfPasses: maxNumberOfPasses,
+                    numberOfObjects: numberOfObjects,
+                    numberOfJugglers: numberOfJugglers,
+                  ))
+              .map((pattern) => pattern.normalize());
       streams.add(Stream.fromIterable(cartesianProduct));
     }
 
@@ -79,15 +87,19 @@ class Engine {
   }) {
     final height = throwConstraint.height;
     final passingIndex = throwConstraint.passingIndex;
-    if (height != null && passingIndex != null) {
-      return [Throw(height: height, passingIndex: passingIndex)];
-    }
+    // if (height != null && passingIndex != null) {
+    //   return [Throw(height: height, passingIndex: passingIndex)];
+    // }
+
+    final isFullyDefinedThrow = height != null && passingIndex != null;
 
     final int negativeSelfHeight;
-    if (landingSite <= index) {
-      negativeSelfHeight = landingSite - index;
+    if (landingSite == index) {
+      negativeSelfHeight = -period;
+    } else if (landingSite >= index) {
+      negativeSelfHeight = landingSite - index - period;
     } else {
-      negativeSelfHeight = period - landingSite - index;
+      negativeSelfHeight = landingSite - index;
     }
 
     var results = <Throw>[];
@@ -98,7 +110,7 @@ class Engine {
         height: possibleHeight.reduce(),
         passingIndex: possiblePassingIndex,
       );
-      if (possibleThrow.isValid() &&
+      if ((isFullyDefinedThrow || possibleThrow.isValid()) &&
           possibleThrow.satisfiesConstraint(throwConstraint)) {
         results.add(possibleThrow);
       }

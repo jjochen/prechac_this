@@ -1,8 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 import 'package:sprintf/sprintf.dart';
 
-class Throw extends Equatable {
+import '../core/core.dart';
+
+class Throw with Comparable<Throw>, Compare<Throw> {
   Throw({
     required this.height,
     required this.passingIndex,
@@ -26,7 +27,14 @@ class Throw extends Equatable {
   final int passingIndex;
 
   @override
-  List<Object?> get props => [height, passingIndex];
+  int compareTo(Throw other) {
+    final heightComparator = height.compareTo(other.height);
+    if (heightComparator != 0) {
+      return heightComparator;
+    }
+    final passingIndexComparator = passingIndex.compareTo(other.passingIndex);
+    return passingIndexComparator;
+  }
 
   bool get isSelf {
     return passingIndex == 0;
