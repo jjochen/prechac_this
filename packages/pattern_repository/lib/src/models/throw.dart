@@ -1,62 +1,63 @@
-import 'package:equatable/equatable.dart';
+import 'package:fraction/fraction.dart';
 import 'package:sprintf/sprintf.dart';
 
-abstract class Throw extends Equatable {}
+import '../core/core.dart';
 
-class SimpleThrow extends Throw {
-  SimpleThrow({
+class Throw with Comparable<Throw>, Compare<Throw> {
+  Throw({
     required this.height,
-    this.passingIndex = 0,
+    required this.passingIndex,
   });
 
-  SimpleThrow.placeholder() : this(height: null, passingIndex: null);
+  factory Throw.pass({
+    required double height,
+    int passingIndex = 1,
+  }) =>
+      Throw(
+        height: height.toFraction(),
+        passingIndex: passingIndex,
+      );
 
-  final double? height;
-  final int? passingIndex;
+  factory Throw.self({required int height}) => Throw(
+        height: height.toFraction(),
+        passingIndex: 0,
+      );
+
+  final Fraction height;
+  final int passingIndex;
 
   @override
-  List<Object?> get props => [height, passingIndex];
+  int compareTo(Throw other) {
+    final heightComparator = height.compareTo(other.height);
+    if (heightComparator != 0) {
+      return heightComparator;
+    }
+    final passingIndexComparator = passingIndex.compareTo(other.passingIndex);
+    return passingIndexComparator;
+  }
+
+  bool get isSelf {
+    return passingIndex == 0;
+  }
+
+  bool get isPass {
+    return passingIndex != 0;
+  }
 
   @override
   String toString() {
-    if (this == SimpleThrow.placeholder()) {
-      return '_';
-    }
-    return _heightString() + _passingIndexString();
-  }
-
-  String _heightString() {
-    final height = this.height;
-    if (height == null) {
-      return '_';
+    if (isSelf) {
+      return heightToString();
     }
 
-    return sprintf('%.4g', [height]);
+    return '${heightToString()}p${passingIndexToString()}';
   }
 
-  String _passingIndexString() {
-    switch (passingIndex) {
-      case null:
-        return 'p_';
-      case 0:
-        return '';
-      default:
-        return 'p$passingIndex';
-    }
+  String heightToString() {
+    return sprintf('%.4g', [height.toDouble()]);
   }
-}
 
-class Multiplex extends Throw {
-  Multiplex(this.throws);
-
-  final List<SimpleThrow> throws;
-
-  @override
-  List<Object?> get props => [throws];
-
-  @override
-  String toString() {
-    final components = throws.map((e) => e.toString());
-    return '[${components.join(', ')}]';
+  String passingIndexToString() {
+    return passingIndex.toString();
   }
 }

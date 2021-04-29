@@ -29,6 +29,13 @@
       "type": "dart",
       "program": "lib/main_production.dart",
       "args": ["--flavor", "production", "--target", "lib/main_production.dart"]
-    }
+    },
+    {
+      "name": "pattern_repository Tests",
+      "type": "dart",
+      "cwd": "packages/pattern_repository",
+      "request": "launch",
+      "program": "./test/"
+    },
   ]
 }
