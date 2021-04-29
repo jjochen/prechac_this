@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:pattern_repository/src/engine/engine.dart';
+import 'package:fraction/fraction.dart';
 
+import 'engine/engine.dart';
 import 'models/models.dart';
 
 class PatternRepository {
@@ -30,31 +31,29 @@ class PatternRepository {
     return engine.fillConstraint(patternConstraint: patternConstraint);
   }
 
-  // Pattern prechacThisThrowConstraint({
-  //   required Pattern pattern,
-  //   required int index,
-  //   required PrechacDirection direction,
-  //   required int numberOfJugglers,
-  // }) {
-  //   return pattern;
-  //   final oldThrow = patternConstraint.throwConstraintAtIndex(index);
-  //   final oldHeight = oldThrowConstraint.height;
-  //   final oldPassingIndex = oldThrowConstraint.passingIndex;
-  //   final prechator = patternConstraint.period / numberOfJugglers;
-  //   if (oldHeight == null || oldPassingIndex == null) {
-  //     // TODO: throw exception
-  //     // maybe separate Throw and Throw
-  //     return pattern;
-  //   }
-
-  //   double newHeight;
-  //   double newPassingIndex;
-
-  //   final newHeight = oldHeight + prechator;
-  //   final newPassingIndex =
-  //   return patternConstraint.copyWithThrowConstraint(
-  //     newThrowConstraint: newThrowConstraint,
-  //     index: index,
-  //   );
-  // }
+  Pattern prechacThisThrow({
+    required Pattern pattern,
+    required int index,
+    required PrechacDirection direction,
+    required int numberOfJugglers,
+  }) {
+    final oldThrow = pattern.throwAtIndex(index);
+    final oldHeight = oldThrow.height;
+    final oldPassingIndex = oldThrow.passingIndex;
+    final prechator = Fraction(pattern.period, numberOfJugglers);
+    final Fraction newHeight;
+    final int newPassingIndex;
+    if (direction == PrechacDirection.up) {
+      newHeight = oldHeight + prechator;
+      newPassingIndex = (oldPassingIndex + 1) % numberOfJugglers;
+    } else {
+      newHeight = oldHeight - prechator;
+      newPassingIndex =
+          oldPassingIndex == 0 ? numberOfJugglers - 1 : (oldPassingIndex - 1);
+    }
+    return pattern.copyWithThrow(
+      newThrow: Throw(height: newHeight, passingIndex: newPassingIndex),
+      index: index,
+    );
+  }
 }

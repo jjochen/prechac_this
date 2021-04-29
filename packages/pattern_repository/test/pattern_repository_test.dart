@@ -29,5 +29,49 @@ void main() {
             ]));
       });
     });
+
+    test('prechac this throw up', () {
+      final pattern = Pattern([
+        Throw.self(height: 4),
+        Throw.pass(height: 2),
+        Throw.self(height: 1),
+        Throw.pass(height: 1),
+      ]);
+      expect(
+          patternRepository.prechacThisThrow(
+            pattern: pattern,
+            index: 1,
+            direction: PrechacDirection.up,
+            numberOfJugglers: 2,
+          ),
+          Pattern([
+            Throw.self(height: 4),
+            Throw.self(height: 4),
+            Throw.self(height: 1),
+            Throw.pass(height: 1),
+          ]));
+    });
+
+    test('prechac this throw down', () {
+      final pattern = Pattern([
+        Throw.self(height: 4),
+        Throw.pass(height: 2),
+        Throw.self(height: 1),
+        Throw.pass(height: 1),
+      ]);
+      expect(
+          patternRepository.prechacThisThrow(
+            pattern: pattern,
+            index: 0,
+            direction: PrechacDirection.down,
+            numberOfJugglers: 2,
+          ),
+          Pattern([
+            Throw.pass(height: 2),
+            Throw.pass(height: 2),
+            Throw.self(height: 1),
+            Throw.pass(height: 1),
+          ]));
+    });
   });
 }
