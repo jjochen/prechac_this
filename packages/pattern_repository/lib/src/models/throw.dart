@@ -1,5 +1,4 @@
 import 'package:fraction/fraction.dart';
-import 'package:sprintf/sprintf.dart';
 
 import '../core/core.dart';
 
@@ -54,7 +53,19 @@ class Throw with Comparable<Throw>, Compare<Throw> {
   }
 
   String heightToString() {
-    return sprintf('%.4g', [height.toDouble()]);
+    if (height.isWhole) {
+      return height.toString();
+    }
+
+    final decimalPart = height.toDouble() % 1;
+    if (decimalPart.toString().length < 5) {
+      return height.toDouble().toString();
+    }
+
+    final mod = 10.0;
+    final truncatedToOneDecimalDigit =
+        (height.toDouble() * mod).truncateToDouble() / mod;
+    return truncatedToOneDecimalDigit.toString();
   }
 
   String passingIndexToString() {

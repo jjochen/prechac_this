@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fraction/fraction.dart';
 import 'package:pattern_repository/src/models/throw.dart';
 
 void main() {
@@ -64,19 +65,29 @@ void main() {
 
       test('has correct string representation', () {
         expect(
+          Throw.pass(height: 4).toString(),
+          '4p1',
+        );
+
+        expect(
           Throw.pass(height: 42.25).toString(),
           '42.25p1',
         );
 
-        // expect(
-        //   Throw(height: 4 / 3, passingIndex: 2).toString(),
-        //   '1.3p2',
-        // );
+        expect(
+          Throw.pass(height: 42.257).toString(),
+          '42.2p1',
+        );
 
-        // expect(
-        //   Throw(height: 5 / 3).toString(),
-        //   '1.6p1',
-        // );
+        expect(
+          Throw(height: Fraction(5, 3), passingIndex: 2).toString(),
+          '1.6p2',
+        );
+
+        expect(
+          Throw(height: Fraction(4, 3), passingIndex: 1).toString(),
+          '1.3p1',
+        );
       });
 
       test('isSelf returns false', () {
