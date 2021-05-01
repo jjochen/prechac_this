@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 import 'package:sprintf/sprintf.dart';
 
-class ThrowConstraint extends Equatable {
+import 'throwable.dart';
+
+class ThrowConstraint extends Throwable with EquatableMixin {
   ThrowConstraint({
     required this.height,
     required this.passingIndex,
@@ -27,7 +29,9 @@ class ThrowConstraint extends Equatable {
         passingIndex: null,
       );
 
+  @override
   final Fraction? height;
+  @override
   final int? passingIndex;
 
   @override

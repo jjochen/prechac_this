@@ -1,8 +1,9 @@
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
+import 'throwable.dart';
 
-class Throw with Comparable<Throw>, Compare<Throw> {
+class Throw extends Throwable with Comparable<Throw>, Compare<Throw> {
   Throw({
     required this.height,
     required this.passingIndex,
@@ -22,7 +23,9 @@ class Throw with Comparable<Throw>, Compare<Throw> {
         passingIndex: 0,
       );
 
+  @override
   final Fraction height;
+  @override
   final int passingIndex;
 
   @override
