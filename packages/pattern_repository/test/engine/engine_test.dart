@@ -62,7 +62,7 @@ void main() {
       });
 
       test('calculates possible throws for given passing index', () {
-        final constraint = ThrowConstraint(height: null, passingIndex: 2);
+        final constraint = const ThrowConstraint(height: null, passingIndex: 2);
         expect(
           engine.possibleThrows(
               throwConstraint: constraint, landingSite: 3, index: 2),
@@ -142,7 +142,7 @@ void main() {
       });
 
       test('calculates possible throws for given passing index', () {
-        final constraint = ThrowConstraint(height: null, passingIndex: 1);
+        final constraint = const ThrowConstraint(height: null, passingIndex: 1);
         expect(
           engine.possibleThrows(
               throwConstraint: constraint, landingSite: 3, index: 2),

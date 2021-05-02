@@ -5,7 +5,7 @@ import 'package:sprintf/sprintf.dart';
 import 'throwable.dart';
 
 class ThrowConstraint extends Throwable with EquatableMixin {
-  ThrowConstraint({
+  const ThrowConstraint({
     required this.height,
     required this.passingIndex,
   });
@@ -24,7 +24,7 @@ class ThrowConstraint extends Throwable with EquatableMixin {
         passingIndex: 0,
       );
 
-  factory ThrowConstraint.placeholder() => ThrowConstraint(
+  factory ThrowConstraint.placeholder() => const ThrowConstraint(
         height: null,
         passingIndex: null,
       );

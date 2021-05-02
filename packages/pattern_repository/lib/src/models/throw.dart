@@ -4,7 +4,7 @@ import '../core/core.dart';
 import 'throwable.dart';
 
 class Throw extends Throwable with Comparable<Throw>, Compare<Throw> {
-  Throw({
+  const Throw({
     required this.height,
     required this.passingIndex,
   });
