@@ -3,12 +3,15 @@ import 'dart:collection';
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
+import 'patternable.dart';
 import 'throw.dart';
 
-class Pattern with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
-  const Pattern(this._sequence);
+class Pattern extends Patternable
+    with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
+  const Pattern(this.throwSequence);
 
-  final List<Throw> _sequence;
+  @override
+  final List<Throw> throwSequence;
 
   @override
   int compareTo(Pattern other) {
@@ -35,7 +38,7 @@ class Pattern with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
   }
 
   int get period {
-    return _sequence.length;
+    return throwSequence.length;
   }
 
   Fraction averageNumberOfObjectsPerJuggler() {
@@ -53,7 +56,7 @@ class Pattern with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
   }
 
   Pattern rotate([int numberOfThrows = 1]) {
-    return Pattern(_sequence.rotate(numberOfThrows));
+    return Pattern(throwSequence.rotate(numberOfThrows));
   }
 
   List<Pattern> allRotations() {
@@ -75,26 +78,26 @@ class Pattern with Comparable<Pattern>, Compare<Pattern>, IterableMixin<Throw> {
   }
 
   @override
-  Iterator<Throw> get iterator => _sequence.iterator;
+  Iterator<Throw> get iterator => throwSequence.iterator;
 
   Iterable<E> mapIndexedThrow<E>(E Function(int index, Throw item) f) sync* {
     var index = 0;
 
-    for (final item in _sequence) {
+    for (final item in throwSequence) {
       yield f(index, item);
       index = index + 1;
     }
   }
 
   Throw throwAtIndex(int index) {
-    return _sequence[index];
+    return throwSequence[index];
   }
 
   Pattern copyWithThrow({
     required Throw newThrow,
     required int index,
   }) {
-    var newSequence = List<Throw>.from(_sequence);
+    var newSequence = List<Throw>.from(throwSequence);
     newSequence[index] = newThrow;
     return Pattern(newSequence);
   }
