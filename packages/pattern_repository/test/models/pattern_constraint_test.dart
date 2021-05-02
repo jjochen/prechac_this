@@ -29,14 +29,14 @@ void main() {
       );
     });
 
-    test('throwConstraintAtIndex returns correct throw', () {
+    test('throwAtIndex returns correct throw', () {
       final patternConstraint = PatternConstraint([
         ThrowConstraint.self(height: 4),
         ThrowConstraint.placeholder(),
         ThrowConstraint.pass(height: 4.5),
       ]);
       expect(
-        patternConstraint.throwConstraintAtIndex(2),
+        patternConstraint.throwAtIndex(2),
         ThrowConstraint.pass(height: 4.5),
       );
     });
@@ -57,15 +57,15 @@ void main() {
     });
   });
 
-  test('copyWithThrowConstraint returns correct pattern', () {
+  test('copyWithThrow returns correct pattern', () {
     final patternConstraint = PatternConstraint([
       ThrowConstraint.self(height: 4),
       ThrowConstraint.placeholder(),
       ThrowConstraint.pass(height: 4.5),
     ]);
     expect(
-      patternConstraint.copyWithThrowConstraint(
-          newThrowConstraint: ThrowConstraint.self(height: 2), index: 1),
+      patternConstraint.copyWithThrow(
+          newThrow: ThrowConstraint.self(height: 2), index: 1),
       PatternConstraint([
         ThrowConstraint.self(height: 4),
         ThrowConstraint.self(height: 2),

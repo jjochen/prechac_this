@@ -21,6 +21,14 @@ void main() {
       );
     });
 
+    test('orders placeholders correctly', () {
+      expect(
+        const ThrowConstraint(height: null, passingIndex: null) <
+            const ThrowConstraint(height: null, passingIndex: 0),
+        isTrue,
+      );
+    });
+
     test('supports comparison of passing index', () {
       expect(
         ThrowConstraint.pass(height: 1, passingIndex: null) <

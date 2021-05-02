@@ -8,49 +8,6 @@ abstract class Throwable with Comparable<Throwable>, Compare<Throwable> {
   Fraction? get height;
   int? get passingIndex;
 
-  @override
-  int compareTo(Throwable other) {
-    // TODO: refactor
-    final thisHeight = height;
-    final otherHeight = other.height;
-
-    if (thisHeight == null && otherHeight == null) {
-      return 0;
-    }
-
-    if (thisHeight == null) {
-      return -1;
-    }
-
-    if (otherHeight == null) {
-      return 1;
-    }
-
-    final heightComparator = thisHeight.compareTo(otherHeight);
-    if (heightComparator != 0) {
-      return heightComparator;
-    }
-
-    final thisPassingIndex = passingIndex;
-    final otherPassingIndex = other.passingIndex;
-
-    if (thisPassingIndex == null && otherPassingIndex == null) {
-      return 0;
-    }
-
-    if (thisPassingIndex == null) {
-      return -1;
-    }
-
-    if (otherPassingIndex == null) {
-      return 1;
-    }
-
-    final passingIndexComparator =
-        thisPassingIndex.compareTo(otherPassingIndex);
-    return passingIndexComparator;
-  }
-
   bool get isSelf {
     return passingIndex != null && passingIndex == 0;
   }
@@ -104,5 +61,57 @@ abstract class Throwable with Comparable<Throwable>, Compare<Throwable> {
     }
 
     return passingIndex.toString();
+  }
+
+  @override
+  int compareTo(Throwable other) {
+    final heightComparator = _compareHeightTo(other);
+    if (heightComparator != 0) {
+      return heightComparator;
+    }
+
+    final passingIndexComparator = _comparePassingIndexTo(other);
+    return passingIndexComparator;
+  }
+
+  int _compareHeightTo(Throwable other) {
+    final thisHeight = height;
+    final otherHeight = other.height;
+
+    if (thisHeight == null && otherHeight == null) {
+      return 0;
+    }
+
+    if (thisHeight == null) {
+      return -1;
+    }
+
+    if (otherHeight == null) {
+      return 1;
+    }
+
+    final heightComparator = thisHeight.compareTo(otherHeight);
+    return heightComparator;
+  }
+
+  int _comparePassingIndexTo(Throwable other) {
+    final thisPassingIndex = passingIndex;
+    final otherPassingIndex = other.passingIndex;
+
+    if (thisPassingIndex == null && otherPassingIndex == null) {
+      return 0;
+    }
+
+    if (thisPassingIndex == null) {
+      return -1;
+    }
+
+    if (otherPassingIndex == null) {
+      return 1;
+    }
+
+    final passingIndexComparator =
+        thisPassingIndex.compareTo(otherPassingIndex);
+    return passingIndexComparator;
   }
 }

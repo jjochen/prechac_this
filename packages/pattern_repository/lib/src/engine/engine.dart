@@ -51,7 +51,7 @@ class Engine {
         prechator: prechator);
     for (final landingSites in permutations) {
       final bagsOfPossibleThrows =
-          patternConstraint.mapIndexedThrowConstraint((index, throwConstraint) {
+          patternConstraint.mapIndexedThrow((index, throwConstraint) {
         final landingSite = landingSites[index];
         return possibleThrows(
           throwConstraint: throwConstraint,
