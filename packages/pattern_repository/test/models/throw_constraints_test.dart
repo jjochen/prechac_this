@@ -1,8 +1,47 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fraction/fraction.dart';
 import 'package:pattern_repository/src/models/throw_constraint.dart';
 
 void main() {
   group('ThrowConstraint', () {
+    test('supports comparison of heights', () {
+      expect(
+        ThrowConstraint.self(height: null) < ThrowConstraint.self(height: 0),
+        isTrue,
+      );
+
+      expect(
+        ThrowConstraint.self(height: null) < ThrowConstraint.self(height: -1),
+        isTrue,
+      );
+
+      expect(
+        ThrowConstraint.self(height: 1) > ThrowConstraint.self(height: null),
+        isTrue,
+      );
+    });
+
+    test('supports comparison of passing index', () {
+      expect(
+        ThrowConstraint.pass(height: 1, passingIndex: null) <
+            ThrowConstraint.pass(height: 1, passingIndex: 0),
+        isTrue,
+      );
+
+      expect(
+        ThrowConstraint.pass(height: 1, passingIndex: 0) >
+            ThrowConstraint.pass(height: 1, passingIndex: null),
+        isTrue,
+      );
+    });
+
+    test('compares height first', () {
+      expect(
+        ThrowConstraint.pass(height: 3) < ThrowConstraint.self(height: 4),
+        isTrue,
+      );
+    });
+
     group('Self', () {
       test('supports value comparisons', () {
         expect(
@@ -52,15 +91,15 @@ void main() {
           '42.25p1',
         );
 
-        // expect(
-        //   ThrowConstraint(height: 4 / 3, passingIndex: 2).toString(),
-        //   '1.3p2',
-        // );
+        expect(
+          ThrowConstraint(height: Fraction(4, 3), passingIndex: 2).toString(),
+          '1.3p2',
+        );
 
-        // expect(
-        //   ThrowConstraint(height: 5 / 3).toString(),
-        //   '1.6p1',
-        // );
+        expect(
+          ThrowConstraint(height: Fraction(5, 3), passingIndex: 1).toString(),
+          '1.6p1',
+        );
 
         expect(
           ThrowConstraint.pass(height: null).toString(),
