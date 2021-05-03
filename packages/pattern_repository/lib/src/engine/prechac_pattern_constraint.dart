@@ -23,7 +23,7 @@ extension PrechacPatternConstraint on PatternConstraint {
   List<int> landingSites({
     required Fraction prechator,
   }) {
-    return mapIndexedThrowConstraint((index, indexedThrowConstraint) {
+    return mapIndexedThrow((index, indexedThrowConstraint) {
       return indexedThrowConstraint.landingSite(
         position: index,
         period: period,

@@ -46,7 +46,7 @@ void main() {
       );
     });
 
-    test('rotates pattern', () {
+    test('rotates', () {
       expect(
         Pattern([
           Throw.self(height: 4),

@@ -84,7 +84,7 @@ void main() {
     test('Throw satisfies constraint for given passingIndex', () {
       expect(
         Throw.self(height: 4).satisfiesConstraint(
-          ThrowConstraint(
+          const ThrowConstraint(
             height: null,
             passingIndex: 0,
           ),
@@ -96,7 +96,7 @@ void main() {
     test('Throw does not satisfy constraint with wrong passing index', () {
       expect(
         Throw.self(height: 4).satisfiesConstraint(
-          ThrowConstraint(
+          const ThrowConstraint(
             height: null,
             passingIndex: 2,
           ),

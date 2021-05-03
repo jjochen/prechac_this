@@ -1,49 +1,24 @@
-import 'dart:collection';
-import 'package:equatable/equatable.dart';
-
+import '../core/core.dart';
+import 'patternable.dart';
 import 'throw_constraint.dart';
 
-class PatternConstraint with EquatableMixin, IterableMixin<ThrowConstraint> {
-  const PatternConstraint(this._sequence);
-
-  final List<ThrowConstraint> _sequence;
-
-  @override
-  List<Object?> get props => [_sequence];
+class PatternConstraint
+    extends Patternable<PatternConstraint, ThrowConstraint> {
+  const PatternConstraint(List<ThrowConstraint> throwSequence)
+      : super(throwSequence);
 
   @override
-  String toString() {
-    final components = map((e) => e.toString());
-    return '${components.join(', ')}';
-  }
-
-  int get period {
-    return _sequence.length;
+  PatternConstraint rotate([int numberOfThrows = 1]) {
+    return PatternConstraint(throwSequence.rotate(numberOfThrows));
   }
 
   @override
-  Iterator<ThrowConstraint> get iterator => _sequence.iterator;
-
-  Iterable<E> mapIndexedThrowConstraint<E>(
-      E Function(int index, ThrowConstraint item) f) sync* {
-    var index = 0;
-
-    for (final item in _sequence) {
-      yield f(index, item);
-      index = index + 1;
-    }
-  }
-
-  ThrowConstraint throwConstraintAtIndex(int index) {
-    return _sequence[index];
-  }
-
-  PatternConstraint copyWithThrowConstraint({
-    required ThrowConstraint newThrowConstraint,
+  PatternConstraint copyWithThrow({
+    required ThrowConstraint newThrow,
     required int index,
   }) {
-    var newSequence = List<ThrowConstraint>.from(_sequence);
-    newSequence[index] = newThrowConstraint;
+    var newSequence = List<ThrowConstraint>.from(throwSequence);
+    newSequence[index] = newThrow;
     return PatternConstraint(newSequence);
   }
 }
