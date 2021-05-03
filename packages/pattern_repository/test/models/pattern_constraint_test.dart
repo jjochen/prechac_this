@@ -1,5 +1,6 @@
-import 'package:pattern_repository/src/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fraction/fraction.dart';
+import 'package:pattern_repository/src/models/models.dart';
 
 void main() {
   group('PatternConstraint', () {
@@ -26,6 +27,21 @@ void main() {
           ThrowConstraint.pass(height: 4.5),
         ]).toString(),
         '4, _, 4.5p1',
+      );
+    });
+
+    test('rotates', () {
+      expect(
+        PatternConstraint([
+          ThrowConstraint.self(height: null),
+          ThrowConstraint(height: 4.toFraction(), passingIndex: null),
+          ThrowConstraint.pass(height: 4.5),
+        ]).rotate(),
+        PatternConstraint([
+          ThrowConstraint(height: 4.toFraction(), passingIndex: null),
+          ThrowConstraint.pass(height: 4.5),
+          ThrowConstraint.self(height: null),
+        ]),
       );
     });
 
