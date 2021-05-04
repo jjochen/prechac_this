@@ -17,7 +17,7 @@ class Engine {
     required this.maxHeight,
     int? minNumberOfPasses,
     int? maxNumberOfPasses,
-  })  : minNumberOfPasses = minNumberOfPasses ?? 0,
+  })  : minNumberOfPasses = minNumberOfPasses ?? 1,
         maxNumberOfPasses = maxNumberOfPasses ?? period;
 
   final int numberOfJugglers;
