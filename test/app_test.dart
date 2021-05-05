@@ -7,13 +7,13 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app.dart';
-import 'package:prechac_this/counter/counter.dart';
+import 'package:prechac_this/home/home.dart';
 
 void main() {
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders HomePage', (tester) async {
       await tester.pumpWidget(const App());
-      expect(find.byType(CounterPage), findsOneWidget);
+      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }

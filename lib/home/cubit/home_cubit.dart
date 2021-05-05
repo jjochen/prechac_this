@@ -57,12 +57,12 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
-    try {
-      // TODO: open search results page
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on Exception {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+    // try {
+    //  // TODO: open search results page
+    emit(state.copyWith(status: FormzStatus.submissionSuccess));
+    // } on Exception {
+    // emit(state.copyWith(status: FormzStatus.submissionFailure));
+    // }
   }
 
   FormzStatus _validate({

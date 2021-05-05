@@ -19,6 +19,27 @@ void main() {
   const validPeriodValue = 2;
   const validPeriod = Period.dirty(validPeriodValue);
 
+  const invalidNumberOfObjectsValue = 0;
+  const invalidNumberOfObjects =
+      NumberOfObjects.dirty(invalidNumberOfObjectsValue);
+
+  const validNumberOfObjectsValue = 3;
+  const validNumberOfObjects = NumberOfObjects.dirty(validNumberOfObjectsValue);
+
+  const invalidMaxHeightValue = 0;
+  const invalidMaxHeight = MaxHeight.dirty(invalidMaxHeightValue);
+
+  const validMaxHeightValue = 2;
+  const validMaxHeight = MaxHeight.dirty(validMaxHeightValue);
+
+  const validHomeState = HomeState(
+    numberOfJugglers: validNumberOfJugglers,
+    period: validPeriod,
+    numberOfObjects: validNumberOfObjects,
+    maxHeight: validMaxHeight,
+    status: FormzStatus.valid,
+  );
+
   group('HomeCubit', () {
     test('initial state is HomeState', () {
       expect(HomeCubit().state, HomeState());
@@ -26,7 +47,7 @@ void main() {
 
     group('numberOfJugglersChanged', () {
       blocTest<HomeCubit, HomeState>(
-        'emits [invalid] when numberOfJugglers/period are invalid',
+        'emits [invalid] when numberOfJugglers is invalid',
         build: () => HomeCubit(),
         act: (cubit) =>
             cubit.numberOfJugglersChanged(invalidNumberOfJugglersValue),
@@ -38,24 +59,24 @@ void main() {
       );
 
       blocTest<HomeCubit, HomeState>(
-        'emits [valid] when numberOfJugglers/period are valid',
+        'emits [valid] when values are valid',
         build: () => HomeCubit(),
-        seed: () => HomeState(period: validPeriod),
+        seed: () => HomeState(
+          period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
+        ),
         act: (cubit) =>
             cubit.numberOfJugglersChanged(validNumberOfJugglersValue),
         expect: () => const <HomeState>[
-          HomeState(
-            numberOfJugglers: validNumberOfJugglers,
-            period: validPeriod,
-            status: FormzStatus.valid,
-          ),
+          validHomeState,
         ],
       );
     });
 
     group('periodChanged', () {
       blocTest<HomeCubit, HomeState>(
-        'emits [invalid] when numberOfJugglers/period are invalid',
+        'emits [invalid] when period is invalid',
         build: () => HomeCubit(),
         act: (cubit) => cubit.periodChanged(invalidPeriodValue),
         expect: () => const <HomeState>[
@@ -67,16 +88,73 @@ void main() {
       );
 
       blocTest<HomeCubit, HomeState>(
-        'emits [valid] when numberOfJugglers/period are valid',
+        'emits [valid] when values are valid',
         build: () => HomeCubit(),
-        seed: () => HomeState(numberOfJugglers: validNumberOfJugglers),
+        seed: () => HomeState(
+          numberOfJugglers: validNumberOfJugglers,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
+        ),
         act: (cubit) => cubit.periodChanged(validPeriodValue),
         expect: () => const <HomeState>[
+          validHomeState,
+        ],
+      );
+    });
+
+    group('numberOfObjectsChanged', () {
+      blocTest<HomeCubit, HomeState>(
+        'emits [invalid] when numberOfObjects is invalid',
+        build: () => HomeCubit(),
+        act: (cubit) =>
+            cubit.numberOfObjectsChanged(invalidNumberOfObjectsValue),
+        expect: () => const <HomeState>[
           HomeState(
-            numberOfJugglers: validNumberOfJugglers,
-            period: validPeriod,
-            status: FormzStatus.valid,
+            numberOfObjects: invalidNumberOfObjects,
+            status: FormzStatus.invalid,
           ),
+        ],
+      );
+
+      blocTest<HomeCubit, HomeState>(
+        'emits [valid] when values are valid',
+        build: () => HomeCubit(),
+        seed: () => HomeState(
+          numberOfJugglers: validNumberOfJugglers,
+          period: validPeriod,
+          maxHeight: validMaxHeight,
+        ),
+        act: (cubit) => cubit.numberOfObjectsChanged(validNumberOfObjectsValue),
+        expect: () => const <HomeState>[
+          validHomeState,
+        ],
+      );
+    });
+
+    group('maxHeightChanged', () {
+      blocTest<HomeCubit, HomeState>(
+        'emits [invalid] when maxHeight is invalid',
+        build: () => HomeCubit(),
+        act: (cubit) => cubit.maxHeightChanged(invalidMaxHeightValue),
+        expect: () => const <HomeState>[
+          HomeState(
+            maxHeight: invalidMaxHeight,
+            status: FormzStatus.invalid,
+          ),
+        ],
+      );
+
+      blocTest<HomeCubit, HomeState>(
+        'emits [valid] when values are valid',
+        build: () => HomeCubit(),
+        seed: () => HomeState(
+          numberOfJugglers: validNumberOfJugglers,
+          period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+        ),
+        act: (cubit) => cubit.maxHeightChanged(validMaxHeightValue),
+        expect: () => const <HomeState>[
+          validHomeState,
         ],
       );
     });
