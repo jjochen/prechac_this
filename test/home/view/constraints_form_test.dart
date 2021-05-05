@@ -19,12 +19,10 @@ class MockMaxHeight extends Mock implements MaxHeight {}
 
 void main() {
   const submitButtonKey = Key('constraintsForm_submit_raisedButton');
-  const numberOfJugglersInputKey =
-      Key('constraintsForm_numberOfJugglersInput_textField');
-  const periodInputKey = Key('constraintsForm_periodInput_textField');
-  const numberOfObjectsInputKey =
-      Key('constraintsForm_numberOfObjectsInput_textField');
-  const maxHeightInputKey = Key('constraintsForm_maxHeightInput_textField');
+  const numberOfJugglersInputKey = Key('constraintsForm_numberOfJugglersInput');
+  const periodInputKey = Key('constraintsForm_periodInput');
+  const numberOfObjectsInputKey = Key('constraintsForm_numberOfObjectsInput');
+  const maxHeightInputKey = Key('constraintsForm_maxHeightInput');
 
   const testNumberOfJugglers = 5;
   const testPeriod = 6;

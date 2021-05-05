@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinbox/material.dart';
 import 'package:prechac_this/home/home.dart';
 import 'package:formz/formz.dart';
 
@@ -25,13 +26,13 @@ class ConstraintsForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _NumberOfJugglersInput(),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 2.0),
               _PeriodInput(),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 2.0),
               _NumberOfObjectsInput(),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 2.0),
               _MaxHeightInput(),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 2.0),
               _SubmitButton(),
             ],
           ),
@@ -48,14 +49,16 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return TextField(
-          key: const Key('constraintsForm_numberOfJugglersInput_textField'),
-          onChanged: (numberOfJugglersString) => context
+        return SpinBox(
+          key: const Key('constraintsForm_numberOfJugglersInput'),
+          onChanged: (numberOfJugglers) => context
               .read<HomeCubit>()
-              .numberOfJugglersChanged(int.parse(numberOfJugglersString)),
-          keyboardType: TextInputType.number,
+              .numberOfJugglersChanged(numberOfJugglers.toInt()),
+          min: NumberOfJugglers.minValue.toDouble(),
+          max: NumberOfJugglers.maxValue.toDouble(),
+          value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'number of jugglers',
+            labelText: 'jugglers',
             helperText: '',
             errorText: state.numberOfJugglers.invalid
                 ? 'invalid number of jugglers'
@@ -73,13 +76,15 @@ class _PeriodInput extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
-        return TextField(
-          key: const Key('constraintsForm_periodInput_textField'),
-          onChanged: (periodString) =>
-              context.read<HomeCubit>().periodChanged(int.parse(periodString)),
-          keyboardType: TextInputType.number,
+        return SpinBox(
+          key: const Key('constraintsForm_periodInput'),
+          onChanged: (period) =>
+              context.read<HomeCubit>().periodChanged(period.toInt()),
+          min: Period.minValue.toDouble(),
+          max: Period.maxValue.toDouble(),
+          value: Period.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'period',
+            labelText: 'Period',
             helperText: '',
             errorText: state.period.invalid ? 'invalid period' : null,
           ),
@@ -96,14 +101,16 @@ class _NumberOfObjectsInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
       builder: (context, state) {
-        return TextField(
-          key: const Key('constraintsForm_numberOfObjectsInput_textField'),
-          onChanged: (numberOfObjectsString) => context
+        return SpinBox(
+          key: const Key('constraintsForm_numberOfObjectsInput'),
+          onChanged: (numberOfObjects) => context
               .read<HomeCubit>()
-              .numberOfObjectsChanged(int.parse(numberOfObjectsString)),
-          keyboardType: TextInputType.number,
+              .numberOfObjectsChanged(numberOfObjects.toInt()),
+          min: NumberOfObjects.minValue.toDouble(),
+          max: NumberOfObjects.maxValue.toDouble(),
+          value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'numberOfObjects',
+            labelText: 'Objects',
             helperText: '',
             errorText: state.numberOfObjects.invalid
                 ? 'invalid number of objects'
@@ -121,14 +128,15 @@ class _MaxHeightInput extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
-        return TextField(
-          key: const Key('constraintsForm_maxHeightInput_textField'),
-          onChanged: (maxHeightString) => context
-              .read<HomeCubit>()
-              .maxHeightChanged(int.parse(maxHeightString)),
-          keyboardType: TextInputType.number,
+        return SpinBox(
+          key: const Key('constraintsForm_maxHeightInput'),
+          onChanged: (maxHeight) =>
+              context.read<HomeCubit>().maxHeightChanged(maxHeight.toInt()),
+          min: MaxHeight.minValue.toDouble(),
+          max: MaxHeight.maxValue.toDouble(),
+          value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'max height',
+            labelText: 'Max Height',
             helperText: '',
             errorText: state.maxHeight.invalid ? 'invalid max height' : null,
           ),

@@ -4,17 +4,16 @@ enum NumberOfJugglersValidationError { invalid }
 
 class NumberOfJugglers
     extends FormzInput<int, NumberOfJugglersValidationError> {
-  const NumberOfJugglers.pure() : super.pure(_defaultValue);
-  const NumberOfJugglers.dirty([int value = _defaultValue])
-      : super.dirty(value);
+  const NumberOfJugglers.pure() : super.pure(defaultValue);
+  const NumberOfJugglers.dirty([int value = defaultValue]) : super.dirty(value);
 
-  static const int _defaultValue = 2;
-  static const int _minValue = 1;
-  static const int _maxValue = 24;
+  static const int defaultValue = 2;
+  static const int minValue = 1;
+  static const int maxValue = 24;
 
   @override
   NumberOfJugglersValidationError? validator(int? value) {
-    return (value != null && value >= _minValue && value <= _maxValue)
+    return (value != null && value >= minValue && value <= maxValue)
         ? null
         : NumberOfJugglersValidationError.invalid;
   }
