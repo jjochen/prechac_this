@@ -22,19 +22,22 @@ class ConstraintsForm extends StatelessWidget {
       child: Align(
         alignment: const Alignment(0, -1 / 3),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _NumberOfJugglersInput(),
-              const SizedBox(height: 2.0),
-              _PeriodInput(),
-              const SizedBox(height: 2.0),
-              _NumberOfObjectsInput(),
-              const SizedBox(height: 2.0),
-              _MaxHeightInput(),
-              const SizedBox(height: 2.0),
-              _SubmitButton(),
-            ],
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 250),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _NumberOfJugglersInput(),
+                const SizedBox(height: 2.0),
+                _PeriodInput(),
+                const SizedBox(height: 2.0),
+                _NumberOfObjectsInput(),
+                const SizedBox(height: 2.0),
+                _MaxHeightInput(),
+                const SizedBox(height: 2.0),
+                _SubmitButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -156,12 +159,6 @@ class _SubmitButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('constraintsForm_submit_raisedButton'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  primary: const Color(0xFFFFD600),
-                ),
                 onPressed: state.status.isValidated
                     ? () => context.read<HomeCubit>().submit()
                     : null,
