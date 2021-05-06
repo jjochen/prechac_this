@@ -16,6 +16,10 @@ dependencies:
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   intl: ^0.17.0
+  equatable: ^2.0.0
+  formz: ^0.4.0
+  google_fonts: ^2.0.0
+  flutter_spinbox: ^0.5.2
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +31,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+  - assets/
