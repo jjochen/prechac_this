@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../attributions/attributions.dart';
 import '../home/home.dart';
+import '../search_results/search_results.dart';
 
 class AppRouter {
   static PageRoute pageRoute(
@@ -31,6 +32,16 @@ class AppRouter {
         {
           return pageRoute(AttributionsPage(), data);
         }
+      case SearchResultsPage.routeName:
+        {
+          final searchParameters =
+              SearchParameters.fromMap(data.queryParameters);
+          return pageRoute(
+              SearchResultsPage(
+                searchParameters: searchParameters,
+              ),
+              data);
+        }
       default:
         {
           return pageRoute(HomePage(), data);
@@ -42,24 +53,24 @@ class AppRouter {
 class RoutingData extends Equatable {
   RoutingData([
     this.route = const [],
-    Map<String, String> queryParameters = const {},
-  ]) : _queryParameters = queryParameters;
+    this.queryParameters = const {},
+  ]);
 
   final List<String> route;
-  final Map<String, String> _queryParameters;
+  final Map<String, String> queryParameters;
 
   @override
-  List<Object?> get props => [route, _queryParameters];
+  List<Object?> get props => [route, queryParameters];
 
   //@override
   //int get hashCode => route.hashCode;
 
   String get fullRoute => Uri(
           pathSegments: route,
-          queryParameters: _queryParameters.isEmpty ? null : _queryParameters)
+          queryParameters: queryParameters.isEmpty ? null : queryParameters)
       .toString();
 
-  String? operator [](String key) => _queryParameters[key];
+  String? operator [](String key) => queryParameters[key];
 }
 
 extension RoutingDataString on String {
