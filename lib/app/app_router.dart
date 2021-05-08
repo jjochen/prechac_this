@@ -45,7 +45,7 @@ class RoutingData extends Equatable {
     Map<String, String> queryParameters = const {},
   ]) : _queryParameters = queryParameters;
 
-  factory RoutingData.home() => RoutingData([], {});
+  factory RoutingData.home() => RoutingData();
 
   final List<String> route;
   final Map<String, String> _queryParameters;

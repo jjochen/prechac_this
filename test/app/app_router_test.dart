@@ -6,6 +6,15 @@ import 'package:prechac_this/home/home.dart';
 
 void main() {
   group('AppRouter', () {
+    group('generates route', () {
+      test('for empty route name', () {
+        expect(
+          AppRouter.generateRoute(const RouteSettings()),
+          isNotNull,
+        );
+      });
+    });
+
     group('renders page for', () {
       testWidgets('empty route', (tester) async {
         await tester.pumpWidget(
