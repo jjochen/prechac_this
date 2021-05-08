@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 class AttributionsPage extends LicensePage {
   AttributionsPage({Key? key}) : super(key: key);
 
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => AttributionsPage());
-  }
+  static const String routeName = 'attributions';
 
   @override
   String? get applicationName {
