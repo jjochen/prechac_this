@@ -19,7 +19,7 @@ class AppRouter {
     final name = settings.name;
     final RoutingData data;
     if (name == null) {
-      data = RoutingData.home();
+      data = RoutingData();
     } else {
       data = name.routingData;
     }
@@ -27,7 +27,7 @@ class AppRouter {
     final route = data.route;
     final firstRouteSegment = route.isEmpty ? '' : route.first;
     switch (firstRouteSegment) {
-      case 'attributions':
+      case AttributionsPage.routeName:
         {
           return pageRoute(AttributionsPage(), data);
         }
@@ -44,8 +44,6 @@ class RoutingData extends Equatable {
     this.route = const [],
     Map<String, String> queryParameters = const {},
   ]) : _queryParameters = queryParameters;
-
-  factory RoutingData.home() => RoutingData();
 
   final List<String> route;
   final Map<String, String> _queryParameters;

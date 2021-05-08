@@ -8,10 +8,6 @@ void main() {
   const attributionsButtonKey = Key('homePage_attributions_iconButton');
 
   group('HomePage', () {
-    test('has a route', () {
-      expect(HomePage.route(), isA<MaterialPageRoute>());
-    });
-
     testWidgets('renders a ConstraintsForm', (tester) async {
       await tester.pumpWidget(
         MaterialApp(home: HomePage()),
@@ -24,6 +20,7 @@ void main() {
           (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
+            initialRoute: HomePage.routeName,
             onGenerateRoute: AppRouter.generateRoute,
           ),
         );

@@ -29,7 +29,7 @@ void main() {
       testWidgets('unknown route', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            initialRoute: 'home',
+            initialRoute: 'whaaaaaat',
             onGenerateRoute: AppRouter.generateRoute,
           ),
         );
@@ -40,7 +40,7 @@ void main() {
       testWidgets('attributions route', (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            initialRoute: 'attributions',
+            initialRoute: AttributionsPage.routeName,
             onGenerateRoute: AppRouter.generateRoute,
           ),
         );
@@ -87,15 +87,6 @@ void main() {
         routingData['parameter1'],
         'value1',
       );
-    });
-
-    group('home', () {
-      test('has route search', () {
-        expect(
-          RoutingData.home(),
-          RoutingData([]),
-        );
-      });
     });
   });
 
