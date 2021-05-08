@@ -24,7 +24,6 @@ void main() {
           (tester) async {
         await tester.pumpWidget(
           const MaterialApp(
-            initialRoute: 'search',
             onGenerateRoute: AppRouter.generateRoute,
           ),
         );

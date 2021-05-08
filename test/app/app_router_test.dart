@@ -1,7 +1,46 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app_router.dart';
+import 'package:prechac_this/attributions/attributions.dart';
+import 'package:prechac_this/home/home.dart';
 
 void main() {
+  group('AppRouter', () {
+    group('renders page for', () {
+      testWidgets('empty route', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            onGenerateRoute: AppRouter.generateRoute,
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byType(HomePage), findsOneWidget);
+      });
+
+      testWidgets('unknown route', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            initialRoute: 'home',
+            onGenerateRoute: AppRouter.generateRoute,
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byType(HomePage), findsOneWidget);
+      });
+
+      testWidgets('attributions route', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            initialRoute: 'attributions',
+            onGenerateRoute: AppRouter.generateRoute,
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byType(AttributionsPage), findsOneWidget);
+      });
+    });
+  });
+
   group('RoutingData', () {
     late RoutingData routingData;
     setUp(() {
@@ -45,7 +84,7 @@ void main() {
       test('has route search', () {
         expect(
           RoutingData.home(),
-          RoutingData(['search']),
+          RoutingData([]),
         );
       });
     });

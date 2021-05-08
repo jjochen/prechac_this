@@ -12,7 +12,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      initialRoute: 'search',
       onGenerateRoute: AppRouter.generateRoute,
       localizationsDelegates: [
         AppLocalizations.delegate,
