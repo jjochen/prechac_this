@@ -12,7 +12,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('PrechacThis')),
+      appBar: AppBar(
+        title: const Text('PrechacThis'),
+        actions: <Widget>[
+          IconButton(
+            key: const Key('homePage_attributions_iconButton'),
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => Navigator.pushNamed(context, 'attributions'),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: BlocProvider(
