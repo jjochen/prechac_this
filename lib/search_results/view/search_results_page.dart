@@ -26,7 +26,7 @@ class SearchResultsPage extends StatelessWidget {
             create: (_) => PatternRepository(),
             child: BlocProvider(
               create: (_) => SearchResultsCubit(),
-              child: null,
+              child: Text(searchParameters.toJson()),
             ),
           )),
     );

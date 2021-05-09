@@ -25,28 +25,66 @@ class AppRouter {
       data = name.routingData;
     }
 
-    final route = data.route;
-    final firstRouteSegment = route.isEmpty ? '' : route.first;
-    switch (firstRouteSegment) {
-      case AttributionsPage.routeName:
-        {
-          return pageRoute(AttributionsPage(), data);
-        }
-      case SearchResultsPage.routeName:
-        {
-          final searchParameters =
-              SearchParameters.fromMap(data.queryParameters);
-          return pageRoute(
-              SearchResultsPage(
-                searchParameters: searchParameters,
-              ),
-              data);
-        }
-      default:
-        {
-          return pageRoute(HomePage(), data);
-        }
+    Route<dynamic>? route;
+
+    route ??= _parseAttributionsRoute(data);
+
+    route ??= _parseSearchResultsRoute(data);
+
+    route ??= pageRoute(HomePage(), data);
+
+    return route;
+  }
+
+  static PageRoute<dynamic>? _parseAttributionsRoute(RoutingData data) {
+    if (AttributionsPage.routeName != data.firstSegment) {
+      return null;
     }
+
+    return pageRoute(AttributionsPage(), data);
+  }
+
+  static PageRoute<dynamic>? _parseSearchResultsRoute(RoutingData data) {
+    if (SearchResultsPage.routeName != data.firstSegment) {
+      return null;
+    }
+
+    // TODO: move to SearchParameters extension
+
+    final map = data.queryParameters;
+    final numberOfJuggers = map['number_of_jugglers'];
+    if (numberOfJuggers == null) {
+      return null;
+    }
+
+    final period = map['period'];
+    if (period == null) {
+      return null;
+    }
+
+    final numberOfObjects = map['number_of_objects'];
+    if (numberOfObjects == null) {
+      return null;
+    }
+
+    final maxHeight = map['max_height'];
+    if (maxHeight == null) {
+      return null;
+    }
+
+    // TODO: handel number of passes
+
+    final searchParameters = SearchParameters(
+      numberOfJugglers: int.parse(numberOfJuggers),
+      period: int.parse(period),
+      numberOfObjects: int.parse(numberOfObjects),
+      maxHeight: int.parse(maxHeight),
+    );
+
+    return pageRoute(
+      SearchResultsPage(searchParameters: searchParameters),
+      data,
+    );
   }
 }
 
@@ -64,6 +102,8 @@ class RoutingData extends Equatable {
 
   //@override
   //int get hashCode => route.hashCode;
+
+  String get firstSegment => route.isEmpty ? '' : route.first;
 
   String get fullRoute => Uri(
           pathSegments: route,

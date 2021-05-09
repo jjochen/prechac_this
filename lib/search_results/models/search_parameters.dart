@@ -12,7 +12,7 @@ class SearchParameters extends Equatable {
     this.maxNumberOfPasses,
   });
 
-  factory SearchParameters.fromMap(Map<String, dynamic> map) {
+  factory SearchParameters.fromMap(Map<String, dynamic?> map) {
     return SearchParameters(
       numberOfJugglers: map['number_of_jugglers'],
       period: map['period'],
@@ -56,7 +56,7 @@ class SearchParameters extends Equatable {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic?> toMap() {
     return {
       'number_of_jugglers': numberOfJugglers,
       'period': period,
