@@ -6,7 +6,7 @@ import 'package:prechac_this/home/home.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  static const String routeName = '';
+  static const routeName = '';
 
   @override
   Widget build(BuildContext context) {
