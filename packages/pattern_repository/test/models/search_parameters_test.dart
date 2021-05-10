@@ -36,6 +36,13 @@ void main() {
       );
     });
 
+    test('has correct string representation', () {
+      expect(
+        searchParameters.toString(),
+        'SearchParameters(3, 5, 6, 6, 2, 3)',
+      );
+    });
+
     test('keeps unchanged values when copying', () {
       expect(
         searchParameters.copyWith(),
