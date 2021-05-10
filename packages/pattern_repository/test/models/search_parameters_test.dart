@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/search_results/models/search_parameters.dart';
+import 'package:test/test.dart';
+import 'package:pattern_repository/src/models/search_parameters.dart';
 
 void main() {
   group('SearchParameters', () {
@@ -64,33 +64,11 @@ void main() {
       );
     });
 
-    test('uses null values when copying', () {
+    test('supports query parameter map representation', () {
       expect(
-        searchParameters.copyWith(
-          minNumberOfPasses: null,
-          maxNumberOfPasses: null,
+        SearchParameters.fromQueryParameters(
+          searchParameters.toQueryParameters(),
         ),
-        SearchParameters(
-          numberOfJugglers: numberOfJugglers,
-          period: period,
-          numberOfObjects: numberOfObjects,
-          maxHeight: maxHeight,
-          minNumberOfPasses: null,
-          maxNumberOfPasses: null,
-        ),
-      );
-    });
-
-    test('supports map representation', () {
-      expect(
-        SearchParameters.fromMap(searchParameters.toMap()),
-        searchParameters,
-      );
-    });
-
-    test('supports json representation', () {
-      expect(
-        SearchParameters.fromJson(searchParameters.toJson()),
         searchParameters,
       );
     });

@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:prechac_this/core/config_map.dart';
+import 'package:pattern_repository/src/core/config_map.dart';
 
 void main() {
   group('ConfigMap', () {

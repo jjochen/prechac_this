@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:pattern_repository/pattern_repository.dart';
 
 import '../attributions/attributions.dart';
-import '../core/core.dart';
 import '../home/home.dart';
 import '../search_results/search_results.dart';
 
@@ -51,7 +51,7 @@ class AppRouter {
     }
 
     final map = data.queryParameters;
-    final searchParameters = MappedSearchParameters.fromQuery(map);
+    final searchParameters = SearchParameters.fromQueryParameters(map);
 
     return pageRoute(
       SearchResultsPage(searchParameters: searchParameters),
@@ -83,28 +83,6 @@ class RoutingData extends Equatable {
       .toString();
 
   String? operator [](String key) => queryParameters[key];
-}
-
-extension MappedSearchParameters on SearchParameters {
-  static SearchParameters fromQuery(Map<String, String> map) {
-    final numberOfJuggers = map.intForKey('number_of_jugglers', fallback: -1);
-    final period = map.intForKey('period', fallback: -1);
-    final numberOfObjects = map.intForKey('number_of_objects', fallback: -1);
-    final maxHeight = map.intForKey('max_height', fallback: -1);
-    final minNumberOfPasses =
-        map.intForKey('min_number_of_passes', fallback: -1);
-    final maxNumberOfPasses =
-        map.intForKey('max_number_of_passes', fallback: -1);
-
-    return SearchParameters(
-      numberOfJugglers: numberOfJuggers,
-      period: period,
-      numberOfObjects: numberOfObjects,
-      maxHeight: maxHeight,
-      minNumberOfPasses: minNumberOfPasses,
-      maxNumberOfPasses: maxNumberOfPasses,
-    );
-  }
 }
 
 extension RoutingDataString on String {

@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:pattern_repository/src/core/cartesian_product_iterable.dart';
 
 void main() {

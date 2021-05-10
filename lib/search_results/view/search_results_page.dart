@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pattern_repository/pattern_repository.dart';
-import 'package:prechac_this/search_results/models/search_parameters.dart';
 import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
@@ -26,7 +25,7 @@ class SearchResultsPage extends StatelessWidget {
             create: (_) => PatternRepository(),
             child: BlocProvider(
               create: (_) => SearchResultsCubit(),
-              child: Text(searchParameters.toJson()),
+              child: Text(searchParameters.toString()),
             ),
           )),
     );
