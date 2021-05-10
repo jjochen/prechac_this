@@ -6,19 +6,17 @@ import 'engine/engine.dart';
 import 'models/models.dart';
 
 class PatternRepository {
-  Stream<Pattern> patterns({
-    required int numberOfJugglers,
-    required int period,
-    required int numberOfObjects,
-    required int maxHeight,
-    int? minNumberOfPasses,
-    int? maxNumberOfPasses,
-  }) {
+  Stream<Pattern> patterns(SearchParameters parameters) {
+    final minNumberOfPasses =
+        parameters.minNumberOfPasses < 0 ? null : parameters.minNumberOfPasses;
+    final maxNumberOfPasses =
+        parameters.maxNumberOfPasses < 0 ? null : parameters.maxNumberOfPasses;
+
     final engine = Engine(
-      numberOfJugglers: numberOfJugglers,
-      period: period,
-      numberOfObjects: numberOfObjects,
-      maxHeight: maxHeight,
+      numberOfJugglers: parameters.numberOfJugglers,
+      period: parameters.period,
+      numberOfObjects: parameters.numberOfObjects,
+      maxHeight: parameters.maxHeight,
       minNumberOfPasses: minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses,
     );
