@@ -63,17 +63,6 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.byType(SearchResultsPage), findsOneWidget);
       });
-
-      testWidgets('results route without required parameters', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            initialRoute: SearchResultsPage.routeName,
-            onGenerateRoute: AppRouter.generateRoute,
-          ),
-        );
-        await tester.pumpAndSettle();
-        expect(find.byType(HomePage), findsOneWidget);
-      });
     });
   });
 

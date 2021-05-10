@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../attributions/attributions.dart';
+import '../core/core.dart';
 import '../home/home.dart';
 import '../search_results/search_results.dart';
 
@@ -49,37 +50,8 @@ class AppRouter {
       return null;
     }
 
-    // TODO: move to SearchParameters extension
-
     final map = data.queryParameters;
-    final numberOfJuggers = map['number_of_jugglers'];
-    if (numberOfJuggers == null) {
-      return null;
-    }
-
-    final period = map['period'];
-    if (period == null) {
-      return null;
-    }
-
-    final numberOfObjects = map['number_of_objects'];
-    if (numberOfObjects == null) {
-      return null;
-    }
-
-    final maxHeight = map['max_height'];
-    if (maxHeight == null) {
-      return null;
-    }
-
-    // TODO: handel number of passes
-
-    final searchParameters = SearchParameters(
-      numberOfJugglers: int.parse(numberOfJuggers),
-      period: int.parse(period),
-      numberOfObjects: int.parse(numberOfObjects),
-      maxHeight: int.parse(maxHeight),
-    );
+    final searchParameters = MappedSearchParameters.fromQuery(map);
 
     return pageRoute(
       SearchResultsPage(searchParameters: searchParameters),
@@ -111,6 +83,28 @@ class RoutingData extends Equatable {
       .toString();
 
   String? operator [](String key) => queryParameters[key];
+}
+
+extension MappedSearchParameters on SearchParameters {
+  static SearchParameters fromQuery(Map<String, String> map) {
+    final numberOfJuggers = map.intForKey('number_of_jugglers', fallback: -1);
+    final period = map.intForKey('period', fallback: -1);
+    final numberOfObjects = map.intForKey('number_of_objects', fallback: -1);
+    final maxHeight = map.intForKey('max_height', fallback: -1);
+    final minNumberOfPasses =
+        map.intForKey('min_number_of_passes', fallback: -1);
+    final maxNumberOfPasses =
+        map.intForKey('max_number_of_passes', fallback: -1);
+
+    return SearchParameters(
+      numberOfJugglers: numberOfJuggers,
+      period: period,
+      numberOfObjects: numberOfObjects,
+      maxHeight: maxHeight,
+      minNumberOfPasses: minNumberOfPasses,
+      maxNumberOfPasses: maxNumberOfPasses,
+    );
+  }
 }
 
 extension RoutingDataString on String {
