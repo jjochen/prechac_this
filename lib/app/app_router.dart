@@ -29,26 +29,25 @@ class AppRouter {
     }
 
     Route<dynamic>? route;
-
-    route ??= _parseAttributionsRoute(data);
-
-    route ??= _parseSearchResultsRoute(data);
-
-    route ??= pageRoute(HomePage(), data);
-
+    route ??= _tryParseAttributionsRoute(data);
+    route ??= _tryParseSearchResultsRoute(data);
+    route ??= _homeRoute(data);
     return route;
   }
 
-  static PageRoute<dynamic>? _parseAttributionsRoute(RoutingData data) {
-    if (AttributionsPage.routeName != data.firstSegment) {
-      return null;
-    }
+  static PageRoute<dynamic> _homeRoute(RoutingData data) {
+    // TODO: fill form with search parameters
+    //final map = data.queryParameters;
+    //final searchParameters = SearchParameters.fromQueryParameters(map);
 
-    return pageRoute(AttributionsPage(), data);
+    return pageRoute(
+      HomePage(),
+      data,
+    );
   }
 
-  static PageRoute<dynamic>? _parseSearchResultsRoute(RoutingData data) {
-    if (SearchResultsPage.routeName != data.firstSegment) {
+  static PageRoute<dynamic>? _tryParseSearchResultsRoute(RoutingData data) {
+    if (SearchResultsPage.routeName != data.firstPathSegment) {
       return null;
     }
 
@@ -60,27 +59,35 @@ class AppRouter {
       data,
     );
   }
+
+  static PageRoute<dynamic>? _tryParseAttributionsRoute(RoutingData data) {
+    if (AttributionsPage.routeName != data.firstPathSegment) {
+      return null;
+    }
+
+    return pageRoute(AttributionsPage(), data);
+  }
 }
 
 class RoutingData extends Equatable {
   RoutingData([
-    this.route = const [],
+    this.pathSegments = const [],
     this.queryParameters = const {},
   ]);
 
-  final List<String> route;
+  final List<String> pathSegments;
   final Map<String, String> queryParameters;
 
   @override
-  List<Object?> get props => [route, queryParameters];
+  List<Object?> get props => [pathSegments, queryParameters];
 
   //@override
   //int get hashCode => route.hashCode;
 
-  String get firstSegment => route.isEmpty ? '' : route.first;
+  String get firstPathSegment => pathSegments.isEmpty ? '' : pathSegments.first;
 
   String get fullRoute => Uri(
-          pathSegments: route,
+          pathSegments: pathSegments,
           queryParameters: queryParameters.isEmpty ? null : queryParameters)
       .toString();
 
