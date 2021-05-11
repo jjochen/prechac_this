@@ -11,10 +11,12 @@ class AppRouter {
     Widget child,
     RoutingData data,
   ) =>
-      _FadeRoute(
-        child,
-        data.fullRoute,
-        data,
+      MaterialPageRoute(
+        builder: (context) => child,
+        settings: RouteSettings(
+          name: data.fullRoute,
+          arguments: data,
+        ),
       );
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -94,37 +96,4 @@ extension RoutingDataString on String {
       uri.queryParameters,
     );
   }
-}
-
-class _FadeRoute extends PageRouteBuilder {
-  _FadeRoute(
-    this.child,
-    this.routeName,
-    this.data,
-  ) : super(
-          settings: RouteSettings(
-            name: routeName,
-            arguments: data,
-          ),
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              child,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        );
-
-  final Widget child;
-  final String routeName;
-  final RoutingData data;
 }
