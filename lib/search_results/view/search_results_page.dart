@@ -15,6 +15,18 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => SearchResultsCubit(),
+      child: SearchResultsView(),
+    );
+  }
+}
+
+class SearchResultsView extends StatelessWidget {
+  SearchResultsView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Results'),
@@ -25,7 +37,7 @@ class SearchResultsPage extends StatelessWidget {
             create: (_) => PatternRepository(),
             child: BlocProvider(
               create: (_) => SearchResultsCubit(),
-              child: Text(searchParameters.toString()),
+              child: const Text('Test'),
             ),
           )),
     );

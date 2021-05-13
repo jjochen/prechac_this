@@ -10,6 +10,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => HomeCubit(),
+      child: HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  HomeView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PrechacThis'),
@@ -24,10 +36,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: BlocProvider(
-          create: (_) => HomeCubit(),
-          child: ConstraintsForm(),
-        ),
+        child: ConstraintsForm(),
       ),
     );
   }
