@@ -40,4 +40,11 @@ class HomeState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  SearchParameters get searchParameters => SearchParameters(
+        numberOfJugglers: numberOfJugglers.value,
+        period: period.value,
+        numberOfObjects: numberOfObjects.value,
+        maxHeight: maxHeight.value,
+      );
 }

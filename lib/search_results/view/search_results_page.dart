@@ -10,13 +10,19 @@ class SearchResultsPage extends StatelessWidget {
   }) : super(key: key);
 
   static const routeName = 'results';
+  static String routeNameWithParameters(SearchParameters parameters) {
+    return Uri(
+      pathSegments: [routeName],
+      queryParameters: parameters.toQueryParameters(),
+    ).toString();
+  }
 
   final SearchParameters searchParameters;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SearchResultsCubit(),
+      create: (_) => SearchBloc(),
       child: SearchResultsView(),
     );
   }
@@ -36,7 +42,7 @@ class SearchResultsView extends StatelessWidget {
           child: RepositoryProvider(
             create: (_) => PatternRepository(),
             child: BlocProvider(
-              create: (_) => SearchResultsCubit(),
+              create: (_) => SearchBloc(),
               child: const Text('Test'),
             ),
           )),

@@ -58,6 +58,7 @@ class SearchParameters extends Equatable {
   }
 
   Map<String, String> toQueryParameters() {
+    // TODO: do not include negative values
     return {
       'number_of_jugglers': numberOfJugglers.toString(),
       'period': period.toString(),
