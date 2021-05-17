@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
-import 'package:pattern_repository/pattern_repository.dart';
-import 'package:prechac_this/home/home.dart';
 import 'package:formz/formz.dart';
-import 'package:prechac_this/search_results/search_results.dart';
+
+import '../../search_results/search_results.dart';
+import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
   ConstraintsForm({Key? key}) : super(key: key);
@@ -19,6 +19,12 @@ class ConstraintsForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Failure')),
             );
+        } else if (state.status.isSubmissionSuccess) {
+          final parameters = state.searchParameters;
+          Navigator.pushNamed(
+            context,
+            SearchResultsPage.routeNameWithParameters(parameters),
+          );
         }
       },
       child: Align(
@@ -161,21 +167,9 @@ class _SubmitButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('constraintsForm_submit_raisedButton'),
-                onPressed: () {
-                  // TODO should be handled in bloc
-                  if (state.status.isValidated) {
-                    final parameters = SearchParameters(
-                      numberOfJugglers: state.numberOfJugglers.value,
-                      period: state.period.value,
-                      numberOfObjects: state.numberOfObjects.value,
-                      maxHeight: state.maxHeight.value,
-                    );
-                    Navigator.pushNamed(
-                      context,
-                      SearchResultsPage.routeNameWithParameters(parameters),
-                    );
-                  }
-                }, //() => context.read<HomeCubit>().submit(),
+                onPressed: state.status.isValidated
+                    ? () => context.read<HomeCubit>().submit()
+                    : null,
                 child: const Text('SUBMIT'),
               );
       },
