@@ -22,12 +22,7 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => PatternRepository(),
-      child: BlocProvider(
-        create: (_) => SearchBloc(),
-        child: SearchResultsView(),
-      ),
+    return SearchResultsView(),
     );
   }
 }
