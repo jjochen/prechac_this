@@ -58,15 +58,32 @@ class SearchParameters extends Equatable {
   }
 
   Map<String, String> toQueryParameters() {
-    // TODO: do not include negative values
-    return {
-      'number_of_jugglers': numberOfJugglers.toString(),
-      'period': period.toString(),
-      'number_of_objects': numberOfObjects.toString(),
-      'max_height': maxHeight.toString(),
-      'min_number_of_passes': minNumberOfPasses.toString(),
-      'max_number_of_passes': maxNumberOfPasses.toString(),
-    };
+    var queryParameters = <String, String>{};
+    queryParameters.setNonNegativeIntForKey(
+      numberOfJugglers,
+      'number_of_jugglers',
+    );
+    queryParameters.setNonNegativeIntForKey(
+      period,
+      'period',
+    );
+    queryParameters.setNonNegativeIntForKey(
+      numberOfObjects,
+      'number_of_objects',
+    );
+    queryParameters.setNonNegativeIntForKey(
+      maxHeight,
+      'max_height',
+    );
+    queryParameters.setNonNegativeIntForKey(
+      minNumberOfPasses,
+      'min_number_of_passes',
+    );
+    queryParameters.setNonNegativeIntForKey(
+      maxNumberOfPasses,
+      'max_number_of_passes',
+    );
+    return queryParameters;
   }
 
   @override
@@ -82,5 +99,13 @@ class SearchParameters extends Equatable {
       minNumberOfPasses,
       maxNumberOfPasses,
     ];
+  }
+}
+
+extension _QueryParameters on Map<String, String> {
+  void setNonNegativeIntForKey(int value, String key) {
+    if (value >= 0) {
+      this[key] = value.toString();
+    }
   }
 }
