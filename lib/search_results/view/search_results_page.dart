@@ -22,9 +22,12 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SearchBloc(),
-      child: SearchResultsView(),
+    return RepositoryProvider(
+      create: (_) => PatternRepository(),
+      child: BlocProvider(
+        create: (_) => SearchBloc(),
+        child: SearchResultsView(),
+      ),
     );
   }
 }
@@ -41,14 +44,9 @@ class SearchResultsView extends StatelessWidget {
         title: const Text('Results'),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: RepositoryProvider(
-            create: (_) => PatternRepository(),
-            child: BlocProvider(
-              create: (_) => SearchBloc(),
-              child: Text(data?.fullRoute ?? 'unknown'),
-            ),
-          )),
+        padding: const EdgeInsets.all(20.0),
+        child: Text(data?.fullRoute ?? 'unknown'),
+      ),
     );
   }
 }
