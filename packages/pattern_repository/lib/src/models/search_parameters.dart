@@ -58,31 +58,13 @@ class SearchParameters extends Equatable {
   }
 
   Map<String, String> toQueryParameters() {
-    var queryParameters = <String, String>{};
-    queryParameters.setNonNegativeIntForKey(
-      numberOfJugglers,
-      'number_of_jugglers',
-    );
-    queryParameters.setNonNegativeIntForKey(
-      period,
-      'period',
-    );
-    queryParameters.setNonNegativeIntForKey(
-      numberOfObjects,
-      'number_of_objects',
-    );
-    queryParameters.setNonNegativeIntForKey(
-      maxHeight,
-      'max_height',
-    );
-    queryParameters.setNonNegativeIntForKey(
-      minNumberOfPasses,
-      'min_number_of_passes',
-    );
-    queryParameters.setNonNegativeIntForKey(
-      maxNumberOfPasses,
-      'max_number_of_passes',
-    );
+    var queryParameters = <String, String>{}
+      ..setNonNegativeIntForKey(numberOfJugglers, 'number_of_jugglers')
+      ..setNonNegativeIntForKey(period, 'period')
+      ..setNonNegativeIntForKey(numberOfObjects, 'number_of_objects')
+      ..setNonNegativeIntForKey(maxHeight, 'max_height')
+      ..setNonNegativeIntForKey(minNumberOfPasses, 'min_number_of_passes')
+      ..setNonNegativeIntForKey(maxNumberOfPasses, 'max_number_of_passes');
     return queryParameters;
   }
 
