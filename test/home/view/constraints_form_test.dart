@@ -1,11 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/app/app_router.dart';
 import 'package:prechac_this/home/home.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/home/models/models.dart';
+import 'package:prechac_this/search_results/search_results.dart';
 
 class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
@@ -264,33 +266,37 @@ void main() {
             ),
           ),
         );
-        final homeButton = tester.widget<ElevatedButton>(
+        final submitButton = tester.widget<ElevatedButton>(
           find.byKey(submitButtonKey),
         );
-        expect(homeButton.enabled, isTrue);
+        expect(submitButton.enabled, isTrue);
       });
+    });
 
-      // group('navigates', () {
-      //   testWidgets('to SearchResultsPage when Create Account is pressed',
-      //       (tester) async {
-      //     await tester.pumpWidget(
-      //       RepositoryProvider<AuthenticationRepository>(
-      //         create: (_) => MockAuthenticationRepository(),
-      //         child: MaterialApp(
-      //           home: Scaffold(
-      //             body: BlocProvider.value(
-      //               value: homeCubit,
-      //               child: ConstraintsForm(),
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     );
-      //     await tester.tap(find.byKey(createAccountButtonKey));
-      //     await tester.pumpAndSettle();
-      //     expect(find.byType(SignUpPage), findsOneWidget);
-      //   });
-      // });
+    group('navigates', () {
+      testWidgets('to search results page when form status is success',
+          (tester) async {
+        whenListen(
+          homeCubit,
+          Stream.fromIterable(const <HomeState>[
+            HomeState(status: FormzStatus.submissionInProgress),
+            HomeState(status: FormzStatus.submissionSuccess),
+          ]),
+        );
+        await tester.pumpWidget(
+          MaterialApp(
+            onGenerateRoute: AppRouter.generateRoute,
+            home: Scaffold(
+              body: BlocProvider.value(
+                value: homeCubit,
+                child: ConstraintsForm(),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byType(SearchResultsPage), findsOneWidget);
+      });
     });
   });
 }

@@ -20,7 +20,7 @@ class ConstraintsForm extends StatelessWidget {
               const SnackBar(content: Text('Failure')),
             );
         } else if (state.status.isSubmissionSuccess) {
-          final parameters = state.searchParameters;
+          final parameters = state.toSearchParameters();
           Navigator.pushNamed(
             context,
             SearchResultsPage.routeNameWithParameters(parameters),

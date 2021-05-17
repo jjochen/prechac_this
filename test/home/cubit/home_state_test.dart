@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/home/home.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:prechac_this/home/models/number_of_jugglers.dart';
+import 'package:prechac_this/search_results/search_results.dart';
 
 void main() {
   const numberOfJugglers = NumberOfJugglers.dirty(5);
@@ -55,6 +57,23 @@ void main() {
       expect(
         HomeState().copyWith(maxHeight: maxHeight),
         HomeState(maxHeight: maxHeight),
+      );
+    });
+
+    test('supports search parameter conversion', () {
+      expect(
+        HomeState(
+          numberOfJugglers: numberOfJugglers,
+          period: period,
+          numberOfObjects: numberOfObjects,
+          maxHeight: maxHeight,
+        ).toSearchParameters(),
+        SearchParameters(
+          numberOfJugglers: 5,
+          period: 3,
+          numberOfObjects: 6,
+          maxHeight: 7,
+        ),
       );
     });
   });

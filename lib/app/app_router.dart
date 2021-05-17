@@ -21,12 +21,7 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final name = settings.name;
-    final RoutingData data;
-    if (name == null) {
-      data = RoutingData();
-    } else {
-      data = name.routingData;
-    }
+    final data = name?.routingData ?? RoutingData();
 
     Route<dynamic>? route;
     route ??= _tryParseAttributionsRoute(data);

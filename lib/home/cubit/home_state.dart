@@ -41,7 +41,7 @@ class HomeState extends Equatable {
     );
   }
 
-  SearchParameters get searchParameters => SearchParameters(
+  SearchParameters toSearchParameters() => SearchParameters(
         numberOfJugglers: numberOfJugglers.value,
         period: period.value,
         numberOfObjects: numberOfObjects.value,

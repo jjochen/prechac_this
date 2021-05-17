@@ -160,13 +160,6 @@ void main() {
     });
 
     group('submit', () {
-      // blocTest<HomeCubit, HomeState>(
-      //   'does nothing when status is invalid',
-      //   build: () => HomeCubit(),
-      //   act: (cubit) => cubit.submit(),
-      //   expect: () => const <HomeState>[],
-      // );
-
       blocTest<HomeCubit, HomeState>(
         'calls submit with correct numberOfJugglers/period',
         build: () => HomeCubit(),
