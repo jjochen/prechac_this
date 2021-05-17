@@ -7,7 +7,7 @@ class HomeState extends Equatable {
     this.period = const Period.pure(),
     this.numberOfObjects = const NumberOfObjects.pure(),
     this.maxHeight = const MaxHeight.pure(),
-    this.status = FormzStatus.pure,
+    this.status = FormzStatus.valid,
   });
 
   final NumberOfJugglers numberOfJugglers;
