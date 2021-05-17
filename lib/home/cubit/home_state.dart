@@ -7,7 +7,7 @@ class HomeState extends Equatable {
     this.period = const Period.pure(),
     this.numberOfObjects = const NumberOfObjects.pure(),
     this.maxHeight = const MaxHeight.pure(),
-    this.status = FormzStatus.pure,
+    this.status = FormzStatus.valid,
   });
 
   final NumberOfJugglers numberOfJugglers;
@@ -40,4 +40,11 @@ class HomeState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  SearchParameters toSearchParameters() => SearchParameters(
+        numberOfJugglers: numberOfJugglers.value,
+        period: period.value,
+        numberOfObjects: numberOfObjects.value,
+        maxHeight: maxHeight.value,
+      );
 }

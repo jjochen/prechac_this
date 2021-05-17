@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:formz/formz.dart';
+import 'package:pattern_repository/pattern_repository.dart';
 
 import '../models/models.dart';
 
@@ -54,15 +55,8 @@ class HomeCubit extends Cubit<HomeState> {
     if (!state.status.isValidated) {
       return;
     }
-
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-
-    // try {
-    //  // TODO: open search results page
     emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    // } on Exception {
-    // emit(state.copyWith(status: FormzStatus.submissionFailure));
-    // }
   }
 
   FormzStatus _validate({

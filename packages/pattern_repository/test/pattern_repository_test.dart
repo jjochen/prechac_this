@@ -10,15 +10,16 @@ void main() {
 
     group('4 _ 1 _', () {
       test('emits stream of patterns', () async {
+        final searchParameters = SearchParameters(
+          numberOfJugglers: 2,
+          period: 4,
+          numberOfObjects: 4,
+          maxHeight: 4,
+          minNumberOfPasses: 1,
+          maxNumberOfPasses: 2,
+        );
         await expectLater(
-            patternRepository.patterns(
-              numberOfJugglers: 2,
-              period: 4,
-              numberOfObjects: 4,
-              maxHeight: 4,
-              minNumberOfPasses: 1,
-              maxNumberOfPasses: 2,
-            ),
+            patternRepository.patterns(searchParameters),
             emitsInOrder([
               Pattern([
                 Throw.self(height: 4),

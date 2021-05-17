@@ -6,7 +6,19 @@ import 'package:prechac_this/home/home.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  static const String routeName = '';
+  static const routeName = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => HomeCubit(),
+      child: HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +36,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: BlocProvider(
-          create: (_) => HomeCubit(),
-          child: ConstraintsForm(),
-        ),
+        child: ConstraintsForm(),
       ),
     );
   }

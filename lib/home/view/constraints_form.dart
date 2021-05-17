@@ -1,8 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
-import 'package:prechac_this/home/home.dart';
 import 'package:formz/formz.dart';
+
+import '../../search_results/search_results.dart';
+import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
   ConstraintsForm({Key? key}) : super(key: key);
@@ -17,6 +19,12 @@ class ConstraintsForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Failure')),
             );
+        } else if (state.status.isSubmissionSuccess) {
+          final parameters = state.toSearchParameters();
+          Navigator.pushNamed(
+            context,
+            SearchResultsPage.routeNameWithParameters(parameters),
+          );
         }
       },
       child: Align(

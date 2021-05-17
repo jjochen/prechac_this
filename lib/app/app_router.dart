@@ -1,65 +1,92 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:pattern_repository/pattern_repository.dart';
 
 import '../attributions/attributions.dart';
 import '../home/home.dart';
+import '../search_results/search_results.dart';
 
 class AppRouter {
   static PageRoute pageRoute(
     Widget child,
     RoutingData data,
   ) =>
-      _FadeRoute(
-        child,
-        data.fullRoute,
-        data,
+      MaterialPageRoute(
+        builder: (context) => child,
+        settings: RouteSettings(
+          name: data.fullRoute,
+          arguments: data,
+        ),
       );
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final name = settings.name;
-    final RoutingData data;
-    if (name == null) {
-      data = RoutingData();
-    } else {
-      data = name.routingData;
+    final data = name?.routingData ?? RoutingData();
+
+    Route<dynamic>? route;
+    route ??= _tryParseAttributionsRoute(data);
+    route ??= _tryParseSearchResultsRoute(data);
+    route ??= _homeRoute(data);
+    return route;
+  }
+
+  static PageRoute<dynamic> _homeRoute(RoutingData data) {
+    // TODO: fill form with search parameters
+    //final map = data.queryParameters;
+    //final searchParameters = SearchParameters.fromQueryParameters(map);
+
+    return pageRoute(
+      HomePage(),
+      data,
+    );
+  }
+
+  static PageRoute<dynamic>? _tryParseSearchResultsRoute(RoutingData data) {
+    if (SearchResultsPage.routeName != data.firstPathSegment) {
+      return null;
     }
 
-    final route = data.route;
-    final firstRouteSegment = route.isEmpty ? '' : route.first;
-    switch (firstRouteSegment) {
-      case AttributionsPage.routeName:
-        {
-          return pageRoute(AttributionsPage(), data);
-        }
-      default:
-        {
-          return pageRoute(HomePage(), data);
-        }
+    final map = data.queryParameters;
+    final searchParameters = SearchParameters.fromQueryParameters(map);
+
+    return pageRoute(
+      SearchResultsPage(searchParameters: searchParameters),
+      data,
+    );
+  }
+
+  static PageRoute<dynamic>? _tryParseAttributionsRoute(RoutingData data) {
+    if (AttributionsPage.routeName != data.firstPathSegment) {
+      return null;
     }
+
+    return pageRoute(AttributionsPage(), data);
   }
 }
 
 class RoutingData extends Equatable {
   RoutingData([
-    this.route = const [],
-    Map<String, String> queryParameters = const {},
-  ]) : _queryParameters = queryParameters;
+    this.pathSegments = const [],
+    this.queryParameters = const {},
+  ]);
 
-  final List<String> route;
-  final Map<String, String> _queryParameters;
+  final List<String> pathSegments;
+  final Map<String, String> queryParameters;
 
   @override
-  List<Object?> get props => [route, _queryParameters];
+  List<Object?> get props => [pathSegments, queryParameters];
 
   //@override
   //int get hashCode => route.hashCode;
 
+  String get firstPathSegment => pathSegments.isEmpty ? '' : pathSegments.first;
+
   String get fullRoute => Uri(
-          pathSegments: route,
-          queryParameters: _queryParameters.isEmpty ? null : _queryParameters)
+          pathSegments: pathSegments,
+          queryParameters: queryParameters.isEmpty ? null : queryParameters)
       .toString();
 
-  String? operator [](String key) => _queryParameters[key];
+  String? operator [](String key) => queryParameters[key];
 }
 
 extension RoutingDataString on String {
@@ -71,37 +98,4 @@ extension RoutingDataString on String {
       uri.queryParameters,
     );
   }
-}
-
-class _FadeRoute extends PageRouteBuilder {
-  _FadeRoute(
-    this.child,
-    this.routeName,
-    this.data,
-  ) : super(
-          settings: RouteSettings(
-            name: routeName,
-            arguments: data,
-          ),
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              child,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        );
-
-  final Widget child;
-  final String routeName;
-  final RoutingData data;
 }

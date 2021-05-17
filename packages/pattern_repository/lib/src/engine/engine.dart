@@ -27,7 +27,6 @@ class Engine {
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
 
-// TODO: rename
   Stream<Pattern> fillConstraint(
       {required PatternConstraint patternConstraint}) {
     // * constraint pattern as input

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app_router.dart';
 import 'package:prechac_this/attributions/attributions.dart';
 import 'package:prechac_this/home/home.dart';
+import 'package:prechac_this/search_results/search_results.dart';
 
 void main() {
   group('AppRouter', () {
@@ -46,6 +47,21 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.byType(AttributionsPage), findsOneWidget);
+      });
+
+      testWidgets('results route', (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            initialRoute: 'results'
+                '?number_of_jugglers=2'
+                '&period=4'
+                '&number_of_objects=4'
+                '&max_height=4',
+            onGenerateRoute: AppRouter.generateRoute,
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byType(SearchResultsPage), findsOneWidget);
       });
     });
   });
