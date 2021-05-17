@@ -22,8 +22,7 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchResultsView(),
-    );
+    return SearchResultsView();
   }
 }
 
