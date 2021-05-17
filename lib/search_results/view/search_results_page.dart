@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/app/app_router.dart';
 import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
@@ -33,6 +34,8 @@ class SearchResultsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)?.settings.arguments as RoutingData?;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Results'),
@@ -43,7 +46,7 @@ class SearchResultsView extends StatelessWidget {
             create: (_) => PatternRepository(),
             child: BlocProvider(
               create: (_) => SearchBloc(),
-              child: const Text('Test'),
+              child: Text(data?.fullRoute ?? 'unknown'),
             ),
           )),
     );
