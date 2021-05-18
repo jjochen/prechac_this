@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:pattern_repository/pattern_repository.dart';
-import 'package:prechac_this/screens/home/home.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
+import 'package:pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/screens/home/home.dart';
 
 void main() {
   const numberOfJugglers = NumberOfJugglers.dirty(5);

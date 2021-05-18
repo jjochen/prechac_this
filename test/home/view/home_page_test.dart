@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app_router.dart';
 import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const attributionsButtonKey = Key('homePage_attributions_iconButton');

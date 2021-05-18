@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:prechac_this/screens/attributions/attributions.dart';
 
 void main() {

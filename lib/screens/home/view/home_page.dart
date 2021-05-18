@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prechac_this/screens/attributions/attributions.dart';
-import 'package:prechac_this/screens/home/home.dart';
+
+import '../../attributions/attributions.dart';
+import '../home.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
