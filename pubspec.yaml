@@ -11,8 +11,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  pattern_repository:
-    path: packages/pattern_repository
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   intl: ^0.17.0
@@ -20,6 +18,8 @@ dependencies:
   formz: ^0.4.0
   google_fonts: ^2.0.0
   flutter_spinbox: ^0.5.2
+  fraction: ^3.0.1
+  trotter: ^2.0.0-dev.1
 
 dev_dependencies:
   flutter_test:

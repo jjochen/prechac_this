@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:formz/formz.dart';
-import 'package:pattern_repository/pattern_repository.dart';
+import 'package:meta/meta.dart';
+import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 
 import '../models/models.dart';
 

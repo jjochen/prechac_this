@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 
 import '../screens/attributions/attributions.dart';
 import '../screens/home/home.dart';

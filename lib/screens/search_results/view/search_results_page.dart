@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pattern_repository/pattern_repository.dart';
 
 import '../../../app/app_router.dart';
+import '../../../repositories/pattern_repository/pattern_repository.dart';
 
 class SearchResultsPage extends StatelessWidget {
   SearchResultsPage({
