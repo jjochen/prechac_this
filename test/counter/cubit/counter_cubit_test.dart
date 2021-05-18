@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:prechac_this/counter/counter.dart';
+import 'package:prechac_this/screens/counter/counter.dart';
 
 void main() {
   group('CounterCubit', () {

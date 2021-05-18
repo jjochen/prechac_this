@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:prechac_this/home/home.dart';
+import 'package:prechac_this/screens/home/home.dart';
 
 import '../l10n/l10n.dart';
 import 'app_router.dart';

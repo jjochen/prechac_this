@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prechac_this/app/app_router.dart';
-import 'package:prechac_this/attributions/attributions.dart';
-import 'package:prechac_this/home/home.dart';
+import 'package:prechac_this/screens/attributions/attributions.dart';
+import 'package:prechac_this/screens/home/home.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
