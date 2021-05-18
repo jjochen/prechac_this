@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:pattern_repository/pattern_repository.dart';
 
-import '../attributions/attributions.dart';
-import '../home/home.dart';
-import '../search_results/search_results.dart';
+import '../repositories/pattern_repository/pattern_repository.dart';
+import '../screens/attributions/attributions.dart';
+import '../screens/home/home.dart';
+import '../screens/search_results/search_results.dart';
 
 class AppRouter {
   static PageRoute pageRoute(

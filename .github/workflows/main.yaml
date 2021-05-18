@@ -14,14 +14,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        directory:
-          [
-            '.',
-            'packages/pattern_repository',
-          ]
-      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -33,23 +25,18 @@ jobs:
           channel: stable
 
       - name: Print Flutter/Dart version
-        working-directory: ${{ matrix.directory }}
         run: flutter --version
 
       - name: Install dependencies
-        working-directory: ${{ matrix.directory }}
         run: flutter packages get
 
       - name: Verify formatting
-        working-directory: ${{ matrix.directory }}
         run: flutter format --dry-run --set-exit-if-changed .
 
       - name: Analyze project source
-        working-directory: ${{ matrix.directory }}
         run: flutter analyze
 
       - name: Run tests
-        working-directory: ${{ matrix.directory }}
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
 
       - name: Upload coverage to Codecov
@@ -57,5 +44,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          path_to_write_report: '${{ matrix.directory }}/coverage/codecov_report.txt'
+          path_to_write_report: coverage/codecov_report.txt
           verbose: true

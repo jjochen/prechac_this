@@ -178,7 +178,7 @@ packages:
     source: hosted
     version: "0.4.0"
   fraction:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: fraction
       url: "https://pub.dartlang.org"
@@ -338,13 +338,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  pattern_repository:
-    dependency: "direct main"
-    description:
-      path: "packages/pattern_repository"
-      relative: true
-    source: path
-    version: "0.0.0"
   pedantic:
     dependency: transitive
     description:
@@ -448,13 +441,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -505,7 +491,7 @@ packages:
     source: hosted
     version: "0.3.15"
   trotter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: trotter
       url: "https://pub.dartlang.org"
