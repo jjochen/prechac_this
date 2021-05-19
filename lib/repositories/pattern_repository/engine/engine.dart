@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:async/async.dart';
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
@@ -27,8 +26,8 @@ class Engine {
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
 
-  Stream<Pattern> fillConstraint(
-      {required PatternConstraint patternConstraint}) {
+  Future<List<Pattern>> fillConstraint(
+      {required PatternConstraint patternConstraint}) async {
     // * constraint pattern as input
     //   > 4 _ 1 _p1
     // * calculate missing landing sites
@@ -45,7 +44,8 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
-    var streams = <Stream<Pattern>>[];
+    var setOfPatterns = <Pattern>{};
+
     final permutations = patternConstraint.permutationsOfPossibleLandingSites(
         prechator: prechator);
     for (final landingSites in permutations) {
@@ -69,10 +69,11 @@ class Engine {
                     numberOfJugglers: numberOfJugglers,
                   ))
               .map((pattern) => pattern.normalize());
-      streams.add(Stream.fromIterable(cartesianProduct));
+      setOfPatterns.addAll(cartesianProduct);
     }
 
-    return StreamGroup.merge(streams);
+    final listOfPatterns = setOfPatterns.toList()..sort();
+    return listOfPatterns;
   }
 
   Fraction get prechator {

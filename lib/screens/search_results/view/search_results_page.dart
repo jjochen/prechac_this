@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/app_router.dart';
 import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
   SearchResultsPage({
@@ -21,7 +23,12 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchResultsView();
+    return BlocProvider(
+      create: (_) => PatternsBloc(
+        patternRepository: PatternRepository(),
+      )..add(LoadPatterns(searchParameters)),
+      child: SearchResultsView(),
+    );
   }
 }
 
