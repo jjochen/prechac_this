@@ -20,6 +20,10 @@ class CartesianProductIterator<E> extends Iterator<List<E>> {
 
   @override
   bool moveNext() {
+    if (lengths.contains(0)) {
+      return false;
+    }
+
     return _moveNextAtIndex(lists.length - 1);
   }
 

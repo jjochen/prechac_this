@@ -12,7 +12,7 @@ part 'patterns_state.dart';
 class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
   PatternsBloc({
     required PatternRepository patternRepository,
-  })   : _patternRepository = patternRepository,
+  })  : _patternRepository = patternRepository,
         super(PatternsInitial());
 
   final PatternRepository _patternRepository;

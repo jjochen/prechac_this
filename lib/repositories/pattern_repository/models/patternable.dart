@@ -1,11 +1,12 @@
 import 'dart:collection';
 
-import '../core/core.dart';
+import 'package:equatable/equatable.dart';
 
+import '../core/core.dart';
 import 'throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
-    with Comparable<P>, Compare<P>, IterableMixin<T> {
+    with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {
   const Patternable(this.throwSequence);
 
   final List<T> throwSequence;
@@ -37,6 +38,9 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     required T newThrow,
     required int index,
   });
+
+  @override
+  List<Object?> get props => [throwSequence];
 
   @override
   String toString() {
