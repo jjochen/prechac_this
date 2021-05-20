@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
@@ -26,8 +24,7 @@ class Engine {
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
 
-  Future<List<Pattern>> fillConstraint(
-      {required PatternConstraint patternConstraint}) async {
+  List<Pattern> fillConstraint({required PatternConstraint patternConstraint}) {
     // * constraint pattern as input
     //   > 4 _ 1 _p1
     // * calculate missing landing sites
