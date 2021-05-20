@@ -20,8 +20,8 @@ void main() {
       expect(
           patternRepository.patterns(searchParameters).then((pattern) {
             expect(pattern, [
-              Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
               Pattern([Throw.pass(height: 3), Throw.pass(height: 1)]),
+              Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
             ]);
           }),
           completes);

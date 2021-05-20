@@ -72,7 +72,8 @@ class Engine {
       setOfPatterns.addAll(cartesianProduct);
     }
 
-    final listOfPatterns = setOfPatterns.toList()..sort();
+    final listOfPatterns = setOfPatterns.toList()
+      ..sort((b, a) => a.compareTo(b));
     return listOfPatterns;
   }
 
