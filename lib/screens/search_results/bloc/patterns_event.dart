@@ -2,9 +2,6 @@ part of 'patterns_bloc.dart';
 
 abstract class PatternsEvent extends Equatable {
   const PatternsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class LoadPatterns extends PatternsEvent {
