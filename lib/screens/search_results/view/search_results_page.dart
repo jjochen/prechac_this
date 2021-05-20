@@ -43,7 +43,7 @@ class SearchResultsView extends StatelessWidget {
         body:
             BlocBuilder<PatternsBloc, PatternsState>(builder: (context, state) {
           if (state is PatternsLoading) {
-            return const Text('loading...');
+            return const Text('Loading ...');
           } else if (state is PatternsLoaded) {
             final patterns = state.patterns;
             return Text(patterns.map((e) => e.toString()).join('\n'));

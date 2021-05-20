@@ -27,9 +27,7 @@ class PatternRepository {
       ThrowConstraint.placeholder(),
     );
     final patternConstraint = PatternConstraint(throwSequence);
-    return Future(() {
-      return engine.fillConstraint(patternConstraint: patternConstraint);
-    });
+    return engine.fillConstraint(patternConstraint: patternConstraint);
   }
 
   Pattern prechacThisThrow({
