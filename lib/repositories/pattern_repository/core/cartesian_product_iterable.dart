@@ -17,10 +17,12 @@ class CartesianProductIterator<E> extends Iterator<List<E>> {
   final List<List<E>> lists;
   final List<int> indeces;
   final List<int> lengths;
+  late bool isEmpty = _getIsEmpty();
+  bool _getIsEmpty() => lengths.contains(0);
 
   @override
   bool moveNext() {
-    if (lengths.contains(0)) {
+    if (isEmpty) {
       return false;
     }
 
