@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
 
-abstract class Throwable with Comparable<Throwable>, Compare<Throwable> {
+abstract class Throwable
+    with Comparable<Throwable>, Compare<Throwable>, EquatableMixin {
   const Throwable();
 
   Fraction? get height;
@@ -19,6 +21,9 @@ abstract class Throwable with Comparable<Throwable>, Compare<Throwable> {
   bool get isPlaceholder {
     return passingIndex == null && height == null;
   }
+
+  @override
+  List<Object?> get props => [height, passingIndex];
 
   @override
   String toString() {

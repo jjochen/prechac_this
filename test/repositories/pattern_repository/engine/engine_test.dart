@@ -23,17 +23,18 @@ void main() {
         ]);
       });
 
-      test('finds correct patterns', () async {
-        await expectLater(
-            engine.fillConstraint(patternConstraint: patternConstraint),
-            emitsInOrder([
-              Pattern([
-                Throw.self(height: 4),
-                Throw(height: Fraction(4, 3), passingIndex: 1),
-                Throw.self(height: 1),
-                Throw(height: Fraction(5, 3), passingIndex: 2),
-              ]),
-            ]));
+      test('finds correct patterns', () {
+        expect(
+          engine.fillConstraint(patternConstraint: patternConstraint),
+          [
+            Pattern([
+              Throw.self(height: 4),
+              Throw(height: Fraction(4, 3), passingIndex: 1),
+              Throw.self(height: 1),
+              Throw(height: Fraction(5, 3), passingIndex: 2),
+            ]),
+          ],
+        );
       });
 
       test('calculates possible throws', () {
@@ -104,17 +105,18 @@ void main() {
         ]);
       });
 
-      test('finds correct patterns', () async {
-        await expectLater(
-            engine.fillConstraint(patternConstraint: patternConstraint),
-            emitsInOrder([
-              Pattern([
-                Throw.self(height: 4),
-                Throw.pass(height: 2),
-                Throw.self(height: 1),
-                Throw.pass(height: 1),
-              ]),
-            ]));
+      test('finds correct patterns', () {
+        expect(
+          engine.fillConstraint(patternConstraint: patternConstraint),
+          [
+            Pattern([
+              Throw.self(height: 4),
+              Throw.pass(height: 2),
+              Throw.self(height: 1),
+              Throw.pass(height: 1),
+            ]),
+          ],
+        );
       });
 
       test('calculates possible throws', () {

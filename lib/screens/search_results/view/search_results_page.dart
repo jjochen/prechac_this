@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/app_router.dart';
 import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
   SearchResultsPage({
@@ -21,7 +22,12 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchResultsView();
+    return BlocProvider(
+      create: (_) => PatternsBloc(
+        patternRepository: PatternRepository(),
+      )..add(LoadPatterns(searchParameters)),
+      child: SearchResultsView(),
+    );
   }
 }
 
@@ -30,16 +36,20 @@ class SearchResultsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)?.settings.arguments as RoutingData?;
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Results'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(data?.fullRoute ?? 'unknown'),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Results'),
+        ),
+        body:
+            BlocBuilder<PatternsBloc, PatternsState>(builder: (context, state) {
+          if (state is PatternsLoading) {
+            return const Text('Loading ...');
+          } else if (state is PatternsLoaded) {
+            final patterns = state.patterns;
+            return Text(patterns.map((e) => e.toString()).join('\n'));
+          } else {
+            return Container();
+          }
+        }));
   }
 }

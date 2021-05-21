@@ -8,7 +8,7 @@ import 'models/models.dart';
 export 'models/models.dart';
 
 class PatternRepository {
-  Stream<Pattern> patterns(SearchParameters parameters) {
+  Future<List<Pattern>> patterns(SearchParameters parameters) async {
     final minNumberOfPasses =
         parameters.minNumberOfPasses < 0 ? null : parameters.minNumberOfPasses;
     final maxNumberOfPasses =
@@ -22,12 +22,11 @@ class PatternRepository {
       minNumberOfPasses: minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses,
     );
-    final patternConstraint = PatternConstraint([
-      ThrowConstraint.self(height: 4),
+    final throwSequence = List.filled(
+      parameters.period,
       ThrowConstraint.placeholder(),
-      ThrowConstraint.self(height: 1),
-      ThrowConstraint.placeholder(),
-    ]);
+    );
+    final patternConstraint = PatternConstraint(throwSequence);
     return engine.fillConstraint(patternConstraint: patternConstraint);
   }
 
