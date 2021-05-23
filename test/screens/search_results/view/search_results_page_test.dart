@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -69,8 +70,7 @@ void main() {
           child: SearchResultsView(),
         ),
       );
-      // TODO
-      expect(find.text('4, 2p1, 1, 1p1'), findsOneWidget);
+      expect(find.byKey(Key('__pattern_item_$pattern')), findsOneWidget);
     });
   });
 }
