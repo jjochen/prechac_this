@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
 import '../../../repositories/pattern_repository/pattern_repository.dart';
@@ -54,8 +53,7 @@ class SearchResultsView extends StatelessWidget {
                 final pattern = patterns[index];
                 return PatternItem(
                   pattern: pattern,
-                  onTap: () =>
-                      Navigator.pushNamed(context, AttributionsPage.routeName),
+                  //   onTap: () => Navigator.pushNamed(context, route),
                 );
               },
             );

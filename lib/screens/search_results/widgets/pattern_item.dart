@@ -7,11 +7,11 @@ class PatternItem extends StatelessWidget {
   PatternItem({
     Key? key,
     required this.pattern,
-    required this.onTap,
+    this.onTap,
   }) : super(key: key);
 
   final Pattern pattern;
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
