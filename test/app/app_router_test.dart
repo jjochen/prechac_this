@@ -5,6 +5,8 @@ import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
+import '../helpers/helpers.dart';
+
 void main() {
   group('AppRouter', () {
     group('generates route', () {
@@ -18,47 +20,30 @@ void main() {
 
     group('renders page for', () {
       testWidgets('empty route', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            onGenerateRoute: AppRouter.generateRoute,
-          ),
-        );
+        await tester.pumpApp(route: null);
         await tester.pumpAndSettle();
         expect(find.byType(HomePage), findsOneWidget);
       });
 
       testWidgets('unknown route', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            initialRoute: 'whaaaaaat',
-            onGenerateRoute: AppRouter.generateRoute,
-          ),
-        );
+        await tester.pumpApp(route: 'whaaaaaat?');
         await tester.pumpAndSettle();
         expect(find.byType(HomePage), findsOneWidget);
       });
 
       testWidgets('attributions route', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            initialRoute: AttributionsPage.routeName,
-            onGenerateRoute: AppRouter.generateRoute,
-          ),
-        );
+        await tester.pumpApp(route: AttributionsPage.routeName);
         await tester.pumpAndSettle();
         expect(find.byType(AttributionsPage), findsOneWidget);
       });
 
       testWidgets('results route', (tester) async {
-        await tester.pumpWidget(
-          const MaterialApp(
-            initialRoute: 'results'
-                '?number_of_jugglers=2'
-                '&period=4'
-                '&number_of_objects=4'
-                '&max_height=4',
-            onGenerateRoute: AppRouter.generateRoute,
-          ),
+        await tester.pumpApp(
+          route: 'results'
+              '?number_of_jugglers=2'
+              '&period=4'
+              '&number_of_objects=4'
+              '&max_height=4',
         );
         await tester.pumpAndSettle();
         expect(find.byType(SearchResultsPage), findsOneWidget);

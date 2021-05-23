@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/app/app_router.dart';
 import 'package:prechac_this/screens/home/home.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
+
+import '../../../helpers/helpers.dart';
 
 class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
@@ -43,13 +44,11 @@ void main() {
     group('calls', () {
       testWidgets('numberOfJugglersChanged when number of jugglers changes',
           (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -60,13 +59,11 @@ void main() {
       });
 
       testWidgets('periodChanged when period changes', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -78,13 +75,11 @@ void main() {
       testWidgets(
           'numberOfObjectsChanged '
           'when number of objects changes', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -95,13 +90,11 @@ void main() {
       });
 
       testWidgets('maxHeightChanged when max height changes', (tester) async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -115,13 +108,11 @@ void main() {
           const HomeState(status: FormzStatus.valid),
         );
         when(() => homeCubit.submit()).thenAnswer((_) async => null);
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -139,13 +130,11 @@ void main() {
             HomeState(status: FormzStatus.submissionFailure),
           ]),
         );
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -160,13 +149,11 @@ void main() {
         when(() => numberOfJugglers.invalid).thenReturn(true);
         when(() => homeCubit.state)
             .thenReturn(HomeState(numberOfJugglers: numberOfJugglers));
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -178,13 +165,11 @@ void main() {
         final period = MockPeriod();
         when(() => period.invalid).thenReturn(true);
         when(() => homeCubit.state).thenReturn(HomeState(period: period));
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -198,13 +183,11 @@ void main() {
         when(() => numberOfObjects.invalid).thenReturn(true);
         when(() => homeCubit.state)
             .thenReturn(HomeState(numberOfObjects: numberOfObjects));
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -216,13 +199,11 @@ void main() {
         final maxHeight = MockMaxHeight();
         when(() => maxHeight.invalid).thenReturn(true);
         when(() => homeCubit.state).thenReturn(HomeState(maxHeight: maxHeight));
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -234,13 +215,11 @@ void main() {
         when(() => homeCubit.state).thenReturn(
           const HomeState(status: FormzStatus.invalid),
         );
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -255,13 +234,11 @@ void main() {
         when(() => homeCubit.state).thenReturn(
           const HomeState(status: FormzStatus.valid),
         );
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );
@@ -282,14 +259,11 @@ void main() {
             HomeState(status: FormzStatus.submissionSuccess),
           ]),
         );
-        await tester.pumpWidget(
-          MaterialApp(
-            onGenerateRoute: AppRouter.generateRoute,
-            home: Scaffold(
-              body: BlocProvider.value(
-                value: homeCubit,
-                child: ConstraintsForm(),
-              ),
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: homeCubit,
+              child: ConstraintsForm(),
             ),
           ),
         );

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
+import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
 import '../../../helpers/helpers.dart';
 
@@ -30,7 +31,7 @@ void main() {
   group('SearchResultsPage', () {
     testWidgets('renders SearchResultsView', (tester) async {
       await tester.pumpApp(
-        SearchResultsPage(
+        widget: SearchResultsPage(
           searchParameters: searchParameters,
         ),
       );
@@ -51,20 +52,19 @@ void main() {
       final state = PatternsLoading();
       when(() => searchResultsBloc.state).thenReturn(state);
       await tester.pumpApp(
-        BlocProvider.value(
+        widget: BlocProvider.value(
           value: searchResultsBloc,
           child: SearchResultsView(),
         ),
       );
-      // TODO
-      expect(find.text('Loading ...'), findsOneWidget);
+      expect(find.byType(LoadingIndicator), findsOneWidget);
     });
 
     testWidgets('renders list of patterns', (tester) async {
       final state = PatternsLoaded([pattern]);
       when(() => searchResultsBloc.state).thenReturn(state);
       await tester.pumpApp(
-        BlocProvider.value(
+        widget: BlocProvider.value(
           value: searchResultsBloc,
           child: SearchResultsView(),
         ),
