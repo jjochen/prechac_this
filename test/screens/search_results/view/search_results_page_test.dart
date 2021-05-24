@@ -1,9 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
+import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
 import '../../../helpers/helpers.dart';
 
@@ -30,7 +32,7 @@ void main() {
   group('SearchResultsPage', () {
     testWidgets('renders SearchResultsView', (tester) async {
       await tester.pumpApp(
-        SearchResultsPage(
+        widget: SearchResultsPage(
           searchParameters: searchParameters,
         ),
       );
@@ -51,26 +53,24 @@ void main() {
       final state = PatternsLoading();
       when(() => searchResultsBloc.state).thenReturn(state);
       await tester.pumpApp(
-        BlocProvider.value(
+        widget: BlocProvider.value(
           value: searchResultsBloc,
           child: SearchResultsView(),
         ),
       );
-      // TODO
-      expect(find.text('Loading ...'), findsOneWidget);
+      expect(find.byType(LoadingIndicator), findsOneWidget);
     });
 
     testWidgets('renders list of patterns', (tester) async {
       final state = PatternsLoaded([pattern]);
       when(() => searchResultsBloc.state).thenReturn(state);
       await tester.pumpApp(
-        BlocProvider.value(
+        widget: BlocProvider.value(
           value: searchResultsBloc,
           child: SearchResultsView(),
         ),
       );
-      // TODO
-      expect(find.text('4, 2p1, 1, 1p1'), findsOneWidget);
+      expect(find.byKey(Key('__pattern_item_$pattern')), findsOneWidget);
     });
   });
 }

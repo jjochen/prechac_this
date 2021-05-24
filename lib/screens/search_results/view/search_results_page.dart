@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
 import '../../../repositories/pattern_repository/pattern_repository.dart';
 import '../search_results.dart';
@@ -37,19 +38,30 @@ class SearchResultsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Results'),
-        ),
-        body:
-            BlocBuilder<PatternsBloc, PatternsState>(builder: (context, state) {
+      appBar: AppBar(
+        title: const Text('Results'),
+      ),
+      body: BlocBuilder<PatternsBloc, PatternsState>(
+        builder: (context, state) {
           if (state is PatternsLoading) {
-            return const Text('Loading ...');
+            return LoadingIndicator();
           } else if (state is PatternsLoaded) {
             final patterns = state.patterns;
-            return Text(patterns.map((e) => e.toString()).join('\n'));
+            return ListView.builder(
+              itemCount: patterns.length,
+              itemBuilder: (context, index) {
+                final pattern = patterns[index];
+                return PatternItem(
+                  pattern: pattern,
+                  //   onTap: () => Navigator.pushNamed(context, route),
+                );
+              },
+            );
           } else {
             return Container();
           }
-        }));
+        },
+      ),
+    );
   }
 }
