@@ -4,7 +4,7 @@ abstract class PatternsState extends Equatable {
   const PatternsState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class PatternsInitial extends PatternsState {}
@@ -17,7 +17,14 @@ class PatternsLoaded extends PatternsState {
   final List<Pattern> patterns;
 
   @override
-  List<Object> get props => [patterns];
+  List<Object?> get props => [patterns];
 }
 
-class PatternsNotLoaded extends PatternsState {}
+class PatternsNotLoaded extends PatternsState {
+  const PatternsNotLoaded([this.error]);
+
+  final Error? error;
+
+  @override
+  List<Object?> get props => [error];
+}

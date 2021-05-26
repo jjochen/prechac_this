@@ -24,17 +24,26 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
       yield* _mapLoadPatternsToState(event);
     } else if (event is PatternsUpdated) {
       yield* _mapPatternsUpdatedToState(event);
+    } else if (event is PatternsNotUpdated) {
+      yield* _mapPatternsNotUpdatedToState(event);
     }
   }
 
   Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
     yield PatternsLoading();
-    final patterns = await _patternsRepository.patterns(event.searchParameters);
-    add(PatternsUpdated(patterns));
+    final future = _patternsRepository.patterns(event.searchParameters);
+    await future
+        .then((patterns) => add(PatternsUpdated(patterns)))
+        .catchError((error) => add(PatternsNotUpdated(error)));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(
       PatternsUpdated event) async* {
     yield PatternsLoaded(event.patterns);
+  }
+
+  Stream<PatternsState> _mapPatternsNotUpdatedToState(
+      PatternsNotUpdated event) async* {
+    yield PatternsNotLoaded(event.error);
   }
 }
