@@ -20,6 +20,7 @@ dependencies:
   flutter_spinbox: ^0.5.2
   fraction: ^3.0.1
   trotter: ^2.0.0-dev.1
+  dartx: ^0.7.1
 
 dev_dependencies:
   flutter_test:
