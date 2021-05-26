@@ -39,11 +39,7 @@ void main() {
 
       testWidgets('results route', (tester) async {
         await tester.pumpApp(
-          route: 'results'
-              '?number_of_jugglers=2'
-              '&period=4'
-              '&number_of_objects=4'
-              '&max_height=4',
+          route: SearchResultsPage.routeNameWithParameters(mockParameters),
         );
         await tester.pumpAndSettle();
         expect(find.byType(SearchResultsPage), findsOneWidget);

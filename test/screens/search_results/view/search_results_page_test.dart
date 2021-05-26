@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
@@ -15,25 +14,11 @@ class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
 class FakePatternsEvent extends Fake implements PatternsEvent {}
 
 void main() {
-  final searchParameters = SearchParameters(
-    numberOfJugglers: 2,
-    period: 4,
-    numberOfObjects: 4,
-    maxHeight: 4,
-  );
-
-  final pattern = Pattern([
-    Throw.self(height: 4),
-    Throw.pass(height: 2),
-    Throw.self(height: 1),
-    Throw.pass(height: 1),
-  ]);
-
   group('SearchResultsPage', () {
     testWidgets('renders SearchResultsView', (tester) async {
       await tester.pumpApp(
         widget: SearchResultsPage(
-          searchParameters: searchParameters,
+          searchParameters: mockParameters,
         ),
       );
       expect(find.byType(SearchResultsView), findsOneWidget);
@@ -62,7 +47,7 @@ void main() {
     });
 
     testWidgets('renders list of patterns', (tester) async {
-      final state = PatternsLoaded([pattern]);
+      final state = PatternsLoaded([mockPattern]);
       when(() => searchResultsBloc.state).thenReturn(state);
       await tester.pumpApp(
         widget: BlocProvider.value(
@@ -70,7 +55,7 @@ void main() {
           child: SearchResultsView(),
         ),
       );
-      expect(find.byKey(Key('__pattern_item_$pattern')), findsOneWidget);
+      expect(find.byKey(Key('__pattern_item_$mockPattern')), findsOneWidget);
     });
   });
 }
