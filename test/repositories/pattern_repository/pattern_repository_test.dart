@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
 
+import '../../helpers/helpers.dart';
+
 void main() {
   group('PatternRepository', () {
     late PatternRepository patternRepository;
@@ -28,15 +30,9 @@ void main() {
     });
 
     test('prechac this throw up', () {
-      final pattern = Pattern([
-        Throw.self(height: 4),
-        Throw.pass(height: 2),
-        Throw.self(height: 1),
-        Throw.pass(height: 1),
-      ]);
       expect(
           patternRepository.prechacThisThrow(
-            pattern: pattern,
+            pattern: mockPattern,
             index: 1,
             direction: PrechacDirection.up,
             numberOfJugglers: 2,
@@ -50,15 +46,9 @@ void main() {
     });
 
     test('prechac this throw down', () {
-      final pattern = Pattern([
-        Throw.self(height: 4),
-        Throw.pass(height: 2),
-        Throw.self(height: 1),
-        Throw.pass(height: 1),
-      ]);
       expect(
           patternRepository.prechacThisThrow(
-            pattern: pattern,
+            pattern: mockPattern,
             index: 0,
             direction: PrechacDirection.down,
             numberOfJugglers: 2,
