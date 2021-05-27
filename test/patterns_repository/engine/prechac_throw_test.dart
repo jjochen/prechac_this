@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/repositories/pattern_repository/engine/prechac_throw.dart';
-import 'package:prechac_this/repositories/pattern_repository/models/throw.dart';
-import 'package:prechac_this/repositories/pattern_repository/models/throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/engine/prechac_throw.dart';
+import 'package:prechac_this/patterns_repository/models/throw.dart';
+import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
 
 void main() {
   group('PrechacThrow', () {

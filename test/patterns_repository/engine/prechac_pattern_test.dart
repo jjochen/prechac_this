@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/repositories/pattern_repository/engine/prechac_pattern.dart';
+import 'package:prechac_this/patterns_repository/engine/prechac_pattern.dart';
 
-import '../../../helpers/helpers.dart';
+import '../../helpers/helpers.dart';
 
 void main() {
   group('PrechacPattern', () {

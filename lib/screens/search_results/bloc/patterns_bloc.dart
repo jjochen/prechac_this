@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../../../patterns_repository/patterns_repository.dart';
 
 part 'patterns_event.dart';
 part 'patterns_state.dart';
 
 class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
   PatternsBloc({
-    required PatternRepository patternRepository,
-  })  : _patternRepository = patternRepository,
+    required PatternsRepository patternsRepository,
+  })  : _patternsRepository = patternsRepository,
         super(PatternsInitial());
 
-  final PatternRepository _patternRepository;
+  final PatternsRepository _patternsRepository;
 
   @override
   Stream<PatternsState> mapEventToState(
@@ -29,7 +29,7 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
     yield PatternsLoading();
-    final patterns = await _patternRepository.patterns(event.searchParameters);
+    final patterns = await _patternsRepository.patterns(event.searchParameters);
     add(PatternsUpdated(patterns));
   }
 

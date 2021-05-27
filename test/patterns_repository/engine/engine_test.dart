@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/repositories/pattern_repository/engine/engine.dart';
-import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/patterns_repository/engine/engine.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 void main() {
   group('Engine', () {

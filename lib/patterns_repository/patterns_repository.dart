@@ -7,7 +7,7 @@ import 'models/models.dart';
 
 export 'models/models.dart';
 
-class PatternRepository {
+class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
     final minNumberOfPasses =
         parameters.minNumberOfPasses < 0 ? null : parameters.minNumberOfPasses;

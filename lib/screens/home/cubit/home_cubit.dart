@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:meta/meta.dart';
 
-import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../../../patterns_repository/patterns_repository.dart';
 import '../models/models.dart';
 
 part 'home_state.dart';
