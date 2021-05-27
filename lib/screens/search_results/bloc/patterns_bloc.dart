@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../../../pattern_repository/pattern_repository.dart';
 
 part 'patterns_event.dart';
 part 'patterns_state.dart';

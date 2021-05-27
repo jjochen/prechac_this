@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/pattern_repository/pattern_repository.dart';
 
-import '../../helpers/helpers.dart';
+import '../helpers/helpers.dart';
 
 void main() {
   group('PatternRepository', () {

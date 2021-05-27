@@ -2,7 +2,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../../../helpers/helpers.dart';

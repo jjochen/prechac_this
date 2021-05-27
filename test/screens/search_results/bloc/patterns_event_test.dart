@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/repositories/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/pattern_repository/pattern_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 void main() {

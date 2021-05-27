@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/repositories/pattern_repository/engine/landing_sites.dart';
+import 'package:prechac_this/pattern_repository/engine/landing_sites.dart';
 
 void main() {
   group('List of landing sites', () {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prechac_this/screens/search_results/widgets/widgets.dart';
 
-import '../../../repositories/pattern_repository/pattern_repository.dart';
+import '../../../pattern_repository/pattern_repository.dart';
 import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
