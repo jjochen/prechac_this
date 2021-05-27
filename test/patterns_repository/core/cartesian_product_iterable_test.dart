@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/pattern_repository/core/cartesian_product_iterable.dart';
+import 'package:prechac_this/patterns_repository/core/cartesian_product_iterable.dart';
 
 void main() {
   group('CartesianProductIterable', () {

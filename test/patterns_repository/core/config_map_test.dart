@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/pattern_repository/core/config_map.dart';
+import 'package:prechac_this/patterns_repository/core/config_map.dart';
 
 void main() {
   group('ConfigMap', () {

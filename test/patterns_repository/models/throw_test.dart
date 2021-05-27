@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/pattern_repository/models/throw.dart';
+import 'package:prechac_this/patterns_repository/models/throw.dart';
 
 void main() {
   group('Throw', () {

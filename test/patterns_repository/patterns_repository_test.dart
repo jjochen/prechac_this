@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../helpers/helpers.dart';
 
 void main() {
-  group('PatternRepository', () {
-    late PatternRepository patternRepository;
+  group('PatternsRepository', () {
+    late PatternsRepository patternsRepository;
     setUp(() {
-      patternRepository = PatternRepository();
+      patternsRepository = PatternsRepository();
     });
 
     test('findes correct for search parameters', () async {
@@ -20,7 +20,7 @@ void main() {
         maxNumberOfPasses: 2,
       );
       expect(
-          patternRepository.patterns(searchParameters).then((pattern) {
+          patternsRepository.patterns(searchParameters).then((pattern) {
             expect(pattern, [
               Pattern([Throw.pass(height: 3), Throw.pass(height: 1)]),
               Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
@@ -31,7 +31,7 @@ void main() {
 
     test('prechac this throw up', () {
       expect(
-          patternRepository.prechacThisThrow(
+          patternsRepository.prechacThisThrow(
             pattern: mockPattern,
             index: 1,
             direction: PrechacDirection.up,
@@ -47,7 +47,7 @@ void main() {
 
     test('prechac this throw down', () {
       expect(
-          patternRepository.prechacThisThrow(
+          patternsRepository.prechacThisThrow(
             pattern: mockPattern,
             index: 0,
             direction: PrechacDirection.down,

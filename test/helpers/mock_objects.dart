@@ -1,4 +1,4 @@
-import 'package:prechac_this/pattern_repository/pattern_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 final mockParameters = SearchParameters(
   numberOfJugglers: 2,

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/pattern_repository/models/search_parameters.dart';
+import 'package:prechac_this/patterns_repository/models/search_parameters.dart';
 
 void main() {
   group('SearchParameters', () {
