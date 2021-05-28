@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../bloc/patterns_bloc.dart';
 import '../l10n/l10n.dart';
+import '../patterns_repository/patterns_repository.dart';
 import '../screens/home/home.dart';
 import 'app_router.dart';
 import 'theme.dart';
@@ -11,15 +14,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      initialRoute: HomePage.routeName,
-      onGenerateRoute: AppRouter.generateRoute,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
+    return BlocProvider(
+      create: (_) => PatternsBloc(
+        patternsRepository: PatternsRepository(),
+      ),
+      child: MaterialApp(
+        theme: theme,
+        initialRoute: HomePage.routeName,
+        onGenerateRoute: AppRouter.generateRoute,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+      ),
     );
   }
 }
