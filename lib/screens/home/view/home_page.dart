@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 
+import '../../../patterns_bloc/patterns_bloc.dart';
 import '../../attributions/attributions.dart';
 import '../home.dart';
 

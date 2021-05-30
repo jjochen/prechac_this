@@ -4,9 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
-import 'package:prechac_this/screens/home/home.dart';
+
+import '../../../patterns_bloc/patterns_bloc.dart';
+import '../../../patterns_repository/patterns_repository.dart';
+import '../home.dart';
 
 part 'constraints_form_event.dart';
 part 'constraints_form_state.dart';
