@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 
 import '../../attributions/attributions.dart';
 import '../home.dart';
@@ -12,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(),
+      create: (_) => ConstraintsFormBloc(
+        patternsBloc: BlocProvider.of<PatternsBloc>(context),
+      ),
       child: HomeView(),
     );
   }

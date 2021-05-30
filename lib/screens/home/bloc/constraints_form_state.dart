@@ -1,13 +1,14 @@
-part of 'home_cubit.dart';
+part of 'constraints_form_bloc.dart';
 
 @immutable
-class HomeState extends Equatable {
-  const HomeState({
+class ConstraintsFormState extends Equatable {
+  const ConstraintsFormState({
     this.numberOfJugglers = const NumberOfJugglers.pure(),
     this.period = const Period.pure(),
     this.numberOfObjects = const NumberOfObjects.pure(),
     this.maxHeight = const MaxHeight.pure(),
     this.status = FormzStatus.valid,
+    this.errorMessage = '',
   });
 
   final NumberOfJugglers numberOfJugglers;
@@ -15,6 +16,7 @@ class HomeState extends Equatable {
   final NumberOfObjects numberOfObjects;
   final MaxHeight maxHeight;
   final FormzStatus status;
+  final String errorMessage;
 
   @override
   List<Object> get props => [
@@ -23,21 +25,24 @@ class HomeState extends Equatable {
         numberOfObjects,
         maxHeight,
         status,
+        errorMessage,
       ];
 
-  HomeState copyWith({
+  ConstraintsFormState copyWith({
     NumberOfJugglers? numberOfJugglers,
     Period? period,
     NumberOfObjects? numberOfObjects,
     MaxHeight? maxHeight,
     FormzStatus? status,
+    String? errorMessage,
   }) {
-    return HomeState(
+    return ConstraintsFormState(
       numberOfJugglers: numberOfJugglers ?? this.numberOfJugglers,
       period: period ?? this.period,
       numberOfObjects: numberOfObjects ?? this.numberOfObjects,
       maxHeight: maxHeight ?? this.maxHeight,
       status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
