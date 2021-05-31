@@ -63,10 +63,10 @@ class MaxNumberOfPassesDidChange extends ConstraintsFormEvent {
 
 class Submit extends ConstraintsFormEvent {}
 
-class PattersDidLoad extends ConstraintsFormEvent {}
+class PatternsDidLoad extends ConstraintsFormEvent {}
 
-class PattersDidNotLoad extends ConstraintsFormEvent {
-  const PattersDidNotLoad(this.errorMessage);
+class PatternsDidNotLoad extends ConstraintsFormEvent {
+  const PatternsDidNotLoad(this.errorMessage);
 
   final String errorMessage;
 

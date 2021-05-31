@@ -20,7 +20,7 @@ class ConstraintsFormBloc
     _patternsSubscription = patternsBloc.stream.listen(
       (state) {
         if (state is PatternsLoaded) {
-          add(PattersDidLoad());
+          add(PatternsDidLoad());
         }
         // TODO: PatternsNotLoaded
       },
@@ -44,9 +44,9 @@ class ConstraintsFormBloc
       yield* _mapMaxHeightDidChangeToState(event);
     } else if (event is Submit) {
       yield* _mapSubmitToState(event);
-    } else if (event is PattersDidLoad) {
+    } else if (event is PatternsDidLoad) {
       yield* _mapPatternsDidLoadToState(event);
-    } else if (event is PattersDidNotLoad) {
+    } else if (event is PatternsDidNotLoad) {
       yield* _mapPatternsDidNotLoadToState(event);
     }
   }
@@ -90,7 +90,7 @@ class ConstraintsFormBloc
   }
 
   Stream<ConstraintsFormState> _mapPatternsDidLoadToState(
-    PattersDidLoad event,
+    PatternsDidLoad event,
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionSuccess,
@@ -99,7 +99,7 @@ class ConstraintsFormBloc
   }
 
   Stream<ConstraintsFormState> _mapPatternsDidNotLoadToState(
-    PattersDidNotLoad event,
+    PatternsDidNotLoad event,
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionFailure,

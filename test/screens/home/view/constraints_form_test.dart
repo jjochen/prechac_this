@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +10,8 @@ import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../../../helpers/helpers.dart';
 
-class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
+class MockConstraintsFormBloc extends MockCubit<ConstraintsFormState>
+    implements ConstraintsFormBloc {}
 
 class MockNumberOfJugglers extends Mock implements NumberOfJugglers {}
 
@@ -32,13 +34,14 @@ void main() {
   const testMaxHeight = 8;
 
   group('ConstraintsForm', () {
-    registerFallbackValue<HomeState>(const HomeState());
+    registerFallbackValue<ConstraintsFormState>(const ConstraintsFormState());
 
-    late HomeCubit homeCubit;
+    late ConstraintsFormBloc constraintsFormBloc;
 
     setUp(() {
-      homeCubit = MockHomeCubit();
-      when(() => homeCubit.state).thenReturn(const HomeState());
+      constraintsFormBloc = MockConstraintsFormBloc();
+      when(() => constraintsFormBloc.state)
+          .thenReturn(const ConstraintsFormState());
     });
 
     group('calls', () {
@@ -47,29 +50,32 @@ void main() {
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
         );
         await tester.enterText(find.byKey(numberOfJugglersInputKey),
             testNumberOfJugglers.toString());
-        verify(() => homeCubit.numberOfJugglersChanged(testNumberOfJugglers))
-            .called(1);
+        verify(() => constraintsFormBloc.add(
+              NumberOfJugglersDidChange(testNumberOfJugglers),
+            )).called(1);
       });
 
       testWidgets('periodChanged when period changes', (tester) async {
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
         );
         await tester.enterText(
             find.byKey(periodInputKey), testPeriod.toString());
-        verify(() => homeCubit.periodChanged(testPeriod)).called(1);
+        verify(() => constraintsFormBloc.add(
+              PeriodDidChange(testNumberOfJugglers),
+            )).called(1);
       });
 
       testWidgets(
@@ -78,62 +84,67 @@ void main() {
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
         );
         await tester.enterText(find.byKey(numberOfObjectsInputKey),
             testNumberOfObjects.toString());
-        verify(() => homeCubit.numberOfObjectsChanged(testNumberOfObjects))
-            .called(1);
+        verify(() => constraintsFormBloc.add(
+              NumberOfObjectsDidChange(testNumberOfJugglers),
+            )).called(1);
       });
 
       testWidgets('maxHeightChanged when max height changes', (tester) async {
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
         );
         await tester.enterText(
             find.byKey(maxHeightInputKey), testMaxHeight.toString());
-        verify(() => homeCubit.maxHeightChanged(testMaxHeight)).called(1);
+        verify(() => constraintsFormBloc.add(
+              MaxHeightDidChange(testNumberOfJugglers),
+            )).called(1);
       });
 
       testWidgets('submit when submit button is pressed', (tester) async {
-        when(() => homeCubit.state).thenReturn(
-          const HomeState(status: FormzStatus.valid),
+        when(() => constraintsFormBloc.state).thenReturn(
+          const ConstraintsFormState(status: FormzStatus.valid),
         );
-        when(() => homeCubit.submit()).thenAnswer((_) async => null);
+        //when(() => constraintsFormBloc.submit()).thenAnswer((_) async => null);
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
         );
         await tester.tap(find.byKey(submitButtonKey));
-        verify(() => homeCubit.submit()).called(1);
+        verify(() => constraintsFormBloc.add(
+              Submit(),
+            )).called(1);
       });
     });
 
     group('renders', () {
       testWidgets('Failure SnackBar when submission fails', (tester) async {
         whenListen(
-          homeCubit,
-          Stream.fromIterable(const <HomeState>[
-            HomeState(status: FormzStatus.submissionInProgress),
-            HomeState(status: FormzStatus.submissionFailure),
+          constraintsFormBloc,
+          Stream.fromIterable(const <ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(status: FormzStatus.submissionFailure),
           ]),
         );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -147,12 +158,12 @@ void main() {
           'when number of jugglers is invalid', (tester) async {
         final numberOfJugglers = MockNumberOfJugglers();
         when(() => numberOfJugglers.invalid).thenReturn(true);
-        when(() => homeCubit.state)
-            .thenReturn(HomeState(numberOfJugglers: numberOfJugglers));
+        when(() => constraintsFormBloc.state).thenReturn(
+            ConstraintsFormState(numberOfJugglers: numberOfJugglers));
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -164,11 +175,12 @@ void main() {
           (tester) async {
         final period = MockPeriod();
         when(() => period.invalid).thenReturn(true);
-        when(() => homeCubit.state).thenReturn(HomeState(period: period));
+        when(() => constraintsFormBloc.state)
+            .thenReturn(ConstraintsFormState(period: period));
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -181,12 +193,12 @@ void main() {
           'when number of objects is invalid', (tester) async {
         final numberOfObjects = MockNumberOfObjects();
         when(() => numberOfObjects.invalid).thenReturn(true);
-        when(() => homeCubit.state)
-            .thenReturn(HomeState(numberOfObjects: numberOfObjects));
+        when(() => constraintsFormBloc.state)
+            .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -198,11 +210,12 @@ void main() {
           (tester) async {
         final maxHeight = MockMaxHeight();
         when(() => maxHeight.invalid).thenReturn(true);
-        when(() => homeCubit.state).thenReturn(HomeState(maxHeight: maxHeight));
+        when(() => constraintsFormBloc.state)
+            .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -212,13 +225,13 @@ void main() {
 
       testWidgets('disabled submit button when status is not validated',
           (tester) async {
-        when(() => homeCubit.state).thenReturn(
-          const HomeState(status: FormzStatus.invalid),
+        when(() => constraintsFormBloc.state).thenReturn(
+          const ConstraintsFormState(status: FormzStatus.invalid),
         );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -231,13 +244,13 @@ void main() {
 
       testWidgets('enabled submit button when status is validated',
           (tester) async {
-        when(() => homeCubit.state).thenReturn(
-          const HomeState(status: FormzStatus.valid),
+        when(() => constraintsFormBloc.state).thenReturn(
+          const ConstraintsFormState(status: FormzStatus.valid),
         );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),
@@ -250,19 +263,19 @@ void main() {
     });
 
     group('navigates', () {
-      testWidgets('to search results page when form status is success',
+      testWidgets('to search results page when patterns did load',
           (tester) async {
         whenListen(
-          homeCubit,
-          Stream.fromIterable(const <HomeState>[
-            HomeState(status: FormzStatus.submissionInProgress),
-            HomeState(status: FormzStatus.submissionSuccess),
+          constraintsFormBloc,
+          Stream.fromIterable(const <ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(status: FormzStatus.submissionSuccess),
           ]),
         );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
-              value: homeCubit,
+              value: constraintsFormBloc,
               child: ConstraintsForm(),
             ),
           ),

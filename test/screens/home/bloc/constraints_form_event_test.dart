@@ -67,20 +67,20 @@ void main() {
       });
     });
 
-    group('PattersDidLoad', () {
+    group('PatternsDidLoad', () {
       test('supports value comparisons', () {
         expect(
-          PattersDidLoad(),
-          PattersDidLoad(),
+          PatternsDidLoad(),
+          PatternsDidLoad(),
         );
       });
     });
 
-    group('PattersDidNotLoad', () {
+    group('PatternsDidNotLoad', () {
       test('supports value comparisons', () {
         expect(
-          PattersDidNotLoad('message'),
-          PattersDidNotLoad('message'),
+          PatternsDidNotLoad('message'),
+          PatternsDidNotLoad('message'),
         );
       });
     });

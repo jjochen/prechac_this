@@ -3,6 +3,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
@@ -44,6 +45,7 @@ void main() {
     numberOfObjects: validNumberOfObjects,
     maxHeight: validMaxHeight,
     status: FormzStatus.valid,
+    errorMessage: '',
   );
 
   group('ConstraintsFormBloc', () {
@@ -204,18 +206,28 @@ void main() {
           status: FormzStatus.valid,
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
         ),
         act: (bloc) => bloc.add(Submit()),
         verify: (_) {
-          // TODO
+          final searchParameters = SearchParameters(
+            numberOfJugglers: validNumberOfJugglersValue,
+            period: validPeriodValue,
+            numberOfObjects: validNumberOfObjectsValue,
+            maxHeight: validMaxHeightValue,
+          );
+          verify(
+            () => patternsBloc.add(
+              LoadPatterns(searchParameters),
+            ),
+          ).called(1);
         },
       );
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'emits [submissionInProgress, submissionSuccess] '
-        'when submit succeeds',
+        'emits [submissionInProgress]',
         build: () => ConstraintsFormBloc(
-          // TODO
           patternsBloc: patternsBloc,
         ),
         seed: () => ConstraintsFormState(
@@ -230,40 +242,39 @@ void main() {
             numberOfJugglers: validNumberOfJugglers,
             period: validPeriod,
           ),
-          ConstraintsFormState(
-            status: FormzStatus.submissionSuccess,
-            numberOfJugglers: validNumberOfJugglers,
-            period: validPeriod,
-          )
         ],
       );
+    });
 
-      // blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-      //   'emits [submissionInProgress, submissionFailure] '
-      //   'when submit fails',
-      //   build: () {
-      //     // TODO
-      //     return ConstraintsFormBloc();
-      //   },
-      //   seed: () => ConstraintsFormState(
-      //     status: FormzStatus.valid,
-      //     numberOfJugglers: validNumberOfJugglers,
-      //     period: validPeriod,
-      //   ),
-      //   act: (cubit) => cubit.submit(),
-      //   expect: () => const <ConstraintsFormState>[
-      //     ConstraintsFormState(
-      //       status: FormzStatus.submissionInProgress,
-      //       numberOfJugglers: validNumberOfJugglers,
-      //       period: validPeriod,
-      //     ),
-      //     ConstraintsFormState(
-      //       status: FormzStatus.submissionFailure,
-      //       numberOfJugglers: validNumberOfJugglers,
-      //       period: validPeriod,
-      //     )
-      //   ],
-      // );
+    group('PatternsDidLoad', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [submissionSuccess] when patterns did load',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        act: (bloc) => bloc.add(PatternsDidLoad()),
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            status: FormzStatus.submissionSuccess,
+          ),
+        ],
+      );
+    });
+
+    group('PatternsDidNotLoad', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [submissionFailure] when patterns did not load',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        act: (bloc) => bloc.add(PatternsDidNotLoad('error')),
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            status: FormzStatus.submissionFailure,
+            errorMessage: 'error',
+          ),
+        ],
+      );
     });
   });
 }
