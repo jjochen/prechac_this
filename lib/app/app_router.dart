@@ -1,10 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../patterns_repository/patterns_repository.dart';
 import '../screens/attributions/attributions.dart';
 import '../screens/home/home.dart';
-import '../screens/search_results/search_results.dart';
 
 class AppRouter {
   static PageRoute pageRoute(
@@ -25,7 +23,6 @@ class AppRouter {
 
     Route<dynamic>? route;
     route ??= _tryParseAttributionsRoute(data);
-    route ??= _tryParseSearchResultsRoute(data);
     route ??= _homeRoute(data);
     return route;
   }
@@ -37,20 +34,6 @@ class AppRouter {
 
     return pageRoute(
       HomePage(),
-      data,
-    );
-  }
-
-  static PageRoute<dynamic>? _tryParseSearchResultsRoute(RoutingData data) {
-    if (SearchResultsPage.routeName != data.firstPathSegment) {
-      return null;
-    }
-
-    final map = data.queryParameters;
-    final searchParameters = SearchParameters.fromQueryParameters(map);
-
-    return pageRoute(
-      SearchResultsPage(searchParameters: searchParameters),
       data,
     );
   }

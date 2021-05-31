@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 
-import '../../search_results/search_results.dart';
 import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
@@ -19,13 +18,14 @@ class ConstraintsForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Failure')),
             );
-        } else if (state.status.isSubmissionSuccess) {
-          final parameters = state.toSearchParameters();
-          Navigator.pushNamed(
-            context,
-            SearchResultsPage.routeNameWithParameters(parameters),
-          );
         }
+        // else if (state.status.isSubmissionSuccess) {
+        //   final parameters = state.toSearchParameters();
+        //   Navigator.pushNamed(
+        //     context,
+        //     SearchResultsPage.routeNameWithParameters(parameters),
+        //   );
+        // }
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),
@@ -64,7 +64,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           key: const Key('constraintsForm_numberOfJugglersInput'),
           onChanged: (numberOfJugglers) => context
               .read<ConstraintsFormBloc>()
-              .add(NumberOfObjectsDidChange(numberOfJugglers.toInt())),
+              .add(NumberOfJugglersDidChange(numberOfJugglers.toInt())),
           min: NumberOfJugglers.minValue.toDouble(),
           max: NumberOfJugglers.maxValue.toDouble(),
           value: NumberOfJugglers.defaultValue.toDouble(),
@@ -110,7 +110,8 @@ class _NumberOfObjectsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
+      buildWhen: (previous, current) =>
+          previous.numberOfObjects != current.numberOfObjects,
       builder: (context, state) {
         return SpinBox(
           key: const Key('constraintsForm_numberOfObjectsInput'),
@@ -123,8 +124,9 @@ class _NumberOfObjectsInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Objects',
             helperText: '',
-            errorText:
-                state.maxHeight.invalid ? 'invalid number of objects' : null,
+            errorText: state.numberOfObjects.invalid
+                ? 'invalid number of objects'
+                : null,
           ),
         );
       },

@@ -17,7 +17,7 @@ void main() {
       patternsRepository = MockPatternsRepository();
     });
 
-    test('initial state is HomeState', () {
+    test('initial state is ConstraintsFormState', () {
       expect(
         PatternsBloc(patternsRepository: patternsRepository).state,
         PatternsInitial(),

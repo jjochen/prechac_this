@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app_router.dart';
 import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
-import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../helpers/helpers.dart';
 
@@ -35,14 +34,6 @@ void main() {
         await tester.pumpApp(route: AttributionsPage.routeName);
         await tester.pumpAndSettle();
         expect(find.byType(AttributionsPage), findsOneWidget);
-      });
-
-      testWidgets('results route', (tester) async {
-        await tester.pumpApp(
-          route: SearchResultsPage.routeNameWithParameters(mockParameters),
-        );
-        await tester.pumpAndSettle();
-        expect(find.byType(SearchResultsPage), findsOneWidget);
       });
     });
   });
