@@ -10,7 +10,7 @@ void main() {
       patternsRepository = PatternsRepository();
     });
 
-    test('findes correct for search parameters', () async {
+    test('findes correct for search parameters on separate isolate', () async {
       final searchParameters = SearchParameters(
         numberOfJugglers: 2,
         period: 2,
@@ -27,6 +27,25 @@ void main() {
             ]);
           }),
           completes);
+    });
+
+    test('findes correct for search parameters', () {
+      // bug in flutter: compute doesn't gather coverage
+      final searchParameters = SearchParameters(
+        numberOfJugglers: 2,
+        period: 2,
+        numberOfObjects: 4,
+        maxHeight: 4,
+        minNumberOfPasses: 1,
+        maxNumberOfPasses: 2,
+      );
+      expect(
+        PatternsRepository.findPatterns(searchParameters),
+        [
+          Pattern([Throw.pass(height: 3), Throw.pass(height: 1)]),
+          Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
+        ],
+      );
     });
 
     test('prechac this throw up', () {

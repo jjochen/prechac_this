@@ -10,10 +10,10 @@ export 'models/models.dart';
 
 class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return await compute(_prechacThis, parameters);
+    return await compute(findPatterns, parameters);
   }
 
-  static List<Pattern> _prechacThis(SearchParameters parameters) {
+  static List<Pattern> findPatterns(SearchParameters parameters) {
     final minNumberOfPasses =
         parameters.minNumberOfPasses < 0 ? null : parameters.minNumberOfPasses;
     final maxNumberOfPasses =
