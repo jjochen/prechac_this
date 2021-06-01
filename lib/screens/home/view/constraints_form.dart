@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 
-import '../../search_results/search_results.dart';
 import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
@@ -11,7 +10,7 @@ class ConstraintsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<HomeCubit, HomeState>(
+    return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
@@ -19,13 +18,14 @@ class ConstraintsForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Failure')),
             );
-        } else if (state.status.isSubmissionSuccess) {
-          final parameters = state.toSearchParameters();
-          Navigator.pushNamed(
-            context,
-            SearchResultsPage.routeNameWithParameters(parameters),
-          );
         }
+        // else if (state.status.isSubmissionSuccess) {
+        //   final parameters = state.toSearchParameters();
+        //   Navigator.pushNamed(
+        //     context,
+        //     SearchResultsPage.routeNameWithParameters(parameters),
+        //   );
+        // }
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),
@@ -56,15 +56,15 @@ class ConstraintsForm extends StatelessWidget {
 class _NumberOfJugglersInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
         return SpinBox(
           key: const Key('constraintsForm_numberOfJugglersInput'),
           onChanged: (numberOfJugglers) => context
-              .read<HomeCubit>()
-              .numberOfJugglersChanged(numberOfJugglers.toInt()),
+              .read<ConstraintsFormBloc>()
+              .add(NumberOfJugglersDidChange(numberOfJugglers.toInt())),
           min: NumberOfJugglers.minValue.toDouble(),
           max: NumberOfJugglers.maxValue.toDouble(),
           value: NumberOfJugglers.defaultValue.toDouble(),
@@ -84,13 +84,14 @@ class _NumberOfJugglersInput extends StatelessWidget {
 class _PeriodInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
         return SpinBox(
           key: const Key('constraintsForm_periodInput'),
-          onChanged: (period) =>
-              context.read<HomeCubit>().periodChanged(period.toInt()),
+          onChanged: (period) => context
+              .read<ConstraintsFormBloc>()
+              .add(PeriodDidChange(period.toInt())),
           min: Period.minValue.toDouble(),
           max: Period.maxValue.toDouble(),
           value: Period.defaultValue.toDouble(),
@@ -108,15 +109,15 @@ class _PeriodInput extends StatelessWidget {
 class _NumberOfObjectsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
       builder: (context, state) {
         return SpinBox(
           key: const Key('constraintsForm_numberOfObjectsInput'),
           onChanged: (numberOfObjects) => context
-              .read<HomeCubit>()
-              .numberOfObjectsChanged(numberOfObjects.toInt()),
+              .read<ConstraintsFormBloc>()
+              .add(NumberOfObjectsDidChange(numberOfObjects.toInt())),
           min: NumberOfObjects.minValue.toDouble(),
           max: NumberOfObjects.maxValue.toDouble(),
           value: NumberOfObjects.defaultValue.toDouble(),
@@ -136,13 +137,14 @@ class _NumberOfObjectsInput extends StatelessWidget {
 class _MaxHeightInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
         return SpinBox(
           key: const Key('constraintsForm_maxHeightInput'),
-          onChanged: (maxHeight) =>
-              context.read<HomeCubit>().maxHeightChanged(maxHeight.toInt()),
+          onChanged: (maxHeight) => context
+              .read<ConstraintsFormBloc>()
+              .add(MaxHeightDidChange(maxHeight.toInt())),
           min: MaxHeight.minValue.toDouble(),
           max: MaxHeight.maxValue.toDouble(),
           value: MaxHeight.defaultValue.toDouble(),
@@ -160,7 +162,7 @@ class _MaxHeightInput extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
@@ -168,7 +170,7 @@ class _SubmitButton extends StatelessWidget {
             : ElevatedButton(
                 key: const Key('constraintsForm_submit_raisedButton'),
                 onPressed: state.status.isValidated
-                    ? () => context.read<HomeCubit>().submit()
+                    ? () => context.read<ConstraintsFormBloc>().add(Submit())
                     : null,
                 child: const Text('SUBMIT'),
               );

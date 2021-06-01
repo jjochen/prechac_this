@@ -9,20 +9,21 @@ void main() {
   const period = Period.dirty(3);
   const numberOfObjects = NumberOfObjects.dirty(6);
   const maxHeight = MaxHeight.dirty(7);
+  const errorMessage = 'Error Error';
 
-  group('HomeState', () {
+  group('ConstraintsFormState', () {
     test('supports value comparisons', () {
-      expect(HomeState(), HomeState());
+      expect(ConstraintsFormState(), ConstraintsFormState());
     });
 
     test('returns same object when no properties are passed', () {
-      expect(HomeState().copyWith(), HomeState());
+      expect(ConstraintsFormState().copyWith(), ConstraintsFormState());
     });
 
     test('returns object with updated status when status is passed', () {
       expect(
-        HomeState().copyWith(status: FormzStatus.valid),
-        HomeState(status: FormzStatus.valid),
+        ConstraintsFormState().copyWith(status: FormzStatus.valid),
+        ConstraintsFormState(status: FormzStatus.valid),
       );
     });
 
@@ -30,15 +31,15 @@ void main() {
         'returns object with updated numberOfJugglers '
         'when numberOfJugglers is passed', () {
       expect(
-        HomeState().copyWith(numberOfJugglers: numberOfJugglers),
-        HomeState(numberOfJugglers: numberOfJugglers),
+        ConstraintsFormState().copyWith(numberOfJugglers: numberOfJugglers),
+        ConstraintsFormState(numberOfJugglers: numberOfJugglers),
       );
     });
 
     test('returns object with updated period when period is passed', () {
       expect(
-        HomeState().copyWith(period: period),
-        HomeState(period: period),
+        ConstraintsFormState().copyWith(period: period),
+        ConstraintsFormState(period: period),
       );
     });
 
@@ -46,21 +47,29 @@ void main() {
         'returns object with updated numberOfObjects '
         'when numberOfObjects is passed', () {
       expect(
-        HomeState().copyWith(numberOfObjects: numberOfObjects),
-        HomeState(numberOfObjects: numberOfObjects),
+        ConstraintsFormState().copyWith(numberOfObjects: numberOfObjects),
+        ConstraintsFormState(numberOfObjects: numberOfObjects),
       );
     });
 
     test('returns object with updated maxHeight when maxHeight is passed', () {
       expect(
-        HomeState().copyWith(maxHeight: maxHeight),
-        HomeState(maxHeight: maxHeight),
+        ConstraintsFormState().copyWith(maxHeight: maxHeight),
+        ConstraintsFormState(maxHeight: maxHeight),
+      );
+    });
+
+    test('returns object with updated error message when message is passed',
+        () {
+      expect(
+        ConstraintsFormState().copyWith(errorMessage: errorMessage),
+        ConstraintsFormState(errorMessage: errorMessage),
       );
     });
 
     test('supports search parameter conversion', () {
       expect(
-        HomeState(
+        ConstraintsFormState(
           numberOfJugglers: numberOfJugglers,
           period: period,
           numberOfObjects: numberOfObjects,
