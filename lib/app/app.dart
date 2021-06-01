@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../l10n/l10n.dart';
+import '../patterns_bloc/patterns_bloc.dart';
+import '../patterns_repository/patterns_repository.dart';
 import '../screens/home/home.dart';
 import 'app_router.dart';
 import 'theme.dart';
