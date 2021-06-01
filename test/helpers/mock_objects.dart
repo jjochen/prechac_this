@@ -1,4 +1,11 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+
+class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
+    implements PatternsBloc {}
+
+class FakePatternsEvent extends Fake implements PatternsEvent {}
 
 final mockParameters = SearchParameters(
   numberOfJugglers: 2,

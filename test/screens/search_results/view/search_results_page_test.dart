@@ -1,17 +1,40 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../../../helpers/helpers.dart';
 
+class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
+    implements PatternsBloc {}
+
+class FakePatternsEvent extends Fake implements PatternsEvent {}
+
 void main() {
   group('SearchResultsPage', () {
+    late PatternsBloc patternsBloc;
+
+    setUp(() {
+      registerFallbackValue(FakePatternsEvent());
+      registerFallbackValue(PatternsInitial());
+      patternsBloc = MockPatternsBloc();
+    });
+
     testWidgets('renders list of patterns', (tester) async {
+      when(() => patternsBloc.state).thenReturn(
+        PatternsLoaded([mockPattern]),
+      );
       await tester.pumpApp(
-        widget: SearchResultsPage(
-          patterns: [mockPattern],
+        widget: Scaffold(
+          body: BlocProvider.value(
+            value: patternsBloc,
+            child: SearchResultsPage(),
+          ),
         ),
       );
+      await tester.pumpAndSettle();
       expect(find.byKey(Key('__pattern_item_$mockPattern')), findsOneWidget);
     });
   });

@@ -259,28 +259,5 @@ void main() {
         expect(submitButton.enabled, isTrue);
       });
     });
-
-    // group('navigates', () {
-    //   testWidgets('to search results page when patterns did load',
-    //       (tester) async {
-    //     whenListen(
-    //       constraintsFormBloc,
-    //       Stream.fromIterable(const <ConstraintsFormState>[
-    //         ConstraintsFormState(status: FormzStatus.submissionInProgress),
-    //         ConstraintsFormState(status: FormzStatus.submissionSuccess),
-    //       ]),
-    //     );
-    //     await tester.pumpApp(
-    //       widget: Scaffold(
-    //         body: BlocProvider.value(
-    //           value: constraintsFormBloc,
-    //           child: ConstraintsForm(),
-    //         ),
-    //       ),
-    //     );
-    //     await tester.pumpAndSettle();
-    //     expect(find.byType(SearchResultsPage), findsOneWidget);
-    //   });
-    // });
   });
 }
