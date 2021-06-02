@@ -23,7 +23,7 @@ void main() {
 
   group('PatternsNotLoaded', () {
     test('supports value comparisons', () {
-      expect(PatternsNotLoaded(), PatternsNotLoaded());
+      expect(PatternsNotLoaded('message'), PatternsNotLoaded('message'));
     });
   });
 }

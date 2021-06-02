@@ -34,7 +34,7 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
     final future = _patternsRepository.patterns(event.searchParameters);
     await future
         .then((patterns) => add(PatternsUpdated(patterns)))
-        .catchError((error) => add(PatternsNotUpdated(error)));
+        .catchError((error) => add(PatternsNotUpdated(error.toString())));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(
@@ -44,6 +44,6 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapPatternsNotUpdatedToState(
       PatternsNotUpdated event) async* {
-    yield PatternsNotLoaded(event.error);
+    yield PatternsNotLoaded(event.errorMessage);
   }
 }
