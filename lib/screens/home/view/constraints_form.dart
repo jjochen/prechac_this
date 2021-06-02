@@ -166,7 +166,9 @@ class _SubmitButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(
+                key: Key('constraintsForm_submit_progressIndicator'),
+              )
             : ElevatedButton(
                 key: const Key('constraintsForm_submit_raisedButton'),
                 onPressed: state.status.isValidated
