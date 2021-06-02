@@ -25,6 +25,18 @@ void main() {
       );
     });
 
+    test('from valid ID', () {
+      expect(
+        Throw.fromId('4-1-0'),
+        Throw.self(height: 4),
+      );
+    });
+
+    test('from invalid ID is null', () {
+      expect(Throw.fromId('4-1'), isNull);
+      expect(Throw.fromId('4-1-x'), isNull);
+    });
+
     test('supports representation as ID', () {
       final aThrow = Throw(height: Fraction(4, 3), passingIndex: 2);
       expect(

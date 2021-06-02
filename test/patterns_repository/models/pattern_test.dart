@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/models/models.dart';
 
+import '../../helpers/helpers.dart';
+
 void main() {
   group('Pattern', () {
     test('supports comparison of length', () {
@@ -43,6 +45,27 @@ void main() {
           Throw(height: 4.toFraction(), passingIndex: 3),
           Throw.pass(height: 4.5),
         ]),
+      );
+    });
+
+    test('from valid ID', () {
+      expect(
+        Pattern.fromId('4-1-0_2-1-1_1-1-0_1-1-1'),
+        mockPattern,
+      );
+    });
+
+    test('from invalid ID is null', () {
+      expect(
+        Pattern.fromId('4-1-0_2-1-1_1-1-0_1-1-x'),
+        isNull,
+      );
+    });
+
+    test('supports representation as ID', () {
+      expect(
+        Pattern.fromId(mockPattern.id),
+        mockPattern,
       );
     });
 

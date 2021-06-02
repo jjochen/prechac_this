@@ -40,4 +40,23 @@ class Pattern extends Patternable<Pattern, Throw> {
     }
     return numberOfPasses;
   }
+
+  static Pattern? fromId(String id) {
+    final components = id.split(_idSeparator);
+    var throwSequence = <Throw>[];
+    for (final throwId in components) {
+      final nextThrow = Throw.fromId(throwId);
+      if (nextThrow == null) {
+        return null;
+      }
+      throwSequence.add(nextThrow);
+    }
+    return Pattern(throwSequence);
+  }
+
+  String get id {
+    return throwSequence.map((aThrow) => aThrow.id).join(_idSeparator);
+  }
+
+  static const _idSeparator = '_';
 }
