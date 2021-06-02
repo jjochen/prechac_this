@@ -26,6 +26,7 @@ void main() {
   const periodInputKey = Key('constraintsForm_periodInput');
   const numberOfObjectsInputKey = Key('constraintsForm_numberOfObjectsInput');
   const maxHeightInputKey = Key('constraintsForm_maxHeightInput');
+  const progressIndicatorKey = Key('constraintsForm_submit_progressIndicator');
 
   const testNumberOfJugglers = 5;
   const testPeriod = 6;
@@ -257,6 +258,21 @@ void main() {
           find.byKey(submitButtonKey),
         );
         expect(submitButton.enabled, isTrue);
+      });
+
+      testWidgets('progress indicator when status is in progress',
+          (tester) async {
+        when(() => constraintsFormBloc.state).thenReturn(
+            ConstraintsFormState(status: FormzStatus.submissionInProgress));
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        expect(find.byKey(progressIndicatorKey), findsOneWidget);
       });
     });
   });
