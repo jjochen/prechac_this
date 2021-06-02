@@ -25,6 +25,14 @@ void main() {
       );
     });
 
+    test('supports representation as ID', () {
+      final aThrow = Throw(height: Fraction(4, 3), passingIndex: 2);
+      expect(
+        Throw.fromId(aThrow.id),
+        aThrow,
+      );
+    });
+
     group('Self', () {
       test('supports value comparisons', () {
         expect(
