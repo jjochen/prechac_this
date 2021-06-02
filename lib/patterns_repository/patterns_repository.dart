@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:fraction/fraction.dart';
 
 import 'engine/engine.dart';
@@ -9,6 +10,10 @@ export 'models/models.dart';
 
 class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
+    return await compute(findPatterns, parameters);
+  }
+
+  static List<Pattern> findPatterns(SearchParameters parameters) {
     final minNumberOfPasses =
         parameters.minNumberOfPasses < 0 ? null : parameters.minNumberOfPasses;
     final maxNumberOfPasses =
