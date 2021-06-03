@@ -45,7 +45,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   @override
   String toString() {
     final components = map((e) => e.toString());
-    return '${components.join(', ')}';
+    return '${components.join(' ')}';
   }
 
   @override

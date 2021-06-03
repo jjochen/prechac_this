@@ -86,27 +86,27 @@ void main() {
       test('has correct string representation', () {
         expect(
           Throw.pass(height: 4).toString(),
-          '4p1',
+          '4p',
         );
 
         expect(
           Throw.pass(height: 42.25).toString(),
-          '42.25p1',
+          '42.25p',
         );
 
         expect(
           Throw.pass(height: 42.257).toString(),
-          '42.2p1',
+          '42.2p',
         );
 
         expect(
           Throw(height: Fraction(5, 3), passingIndex: 2).toString(),
-          '1.6p2',
+          '1.6p₂',
         );
 
         expect(
           Throw(height: Fraction(4, 3), passingIndex: 1).toString(),
-          '1.3p1',
+          '1.3p',
         );
       });
 
