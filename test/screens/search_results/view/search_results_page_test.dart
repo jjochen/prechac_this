@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
@@ -28,15 +27,13 @@ void main() {
         PatternsLoaded([mockPattern]),
       );
       await tester.pumpApp(
-        widget: Scaffold(
-          body: BlocProvider.value(
-            value: patternsBloc,
-            child: SearchResultsPage(),
-          ),
-        ),
+        patternsBloc: patternsBloc,
+        widget: SearchResultsPage(),
       );
-      await tester.pumpAndSettle();
-      expect(find.byKey(Key('__pattern_item_$mockPattern')), findsOneWidget);
+      expect(
+        find.byKey(Key('__pattern_item_${mockPattern.id}')),
+        findsOneWidget,
+      );
     });
   });
 }

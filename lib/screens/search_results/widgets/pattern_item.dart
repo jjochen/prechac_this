@@ -16,10 +16,10 @@ class PatternItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      key: Key('__pattern_item_$pattern'),
+      key: Key('__pattern_item_${pattern.id}'),
       onTap: onTap,
       title: Hero(
-        tag: '${pattern}__heroTag',
+        tag: '${pattern.id}__heroTag',
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Text(
