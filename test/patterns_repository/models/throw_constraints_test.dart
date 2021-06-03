@@ -96,22 +96,22 @@ void main() {
       test('has correct string representation', () {
         expect(
           ThrowConstraint.pass(height: 42.25).toString(),
-          '42.25p',
+          '42.25p1',
         );
 
         expect(
           ThrowConstraint(height: Fraction(4, 3), passingIndex: 2).toString(),
-          '1.3p₂',
+          '1.3p2',
         );
 
         expect(
           ThrowConstraint(height: Fraction(5, 3), passingIndex: 1).toString(),
-          '1.6p',
+          '1.6p1',
         );
 
         expect(
           ThrowConstraint.pass(height: null).toString(),
-          '_p',
+          '_p1',
         );
 
         expect(
