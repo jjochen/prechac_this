@@ -16,7 +16,7 @@ void main() {
         period: 2,
         numberOfObjects: 4,
         maxHeight: 4,
-        minNumberOfPasses: 1,
+        minNumberOfPasses: 2,
         maxNumberOfPasses: 2,
       );
       expect(
@@ -42,8 +42,6 @@ void main() {
         period: 2,
         numberOfObjects: 4,
         maxHeight: 4,
-        minNumberOfPasses: 1,
-        maxNumberOfPasses: 2,
       );
       expect(
         PatternsRepository.findPatterns(searchParameters),

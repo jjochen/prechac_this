@@ -245,6 +245,40 @@ void main() {
       );
     });
 
+    test(
+        'throwAtIndexToString returns correct string representation'
+        'for 4 jugglers', () {
+      final pattern = Pattern(
+        numberOfJugglers: 4,
+        throwSequence: [
+          Throw.self(height: 4),
+          Throw(height: 4.toFraction(), passingIndex: 3),
+          Throw.pass(height: 4.5),
+        ],
+      );
+      expect(
+        pattern.throwAtIndexToString(2),
+        '4.5p₁',
+      );
+    });
+
+    test(
+        'throwAtIndexToString returns correct string representation'
+        'for 2 jugglers', () {
+      final pattern = Pattern(
+        numberOfJugglers: 2,
+        throwSequence: [
+          Throw.self(height: 4),
+          Throw(height: 4.toFraction(), passingIndex: 3),
+          Throw.pass(height: 4.5),
+        ],
+      );
+      expect(
+        pattern.throwAtIndexToString(2),
+        '4.5p',
+      );
+    });
+
     test('throw are iterable', () {
       final pattern = Pattern(
         numberOfJugglers: 4,

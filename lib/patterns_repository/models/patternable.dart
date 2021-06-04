@@ -54,17 +54,17 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   @override
   String toString() {
     final components = map(
-      (aThrow) => aThrow.toStringShowingPassingIndex(showPassingIndex),
+      (aThrow) => aThrow.toStringShowingPassingIndex(shouldShowPassingIndex),
     );
     return '${components.join(' ')}';
   }
 
   String throwAtIndexToString(int index) {
     final theThrow = throwAtIndex(index);
-    return theThrow.toStringShowingPassingIndex(showPassingIndex);
+    return theThrow.toStringShowingPassingIndex(shouldShowPassingIndex);
   }
 
-  bool get showPassingIndex {
+  bool get shouldShowPassingIndex {
     return numberOfJugglers > 2;
   }
 
