@@ -18,10 +18,7 @@ extension PrechacPattern on Pattern {
       return false;
     }
 
-    final averageNumberOfObjects = averageNumberOfObjectsPerJuggler();
-    final combinedNumberOfObjects =
-        averageNumberOfObjects * Fraction(numberOfJugglers);
-    if (combinedNumberOfObjects != numberOfObjects.toFraction()) {
+    if (this.numberOfObjects != numberOfObjects.toFraction()) {
       return false;
     }
 

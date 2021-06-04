@@ -5,11 +5,20 @@ import 'patternable.dart';
 import 'throw.dart';
 
 class Pattern extends Patternable<Pattern, Throw> {
-  const Pattern(List<Throw> throwSequence) : super(throwSequence);
+  const Pattern({
+    required int numberOfJugglers,
+    required List<Throw> throwSequence,
+  }) : super(
+          numberOfJugglers: numberOfJugglers,
+          throwSequence: throwSequence,
+        );
 
   @override
   Pattern rotate([int numberOfThrows = 1]) {
-    return Pattern(throwSequence.rotate(numberOfThrows));
+    return Pattern(
+      numberOfJugglers: numberOfJugglers,
+      throwSequence: throwSequence.rotate(numberOfThrows),
+    );
   }
 
   @override
@@ -19,16 +28,19 @@ class Pattern extends Patternable<Pattern, Throw> {
   }) {
     var newSequence = List<Throw>.from(throwSequence);
     newSequence[index] = newThrow;
-    return Pattern(newSequence);
+    return Pattern(
+      numberOfJugglers: numberOfJugglers,
+      throwSequence: newSequence,
+    );
   }
 
-  Fraction averageNumberOfObjectsPerJuggler() {
+  Fraction get numberOfObjects {
     var sumOfHeights = 0.toFraction();
     for (var aThrow in this) {
       sumOfHeights += aThrow.height;
     }
 
-    return (sumOfHeights / Fraction(period)).reduce();
+    return (sumOfHeights / prechator).reduce();
   }
 
   int numberOfPasses() {
@@ -43,19 +55,33 @@ class Pattern extends Patternable<Pattern, Throw> {
 
   static Pattern? fromId(String id) {
     final components = id.split(_idSeparator);
+
+    final int numberOfJugglers;
     var throwSequence = <Throw>[];
-    for (final throwId in components) {
-      final nextThrow = Throw.fromId(throwId);
-      if (nextThrow == null) {
-        return null;
+    try {
+      numberOfJugglers = int.parse(components.removeAt(0));
+      for (final throwId in components) {
+        final nextThrow = Throw.fromId(throwId);
+        if (nextThrow == null) {
+          return null;
+        }
+        throwSequence.add(nextThrow);
       }
-      throwSequence.add(nextThrow);
+    } catch (e) {
+      return null;
     }
-    return Pattern(throwSequence);
+
+    return Pattern(
+      numberOfJugglers: numberOfJugglers,
+      throwSequence: throwSequence,
+    );
   }
 
   String get id {
-    return throwSequence.map((aThrow) => aThrow.id).join(_idSeparator);
+    var components = <String>[]
+      ..add(numberOfJugglers.toString())
+      ..addAll(throwSequence.map((aThrow) => aThrow.id));
+    return components.join(_idSeparator);
   }
 
   static const _idSeparator = '_';

@@ -8,19 +8,20 @@ void main() {
     group('4 1.3p1 _ 1.6p2', () {
       late PatternConstraint patternConstraint;
       setUp(() {
-        patternConstraint = PatternConstraint([
-          ThrowConstraint.self(height: 4),
-          ThrowConstraint(height: Fraction(4, 3), passingIndex: 1),
-          ThrowConstraint.placeholder(),
-          ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
-        ]);
+        patternConstraint = PatternConstraint(
+          numberOfJugglers: 3,
+          throwSequence: [
+            ThrowConstraint.self(height: 4),
+            ThrowConstraint(height: Fraction(4, 3), passingIndex: 1),
+            ThrowConstraint.placeholder(),
+            ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
+          ],
+        );
       });
 
       test('calculates permutations of missing landing sites', () {
         expect(
-          patternConstraint
-              .permutationsOfPossibleLandingSites(prechator: Fraction(4, 3))
-              .toList(),
+          patternConstraint.permutationsOfPossibleLandingSites().toList(),
           [
             [0, 1, 3, 2],
           ],
@@ -31,19 +32,20 @@ void main() {
     group('4 _ 1 _', () {
       late PatternConstraint patternConstraint;
       setUp(() {
-        patternConstraint = PatternConstraint([
-          ThrowConstraint.self(height: 4),
-          ThrowConstraint.placeholder(),
-          ThrowConstraint.self(height: 1),
-          ThrowConstraint.placeholder(),
-        ]);
+        patternConstraint = PatternConstraint(
+          numberOfJugglers: 2,
+          throwSequence: [
+            ThrowConstraint.self(height: 4),
+            ThrowConstraint.placeholder(),
+            ThrowConstraint.self(height: 1),
+            ThrowConstraint.placeholder(),
+          ],
+        );
       });
 
       test('calculates permutations of missing landing sites', () {
         expect(
-          patternConstraint
-              .permutationsOfPossibleLandingSites(prechator: Fraction(4, 2))
-              .toList(),
+          patternConstraint.permutationsOfPossibleLandingSites().toList(),
           [
             [0, 1, 3, 2],
             [0, 2, 3, 1],

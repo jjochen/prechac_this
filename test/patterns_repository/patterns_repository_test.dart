@@ -22,8 +22,14 @@ void main() {
       expect(
           patternsRepository.patterns(searchParameters).then((pattern) {
             expect(pattern, [
-              Pattern([Throw.pass(height: 3), Throw.pass(height: 1)]),
-              Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
+              Pattern(
+                numberOfJugglers: 2,
+                throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+              ),
+              Pattern(
+                numberOfJugglers: 2,
+                throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
+              ),
             ]);
           }),
           completes);
@@ -42,42 +48,54 @@ void main() {
       expect(
         PatternsRepository.findPatterns(searchParameters),
         [
-          Pattern([Throw.pass(height: 3), Throw.pass(height: 1)]),
-          Pattern([Throw.pass(height: 2), Throw.pass(height: 2)]),
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+          ),
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
+          ),
         ],
       );
     });
 
     test('prechac this throw up', () {
       expect(
-          patternsRepository.prechacThisThrow(
-            pattern: mockPattern,
-            index: 1,
-            direction: PrechacDirection.up,
-            numberOfJugglers: 2,
-          ),
-          Pattern([
+        patternsRepository.prechacThisThrow(
+          pattern: mockPattern,
+          index: 1,
+          direction: PrechacDirection.up,
+        ),
+        Pattern(
+          numberOfJugglers: 2,
+          throwSequence: [
             Throw.self(height: 4),
             Throw.self(height: 4),
             Throw.self(height: 1),
             Throw.pass(height: 1),
-          ]));
+          ],
+        ),
+      );
     });
 
     test('prechac this throw down', () {
       expect(
-          patternsRepository.prechacThisThrow(
-            pattern: mockPattern,
-            index: 0,
-            direction: PrechacDirection.down,
-            numberOfJugglers: 2,
-          ),
-          Pattern([
+        patternsRepository.prechacThisThrow(
+          pattern: mockPattern,
+          index: 0,
+          direction: PrechacDirection.down,
+        ),
+        Pattern(
+          numberOfJugglers: 2,
+          throwSequence: [
             Throw.pass(height: 2),
             Throw.pass(height: 2),
             Throw.self(height: 1),
             Throw.pass(height: 1),
-          ]));
+          ],
+        ),
+      );
     });
   });
 }

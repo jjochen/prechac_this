@@ -1,18 +1,27 @@
 import 'dart:collection';
 
 import 'package:equatable/equatable.dart';
+import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
 import 'throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {
-  const Patternable(this.throwSequence);
+  const Patternable({
+    required this.numberOfJugglers,
+    required this.throwSequence,
+  });
 
+  final int numberOfJugglers;
   final List<T> throwSequence;
 
   int get period {
     return throwSequence.length;
+  }
+
+  Fraction get prechator {
+    return Fraction(period, numberOfJugglers);
   }
 
   P normalize() {
@@ -50,6 +59,12 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
   @override
   int compareTo(P other) {
+    final numberOfJugglersComparator =
+        numberOfJugglers.compareTo(other.numberOfJugglers);
+    if (numberOfJugglersComparator != 0) {
+      return numberOfJugglersComparator;
+    }
+
     final periodComparator = period.compareTo(other.period);
     if (periodComparator != 0) {
       return periodComparator;

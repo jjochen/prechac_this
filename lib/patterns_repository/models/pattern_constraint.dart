@@ -4,12 +4,20 @@ import 'throw_constraint.dart';
 
 class PatternConstraint
     extends Patternable<PatternConstraint, ThrowConstraint> {
-  const PatternConstraint(List<ThrowConstraint> throwSequence)
-      : super(throwSequence);
+  const PatternConstraint({
+    required int numberOfJugglers,
+    required List<ThrowConstraint> throwSequence,
+  }) : super(
+          numberOfJugglers: numberOfJugglers,
+          throwSequence: throwSequence,
+        );
 
   @override
   PatternConstraint rotate([int numberOfThrows = 1]) {
-    return PatternConstraint(throwSequence.rotate(numberOfThrows));
+    return PatternConstraint(
+      numberOfJugglers: numberOfJugglers,
+      throwSequence: throwSequence.rotate(numberOfThrows),
+    );
   }
 
   @override
@@ -19,6 +27,9 @@ class PatternConstraint
   }) {
     var newSequence = List<ThrowConstraint>.from(throwSequence);
     newSequence[index] = newThrow;
-    return PatternConstraint(newSequence);
+    return PatternConstraint(
+      numberOfJugglers: numberOfJugglers,
+      throwSequence: newSequence,
+    );
   }
 }

@@ -8,17 +8,12 @@ import 'prechac_throw.dart';
 
 class Engine {
   Engine({
-    required this.numberOfJugglers,
-    required this.period,
     required this.numberOfObjects,
     required this.maxHeight,
-    int? minNumberOfPasses,
-    int? maxNumberOfPasses,
-  })  : minNumberOfPasses = minNumberOfPasses ?? 1,
-        maxNumberOfPasses = maxNumberOfPasses ?? period;
+    required this.minNumberOfPasses,
+    required this.maxNumberOfPasses,
+  });
 
-  final int numberOfJugglers;
-  final int period;
   final int numberOfObjects;
   final int maxHeight;
   final int minNumberOfPasses;
@@ -41,24 +36,34 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
+    final numberOfJugglers = patternConstraint.numberOfJugglers;
     var setOfPatterns = <Pattern>{};
 
-    final permutations = patternConstraint.permutationsOfPossibleLandingSites(
-        prechator: prechator);
+    final permutations = patternConstraint.permutationsOfPossibleLandingSites();
     for (final landingSites in permutations) {
       final bagsOfPossibleThrows =
           patternConstraint.mapIndexedThrow((index, throwConstraint) {
+        final throwConstraint = patternConstraint.throwAtIndex(index);
         final landingSite = landingSites[index];
+        final numberOfJugglers = patternConstraint.numberOfJugglers;
+        final period = patternConstraint.period;
+        final prechator = patternConstraint.prechator;
         return possibleThrows(
           throwConstraint: throwConstraint,
           landingSite: landingSite,
           index: index,
+          numberOfJugglers: numberOfJugglers,
+          period: period,
+          prechator: prechator,
         );
       }).toList();
 
       final cartesianProduct =
           CartesianProductIterable<Throw>(bagsOfPossibleThrows)
-              .map((throwSequence) => Pattern(throwSequence))
+              .map((throwSequence) => Pattern(
+                    numberOfJugglers: numberOfJugglers,
+                    throwSequence: throwSequence,
+                  ))
               .where((pattern) => pattern.isValid(
                     minNumberOfPasses: minNumberOfPasses,
                     maxNumberOfPasses: maxNumberOfPasses,
@@ -74,14 +79,13 @@ class Engine {
     return listOfPatterns;
   }
 
-  Fraction get prechator {
-    return Fraction(period, numberOfJugglers);
-  }
-
   List<Throw> possibleThrows({
     required ThrowConstraint throwConstraint,
-    required int landingSite,
     required int index,
+    required int landingSite,
+    required int numberOfJugglers,
+    required int period,
+    required Fraction prechator,
   }) {
     final height = throwConstraint.height;
     final passingIndex = throwConstraint.passingIndex;
