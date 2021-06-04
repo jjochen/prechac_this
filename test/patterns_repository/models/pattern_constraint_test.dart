@@ -35,7 +35,7 @@ void main() {
             ThrowConstraint.pass(height: 4.5),
           ],
         ).toString(),
-        '4, _, 4.5p1',
+        '4 _ 4.5p',
       );
     });
 

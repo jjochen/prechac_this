@@ -226,7 +226,7 @@ void main() {
             Throw.pass(height: 4.5),
           ],
         ).toString(),
-        '4, 4p3, 4.5p1',
+        '4 4p₃ 4.5p₁',
       );
     });
 
