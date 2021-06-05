@@ -58,6 +58,20 @@ void main() {
       );
     });
 
+    test('findes correct number of patterns', () {
+      // bug in flutter: compute doesn't gather coverage
+      final searchParameters = SearchParameters(
+        numberOfJugglers: 2,
+        period: 4,
+        numberOfObjects: 4,
+        maxHeight: 4,
+      );
+      expect(
+        PatternsRepository.findPatterns(searchParameters).length,
+        38,
+      );
+    });
+
     test('prechac this throw up', () {
       expect(
         patternsRepository.prechacThisThrow(
