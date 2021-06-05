@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 
@@ -11,7 +12,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   const Patternable({
     required this.numberOfJugglers,
     required this.throwSequence,
-  });
+  }) : assert(throwSequence.length > 0);
 
   final int numberOfJugglers;
   final List<T> throwSequence;
@@ -25,8 +26,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   }
 
   P normalize() {
-    return allRotations()
-        .reduce((value, element) => element > value ? element : value);
+    return allRotations().max()!;
   }
 
   P rotate([int numberOfThrows = 1]);
@@ -68,6 +68,16 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     return numberOfJugglers > 2;
   }
 
+  int numberOfPasses() {
+    var numberOfPasses = 0;
+    for (var aThrow in this) {
+      if (aThrow.isPass) {
+        numberOfPasses++;
+      }
+    }
+    return numberOfPasses;
+  }
+
   @override
   int compareTo(P other) {
     final numberOfJugglersComparator =
@@ -88,6 +98,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
       if (throwComparator != 0) {
         return throwComparator;
       }
+      index++;
     }
     return 0;
   }

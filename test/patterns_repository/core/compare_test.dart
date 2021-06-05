@@ -95,26 +95,26 @@ void main() {
           isFalse,
         );
       });
+    });
 
-      group('equal', () {
-        test('1 == 1', () {
-          expect(
-            TestObject(1) == TestObject(1),
-            isTrue,
-          );
-        });
-        test('not 1 == 2', () {
-          expect(
-            TestObject(1) == TestObject(2),
-            isFalse,
-          );
-        });
-        test('not 2 == 1', () {
-          expect(
-            TestObject(2) == TestObject(1),
-            isFalse,
-          );
-        });
+    group('equal', () {
+      test('1 == 1', () {
+        expect(
+          TestObject(1) == TestObject(1),
+          isTrue,
+        );
+      });
+      test('not 1 == 2', () {
+        expect(
+          TestObject(1) == TestObject(2),
+          isFalse,
+        );
+      });
+      test('not 2 == 1', () {
+        expect(
+          TestObject(2) == TestObject(1),
+          isFalse,
+        );
       });
     });
   });

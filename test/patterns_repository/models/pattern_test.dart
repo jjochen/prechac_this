@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/models/models.dart';
@@ -36,7 +37,7 @@ void main() {
               numberOfJugglers: 2,
               throwSequence: [
                 Throw.self(height: 4),
-                Throw.pass(height: 4.5),
+                Throw.pass(height: 3),
               ],
             ),
         isTrue,
@@ -48,19 +49,67 @@ void main() {
         Pattern(
               numberOfJugglers: 2,
               throwSequence: [
-                Throw.self(height: 4),
-                Throw.pass(height: 4.5),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
               ],
             ) <
             Pattern(
               numberOfJugglers: 2,
               throwSequence: [
-                Throw.pass(height: 4.5),
-                Throw.self(height: 4),
+                Throw.self(height: 3),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
               ],
             ),
         isTrue,
       );
+    });
+
+    test('sorted correctly', () {
+      expect(
+          [
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 3),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+              ],
+            ),
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
+              ],
+            ),
+          ].sorted(),
+          [
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
+              ],
+            ),
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 3),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+              ],
+            ),
+          ]);
     });
 
     test('supports value comparisons', () {
@@ -121,10 +170,10 @@ void main() {
           numberOfJugglers: 2,
           throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
         ))
-        ..add(Pattern(numberOfJugglers: 2, throwSequence: [
-          Throw.pass(height: 3),
-          Throw.pass(height: 1),
-        ]));
+        ..add(Pattern(
+          numberOfJugglers: 2,
+          throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+        ));
       expect(
         set,
         {
@@ -160,60 +209,123 @@ void main() {
     test('allRotations returns list with all rotations', () {
       expect(
           Pattern(
-            numberOfJugglers: 4,
+            numberOfJugglers: 2,
             throwSequence: [
-              Throw.self(height: 4),
-              Throw(height: 4.toFraction(), passingIndex: 3),
-              Throw.pass(height: 4.5),
+              Throw.self(height: 3),
+              Throw.pass(height: 1),
+              Throw.pass(height: 1),
+              Throw.self(height: 3),
             ],
           ).allRotations(),
           [
             Pattern(
-              numberOfJugglers: 4,
+              numberOfJugglers: 2,
               throwSequence: [
-                Throw.self(height: 4),
-                Throw(height: 4.toFraction(), passingIndex: 3),
-                Throw.pass(height: 4.5),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
               ],
             ),
             Pattern(
-              numberOfJugglers: 4,
+              numberOfJugglers: 2,
               throwSequence: [
-                Throw(height: 4.toFraction(), passingIndex: 3),
-                Throw.pass(height: 4.5),
-                Throw.self(height: 4),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
+                Throw.self(height: 3),
               ],
             ),
             Pattern(
-              numberOfJugglers: 4,
+              numberOfJugglers: 2,
               throwSequence: [
-                Throw.pass(height: 4.5),
-                Throw.self(height: 4),
-                Throw(height: 4.toFraction(), passingIndex: 3),
+                Throw.pass(height: 1),
+                Throw.self(height: 3),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+              ],
+            ),
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 3),
+                Throw.self(height: 3),
+                Throw.pass(height: 1),
+                Throw.pass(height: 1),
               ],
             ),
           ]);
     });
 
-    test('normalize rotates highest throw first', () {
-      expect(
-        Pattern(
-          numberOfJugglers: 4,
-          throwSequence: [
-            Throw.self(height: 4),
-            Throw(height: 4.toFraction(), passingIndex: 3),
-            Throw.pass(height: 4.5),
-          ],
-        ).normalize(),
-        Pattern(
-          numberOfJugglers: 4,
-          throwSequence: [
-            Throw.pass(height: 4.5),
-            Throw.self(height: 4),
-            Throw(height: 4.toFraction(), passingIndex: 3),
-          ],
-        ),
+    test('compares', () {
+      final pattern1 = Pattern(
+        numberOfJugglers: 2,
+        throwSequence: [
+          Throw.self(height: 3),
+          Throw.pass(height: 1),
+          Throw.pass(height: 1),
+          Throw.self(height: 3),
+        ],
       );
+      final pattern2 = Pattern(
+        numberOfJugglers: 2,
+        throwSequence: [
+          Throw.self(height: 3),
+          Throw.self(height: 3),
+          Throw.pass(height: 1),
+          Throw.pass(height: 1),
+        ],
+      );
+
+      expect(pattern1.compareTo(pattern2), -1);
+    });
+
+    group('normalizes', () {
+      test('3 1p 1p 3', () {
+        expect(
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.self(height: 3),
+              Throw.pass(height: 1),
+              Throw.pass(height: 1),
+              Throw.self(height: 3),
+            ],
+          ).normalize(),
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.self(height: 3),
+              Throw.self(height: 3),
+              Throw.pass(height: 1),
+              Throw.pass(height: 1),
+            ],
+          ),
+        );
+      });
+
+      test('1 1p 4 2p', () {
+        expect(
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.self(height: 1),
+              Throw.pass(height: 1),
+              Throw.self(height: 4),
+              Throw.pass(height: 2),
+            ],
+          ).normalize(),
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.self(height: 4),
+              Throw.pass(height: 2),
+              Throw.self(height: 1),
+              Throw.pass(height: 1),
+            ],
+          ),
+        );
+      });
     });
 
     test('has correct string representation', () {

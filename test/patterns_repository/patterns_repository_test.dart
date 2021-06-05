@@ -24,11 +24,11 @@ void main() {
             expect(pattern, [
               Pattern(
                 numberOfJugglers: 2,
-                throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+                throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
               ),
               Pattern(
                 numberOfJugglers: 2,
-                throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
+                throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
               ),
             ]);
           }),
@@ -48,11 +48,11 @@ void main() {
         [
           Pattern(
             numberOfJugglers: 2,
-            throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+            throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
           ),
           Pattern(
             numberOfJugglers: 2,
-            throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
+            throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
           ),
         ],
       );

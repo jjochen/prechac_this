@@ -43,16 +43,6 @@ class Pattern extends Patternable<Pattern, Throw> {
     return (sumOfHeights / prechator).reduce();
   }
 
-  int numberOfPasses() {
-    var numberOfPasses = 0;
-    for (var aThrow in this) {
-      if (aThrow.isPass) {
-        numberOfPasses++;
-      }
-    }
-    return numberOfPasses;
-  }
-
   static Pattern? fromId(String id) {
     final components = id.split(_idSeparator);
 
