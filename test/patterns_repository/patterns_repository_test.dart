@@ -65,6 +65,8 @@ void main() {
         period: 4,
         numberOfObjects: 4,
         maxHeight: 4,
+        minNumberOfPasses: 1,
+        maxNumberOfPasses: 4,
       );
       expect(
         PatternsRepository.findPatterns(searchParameters).length,
