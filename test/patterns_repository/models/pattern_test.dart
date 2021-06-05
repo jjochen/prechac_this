@@ -440,7 +440,7 @@ void main() {
         ],
       );
       expect(
-        pattern.numberOfPasses(),
+        pattern.numberOfPasses,
         2,
       );
     });

@@ -4,7 +4,7 @@ import 'throw_constraint.dart';
 
 class PatternConstraint
     extends Patternable<PatternConstraint, ThrowConstraint> {
-  const PatternConstraint({
+  PatternConstraint({
     required int numberOfJugglers,
     required List<ThrowConstraint> throwSequence,
   }) : super(

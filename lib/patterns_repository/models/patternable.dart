@@ -9,20 +9,33 @@ import 'throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {
-  const Patternable({
+  Patternable({
     required this.numberOfJugglers,
     required this.throwSequence,
-  }) : assert(throwSequence.length > 0);
+  }) : assert(throwSequence.isNotEmpty);
 
   final int numberOfJugglers;
   final List<T> throwSequence;
 
-  int get period {
+  late int period = _getPeriod();
+  int _getPeriod() {
     return throwSequence.length;
   }
 
-  Fraction get prechator {
+  late Fraction prechator = _getPrechator();
+  Fraction _getPrechator() {
     return Fraction(period, numberOfJugglers);
+  }
+
+  late int numberOfPasses = _getNumberOfPasses();
+  int _getNumberOfPasses() {
+    var numberOfPasses = 0;
+    for (var aThrow in this) {
+      if (aThrow.isPass) {
+        numberOfPasses++;
+      }
+    }
+    return numberOfPasses;
   }
 
   P normalize() {
@@ -56,7 +69,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     final components = map(
       (aThrow) => aThrow.toStringShowingPassingIndex(shouldShowPassingIndex),
     );
-    return '${components.join(' ')}';
+    return components.join(' ');
   }
 
   String throwAtIndexToString(int index) {
@@ -66,16 +79,6 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
   bool get shouldShowPassingIndex {
     return numberOfJugglers > 2;
-  }
-
-  int numberOfPasses() {
-    var numberOfPasses = 0;
-    for (var aThrow in this) {
-      if (aThrow.isPass) {
-        numberOfPasses++;
-      }
-    }
-    return numberOfPasses;
   }
 
   @override
@@ -89,6 +92,12 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     final periodComparator = period.compareTo(other.period);
     if (periodComparator != 0) {
       return periodComparator;
+    }
+
+    final numberOfPassesComparator =
+        numberOfPasses.compareTo(other.numberOfPasses);
+    if (numberOfPassesComparator != 0) {
+      return numberOfPassesComparator;
     }
 
     var index = 0;
@@ -111,7 +120,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
     for (final item in throwSequence) {
       yield f(index, item);
-      index = index + 1;
+      index++;
     }
   }
 }

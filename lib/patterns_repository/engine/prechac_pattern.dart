@@ -9,7 +9,7 @@ extension PrechacPattern on Pattern {
     required int numberOfObjects,
     required int numberOfJugglers,
   }) {
-    final numberOfPasses = this.numberOfPasses();
+    final numberOfPasses = this.numberOfPasses;
     if (numberOfPasses < minNumberOfPasses) {
       return false;
     }

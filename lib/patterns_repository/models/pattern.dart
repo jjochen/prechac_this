@@ -5,7 +5,7 @@ import 'patternable.dart';
 import 'throw.dart';
 
 class Pattern extends Patternable<Pattern, Throw> {
-  const Pattern({
+  Pattern({
     required int numberOfJugglers,
     required List<Throw> throwSequence,
   }) : super(
@@ -34,7 +34,8 @@ class Pattern extends Patternable<Pattern, Throw> {
     );
   }
 
-  Fraction get numberOfObjects {
+  late Fraction numberOfObjects = _getNumberOfObjects();
+  Fraction _getNumberOfObjects() {
     var sumOfHeights = 0.toFraction();
     for (var aThrow in this) {
       sumOfHeights += aThrow.height;
@@ -67,7 +68,8 @@ class Pattern extends Patternable<Pattern, Throw> {
     );
   }
 
-  String get id {
+  late String id = _getId();
+  String _getId() {
     var components = <String>[]
       ..add(numberOfJugglers.toString())
       ..addAll(throwSequence.map((aThrow) => aThrow.id));
