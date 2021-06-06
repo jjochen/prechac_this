@@ -49,7 +49,7 @@ class PatternItem extends StatelessWidget {
       case ThrowStyle.bi:
         return const TextStyle(color: Color(0xff800080));
       case ThrowStyle.instantbi:
-        return const TextStyle(color: Color(0xff00ff00));
+        return const TextStyle(color: Color(0xff008000));
       default:
         return null;
     }
