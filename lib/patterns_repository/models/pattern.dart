@@ -5,7 +5,7 @@ import '../patterns_repository.dart';
 import 'patternable.dart';
 import 'throw.dart';
 
-enum ThrowStyle { self, classic, equi, bi, instantbi }
+enum ThrowStyle { self, classic, equi, bi, instantBi }
 
 class Pattern extends Patternable<Pattern, Throw> {
   Pattern({
@@ -98,7 +98,7 @@ class Pattern extends Patternable<Pattern, Throw> {
     } else {
       // period.isOdd
       if (origin.isEven == index.isEven) {
-        style = ThrowStyle.instantbi;
+        style = ThrowStyle.instantBi;
       } else {
         style = ThrowStyle.bi;
       }

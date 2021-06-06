@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:prechac_this/core/core.dart';
 
 import '../../../patterns_repository/patterns_repository.dart';
 
@@ -28,11 +29,11 @@ class PatternItem extends StatelessWidget {
               children: pattern
                   .mapThrowsAsStringWithStyle(
                     (throwString, style) => TextSpan(
-                      text: '$throwString ',
+                      text: throwString,
                       style: textStyleForStyle(style),
                     ),
                   )
-                  .toList(),
+                  .joinToList(const TextSpan(text: ' ')),
             ),
           ),
         ),
@@ -48,7 +49,7 @@ class PatternItem extends StatelessWidget {
         return const TextStyle(color: Color(0xffff0000));
       case ThrowStyle.bi:
         return const TextStyle(color: Color(0xff800080));
-      case ThrowStyle.instantbi:
+      case ThrowStyle.instantBi:
         return const TextStyle(color: Color(0xff008000));
       default:
         return null;

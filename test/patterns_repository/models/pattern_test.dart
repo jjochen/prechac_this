@@ -460,5 +460,28 @@ void main() {
         16.toFraction(),
       );
     });
+
+    test('mapThrowsAsStringWithStyle', () {
+      final pattern = Pattern(
+        numberOfJugglers: 2,
+        throwSequence: [
+          Throw(height: 4.toFraction(), passingIndex: 0, origin: 0),
+          Throw(height: 2.toFraction(), passingIndex: 1, origin: 0),
+          Throw(height: 1.toFraction(), passingIndex: 0, origin: 1),
+          Throw(height: 1.toFraction(), passingIndex: 1, origin: 3),
+        ],
+      );
+      expect(
+        pattern
+            .mapThrowsAsStringWithStyle((string, style) => '$string.$style')
+            .toList(),
+        [
+          '4.ThrowStyle.self',
+          '2p.ThrowStyle.equi',
+          '1.ThrowStyle.self',
+          '1p.ThrowStyle.classic',
+        ],
+      );
+    });
   });
 }
