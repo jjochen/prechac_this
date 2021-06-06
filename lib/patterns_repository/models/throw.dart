@@ -6,6 +6,7 @@ class Throw extends Throwable {
   const Throw({
     required this.height,
     required this.passingIndex,
+    this.origin,
   });
 
   factory Throw.pass({
@@ -26,6 +27,7 @@ class Throw extends Throwable {
   final Fraction height;
   @override
   final int passingIndex;
+  final int? origin;
 
   static Throw? fromId(String id) {
     final components = id.split(_idSeparator);

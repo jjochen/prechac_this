@@ -1,8 +1,11 @@
 import 'package:fraction/fraction.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../core/core.dart';
 import 'patternable.dart';
 import 'throw.dart';
+
+enum ThrowStyle { self, classic, equi, bi, instantbi }
 
 class Pattern extends Patternable<Pattern, Throw> {
   Pattern({
@@ -77,4 +80,36 @@ class Pattern extends Patternable<Pattern, Throw> {
   }
 
   static const _idSeparator = '_';
+
+  ThrowStyle styleOfThrowAtIndex(int index) {
+    final theThrow = throwAtIndex(index);
+    final origin = theThrow.origin;
+    if (origin == null || theThrow.isSelf) {
+      return ThrowStyle.self;
+    }
+
+    final ThrowStyle style;
+    if (period.isEven) {
+      if (origin.isEven) {
+        style = ThrowStyle.equi;
+      } else {
+        style = ThrowStyle.classic;
+      }
+    } else {
+      // period.isOdd
+      if (origin.isEven == index.isEven) {
+        style = ThrowStyle.instantbi;
+      } else {
+        style = ThrowStyle.bi;
+      }
+    }
+    return style;
+  }
+
+  Iterable<E> mapThrowsAsStringWithStyle<E>(
+      E Function(String string, ThrowStyle style) f) sync* {
+    for (var index = 0; index < period; index++) {
+      yield f(throwAtIndexToString(index), styleOfThrowAtIndex(index));
+    }
+  }
 }

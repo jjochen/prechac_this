@@ -95,12 +95,16 @@ class Engine {
     final isFullyDefinedThrow = height != null && passingIndex != null;
 
     final int negativeSelfHeight;
+    final int origin;
     if (landingSite == index) {
       negativeSelfHeight = -period;
+      origin = 0;
     } else if (landingSite >= index) {
       negativeSelfHeight = landingSite - index - period;
+      origin = landingSite - index;
     } else {
       negativeSelfHeight = landingSite - index;
+      origin = landingSite - index + period;
     }
 
     var results = <Throw>[];
@@ -110,6 +114,7 @@ class Engine {
       final possibleThrow = Throw(
         height: possibleHeight.reduce(),
         passingIndex: possiblePassingIndex,
+        origin: origin,
       );
       if ((isFullyDefinedThrow || possibleThrow.isValid()) &&
           possibleThrow.satisfiesConstraint(throwConstraint)) {
