@@ -4,7 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
 import 'throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>

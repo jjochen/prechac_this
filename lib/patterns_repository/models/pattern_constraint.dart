@@ -1,4 +1,4 @@
-import '../core/core.dart';
+import '../../core/core.dart';
 import 'patternable.dart';
 import 'throw_constraint.dart';
 

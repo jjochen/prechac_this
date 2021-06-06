@@ -1,6 +1,6 @@
 import 'package:fraction/fraction.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
 import '../models/models.dart';
 import 'prechac_pattern.dart';
 import 'prechac_pattern_constraint.dart';

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
 
 class SearchParameters extends Equatable {
   SearchParameters({

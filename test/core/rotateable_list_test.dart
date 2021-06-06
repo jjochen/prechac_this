@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/patterns_repository/core/rotateable_list.dart';
+import 'package:prechac_this/core/rotateable_list.dart';
 
 void main() {
   group('RotateableList', () {

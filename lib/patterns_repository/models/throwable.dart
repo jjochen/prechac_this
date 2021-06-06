@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
 
 abstract class Throwable
     with Comparable<Throwable>, Compare<Throwable>, EquatableMixin {

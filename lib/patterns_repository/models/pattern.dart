@@ -1,7 +1,7 @@
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
+import '../patterns_repository.dart';
 import 'patternable.dart';
 import 'throw.dart';
 

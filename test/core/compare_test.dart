@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/patterns_repository/core/compare.dart';
+import 'package:prechac_this/core/compare.dart';
 
 class TestObject with Comparable<TestObject>, Compare<TestObject> {
   TestObject(this.property);
