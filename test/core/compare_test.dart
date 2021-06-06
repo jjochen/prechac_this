@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:prechac_this/core/compare.dart';
+import 'package:test/test.dart';
 
 class TestObject with Comparable<TestObject>, Compare<TestObject> {
   TestObject(this.property);

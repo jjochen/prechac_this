@@ -1,7 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/engine/prechac_pattern_constraint.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('PrechacPatternConstraint', () {

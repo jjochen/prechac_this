@@ -1,8 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/engine/prechac_throw.dart';
 import 'package:prechac_this/patterns_repository/models/throw.dart';
 import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('PrechacThrow', () {

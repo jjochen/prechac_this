@@ -1,7 +1,8 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:dartx/dartx.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/models/models.dart';
+import 'package:test/test.dart';
 
 import '../../helpers/helpers.dart';
 

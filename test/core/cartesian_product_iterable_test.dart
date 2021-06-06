@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:prechac_this/core/cartesian_product_iterable.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('CartesianProductIterable', () {
