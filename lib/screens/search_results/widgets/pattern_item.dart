@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:prechac_this/core/core.dart';
 
+import '../../../core/core.dart';
 import '../../../patterns_repository/patterns_repository.dart';
 
 class PatternItem extends StatelessWidget {

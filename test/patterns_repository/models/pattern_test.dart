@@ -461,27 +461,68 @@ void main() {
       );
     });
 
-    test('mapThrowsAsStringWithStyle', () {
-      final pattern = Pattern(
-        numberOfJugglers: 2,
-        throwSequence: [
-          Throw(height: 4.toFraction(), passingIndex: 0, origin: 0),
-          Throw(height: 2.toFraction(), passingIndex: 1, origin: 0),
-          Throw(height: 1.toFraction(), passingIndex: 0, origin: 1),
-          Throw(height: 1.toFraction(), passingIndex: 1, origin: 3),
-        ],
-      );
-      expect(
-        pattern
-            .mapThrowsAsStringWithStyle((string, style) => '$string.$style')
-            .toList(),
-        [
-          '4.ThrowStyle.self',
-          '2p.ThrowStyle.equi',
-          '1.ThrowStyle.self',
-          '1p.ThrowStyle.classic',
-        ],
-      );
+    group('mapThrowsAsStringWithStyle', () {
+      test('4 2p 1 1p', () {
+        expect(
+          mockPattern
+              .mapThrowsAsStringWithStyle((string, style) => '$string $style')
+              .toList(),
+          [
+            '4 ThrowStyle.self',
+            '2p ThrowStyle.equi',
+            '1 ThrowStyle.self',
+            '1p ThrowStyle.classic',
+          ],
+        );
+      });
+      test('2.5p 2.5p 2 1.5p 1.5p', () {
+        final pattern = Pattern(
+          numberOfJugglers: 2,
+          throwSequence: [
+            Throw.pass(height: 2.5),
+            Throw.pass(height: 2.5),
+            Throw.self(height: 2),
+            Throw.pass(height: 1.5),
+            Throw.pass(height: 1.5),
+          ],
+        );
+        expect(
+          pattern
+              .mapThrowsAsStringWithStyle((string, style) => '$string $style')
+              .toList(),
+          [
+            '2.5p ThrowStyle.instantBi',
+            '2.5p ThrowStyle.instantBi',
+            '2 ThrowStyle.self',
+            '1.5p ThrowStyle.bi',
+            '1.5p ThrowStyle.bi',
+          ],
+        );
+      });
+      test('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
+        final pattern = Pattern(
+          numberOfJugglers: 3,
+          throwSequence: [
+            Throw(height: Fraction(10, 3), passingIndex: 2),
+            Throw(height: Fraction(8, 3), passingIndex: 1),
+            Throw(height: Fraction(7, 3), passingIndex: 2),
+            Throw(height: Fraction(5, 3), passingIndex: 1),
+            Throw(height: Fraction(5, 3), passingIndex: 1),
+          ],
+        );
+        expect(
+          pattern
+              .mapThrowsAsStringWithStyle((string, style) => '$string $style')
+              .toList(),
+          [
+            '3.3p₂ ThrowStyle.bi',
+            '2.6p₁ ThrowStyle.bi',
+            '2.3p₂ ThrowStyle.instantBi',
+            '1.6p₁ ThrowStyle.instantBi',
+            '1.6p₁ ThrowStyle.instantBi',
+          ],
+        );
+      });
     });
   });
 }

@@ -83,10 +83,16 @@ class Pattern extends Patternable<Pattern, Throw> {
 
   ThrowStyle styleOfThrowAtIndex(int index) {
     final theThrow = throwAtIndex(index);
-    final origin = theThrow.origin;
-    if (origin == null || theThrow.isSelf) {
+    if (theThrow.isSelf) {
       return ThrowStyle.self;
     }
+
+    final originFraction =
+        (theThrow.height - (theThrow.passingIndex.toFraction() * prechator))
+            .reduce();
+    assert(originFraction.isWhole);
+    final origin = originFraction.numerator;
+    final passingIndex = theThrow.passingIndex;
 
     final ThrowStyle style;
     if (period.isEven) {
@@ -97,10 +103,10 @@ class Pattern extends Patternable<Pattern, Throw> {
       }
     } else {
       // period.isOdd
-      if (origin.isEven == index.isEven) {
-        style = ThrowStyle.instantBi;
-      } else {
+      if (origin.isOdd == passingIndex.isOdd) {
         style = ThrowStyle.bi;
+      } else {
+        style = ThrowStyle.instantBi;
       }
     }
     return style;
