@@ -73,9 +73,10 @@ class Pattern extends Patternable<Pattern, Throw> {
 
   late String id = _getId();
   String _getId() {
-    var components = <String>[]
-      ..add(numberOfJugglers.toString())
-      ..addAll(throwSequence.map((aThrow) => aThrow.id));
+    var components = <String>[
+      numberOfJugglers.toString(),
+      ...throwSequence.map((aThrow) => aThrow.id)
+    ];
     return components.join(_idSeparator);
   }
 

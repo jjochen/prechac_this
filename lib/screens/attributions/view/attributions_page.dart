@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AttributionsPage extends LicensePage {
-  AttributionsPage({Key? key}) : super(key: key);
+  const AttributionsPage({Key? key}) : super(key: key);
 
   static const routeName = 'attributions';
 

@@ -6,7 +6,7 @@ import 'package:formz/formz.dart';
 import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
-  ConstraintsForm({Key? key}) : super(key: key);
+  const ConstraintsForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:prechac_this/core/joinable.dart';
 import 'package:test/test.dart';
 

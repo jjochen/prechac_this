@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../core/core.dart';
 
 class SearchParameters extends Equatable {
-  SearchParameters({
+  const SearchParameters({
     required this.numberOfJugglers,
     required this.period,
     required this.numberOfObjects,

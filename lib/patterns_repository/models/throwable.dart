@@ -61,7 +61,7 @@ abstract class Throwable
       return height.toDouble().toString();
     }
 
-    final mod = 10.0;
+    const mod = 10.0;
     final truncatedToOneDecimalDigit =
         (height.toDouble() * mod).truncateToDouble() / mod;
     return truncatedToOneDecimalDigit.toString();

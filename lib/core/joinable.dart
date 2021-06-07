@@ -5,7 +5,7 @@ extension Joinable<E> on Iterable<E> {
       return [];
     }
 
-    var list = <E>[]..add(iterator.current);
+    var list = <E>[iterator.current];
     while (iterator.moveNext()) {
       list..add(separator)..add(iterator.current);
     }

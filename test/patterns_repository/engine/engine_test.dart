@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/engine/engine.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
@@ -82,7 +83,7 @@ void main() {
       });
 
       test('calculates possible throws for given passing index', () {
-        final constraint = const ThrowConstraint(height: null, passingIndex: 2);
+        const constraint = ThrowConstraint(height: null, passingIndex: 2);
         expect(
           engine.possibleThrows(
             throwConstraint: constraint,
@@ -193,7 +194,7 @@ void main() {
       });
 
       test('calculates possible throws for given passing index', () {
-        final constraint = const ThrowConstraint(height: null, passingIndex: 1);
+        const constraint = ThrowConstraint(height: null, passingIndex: 1);
         expect(
           engine.possibleThrows(
             throwConstraint: constraint,

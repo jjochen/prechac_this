@@ -5,10 +5,10 @@ import '../../../patterns_bloc/patterns_bloc.dart';
 import '../search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
-  SearchResultsPage({Key? key}) : super(key: key);
+  const SearchResultsPage({Key? key}) : super(key: key);
 
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => SearchResultsPage());
+    return MaterialPageRoute<void>(builder: (_) => const SearchResultsPage());
   }
 
   @override

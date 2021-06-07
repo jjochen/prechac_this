@@ -21,6 +21,7 @@ dependencies:
   fraction: ^3.0.1
   trotter: ^2.0.0-dev.1
   dartx: ^0.7.1
+  petitparser: ^4.1.0
 
 dev_dependencies:
   flutter_test:

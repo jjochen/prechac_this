@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,7 @@ void main() {
       await tester.pumpApp(
         widget: BlocProvider.value(
           value: counterCubit,
-          child: CounterView(),
+          child: const CounterView(),
         ),
       );
       expect(find.text('$state'), findsOneWidget);
@@ -50,7 +52,7 @@ void main() {
       await tester.pumpApp(
         widget: BlocProvider.value(
           value: counterCubit,
-          child: CounterView(),
+          child: const CounterView(),
         ),
       );
       await tester.tap(find.byKey(incrementButtonKey));

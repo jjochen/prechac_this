@@ -11,13 +11,13 @@ class CounterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => CounterCubit(),
-      child: CounterView(),
+      child: const CounterView(),
     );
   }
 }
 
 class CounterView extends StatelessWidget {
-  CounterView({Key? key}) : super(key: key);
+  const CounterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
