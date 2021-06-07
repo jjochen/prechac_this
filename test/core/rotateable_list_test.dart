@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/patterns_repository/core/rotateable_list.dart';
+// ignore_for_file: prefer_const_constructors
+import 'package:prechac_this/core/rotateable_list.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('RotateableList', () {

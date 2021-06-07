@@ -9,7 +9,7 @@ extension PrechacPattern on Pattern {
     required int numberOfObjects,
     required int numberOfJugglers,
   }) {
-    final numberOfPasses = this.numberOfPasses();
+    final numberOfPasses = this.numberOfPasses;
     if (numberOfPasses < minNumberOfPasses) {
       return false;
     }
@@ -18,10 +18,7 @@ extension PrechacPattern on Pattern {
       return false;
     }
 
-    final averageNumberOfObjects = averageNumberOfObjectsPerJuggler();
-    final combinedNumberOfObjects =
-        averageNumberOfObjects * Fraction(numberOfJugglers);
-    if (combinedNumberOfObjects != numberOfObjects.toFraction()) {
+    if (this.numberOfObjects != numberOfObjects.toFraction()) {
       return false;
     }
 

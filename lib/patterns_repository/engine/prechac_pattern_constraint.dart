@@ -1,4 +1,3 @@
-import 'package:fraction/fraction.dart';
 import 'package:trotter/trotter.dart';
 
 import '../models/pattern_constraint.dart';
@@ -6,11 +5,9 @@ import 'landing_sites.dart';
 import 'prechac_throw_constraint.dart';
 
 extension PrechacPatternConstraint on PatternConstraint {
-  Iterable<List<int>> permutationsOfPossibleLandingSites({
-    required Fraction prechator,
-  }) {
+  Iterable<List<int>> permutationsOfPossibleLandingSites() {
     final allSites = List<int>.generate(period, (int index) => index);
-    final existingSites = landingSites(prechator: prechator);
+    final existingSites = landingSites();
     final missingSites =
         allSites.where((element) => !existingSites.contains(element)).toList();
     final numberOfMissingSites = missingSites.length;
@@ -20,9 +17,7 @@ extension PrechacPatternConstraint on PatternConstraint {
     return permutationsOfMissingSites().map(existingSites.fillMissingSites);
   }
 
-  List<int> landingSites({
-    required Fraction prechator,
-  }) {
+  List<int> landingSites() {
     return mapIndexedThrow((index, indexedThrowConstraint) {
       return indexedThrowConstraint.landingSite(
         position: index,

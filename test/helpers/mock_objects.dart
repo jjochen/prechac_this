@@ -15,9 +15,12 @@ final mockParameters = SearchParameters(
   maxHeight: 4,
 );
 
-final mockPattern = Pattern([
-  Throw.self(height: 4),
-  Throw.pass(height: 2),
-  Throw.self(height: 1),
-  Throw.pass(height: 1),
-]);
+final mockPattern = Pattern(
+  numberOfJugglers: 2,
+  throwSequence: [
+    Throw.self(height: 4),
+    Throw.pass(height: 2),
+    Throw.self(height: 1),
+    Throw.pass(height: 1),
+  ],
+);

@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:prechac_this/patterns_repository/engine/prechac_pattern.dart';
+import 'package:test/test.dart';
 
 import '../../helpers/helpers.dart';
 

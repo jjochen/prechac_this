@@ -1,6 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/models/throw.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Throw', () {
@@ -22,6 +23,26 @@ void main() {
       expect(
         Throw.pass(height: 3) < Throw.self(height: 4),
         isTrue,
+      );
+    });
+
+    test('from valid ID', () {
+      expect(
+        Throw.fromId('4-1-0'),
+        Throw.self(height: 4),
+      );
+    });
+
+    test('from invalid ID is null', () {
+      expect(Throw.fromId('4-1'), isNull);
+      expect(Throw.fromId('4-1-x'), isNull);
+    });
+
+    test('supports representation as ID', () {
+      final aThrow = Throw(height: Fraction(4, 3), passingIndex: 2);
+      expect(
+        Throw.fromId(aThrow.id),
+        aThrow,
       );
     });
 
@@ -66,27 +87,27 @@ void main() {
       test('has correct string representation', () {
         expect(
           Throw.pass(height: 4).toString(),
-          '4p1',
+          '4p₁',
         );
 
         expect(
           Throw.pass(height: 42.25).toString(),
-          '42.25p1',
+          '42.25p₁',
         );
 
         expect(
           Throw.pass(height: 42.257).toString(),
-          '42.2p1',
+          '42.2p₁',
         );
 
         expect(
           Throw(height: Fraction(5, 3), passingIndex: 2).toString(),
-          '1.6p2',
+          '1.6p₂',
         );
 
         expect(
           Throw(height: Fraction(4, 3), passingIndex: 1).toString(),
-          '1.3p1',
+          '1.3p₁',
         );
       });
 

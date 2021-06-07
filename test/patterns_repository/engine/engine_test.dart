@@ -1,7 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/engine/engine.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Engine', () {
@@ -9,30 +10,36 @@ void main() {
       late Engine engine;
       late PatternConstraint patternConstraint;
       setUp(() {
-        engine = Engine(
+        patternConstraint = PatternConstraint(
           numberOfJugglers: 3,
-          period: 4,
+          throwSequence: [
+            ThrowConstraint.self(height: 4),
+            ThrowConstraint(height: Fraction(4, 3), passingIndex: null),
+            ThrowConstraint.placeholder(),
+            ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
+          ],
+        );
+        engine = Engine(
           numberOfObjects: 6,
           maxHeight: 4,
+          minNumberOfPasses: 1,
+          maxNumberOfPasses: patternConstraint.period,
         );
-        patternConstraint = PatternConstraint([
-          ThrowConstraint.self(height: 4),
-          ThrowConstraint(height: Fraction(4, 3), passingIndex: null),
-          ThrowConstraint.placeholder(),
-          ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
-        ]);
       });
 
       test('finds correct patterns', () {
         expect(
           engine.fillConstraint(patternConstraint: patternConstraint),
           [
-            Pattern([
-              Throw.self(height: 4),
-              Throw(height: Fraction(4, 3), passingIndex: 1),
-              Throw.self(height: 1),
-              Throw(height: Fraction(5, 3), passingIndex: 2),
-            ]),
+            Pattern(
+              numberOfJugglers: 3,
+              throwSequence: [
+                Throw.self(height: 4),
+                Throw(height: Fraction(4, 3), passingIndex: 1),
+                Throw.self(height: 1),
+                Throw(height: Fraction(5, 3), passingIndex: 2),
+              ],
+            ),
           ],
         );
       });
@@ -41,7 +48,13 @@ void main() {
         final constraint = ThrowConstraint.placeholder();
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw.self(height: 1),
             Throw(height: Fraction(7, 3), passingIndex: 1),
@@ -55,7 +68,13 @@ void main() {
             ThrowConstraint(height: Fraction(7, 3), passingIndex: null);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw(height: Fraction(7, 3), passingIndex: 1),
           ],
@@ -66,7 +85,13 @@ void main() {
         final constraint = const ThrowConstraint(height: null, passingIndex: 2);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw(height: Fraction(11, 3), passingIndex: 2),
           ],
@@ -78,7 +103,13 @@ void main() {
             ThrowConstraint(height: Fraction(5, 3), passingIndex: 2);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+            throwConstraint: constraint,
+            landingSite: 2,
+            index: 3,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -90,31 +121,37 @@ void main() {
       late PatternConstraint patternConstraint;
       late Engine engine;
       setUp(() {
-        engine = Engine(
+        patternConstraint = PatternConstraint(
           numberOfJugglers: 2,
-          period: 4,
+          throwSequence: [
+            ThrowConstraint.self(height: 4),
+            ThrowConstraint.placeholder(),
+            ThrowConstraint.self(height: 1),
+            ThrowConstraint.placeholder(),
+          ],
+        );
+
+        engine = Engine(
           numberOfObjects: 4,
           maxHeight: 4,
           minNumberOfPasses: 2,
+          maxNumberOfPasses: patternConstraint.period,
         );
-        patternConstraint = PatternConstraint([
-          ThrowConstraint.self(height: 4),
-          ThrowConstraint.placeholder(),
-          ThrowConstraint.self(height: 1),
-          ThrowConstraint.placeholder(),
-        ]);
       });
 
       test('finds correct patterns', () {
         expect(
           engine.fillConstraint(patternConstraint: patternConstraint),
           [
-            Pattern([
-              Throw.self(height: 4),
-              Throw.pass(height: 2),
-              Throw.self(height: 1),
-              Throw.pass(height: 1),
-            ]),
+            Pattern(
+              numberOfJugglers: 2,
+              throwSequence: [
+                Throw.self(height: 4),
+                Throw.pass(height: 2),
+                Throw.self(height: 1),
+                Throw.pass(height: 1),
+              ],
+            ),
           ],
         );
       });
@@ -123,7 +160,13 @@ void main() {
         final constraint = ThrowConstraint.placeholder();
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw.self(height: 1),
             Throw.pass(height: 3),
@@ -136,7 +179,13 @@ void main() {
             ThrowConstraint(height: Fraction(1), passingIndex: null);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw.self(height: 1),
           ],
@@ -147,7 +196,13 @@ void main() {
         final constraint = const ThrowConstraint(height: null, passingIndex: 1);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 2),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw.pass(height: 3),
           ],
@@ -159,7 +214,13 @@ void main() {
             ThrowConstraint(height: Fraction(3), passingIndex: 0);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+            throwConstraint: constraint,
+            landingSite: 2,
+            index: 3,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [
             Throw.self(height: 3),
           ],
@@ -171,7 +232,13 @@ void main() {
             ThrowConstraint(height: Fraction(1), passingIndex: 0);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 3, index: 3),
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 3,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [],
         );
       });
@@ -182,7 +249,13 @@ void main() {
             ThrowConstraint(height: Fraction(1), passingIndex: 0);
         expect(
           engine.possibleThrows(
-              throwConstraint: constraint, landingSite: 2, index: 3),
+            throwConstraint: constraint,
+            landingSite: 2,
+            index: 3,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
           [],
         );
       });

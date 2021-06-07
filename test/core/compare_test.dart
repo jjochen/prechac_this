@@ -1,5 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:prechac_this/patterns_repository/core/compare.dart';
+// ignore_for_file: prefer_const_constructors
+import 'package:prechac_this/core/compare.dart';
+import 'package:test/test.dart';
 
 class TestObject with Comparable<TestObject>, Compare<TestObject> {
   TestObject(this.property);
@@ -95,26 +96,26 @@ void main() {
           isFalse,
         );
       });
+    });
 
-      group('equal', () {
-        test('1 == 1', () {
-          expect(
-            TestObject(1) == TestObject(1),
-            isTrue,
-          );
-        });
-        test('not 1 == 2', () {
-          expect(
-            TestObject(1) == TestObject(2),
-            isFalse,
-          );
-        });
-        test('not 2 == 1', () {
-          expect(
-            TestObject(2) == TestObject(1),
-            isFalse,
-          );
-        });
+    group('equal', () {
+      test('1 == 1', () {
+        expect(
+          TestObject(1) == TestObject(1),
+          isTrue,
+        );
+      });
+      test('not 1 == 2', () {
+        expect(
+          TestObject(1) == TestObject(2),
+          isFalse,
+        );
+      });
+      test('not 2 == 1', () {
+        expect(
+          TestObject(2) == TestObject(1),
+          isFalse,
+        );
       });
     });
   });

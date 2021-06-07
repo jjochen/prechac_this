@@ -1,6 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('ThrowConstraint', () {
@@ -96,22 +97,22 @@ void main() {
       test('has correct string representation', () {
         expect(
           ThrowConstraint.pass(height: 42.25).toString(),
-          '42.25p1',
+          '42.25p₁',
         );
 
         expect(
           ThrowConstraint(height: Fraction(4, 3), passingIndex: 2).toString(),
-          '1.3p2',
+          '1.3p₂',
         );
 
         expect(
           ThrowConstraint(height: Fraction(5, 3), passingIndex: 1).toString(),
-          '1.6p1',
+          '1.6p₁',
         );
 
         expect(
           ThrowConstraint.pass(height: null).toString(),
-          '_p1',
+          '_p₁',
         );
 
         expect(

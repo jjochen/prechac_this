@@ -1,23 +1,45 @@
 import 'dart:collection';
 
+import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fraction/fraction.dart';
 
-import '../core/core.dart';
+import '../../core/core.dart';
 import 'throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {
-  const Patternable(this.throwSequence);
+  Patternable({
+    required this.numberOfJugglers,
+    required this.throwSequence,
+  }) : assert(throwSequence.isNotEmpty);
 
+  final int numberOfJugglers;
   final List<T> throwSequence;
 
-  int get period {
+  late int period = _getPeriod();
+  int _getPeriod() {
     return throwSequence.length;
   }
 
+  late Fraction prechator = _getPrechator();
+  Fraction _getPrechator() {
+    return Fraction(period, numberOfJugglers);
+  }
+
+  late int numberOfPasses = _getNumberOfPasses();
+  int _getNumberOfPasses() {
+    var numberOfPasses = 0;
+    for (var aThrow in this) {
+      if (aThrow.isPass) {
+        numberOfPasses++;
+      }
+    }
+    return numberOfPasses;
+  }
+
   P normalize() {
-    return allRotations()
-        .reduce((value, element) => element > value ? element : value);
+    return allRotations().max()!;
   }
 
   P rotate([int numberOfThrows = 1]);
@@ -44,15 +66,38 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
   @override
   String toString() {
-    final components = map((e) => e.toString());
-    return '${components.join(', ')}';
+    final components = map(
+      (aThrow) => aThrow.toStringShowingPassingIndex(shouldShowPassingIndex),
+    );
+    return components.join(' ');
+  }
+
+  String throwAtIndexToString(int index) {
+    final theThrow = throwAtIndex(index);
+    return theThrow.toStringShowingPassingIndex(shouldShowPassingIndex);
+  }
+
+  bool get shouldShowPassingIndex {
+    return numberOfJugglers > 2;
   }
 
   @override
   int compareTo(P other) {
+    final numberOfJugglersComparator =
+        numberOfJugglers.compareTo(other.numberOfJugglers);
+    if (numberOfJugglersComparator != 0) {
+      return numberOfJugglersComparator;
+    }
+
     final periodComparator = period.compareTo(other.period);
     if (periodComparator != 0) {
       return periodComparator;
+    }
+
+    final numberOfPassesComparator =
+        numberOfPasses.compareTo(other.numberOfPasses);
+    if (numberOfPassesComparator != 0) {
+      return numberOfPassesComparator;
     }
 
     var index = 0;
@@ -62,6 +107,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
       if (throwComparator != 0) {
         return throwComparator;
       }
+      index++;
     }
     return 0;
   }
@@ -74,7 +120,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
     for (final item in throwSequence) {
       yield f(index, item);
-      index = index + 1;
+      index++;
     }
   }
 }
