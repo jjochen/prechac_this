@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -95,7 +96,7 @@ void main() {
 
   group('RoutingDataString', () {
     test('parses route', () {
-      final route = 'search/results?number_of_jugglers=2&period=4';
+      const route = 'search/results?number_of_jugglers=2&period=4';
       expect(
         route.routingData,
         RoutingData([

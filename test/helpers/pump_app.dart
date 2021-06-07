@@ -27,7 +27,7 @@ extension PumpApp on WidgetTester {
 
 MaterialApp _app({Widget? widget, String? route}) {
   return MaterialApp(
-    localizationsDelegates: [
+    localizationsDelegates: const [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
     ],

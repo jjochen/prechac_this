@@ -32,7 +32,7 @@ class AppView extends StatelessWidget {
       theme: theme,
       initialRoute: HomePage.routeName,
       onGenerateRoute: AppRouter.generateRoute,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
       ],

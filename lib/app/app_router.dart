@@ -19,7 +19,7 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final name = settings.name;
-    final data = name?.routingData ?? RoutingData();
+    final data = name?.routingData ?? const RoutingData();
 
     Route<dynamic>? route;
     route ??= _tryParseAttributionsRoute(data);
@@ -33,7 +33,7 @@ class AppRouter {
     //final searchParameters = SearchParameters.fromQueryParameters(map);
 
     return pageRoute(
-      HomePage(),
+      const HomePage(),
       data,
     );
   }
@@ -43,12 +43,12 @@ class AppRouter {
       return null;
     }
 
-    return pageRoute(AttributionsPage(), data);
+    return pageRoute(const AttributionsPage(), data);
   }
 }
 
 class RoutingData extends Equatable {
-  RoutingData([
+  const RoutingData([
     this.pathSegments = const [],
     this.queryParameters = const {},
   ]);

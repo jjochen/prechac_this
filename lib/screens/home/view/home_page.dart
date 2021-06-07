@@ -7,18 +7,18 @@ import '../../search_results/search_results.dart';
 import '../home.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   static const routeName = '';
 
   @override
   Widget build(BuildContext context) {
-    return HomeView();
+    return const HomeView();
   }
 }
 
 class HomeView extends StatelessWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
             create: (_) => ConstraintsFormBloc(
               patternsBloc: BlocProvider.of<PatternsBloc>(context),
             ),
-            child: ConstraintsForm(),
+            child: const ConstraintsForm(),
           ),
         ),
       ),

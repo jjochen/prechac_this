@@ -5,7 +5,7 @@ import '../../../core/core.dart';
 import '../../../patterns_repository/patterns_repository.dart';
 
 class PatternItem extends StatelessWidget {
-  PatternItem({
+  const PatternItem({
     Key? key,
     required this.pattern,
     this.onTap,
@@ -21,7 +21,7 @@ class PatternItem extends StatelessWidget {
       onTap: onTap,
       title: Hero(
         tag: '${pattern.id}__heroTag',
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: RichText(
             text: TextSpan(
