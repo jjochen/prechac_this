@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:petitparser/petitparser.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
@@ -8,14 +9,22 @@ class ConstraintParserDefinition extends GrammarDefinition {
   Parser<ThrowConstraint> throwConstraint() =>
       (self() | pass() | throwPlaceholder()).map((value) => value);
 
+  Parser<ThrowConstraint> throwConstraint() => [
+        pass(),
+        throwPlaceholder(),
+        self(),
+      ]
+          .toChoiceParser(failureJoiner: selectFarthestJoined)
+          .map((value) => value);
+
   Parser<ThrowConstraint> self() =>
       integer().map((height) => ThrowConstraint.self(height: height));
 
   Parser<ThrowConstraint> pass() =>
-      (floatOrPlaceholder() & passMarker() & integerOrPlaceholder())
+      (floatOrPlaceholder() & passMarker() & integerOrPlaceholder().optional())
           .map((values) => ThrowConstraint.pass(
-                height: values[0],
-                passingIndex: values[2],
+                height: values.elementAtOrNull(0),
+                passingIndex: values.elementAtOrNull(2),
               ));
 
   Parser<ThrowConstraint> throwPlaceholder() =>
