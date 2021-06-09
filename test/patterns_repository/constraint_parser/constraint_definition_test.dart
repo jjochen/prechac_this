@@ -127,7 +127,7 @@ void main() {
         });
       });
 
-      group('integerOrPlaceholder', () {
+      group('floatOrPlaceholder', () {
         late Parser parser;
 
         setUp(() {

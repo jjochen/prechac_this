@@ -24,12 +24,18 @@ class ConstraintParserDefinition extends GrammarDefinition {
   Parser<ThrowConstraint> self() =>
       integer().map((height) => ThrowConstraint.self(height: height));
 
-  Parser<ThrowConstraint> pass() =>
-      (floatOrPlaceholder() & passMarker() & integerOrPlaceholder().optional())
-          .map((values) => ThrowConstraint.pass(
-                height: values.elementAtOrNull(0),
-                passingIndex: values.elementAtOrDefault(2, 1),
-              ));
+  Parser<ThrowConstraint> pass() => (floatOrPlaceholder() & passingIndex())
+      .map((values) => ThrowConstraint.pass(
+            height: values.elementAt(0),
+            passingIndex: values.elementAt(1),
+          ));
+
+  Parser<int?> passingIndex() =>
+      (pWithIndex() | pWithoutIndex()).map((value) => value);
+
+  Parser<int?> pWithIndex() => (passMarker() & integerOrPlaceholder())
+      .map((values) => values.elementAtOrNull(1));
+  Parser<int?> pWithoutIndex() => passMarker().map((_) => 1);
 
   Parser<ThrowConstraint> throwPlaceholder() =>
       placeholder().map((_) => ThrowConstraint.placeholder());
