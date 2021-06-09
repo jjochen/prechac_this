@@ -6,8 +6,12 @@ class ConstraintParserDefinition extends GrammarDefinition {
   @override
   Parser start() => ref0(throwConstraint).end();
 
-  Parser<ThrowConstraint> throwConstraint() =>
-      (self() | pass() | throwPlaceholder()).map((value) => value);
+  // Parser<List<ThrowConstraint>> patternConstraint() =>
+  //     (throwConstraint() & whitespaceAndThrowConstraint().plus())
+  //         .map((value) => value);
+
+  // Parser<ThrowConstraint> whitespaceAndThrowConstraint() =>
+  //     (whitespace() & throwConstraint()).map((values) => values.lastOrNull);
 
   Parser<ThrowConstraint> throwConstraint() => [
         pass(),
@@ -24,7 +28,7 @@ class ConstraintParserDefinition extends GrammarDefinition {
       (floatOrPlaceholder() & passMarker() & integerOrPlaceholder().optional())
           .map((values) => ThrowConstraint.pass(
                 height: values.elementAtOrNull(0),
-                passingIndex: values.elementAtOrNull(2),
+                passingIndex: values.elementAtOrDefault(2, 1),
               ));
 
   Parser<ThrowConstraint> throwPlaceholder() =>
