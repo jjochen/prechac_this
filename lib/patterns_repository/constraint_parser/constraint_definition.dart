@@ -4,14 +4,15 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 class ConstraintParserDefinition extends GrammarDefinition {
   @override
-  Parser start() => ref0(throwConstraint).end();
+  Parser start() => throwSequence().end();
 
-  // Parser<List<ThrowConstraint>> patternConstraint() =>
-  //     (throwConstraint() & whitespaceAndThrowConstraint().plus())
-  //         .map((value) => value);
+  Parser<List<ThrowConstraint>> throwSequence() =>
+      (throwConstraint() & whitespaceAndThrowConstraint().star())
+          .trim()
+          .map((values) => <ThrowConstraint>[values[0], ...values[1]]);
 
-  // Parser<ThrowConstraint> whitespaceAndThrowConstraint() =>
-  //     (whitespace() & throwConstraint()).map((values) => values.lastOrNull);
+  Parser<ThrowConstraint> whitespaceAndThrowConstraint() =>
+      (whitespace().plus() & throwConstraint()).map((values) => values.last);
 
   Parser<ThrowConstraint> throwConstraint() => [
         pass(),
