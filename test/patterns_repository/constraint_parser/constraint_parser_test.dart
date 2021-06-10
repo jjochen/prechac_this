@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:petitparser/petitparser.dart';
-import 'package:prechac_this/patterns_repository/constraint_parser/constraint_definition.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
@@ -49,7 +49,8 @@ void main() {
         late Parser parser;
 
         setUp(() {
-          parser = definition.build(start: definition.throwConstraint);
+          Parser start() => definition.throwConstraint().end();
+          parser = definition.build(start: start);
         });
 
         group('self', () {
@@ -131,7 +132,7 @@ void main() {
 
           test('?', () {
             expect(
-              parser.parse('*').value,
+              parser.parse('?').value,
               ThrowConstraint.placeholder(),
             );
           });
@@ -142,21 +143,47 @@ void main() {
         late Parser parser;
 
         setUp(() {
-          parser = definition.build(start: definition.integerOrPlaceholder);
+          Parser start() => definition.integerOrPlaceholder().end();
+          parser = definition.build(start: start);
         });
 
-        test('4', () {
-          expect(
-            parser.parse('4').value,
-            4,
-          );
+        group('valid', () {
+          test('4', () {
+            expect(
+              parser.parse('4').value,
+              4,
+            );
+          });
+
+          test('_', () {
+            expect(
+              parser.parse('_').value,
+              isNull,
+            );
+          });
         });
 
-        test('_', () {
-          expect(
-            parser.parse('_').value,
-            isNull,
-          );
+        group('invalid', () {
+          test('4.2', () {
+            expect(
+              parser.parse('4.2').isFailure,
+              isTrue,
+            );
+          });
+
+          test(' 4 ', () {
+            expect(
+              parser.parse('4 ').isFailure,
+              isTrue,
+            );
+          });
+
+          test('p', () {
+            expect(
+              parser.parse('p').isFailure,
+              isTrue,
+            );
+          });
         });
       });
 
@@ -164,27 +191,60 @@ void main() {
         late Parser parser;
 
         setUp(() {
-          parser = definition.build(start: definition.floatOrPlaceholder);
-        });
-        test('4', () {
-          expect(
-            parser.parse('4').value,
-            4,
-          );
+          Parser start() => definition.floatOrPlaceholder().end();
+          parser = definition.build(start: start);
         });
 
-        test('4.2', () {
-          expect(
-            parser.parse('4.2').value,
-            4.2,
-          );
-        });
+        group('valid', () {
+          test('4', () {
+            expect(
+              parser.parse('4').value,
+              4,
+            );
+          });
 
-        test('_', () {
-          expect(
-            parser.parse('_').value,
-            isNull,
-          );
+          test('4.2', () {
+            expect(
+              parser.parse('4.2').value,
+              4.2,
+            );
+          });
+
+          test('_', () {
+            expect(
+              parser.parse('_').value,
+              isNull,
+            );
+          });
+        });
+        group('invalid', () {
+          test('4.2.2', () {
+            expect(
+              parser.parse('4.2.2').isFailure,
+              isTrue,
+            );
+          });
+
+          test('4.', () {
+            expect(
+              parser.parse('4.').isFailure,
+              isTrue,
+            );
+          });
+
+          test('', () {
+            expect(
+              parser.parse('').isFailure,
+              isTrue,
+            );
+          });
+
+          test(' ', () {
+            expect(
+              parser.parse(' ').isFailure,
+              isTrue,
+            );
+          });
         });
       });
     });
