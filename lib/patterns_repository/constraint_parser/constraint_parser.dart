@@ -36,7 +36,7 @@ class ConstraintParserDefinition extends GrammarDefinition {
 
   Parser<int?> pWithIndex() => (passMarker() & integerOrPlaceholder())
       .map((values) => values.elementAtOrNull(1));
-  Parser<int?> pWithoutIndex() => passMarker().map((_) => 1);
+  Parser<int?> pWithoutIndex() => passMarker().map((_) => null);
 
   Parser<ThrowConstraint> throwPlaceholder() =>
       placeholder().map((_) => ThrowConstraint.placeholder());

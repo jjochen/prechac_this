@@ -38,7 +38,7 @@ void main() {
             parser.parse('   4   _p1  _    ').value,
             [
               ThrowConstraint.self(height: 4),
-              ThrowConstraint.pass(height: null),
+              ThrowConstraint.pass(height: null, passingIndex: 1),
               ThrowConstraint.placeholder(),
             ],
           );
@@ -78,18 +78,16 @@ void main() {
           });
 
           test('4.5p', () {
-            // TODO: passing index should be null
             expect(
               parser.parse('4.5p').value,
-              ThrowConstraint.pass(height: 4.5, passingIndex: 1),
+              ThrowConstraint.pass(height: 4.5, passingIndex: null),
             );
           });
 
           test('4p', () {
-            // TODO: passing index should be null
             expect(
               parser.parse('4p').value,
-              ThrowConstraint.pass(height: 4, passingIndex: 1),
+              ThrowConstraint.pass(height: 4, passingIndex: null),
             );
           });
 

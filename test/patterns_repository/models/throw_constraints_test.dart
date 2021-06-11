@@ -98,7 +98,7 @@ void main() {
       test('has correct string representation', () {
         expect(
           ThrowConstraint.pass(height: 42.25).toString(),
-          '42.25p₁',
+          '42.25p_',
         );
 
         expect(
@@ -113,7 +113,7 @@ void main() {
 
         expect(
           ThrowConstraint.pass(height: null).toString(),
-          '_p₁',
+          '_p_',
         );
 
         expect(
@@ -124,12 +124,22 @@ void main() {
 
       test('isSelf returns false', () {
         expect(
+          ThrowConstraint.pass(height: 4, passingIndex: 1).isSelf,
+          false,
+        );
+
+        expect(
           ThrowConstraint.pass(height: 4).isSelf,
           false,
         );
       });
 
       test('isPass returns true', () {
+        expect(
+          ThrowConstraint.pass(height: 4, passingIndex: 1).isPass,
+          true,
+        );
+
         expect(
           ThrowConstraint.pass(height: 4).isPass,
           true,
