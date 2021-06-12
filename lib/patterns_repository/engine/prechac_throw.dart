@@ -54,7 +54,7 @@ extension PrechacThrow on Throw {
       return passingIndex == throwConstraint.passingIndex;
     }
 
-    if (throwConstraint.limmitToPass) {
+    if (throwConstraint.limitToPass) {
       return passingIndex > 0;
     }
 
