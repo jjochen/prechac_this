@@ -42,8 +42,11 @@ extension PrechacThrow on Throw {
   }
 
   bool heightSatisfiesConstraint(ThrowConstraint throwConstraint) {
-    if (throwConstraint.height != null) {
-      return height == throwConstraint.height;
+    final constraintHeight = throwConstraint.height;
+    if (constraintHeight != null) {
+      const minDistance = 0.1;
+      final distance = (height.toDouble() - constraintHeight.toDouble()).abs();
+      return distance < minDistance;
     }
 
     return true;
