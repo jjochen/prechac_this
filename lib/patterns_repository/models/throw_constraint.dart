@@ -6,7 +6,7 @@ class ThrowConstraint extends Throwable {
   const ThrowConstraint({
     required this.height,
     required this.passingIndex,
-    this.limmitToPass = false,
+    this.limitToPass = false,
   });
 
   factory ThrowConstraint.pass({
@@ -16,7 +16,7 @@ class ThrowConstraint extends Throwable {
       ThrowConstraint(
         height: height?.toFraction(),
         passingIndex: passingIndex,
-        limmitToPass: true,
+        limitToPass: true,
       );
 
   factory ThrowConstraint.self({required int? height}) => ThrowConstraint(
@@ -36,11 +36,11 @@ class ThrowConstraint extends Throwable {
 
   // TODO add optional function `isValid...` used when height/passingIndex is null
 
-  final bool limmitToPass;
+  final bool limitToPass;
 
   @override
-  bool get isPlaceholder => !limmitToPass && super.isPlaceholder;
+  bool get isPlaceholder => !limitToPass && super.isPlaceholder;
 
   @override
-  bool get isPass => limmitToPass || super.isPass;
+  bool get isPass => limitToPass || super.isPass;
 }

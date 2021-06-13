@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('Engine', () {
-    group('4 1.3p1 _ 1.6p2', () {
+    group('4 1.3p_ _ 1.6p2', () {
       late Engine engine;
       late PatternConstraint patternConstraint;
       setUp(() {
@@ -15,7 +15,11 @@ void main() {
           numberOfJugglers: 3,
           throwSequence: [
             ThrowConstraint.self(height: 4),
-            ThrowConstraint(height: Fraction(4, 3), passingIndex: null),
+            ThrowConstraint(
+              height: Fraction(4, 3),
+              passingIndex: null,
+              limitToPass: true,
+            ),
             ThrowConstraint.placeholder(),
             ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -126,7 +130,7 @@ void main() {
           numberOfJugglers: 2,
           throwSequence: [
             ThrowConstraint.self(height: 4),
-            ThrowConstraint.placeholder(),
+            ThrowConstraint.pass(height: null),
             ThrowConstraint.self(height: 1),
             ThrowConstraint.placeholder(),
           ],
@@ -135,7 +139,7 @@ void main() {
         engine = Engine(
           numberOfObjects: 4,
           maxHeight: 4,
-          minNumberOfPasses: 2,
+          minNumberOfPasses: 0,
           maxNumberOfPasses: patternConstraint.period,
         );
       });
@@ -189,6 +193,27 @@ void main() {
           ),
           [
             Throw.self(height: 1),
+          ],
+        );
+      });
+
+      test('calculates possible throws limited to passes', () {
+        final constraint = ThrowConstraint(
+          height: null,
+          passingIndex: null,
+          limitToPass: true,
+        );
+        expect(
+          engine.possibleThrows(
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
+          [
+            Throw.pass(height: 3),
           ],
         );
       });

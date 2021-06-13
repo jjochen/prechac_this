@@ -37,23 +37,27 @@ extension PrechacThrow on Throw {
   }
 
   bool satisfiesConstraint(ThrowConstraint throwConstraint) {
-    return passingIndexSatisfiesConstraint(throwConstraint.passingIndex) &&
-        heightSatisfiesConstraint(throwConstraint.height);
+    return passingIndexSatisfiesConstraint(throwConstraint) &&
+        heightSatisfiesConstraint(throwConstraint);
   }
 
-  bool heightSatisfiesConstraint(Fraction? heightConstraint) {
-    if (heightConstraint == null) {
-      return true;
+  bool heightSatisfiesConstraint(ThrowConstraint throwConstraint) {
+    if (throwConstraint.height != null) {
+      return height == throwConstraint.height;
     }
 
-    return height == heightConstraint;
+    return true;
   }
 
-  bool passingIndexSatisfiesConstraint(int? passingIndexConstraint) {
-    if (passingIndexConstraint == null) {
-      return true;
+  bool passingIndexSatisfiesConstraint(ThrowConstraint throwConstraint) {
+    if (throwConstraint.passingIndex != null) {
+      return passingIndex == throwConstraint.passingIndex;
     }
 
-    return passingIndex == passingIndexConstraint;
+    if (throwConstraint.limitToPass) {
+      return passingIndex > 0;
+    }
+
+    return true;
   }
 }
