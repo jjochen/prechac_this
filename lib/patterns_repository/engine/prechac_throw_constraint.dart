@@ -14,13 +14,9 @@ extension PrechacThrowConstraint on ThrowConstraint {
       return -1;
     }
 
-    final wholeHeight =
-        (height - (prechator * passingIndex.toFraction())).reduce();
+    final closestWholeHeight =
+        (height - (prechator * passingIndex.toFraction())).toDouble().round();
 
-    if (!wholeHeight.isWhole) {
-      throw Exception('not a valid self height: $wholeHeight');
-    }
-
-    return (position + wholeHeight.numerator) % period;
+    return (position + closestWholeHeight) % period;
   }
 }

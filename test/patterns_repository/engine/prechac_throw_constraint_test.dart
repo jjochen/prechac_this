@@ -29,16 +29,14 @@ void main() {
       );
     });
 
-    test('throws an error when calculating landing site with invalid throw',
-        () {
+    test('calculates landing site for pass with fuzzy height', () {
       expect(
-        () => ThrowConstraint(height: Fraction(5, 3), passingIndex: 1)
-            .landingSite(
+        ThrowConstraint.pass(height: 1.3, passingIndex: 2).landingSite(
           position: 4,
           period: 4,
           prechator: Fraction(4, 3),
         ),
-        throwsException,
+        3,
       );
     });
   });

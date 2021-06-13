@@ -15,11 +15,7 @@ void main() {
           numberOfJugglers: 3,
           throwSequence: [
             ThrowConstraint.self(height: 4),
-            ThrowConstraint(
-              height: Fraction(4, 3),
-              passingIndex: null,
-              limitToPass: true,
-            ),
+            ThrowConstraint.pass(height: 1.3),
             ThrowConstraint.placeholder(),
             ThrowConstraint(height: Fraction(5, 3), passingIndex: 2),
           ],
@@ -86,6 +82,23 @@ void main() {
         );
       });
 
+      test('calculates possible throws for fuzzy height', () {
+        final constraint = ThrowConstraint.pass(height: 2.3);
+        expect(
+          engine.possibleThrows(
+            throwConstraint: constraint,
+            landingSite: 3,
+            index: 2,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
+          [
+            Throw(height: Fraction(7, 3), passingIndex: 1),
+          ],
+        );
+      });
+
       test('calculates possible throws for given passing index', () {
         const constraint = ThrowConstraint(height: null, passingIndex: 2);
         expect(
@@ -106,6 +119,25 @@ void main() {
       test('calculates possible throws for given passing index and height', () {
         final constraint =
             ThrowConstraint(height: Fraction(5, 3), passingIndex: 2);
+        expect(
+          engine.possibleThrows(
+            throwConstraint: constraint,
+            landingSite: 2,
+            index: 3,
+            numberOfJugglers: patternConstraint.numberOfJugglers,
+            period: patternConstraint.period,
+            prechator: patternConstraint.prechator,
+          ),
+          [
+            Throw(height: Fraction(5, 3), passingIndex: 2),
+          ],
+        );
+      });
+
+      test(
+          'calculates possible throws for given passing index and fuzzy height',
+          () {
+        final constraint = ThrowConstraint.pass(height: 1.6, passingIndex: 2);
         expect(
           engine.possibleThrows(
             throwConstraint: constraint,
