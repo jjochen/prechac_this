@@ -121,6 +121,9 @@ void main() {
         ThrowConstraint.pass(height: 4.5),
       ],
     );
+
+    expect(patternConstraint.copyWith(), patternConstraint);
+
     expect(
       patternConstraint.copyWith(
         numberOfJugglers: 3,
