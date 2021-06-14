@@ -1,24 +1,19 @@
 import 'package:fraction/fraction.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../models/pattern.dart';
 
 extension PrechacPattern on Pattern {
-  bool isValid({
-    required int minNumberOfPasses,
-    required int maxNumberOfPasses,
-    required int numberOfObjects,
-    required int numberOfJugglers,
-  }) {
-    final numberOfPasses = this.numberOfPasses;
-    if (numberOfPasses < minNumberOfPasses) {
+  bool satisfiesConstraint(PatternConstraint constraint) {
+    if (numberOfPasses < constraint.minNumberOfPasses) {
       return false;
     }
 
-    if (numberOfPasses > maxNumberOfPasses) {
+    if (numberOfPasses > constraint.maxNumberOfPasses) {
       return false;
     }
 
-    if (this.numberOfObjects != numberOfObjects.toFraction()) {
+    if (numberOfObjects != constraint.numberOfObjects.toFraction()) {
       return false;
     }
 

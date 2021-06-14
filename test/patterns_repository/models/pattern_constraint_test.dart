@@ -10,6 +10,8 @@ void main() {
       expect(
         PatternConstraint(
           numberOfJugglers: 2,
+          numberOfObjects: 4,
+          maxHeight: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -18,6 +20,8 @@ void main() {
         ),
         PatternConstraint(
           numberOfJugglers: 2,
+          numberOfObjects: 4,
+          maxHeight: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -31,6 +35,8 @@ void main() {
       expect(
         PatternConstraint(
           numberOfJugglers: 2,
+          numberOfObjects: 4,
+          maxHeight: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -45,6 +51,8 @@ void main() {
       expect(
         PatternConstraint(
           numberOfJugglers: 2,
+          numberOfObjects: 4,
+          maxHeight: 4,
           throwSequence: [
             ThrowConstraint.self(height: null),
             ThrowConstraint(height: 4.toFraction(), passingIndex: null),
@@ -53,6 +61,8 @@ void main() {
         ).rotate(),
         PatternConstraint(
           numberOfJugglers: 2,
+          numberOfObjects: 4,
+          maxHeight: 4,
           throwSequence: [
             ThrowConstraint(height: 4.toFraction(), passingIndex: null),
             ThrowConstraint.pass(height: 4.5),
@@ -65,6 +75,8 @@ void main() {
     test('throwAtIndex returns correct throw', () {
       final patternConstraint = PatternConstraint(
         numberOfJugglers: 2,
+        numberOfObjects: 4,
+        maxHeight: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.placeholder(),
@@ -80,6 +92,8 @@ void main() {
     test('throwConstraint are iterable', () {
       final patternConstraint = PatternConstraint(
         numberOfJugglers: 2,
+        numberOfObjects: 4,
+        maxHeight: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.placeholder(),
@@ -96,9 +110,48 @@ void main() {
     });
   });
 
+  test('copyWith returns correct pattern', () {
+    final patternConstraint = PatternConstraint(
+      numberOfJugglers: 2,
+      numberOfObjects: 4,
+      maxHeight: 4,
+      throwSequence: [
+        ThrowConstraint.self(height: 4),
+        ThrowConstraint.placeholder(),
+        ThrowConstraint.pass(height: 4.5),
+      ],
+    );
+    expect(
+      patternConstraint.copyWith(
+        numberOfJugglers: 3,
+        numberOfObjects: 5,
+        maxHeight: 6,
+        minNumberOfPasses: 2,
+        throwSequence: [
+          ThrowConstraint.placeholder(),
+          ThrowConstraint.self(height: 3),
+          ThrowConstraint.pass(height: 4),
+        ],
+      ),
+      PatternConstraint(
+        numberOfJugglers: 3,
+        numberOfObjects: 5,
+        maxHeight: 6,
+        minNumberOfPasses: 2,
+        throwSequence: [
+          ThrowConstraint.placeholder(),
+          ThrowConstraint.self(height: 3),
+          ThrowConstraint.pass(height: 4),
+        ],
+      ),
+    );
+  });
+
   test('copyWithThrow returns correct pattern', () {
     final patternConstraint = PatternConstraint(
       numberOfJugglers: 2,
+      numberOfObjects: 4,
+      maxHeight: 4,
       throwSequence: [
         ThrowConstraint.self(height: 4),
         ThrowConstraint.placeholder(),
@@ -110,6 +163,8 @@ void main() {
           newThrow: ThrowConstraint.self(height: 2), index: 1),
       PatternConstraint(
         numberOfJugglers: 2,
+        numberOfObjects: 4,
+        maxHeight: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.self(height: 2),

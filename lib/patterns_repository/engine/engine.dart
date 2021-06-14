@@ -1,23 +1,12 @@
-import 'package:fraction/fraction.dart';
+import 'package:dartx/dartx.dart';
 
 import '../../core/core.dart';
 import '../models/models.dart';
 import 'prechac_pattern.dart';
 import 'prechac_pattern_constraint.dart';
-import 'prechac_throw.dart';
 
 class Engine {
-  Engine({
-    required this.numberOfObjects,
-    required this.maxHeight,
-    required this.minNumberOfPasses,
-    required this.maxNumberOfPasses,
-  });
-
-  final int numberOfObjects;
-  final int maxHeight;
-  final int minNumberOfPasses;
-  final int maxNumberOfPasses;
+  const Engine();
 
   List<Pattern> fillConstraint({required PatternConstraint patternConstraint}) {
     // * constraint pattern as input
@@ -36,88 +25,30 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
-    final numberOfJugglers = patternConstraint.numberOfJugglers;
     var setOfPatterns = <Pattern>{};
 
     final permutations = patternConstraint.permutationsOfPossibleLandingSites();
     for (final landingSites in permutations) {
-      final bagsOfPossibleThrows =
-          patternConstraint.mapIndexedThrow((index, throwConstraint) {
-        final throwConstraint = patternConstraint.throwAtIndex(index);
+      final bagsOfPossibleThrows = patternConstraint.mapIndexed((index, _) {
         final landingSite = landingSites[index];
-        final numberOfJugglers = patternConstraint.numberOfJugglers;
-        final period = patternConstraint.period;
-        final prechator = patternConstraint.prechator;
-        return possibleThrows(
-          throwConstraint: throwConstraint,
-          landingSite: landingSite,
+        return patternConstraint.possibleThrows(
           index: index,
-          numberOfJugglers: numberOfJugglers,
-          period: period,
-          prechator: prechator,
+          landingSite: landingSite,
         );
       }).toList();
 
-      final cartesianProduct =
-          CartesianProductIterable<Throw>(bagsOfPossibleThrows)
-              .map((throwSequence) => Pattern(
-                    numberOfJugglers: numberOfJugglers,
-                    throwSequence: throwSequence,
-                  ))
-              .where((pattern) => pattern.isValid(
-                    minNumberOfPasses: minNumberOfPasses,
-                    maxNumberOfPasses: maxNumberOfPasses,
-                    numberOfObjects: numberOfObjects,
-                    numberOfJugglers: numberOfJugglers,
-                  ))
-              .map((pattern) => pattern.normalize());
+      final cartesianProduct = CartesianProductIterable<Throw>(
+              bagsOfPossibleThrows)
+          .map((throwSequence) => Pattern(
+                numberOfJugglers: patternConstraint.numberOfJugglers,
+                throwSequence: throwSequence,
+              ))
+          .where((pattern) => pattern.satisfiesConstraint(patternConstraint))
+          .map((pattern) => pattern.normalize());
       setOfPatterns.addAll(cartesianProduct);
     }
 
     final listOfPatterns = setOfPatterns.toList()..sort();
     return listOfPatterns;
-  }
-
-  List<Throw> possibleThrows({
-    required ThrowConstraint throwConstraint,
-    required int index,
-    required int landingSite,
-    required int numberOfJugglers,
-    required int period,
-    required Fraction prechator,
-  }) {
-    final height = throwConstraint.height;
-    final passingIndex = throwConstraint.passingIndex;
-    // if (height != null && passingIndex != null) {
-    //   return [Throw(height: height, passingIndex: passingIndex)];
-    // }
-
-    final isFullyDefinedThrow = height != null && passingIndex != null;
-
-    final int negativeSelfHeight;
-    if (landingSite == index) {
-      negativeSelfHeight = -period;
-    } else if (landingSite >= index) {
-      negativeSelfHeight = landingSite - index - period;
-    } else {
-      negativeSelfHeight = landingSite - index;
-    }
-
-    var results = <Throw>[];
-    var possibleHeight = negativeSelfHeight.toFraction();
-    var possiblePassingIndex = 0;
-    while (possibleHeight <= maxHeight.toFraction()) {
-      final possibleThrow = Throw(
-        height: possibleHeight.reduce(),
-        passingIndex: possiblePassingIndex,
-      );
-      if ((isFullyDefinedThrow || possibleThrow.isValid()) &&
-          possibleThrow.satisfiesConstraint(throwConstraint)) {
-        results.add(possibleThrow);
-      }
-      possibleHeight += prechator;
-      possiblePassingIndex = (possiblePassingIndex + 1) % numberOfJugglers;
-    }
-    return results;
   }
 }

@@ -20,18 +20,17 @@ class PatternsRepository {
         ? parameters.period
         : parameters.maxNumberOfPasses;
 
-    final engine = Engine(
-      numberOfObjects: parameters.numberOfObjects,
-      maxHeight: parameters.maxHeight,
-      minNumberOfPasses: minNumberOfPasses,
-      maxNumberOfPasses: maxNumberOfPasses,
-    );
+    const engine = Engine();
     final throwSequence = List.filled(
       parameters.period,
       ThrowConstraint.placeholder(),
     );
     final patternConstraint = PatternConstraint(
       numberOfJugglers: parameters.numberOfJugglers,
+      numberOfObjects: parameters.numberOfObjects,
+      maxHeight: parameters.maxHeight,
+      minNumberOfPasses: minNumberOfPasses,
+      maxNumberOfPasses: maxNumberOfPasses,
       throwSequence: throwSequence,
     );
     return engine.fillConstraint(patternConstraint: patternConstraint);
