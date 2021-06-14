@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/patterns_repository/engine/prechac_throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_throw_constraint.dart';
 import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('PrechacThrowConstraint', () {
+  group('EngineThrowConstraint', () {
     test('calculates landing site for self', () {
       expect(
         ThrowConstraint.self(height: 4).landingSite(

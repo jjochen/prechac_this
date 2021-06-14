@@ -3,7 +3,7 @@ import 'package:fraction/fraction.dart';
 import '../models/throw.dart';
 import '../models/throw_constraint.dart';
 
-extension PrechacThrow on Throw {
+extension EngineThrow on Throw {
   bool isValid() {
     return isValidSelf() || isValidPass();
   }

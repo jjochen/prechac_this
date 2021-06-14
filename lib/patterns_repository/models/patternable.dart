@@ -12,7 +12,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   Patternable({
     required this.numberOfJugglers,
     required this.throwSequence,
-  }) : assert(throwSequence.isNotEmpty);
+  });
 
   final int numberOfJugglers;
   final List<T> throwSequence;
@@ -62,7 +62,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   });
 
   @override
-  List<Object?> get props => [throwSequence];
+  List<Object?> get props => [numberOfJugglers, throwSequence];
 
   @override
   String toString() {

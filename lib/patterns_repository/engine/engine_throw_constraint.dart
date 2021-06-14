@@ -2,7 +2,7 @@ import 'package:fraction/fraction.dart';
 
 import '../models/throw_constraint.dart';
 
-extension PrechacThrowConstraint on ThrowConstraint {
+extension EngineThrowConstraint on ThrowConstraint {
   int landingSite({
     required int position,
     required int period,
