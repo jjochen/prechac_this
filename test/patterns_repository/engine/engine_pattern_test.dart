@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
-import 'package:prechac_this/patterns_repository/engine/prechac_pattern.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_pattern.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
 import '../../helpers/helpers.dart';
 
 void main() {
-  group('PrechacPattern', () {
+  group('EnginePattern', () {
     group('satisfiesConstraint', () {
       test('returns true when constraints are satisfied', () async {
         expect(

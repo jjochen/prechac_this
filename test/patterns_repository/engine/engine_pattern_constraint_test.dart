@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/patterns_repository/engine/prechac_pattern_constraint.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_pattern_constraint.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('PrechacPatternConstraint', () {
+  group('EnginePatternConstraint', () {
     group('4 1.3p1 _ 1.6p2', () {
       late PatternConstraint patternConstraint;
       setUp(() {

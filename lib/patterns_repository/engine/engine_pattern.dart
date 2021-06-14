@@ -1,9 +1,9 @@
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../models/pattern.dart';
+import '../patterns_repository.dart';
 
-extension PrechacPattern on Pattern {
+extension EnginePattern on Pattern {
   bool satisfiesConstraint(PatternConstraint constraint) {
     if (numberOfPasses < constraint.minNumberOfPasses) {
       return false;

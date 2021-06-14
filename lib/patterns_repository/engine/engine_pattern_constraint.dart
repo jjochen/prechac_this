@@ -3,11 +3,11 @@ import 'package:trotter/trotter.dart';
 
 import '../models/pattern_constraint.dart';
 import '../models/throw.dart';
+import 'engine_throw.dart';
+import 'engine_throw_constraint.dart';
 import 'landing_sites.dart';
-import 'prechac_throw.dart';
-import 'prechac_throw_constraint.dart';
 
-extension PrechacPatternConstraint on PatternConstraint {
+extension EnginePatternConstraint on PatternConstraint {
   Iterable<List<int>> permutationsOfPossibleLandingSites() {
     final allSites = List<int>.generate(period, (int index) => index);
     final existingSites = landingSites();
