@@ -16,6 +16,23 @@ class PatternConstraint
           throwSequence: throwSequence,
         );
 
+  factory PatternConstraint.placeholder({
+    required int numberOfJugglers,
+    required int period,
+    required int numberOfObjects,
+    required int maxHeight,
+    required int minNumberOfPasses,
+    required int maxNumberOfPasses,
+  }) =>
+      PatternConstraint(
+        numberOfJugglers: numberOfJugglers,
+        numberOfObjects: numberOfObjects,
+        maxHeight: maxHeight,
+        minNumberOfPasses: minNumberOfPasses,
+        maxNumberOfPasses: maxNumberOfPasses,
+        throwSequence: List.filled(period, ThrowConstraint.placeholder()),
+      );
+
   final int numberOfObjects;
   final int maxHeight;
   final int minNumberOfPasses;

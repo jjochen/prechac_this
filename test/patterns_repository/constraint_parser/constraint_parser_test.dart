@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:petitparser/petitparser.dart';
-import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser_definition.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
