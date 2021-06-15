@@ -21,6 +21,13 @@ void main() {
           parser = definition.build();
         });
 
+        test('empty string', () {
+          expect(
+            parser.parse('').value,
+            [],
+          );
+        });
+
         test('4 2p 1 1p', () {
           expect(
             parser.parse('4 2p 1 1p').value,

@@ -8,12 +8,10 @@ class PatternConstraint
     required int numberOfJugglers,
     required this.numberOfObjects,
     required this.maxHeight,
-    int? minNumberOfPasses,
-    int? maxNumberOfPasses,
+    required this.minNumberOfPasses,
+    required this.maxNumberOfPasses,
     required List<ThrowConstraint> throwSequence,
-  })  : minNumberOfPasses = minNumberOfPasses ?? 1,
-        maxNumberOfPasses = maxNumberOfPasses ?? throwSequence.length,
-        super(
+  }) : super(
           numberOfJugglers: numberOfJugglers,
           throwSequence: throwSequence,
         );
