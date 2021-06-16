@@ -43,13 +43,28 @@ void main() {
       'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load',
       build: () {
         when(() => patternsRepository.patterns(mockParameters))
-            .thenThrow('some error');
+            .thenThrow(ConstraintsNotValidException('message'));
         return PatternsBloc(patternsRepository: patternsRepository);
       },
       act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
       expect: () => <PatternsState>[
         PatternsLoading(),
-        PatternsNotLoaded('some error'),
+        PatternsNotLoaded('message'),
+      ],
+    );
+
+    blocTest<PatternsBloc, PatternsState>(
+      'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load '
+      'with unknown exception',
+      build: () {
+        when(() => patternsRepository.patterns(mockParameters))
+            .thenThrow(FormatException('some message'));
+        return PatternsBloc(patternsRepository: patternsRepository);
+      },
+      act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
+      expect: () => <PatternsState>[
+        PatternsLoading(),
+        PatternsNotLoaded('unknown error'),
       ],
     );
   });
