@@ -16,7 +16,7 @@ class ThrowConstraint extends Throwable {
       ThrowConstraint(
         height: height?.toFraction(),
         passingIndex: passingIndex,
-        limitToPass: true,
+        limitToPass: passingIndex != 0,
       );
 
   factory ThrowConstraint.self({required int? height}) => ThrowConstraint(

@@ -60,6 +60,13 @@ void main() {
         );
       });
 
+      test('with passing index 0 is self', () {
+        expect(
+          ThrowConstraint.pass(height: 4, passingIndex: 0),
+          ThrowConstraint.self(height: 4),
+        );
+      });
+
       test('has correct string representation', () {
         expect(
           ThrowConstraint.self(height: 42).toString(),
