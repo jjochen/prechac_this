@@ -28,6 +28,16 @@ void main() {
         );
       });
 
+      test('1 and _p0', () {
+        final throwConstraint1 = ThrowConstraint.self(height: 1);
+        final throwConstraint2 = ThrowConstraint(height: null, passingIndex: 0);
+        final result = ThrowConstraint.self(height: 1);
+        expect(
+          throwConstraint1.merge(throwConstraint2),
+          result,
+        );
+      });
+
       test('_p2 and 3p', () {
         final throwConstraint1 = ThrowConstraint.pass(
           height: null,
