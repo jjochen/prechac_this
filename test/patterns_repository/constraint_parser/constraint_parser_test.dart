@@ -68,6 +68,13 @@ void main() {
             );
           });
 
+          test('_p0', () {
+            expect(
+              parser.parse('_p0').value,
+              ThrowConstraint.self(height: null),
+            );
+          });
+
           test('42', () {
             expect(
               parser.parse('42').value,

@@ -30,6 +30,9 @@ class ThrowConstraint extends Throwable {
       );
 
   @override
+  List<Object?> get props => [height, passingIndex, limitToPass];
+
+  @override
   final Fraction? height;
   @override
   final int? passingIndex;
