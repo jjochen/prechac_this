@@ -26,6 +26,7 @@ class ConstraintParserDefinition extends GrammarDefinition {
           .toChoiceParser(failureJoiner: selectFarthestJoined)
           .map((value) => value);
 
+  // TODO: handle case where self is expressed as _p0
   Parser<ThrowConstraint> self() =>
       integer().map((height) => ThrowConstraint.self(height: height));
 
