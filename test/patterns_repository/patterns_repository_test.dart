@@ -20,6 +20,7 @@ void main() {
         maxHeight: 4,
         minNumberOfPasses: 2,
         maxNumberOfPasses: 2,
+        contains: '_p',
       );
       expect(
           patternsRepository.patterns(searchParameters).then((pattern) {

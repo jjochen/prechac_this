@@ -12,6 +12,7 @@ void main() {
     const maxHeight = 6;
     const minNumberOfPasses = 2;
     const maxNumberOfPasses = 3;
+    const contains = '4 2p';
 
     setUp(() {
       searchParameters = SearchParameters(
@@ -21,6 +22,7 @@ void main() {
         maxHeight: maxHeight,
         minNumberOfPasses: minNumberOfPasses,
         maxNumberOfPasses: maxNumberOfPasses,
+        contains: contains,
       );
     });
 
@@ -34,6 +36,7 @@ void main() {
           maxHeight: maxHeight,
           minNumberOfPasses: minNumberOfPasses,
           maxNumberOfPasses: maxNumberOfPasses,
+          contains: contains,
         ),
       );
     });
@@ -41,7 +44,7 @@ void main() {
     test('has correct string representation', () {
       expect(
         searchParameters.toString(),
-        'SearchParameters(3, 5, 6, 6, 2, 3)',
+        'SearchParameters(3, 5, 6, 6, 2, 3, 4 2p)',
       );
     });
 
@@ -61,6 +64,7 @@ void main() {
           maxHeight: 5,
           minNumberOfPasses: 6,
           maxNumberOfPasses: 7,
+          contains: '3 3',
         ),
         SearchParameters(
           numberOfJugglers: 1,
@@ -69,6 +73,7 @@ void main() {
           maxHeight: 5,
           minNumberOfPasses: 6,
           maxNumberOfPasses: 7,
+          contains: '3 3',
         ),
       );
     });

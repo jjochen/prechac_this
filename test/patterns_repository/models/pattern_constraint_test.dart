@@ -12,6 +12,8 @@ void main() {
           numberOfJugglers: 2,
           numberOfObjects: 4,
           maxHeight: 4,
+          minNumberOfPasses: 0,
+          maxNumberOfPasses: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -22,6 +24,8 @@ void main() {
           numberOfJugglers: 2,
           numberOfObjects: 4,
           maxHeight: 4,
+          minNumberOfPasses: 0,
+          maxNumberOfPasses: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -37,6 +41,8 @@ void main() {
           numberOfJugglers: 2,
           numberOfObjects: 4,
           maxHeight: 4,
+          minNumberOfPasses: 0,
+          maxNumberOfPasses: 4,
           throwSequence: [
             ThrowConstraint.self(height: 4),
             ThrowConstraint.placeholder(),
@@ -53,6 +59,8 @@ void main() {
           numberOfJugglers: 2,
           numberOfObjects: 4,
           maxHeight: 4,
+          minNumberOfPasses: 0,
+          maxNumberOfPasses: 4,
           throwSequence: [
             ThrowConstraint.self(height: null),
             ThrowConstraint(height: 4.toFraction(), passingIndex: null),
@@ -63,6 +71,8 @@ void main() {
           numberOfJugglers: 2,
           numberOfObjects: 4,
           maxHeight: 4,
+          minNumberOfPasses: 0,
+          maxNumberOfPasses: 4,
           throwSequence: [
             ThrowConstraint(height: 4.toFraction(), passingIndex: null),
             ThrowConstraint.pass(height: 4.5),
@@ -77,6 +87,8 @@ void main() {
         numberOfJugglers: 2,
         numberOfObjects: 4,
         maxHeight: 4,
+        minNumberOfPasses: 0,
+        maxNumberOfPasses: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.placeholder(),
@@ -94,6 +106,8 @@ void main() {
         numberOfJugglers: 2,
         numberOfObjects: 4,
         maxHeight: 4,
+        minNumberOfPasses: 0,
+        maxNumberOfPasses: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.placeholder(),
@@ -115,6 +129,8 @@ void main() {
       numberOfJugglers: 2,
       numberOfObjects: 4,
       maxHeight: 4,
+      minNumberOfPasses: 0,
+      maxNumberOfPasses: 4,
       throwSequence: [
         ThrowConstraint.self(height: 4),
         ThrowConstraint.placeholder(),
@@ -141,6 +157,7 @@ void main() {
         numberOfObjects: 5,
         maxHeight: 6,
         minNumberOfPasses: 2,
+        maxNumberOfPasses: 4,
         throwSequence: [
           ThrowConstraint.placeholder(),
           ThrowConstraint.self(height: 3),
@@ -155,6 +172,8 @@ void main() {
       numberOfJugglers: 2,
       numberOfObjects: 4,
       maxHeight: 4,
+      minNumberOfPasses: 0,
+      maxNumberOfPasses: 4,
       throwSequence: [
         ThrowConstraint.self(height: 4),
         ThrowConstraint.placeholder(),
@@ -168,6 +187,8 @@ void main() {
         numberOfJugglers: 2,
         numberOfObjects: 4,
         maxHeight: 4,
+        minNumberOfPasses: 0,
+        maxNumberOfPasses: 4,
         throwSequence: [
           ThrowConstraint.self(height: 4),
           ThrowConstraint.self(height: 2),

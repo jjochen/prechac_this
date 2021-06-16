@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:fraction/fraction.dart';
 
+import 'constraint_parser/parser.dart';
 import 'engine/engine.dart';
 import 'models/models.dart';
 
+export 'exceptions/pattern_repository_exception.dart';
 export 'models/models.dart';
 
 class PatternsRepository {
@@ -14,26 +16,10 @@ class PatternsRepository {
   }
 
   static List<Pattern> findPatterns(SearchParameters parameters) {
-    final minNumberOfPasses =
-        parameters.minNumberOfPasses < 0 ? 1 : parameters.minNumberOfPasses;
-    final maxNumberOfPasses = parameters.maxNumberOfPasses < 0
-        ? parameters.period
-        : parameters.maxNumberOfPasses;
-
+    // TODO: handle exceptions
+    final constraints = parameters.parse();
     const engine = Engine();
-    final throwSequence = List.filled(
-      parameters.period,
-      ThrowConstraint.placeholder(),
-    );
-    final patternConstraint = PatternConstraint(
-      numberOfJugglers: parameters.numberOfJugglers,
-      numberOfObjects: parameters.numberOfObjects,
-      maxHeight: parameters.maxHeight,
-      minNumberOfPasses: minNumberOfPasses,
-      maxNumberOfPasses: maxNumberOfPasses,
-      throwSequence: throwSequence,
-    );
-    return engine.fillConstraint(patternConstraint: patternConstraint);
+    return engine.fillConstraint(patternConstraint: constraints);
   }
 
   Pattern prechacThisThrow({

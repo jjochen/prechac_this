@@ -10,6 +10,7 @@ class SearchParameters extends Equatable {
     required this.maxHeight,
     this.minNumberOfPasses = -1,
     this.maxNumberOfPasses = -1,
+    this.contains = '',
   });
 
   factory SearchParameters.fromQueryParameters(Map<String, String> map) {
@@ -21,6 +22,7 @@ class SearchParameters extends Equatable {
         map.intForKey('min_number_of_passes', fallback: -1);
     final maxNumberOfPasses =
         map.intForKey('max_number_of_passes', fallback: -1);
+    final contains = map.stringForKey('contains', fallback: '');
 
     return SearchParameters(
       numberOfJugglers: numberOfJuggers,
@@ -29,6 +31,7 @@ class SearchParameters extends Equatable {
       maxHeight: maxHeight,
       minNumberOfPasses: minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses,
+      contains: contains,
     );
   }
 
@@ -38,6 +41,7 @@ class SearchParameters extends Equatable {
   final int maxHeight;
   final int minNumberOfPasses;
   final int maxNumberOfPasses;
+  final String contains;
 
   SearchParameters copyWith({
     int? numberOfJugglers,
@@ -46,6 +50,7 @@ class SearchParameters extends Equatable {
     int? maxHeight,
     int? minNumberOfPasses,
     int? maxNumberOfPasses,
+    String? contains,
   }) {
     return SearchParameters(
       numberOfJugglers: numberOfJugglers ?? this.numberOfJugglers,
@@ -54,6 +59,7 @@ class SearchParameters extends Equatable {
       maxHeight: maxHeight ?? this.maxHeight,
       minNumberOfPasses: minNumberOfPasses ?? this.minNumberOfPasses,
       maxNumberOfPasses: maxNumberOfPasses ?? this.maxNumberOfPasses,
+      contains: contains ?? this.contains,
     );
   }
 
@@ -64,7 +70,8 @@ class SearchParameters extends Equatable {
       ..setNonNegativeIntForKey(numberOfObjects, 'number_of_objects')
       ..setNonNegativeIntForKey(maxHeight, 'max_height')
       ..setNonNegativeIntForKey(minNumberOfPasses, 'min_number_of_passes')
-      ..setNonNegativeIntForKey(maxNumberOfPasses, 'max_number_of_passes');
+      ..setNonNegativeIntForKey(maxNumberOfPasses, 'max_number_of_passes')
+      ..['contains'] = contains;
     return queryParameters;
   }
 
@@ -80,6 +87,7 @@ class SearchParameters extends Equatable {
       maxHeight,
       minNumberOfPasses,
       maxNumberOfPasses,
+      contains,
     ];
   }
 }

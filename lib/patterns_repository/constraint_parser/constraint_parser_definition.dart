@@ -5,7 +5,10 @@ import '../patterns_repository.dart';
 
 class ConstraintParserDefinition extends GrammarDefinition {
   @override
-  Parser start() => throwSequence().end();
+  Parser start() => (throwSequence() | emptyList()).end();
+
+  Parser<List<ThrowConstraint>> emptyList() =>
+      whitespace().optional().map((_) => <ThrowConstraint>[]);
 
   Parser<List<ThrowConstraint>> throwSequence() =>
       (throwConstraint() & whitespaceAndThrowConstraint().star())
@@ -23,6 +26,7 @@ class ConstraintParserDefinition extends GrammarDefinition {
           .toChoiceParser(failureJoiner: selectFarthestJoined)
           .map((value) => value);
 
+  // TODO: handle case where self is expressed as _p0
   Parser<ThrowConstraint> self() =>
       integer().map((height) => ThrowConstraint.self(height: height));
 

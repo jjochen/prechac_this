@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:petitparser/petitparser.dart';
-import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser_definition.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
@@ -19,6 +19,13 @@ void main() {
 
         setUp(() {
           parser = definition.build();
+        });
+
+        test('empty string', () {
+          expect(
+            parser.parse('').value,
+            [],
+          );
         });
 
         test('4 2p 1 1p', () {
@@ -58,6 +65,13 @@ void main() {
             expect(
               parser.parse('1').value,
               ThrowConstraint.self(height: 1),
+            );
+          });
+
+          test('_p0', () {
+            expect(
+              parser.parse('_p0').value,
+              ThrowConstraint.self(height: null),
             );
           });
 

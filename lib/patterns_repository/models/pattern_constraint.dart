@@ -8,15 +8,30 @@ class PatternConstraint
     required int numberOfJugglers,
     required this.numberOfObjects,
     required this.maxHeight,
-    int? minNumberOfPasses,
-    int? maxNumberOfPasses,
+    required this.minNumberOfPasses,
+    required this.maxNumberOfPasses,
     required List<ThrowConstraint> throwSequence,
-  })  : minNumberOfPasses = minNumberOfPasses ?? 1,
-        maxNumberOfPasses = maxNumberOfPasses ?? throwSequence.length,
-        super(
+  }) : super(
           numberOfJugglers: numberOfJugglers,
           throwSequence: throwSequence,
         );
+
+  factory PatternConstraint.placeholder({
+    required int numberOfJugglers,
+    required int period,
+    required int numberOfObjects,
+    required int maxHeight,
+    required int minNumberOfPasses,
+    required int maxNumberOfPasses,
+  }) =>
+      PatternConstraint(
+        numberOfJugglers: numberOfJugglers,
+        numberOfObjects: numberOfObjects,
+        maxHeight: maxHeight,
+        minNumberOfPasses: minNumberOfPasses,
+        maxNumberOfPasses: maxNumberOfPasses,
+        throwSequence: List.filled(period, ThrowConstraint.placeholder()),
+      );
 
   final int numberOfObjects;
   final int maxHeight;

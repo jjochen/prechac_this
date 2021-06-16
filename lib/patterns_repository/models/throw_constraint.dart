@@ -16,7 +16,7 @@ class ThrowConstraint extends Throwable {
       ThrowConstraint(
         height: height?.toFraction(),
         passingIndex: passingIndex,
-        limitToPass: true,
+        limitToPass: passingIndex != 0,
       );
 
   factory ThrowConstraint.self({required int? height}) => ThrowConstraint(
@@ -30,11 +30,12 @@ class ThrowConstraint extends Throwable {
       );
 
   @override
+  List<Object?> get props => [height, passingIndex, limitToPass];
+
+  @override
   final Fraction? height;
   @override
   final int? passingIndex;
-
-  // TODO add optional function `isValid...` used when height/passingIndex is null
 
   final bool limitToPass;
 
