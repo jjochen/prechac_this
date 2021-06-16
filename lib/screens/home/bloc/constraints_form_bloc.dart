@@ -21,8 +21,9 @@ class ConstraintsFormBloc
       (state) {
         if (state is PatternsLoaded) {
           add(PatternsDidLoad());
+        } else if (state is PatternsNotLoaded) {
+          add(PatternsDidNotLoad(state.errorMessage));
         }
-        // TODO: PatternsNotLoaded
       },
     );
   }
