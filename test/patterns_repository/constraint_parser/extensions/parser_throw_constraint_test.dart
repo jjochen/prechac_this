@@ -107,6 +107,21 @@ void main() {
         );
       });
 
+      test('1p2 and 2p2', () {
+        final throwConstraint1 = ThrowConstraint.pass(
+          height: 1,
+          passingIndex: 2,
+        );
+        final throwConstraint2 = ThrowConstraint.pass(
+          height: 2,
+          passingIndex: 2,
+        );
+        expect(
+          () => throwConstraint1.merge(throwConstraint2),
+          throwsA(isA<ConstraintMergeConflictException>()),
+        );
+      });
+
       test('1p and 1', () {
         final throwConstraint1 = ThrowConstraint.pass(
           height: 1,
