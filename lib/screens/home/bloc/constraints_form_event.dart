@@ -66,10 +66,10 @@ class Submit extends ConstraintsFormEvent {}
 class PatternsDidLoad extends ConstraintsFormEvent {}
 
 class PatternsDidNotLoad extends ConstraintsFormEvent {
-  const PatternsDidNotLoad(this.errorMessage);
+  const PatternsDidNotLoad(this.exception);
 
-  final String errorMessage;
+  final Exception exception;
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => [exception];
 }

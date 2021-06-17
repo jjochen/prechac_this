@@ -32,8 +32,8 @@ void main() {
   group('PatternsNotUpdated', () {
     test('supports value comparisons', () {
       expect(
-        PatternsNotUpdated('some error'),
-        PatternsNotUpdated('some error'),
+        PatternsNotUpdated(NoPatternsFoundException()),
+        PatternsNotUpdated(NoPatternsFoundException()),
       );
     });
   });

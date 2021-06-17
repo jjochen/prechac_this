@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 void main() {
@@ -80,8 +81,8 @@ void main() {
     group('PatternsDidNotLoad', () {
       test('supports value comparisons', () {
         expect(
-          PatternsDidNotLoad('message'),
-          PatternsDidNotLoad('message'),
+          PatternsDidNotLoad(NoPatternsFoundException('')),
+          PatternsDidNotLoad(NoPatternsFoundException('')),
         );
       });
     });

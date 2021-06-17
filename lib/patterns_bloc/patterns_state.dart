@@ -21,10 +21,10 @@ class PatternsLoaded extends PatternsState {
 }
 
 class PatternsNotLoaded extends PatternsState {
-  const PatternsNotLoaded(this.errorMessage);
+  const PatternsNotLoaded(this.exception);
 
-  final String errorMessage;
+  final Exception exception;
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => [exception];
 }

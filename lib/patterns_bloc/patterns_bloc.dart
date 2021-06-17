@@ -36,9 +36,9 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
           await _patternsRepository.patterns(event.searchParameters);
       add(PatternsUpdated(patterns));
     } on PatternRepositoryException catch (e) {
-      add(PatternsNotUpdated(e.message));
-    } catch (e) {
-      add(const PatternsNotUpdated('unknown error'));
+      add(PatternsNotUpdated(e));
+    } on Exception catch (e) {
+      add(PatternsNotUpdated(e));
     }
   }
 
@@ -49,6 +49,6 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapPatternsNotUpdatedToState(
       PatternsNotUpdated event) async* {
-    yield PatternsNotLoaded(event.errorMessage);
+    yield PatternsNotLoaded(event.exception);
   }
 }

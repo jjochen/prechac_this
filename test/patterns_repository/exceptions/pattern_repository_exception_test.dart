@@ -7,21 +7,21 @@ void main() {
   group('PatternRepositoryException', () {
     test('NoPatternsFoundException', () {
       expect(
-        NoPatternsFoundException(),
+        NoPatternsFoundException('message'),
         isNotNull,
       );
     });
 
     test('ConstraintsNotValidException', () {
       expect(
-        ConstraintsNotValidException(),
+        ConstraintsNotValidException('message'),
         isNotNull,
       );
     });
 
     test('ConstraintMergeConflictException', () {
       expect(
-        ConstraintMergeConflictException(),
+        ConstraintMergeConflictException('message'),
         isNotNull,
       );
     });

@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 void main() {
   group('PatternsInitial', () {
@@ -23,7 +24,10 @@ void main() {
 
   group('PatternsNotLoaded', () {
     test('supports value comparisons', () {
-      expect(PatternsNotLoaded('message'), PatternsNotLoaded('message'));
+      expect(
+        PatternsNotLoaded(NoPatternsFoundException()),
+        PatternsNotLoaded(NoPatternsFoundException()),
+      );
     });
   });
 }
