@@ -26,7 +26,7 @@ void main() {
     });
 
     blocTest<PatternsBloc, PatternsState>(
-      'emits [PatternsLoading, PatternsLoaded]',
+      'emits [PatternsLoading, PatternsLoaded] when patterns did load',
       build: () {
         when(() => patternsRepository.patterns(mockParameters))
             .thenAnswer((invocation) async => [mockPattern]);
@@ -36,6 +36,35 @@ void main() {
       expect: () => <PatternsState>[
         PatternsLoading(),
         PatternsLoaded([mockPattern]),
+      ],
+    );
+
+    blocTest<PatternsBloc, PatternsState>(
+      'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load',
+      build: () {
+        when(() => patternsRepository.patterns(mockParameters))
+            .thenThrow(ConstraintsNotValidException('message'));
+        return PatternsBloc(patternsRepository: patternsRepository);
+      },
+      act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
+      expect: () => <PatternsState>[
+        PatternsLoading(),
+        PatternsNotLoaded('message'),
+      ],
+    );
+
+    blocTest<PatternsBloc, PatternsState>(
+      'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load '
+      'with unknown exception',
+      build: () {
+        when(() => patternsRepository.patterns(mockParameters))
+            .thenThrow(FormatException('some message'));
+        return PatternsBloc(patternsRepository: patternsRepository);
+      },
+      act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
+      expect: () => <PatternsState>[
+        PatternsLoading(),
+        PatternsNotLoaded('unknown error'),
       ],
     );
   });

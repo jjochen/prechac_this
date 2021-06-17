@@ -24,17 +24,31 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
       yield* _mapLoadPatternsToState(event);
     } else if (event is PatternsUpdated) {
       yield* _mapPatternsUpdatedToState(event);
+    } else if (event is PatternsNotUpdated) {
+      yield* _mapPatternsNotUpdatedToState(event);
     }
   }
 
   Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
     yield PatternsLoading();
-    final patterns = await _patternsRepository.patterns(event.searchParameters);
-    add(PatternsUpdated(patterns));
+    try {
+      final patterns =
+          await _patternsRepository.patterns(event.searchParameters);
+      add(PatternsUpdated(patterns));
+    } on PatternRepositoryException catch (e) {
+      add(PatternsNotUpdated(e.message));
+    } catch (e) {
+      add(const PatternsNotUpdated('unknown error'));
+    }
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(
       PatternsUpdated event) async* {
     yield PatternsLoaded(event.patterns);
+  }
+
+  Stream<PatternsState> _mapPatternsNotUpdatedToState(
+      PatternsNotUpdated event) async* {
+    yield PatternsNotLoaded(event.errorMessage);
   }
 }

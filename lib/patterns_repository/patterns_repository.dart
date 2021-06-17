@@ -16,7 +16,6 @@ class PatternsRepository {
   }
 
   static List<Pattern> findPatterns(SearchParameters parameters) {
-    // TODO: handle exceptions
     final constraints = parameters.parse();
     const engine = Engine();
     return engine.fillConstraint(patternConstraint: constraints);

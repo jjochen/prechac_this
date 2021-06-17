@@ -21,3 +21,12 @@ class PatternsUpdated extends PatternsEvent {
   @override
   List<Object> get props => [patterns];
 }
+
+class PatternsNotUpdated extends PatternsEvent {
+  const PatternsNotUpdated(this.errorMessage);
+
+  final String errorMessage;
+
+  @override
+  List<Object> get props => [errorMessage];
+}
