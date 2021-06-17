@@ -8,6 +8,8 @@ import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
+import '../../../helpers/helpers.dart';
+
 class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
     implements PatternsBloc {}
 
@@ -261,6 +263,27 @@ void main() {
           ),
         ],
       );
+
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'PatternLoaded is passed on from patterns bloc',
+        build: () {
+          whenListen(
+            patternsBloc,
+            Stream.fromIterable(<PatternsState>[
+              PatternsLoading(),
+              PatternsLoaded([mockPattern]),
+            ]),
+          );
+          return ConstraintsFormBloc(
+            patternsBloc: patternsBloc,
+          );
+        },
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            status: FormzStatus.submissionSuccess,
+          ),
+        ],
+      );
     });
 
     group('PatternsDidNotLoad', () {
@@ -274,6 +297,28 @@ void main() {
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
             errorMessage: 'error',
+          ),
+        ],
+      );
+
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'PatternsNotLoaded is passed on from patterns bloc',
+        build: () {
+          whenListen(
+            patternsBloc,
+            Stream.fromIterable(<PatternsState>[
+              PatternsLoading(),
+              PatternsNotLoaded('some message'),
+            ]),
+          );
+          return ConstraintsFormBloc(
+            patternsBloc: patternsBloc,
+          );
+        },
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            status: FormzStatus.submissionFailure,
+            errorMessage: 'some message',
           ),
         ],
       );
