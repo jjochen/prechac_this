@@ -52,20 +52,5 @@ void main() {
         PatternsNotLoaded(NoPatternsFoundException()),
       ],
     );
-
-    // blocTest<PatternsBloc, PatternsState>(
-    //'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load '
-    //   'with unknown exception',
-    //   build: () {
-    //     when(() => patternsRepository.patterns(mockParameters))
-    //         .thenThrow(FormatException('some message'));
-    //     return PatternsBloc(patternsRepository: patternsRepository);
-    //   },
-    //   act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
-    //   expect: () => <PatternsState>[
-    //     PatternsLoading(),
-    //     PatternsNotLoaded(any()),
-    //   ],
-    // );
   });
 }

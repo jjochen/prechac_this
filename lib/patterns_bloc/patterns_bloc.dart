@@ -37,8 +37,6 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
       add(PatternsUpdated(patterns));
     } on PatternRepositoryException catch (e) {
       add(PatternsNotUpdated(e));
-    } on Exception catch (e) {
-      add(PatternsNotUpdated(e));
     }
   }
 
