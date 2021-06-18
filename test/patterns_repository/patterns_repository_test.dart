@@ -83,7 +83,7 @@ void main() {
       });
 
       group('throws', () {
-        test('ConstraintsNotValidException', () {
+        test('ConstraintsNotValidException 3x', () {
           // bug in flutter: compute doesn't gather coverage
           final searchParameters = SearchParameters(
             numberOfJugglers: 2,
@@ -93,6 +93,23 @@ void main() {
             minNumberOfPasses: 1,
             maxNumberOfPasses: 4,
             contains: '3x',
+          );
+          expect(
+            () => PatternsRepository.findPatterns(searchParameters),
+            throwsA(isA<ConstraintsNotValidException>()),
+          );
+        });
+
+        test('ConstraintsNotValidException 3 2 _', () {
+          // bug in flutter: compute doesn't gather coverage
+          final searchParameters = SearchParameters(
+            numberOfJugglers: 1,
+            period: 3,
+            numberOfObjects: 3,
+            maxHeight: 5,
+            minNumberOfPasses: 0,
+            maxNumberOfPasses: 3,
+            contains: '3 2 _',
           );
           expect(
             () => PatternsRepository.findPatterns(searchParameters),
