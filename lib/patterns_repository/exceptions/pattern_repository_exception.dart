@@ -27,6 +27,7 @@ class ConstraintsNotValidException extends PatternRepositoryException {
   const ConstraintsNotValidException([String message = '']) : super(message);
 }
 
+// TODO: rename
 class ConstraintMergeConflictException extends PatternRepositoryException {
   const ConstraintMergeConflictException([String message = ''])
       : super(message);
