@@ -21,18 +21,18 @@ void main() {
       });
     });
 
-    group('ConstraintsNotValidException', () {
+    group('ConstraintsInvalidException', () {
       test('supports value comparisons', () {
         expect(
-          ConstraintsNotValidException('message'),
-          ConstraintsNotValidException('message'),
+          ConstraintsInvalidException('message'),
+          ConstraintsInvalidException('message'),
         );
       });
 
       test('has correct string representation', () {
         expect(
-          ConstraintsNotValidException('message').toString(),
-          'ConstraintsNotValidException: message',
+          ConstraintsInvalidException('message').toString(),
+          'ConstraintsInvalidException: message',
         );
       });
     });

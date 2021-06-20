@@ -23,8 +23,8 @@ class NoPatternsFoundException extends PatternRepositoryException {
   const NoPatternsFoundException([String message = '']) : super(message);
 }
 
-class ConstraintsNotValidException extends PatternRepositoryException {
-  const ConstraintsNotValidException([String message = '']) : super(message);
+class ConstraintsInvalidException extends PatternRepositoryException {
+  const ConstraintsInvalidException([String message = '']) : super(message);
 }
 
 // TODO: rename
