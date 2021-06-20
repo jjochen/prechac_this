@@ -88,7 +88,7 @@ void main() {
         );
         expect(
           () => throwConstraint1.merge(throwConstraint2),
-          throwsA(isA<ConstraintMergeConflictException>()),
+          throwsA(isA<ConstraintsInvalidException>()),
         );
       });
 
@@ -103,7 +103,7 @@ void main() {
         );
         expect(
           () => throwConstraint1.merge(throwConstraint2),
-          throwsA(isA<ConstraintMergeConflictException>()),
+          throwsA(isA<ConstraintsInvalidException>()),
         );
       });
 
@@ -118,7 +118,7 @@ void main() {
         );
         expect(
           () => throwConstraint1.merge(throwConstraint2),
-          throwsA(isA<ConstraintMergeConflictException>()),
+          throwsA(isA<ConstraintsInvalidException>()),
         );
       });
 
@@ -131,7 +131,7 @@ void main() {
         );
         expect(
           () => throwConstraint1.merge(throwConstraint2),
-          throwsA(isA<ConstraintMergeConflictException>()),
+          throwsA(isA<ConstraintsInvalidException>()),
         );
       });
     });

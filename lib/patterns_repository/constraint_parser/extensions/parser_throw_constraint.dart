@@ -13,14 +13,14 @@ extension ParserThrowConstraint on ThrowConstraint {
       mergedPassingIndex = other.passingIndex;
     } else {
       final message = '$this and $other can\'t be merged.';
-      throw (ConstraintMergeConflictException(message));
+      throw (ConstraintsInvalidException(message));
     }
 
     final mergedLimitToPass = limitToPass || other.limitToPass;
 
     if (mergedLimitToPass && mergedPassingIndex == 0) {
       final message = '$this and $other can\'t be merged.';
-      throw (ConstraintMergeConflictException(message));
+      throw (ConstraintsInvalidException(message));
     }
 
     final Fraction? mergedHeight;
@@ -32,7 +32,7 @@ extension ParserThrowConstraint on ThrowConstraint {
       mergedHeight = other.height;
     } else {
       final message = '$this and $other can\'t be merged.';
-      throw (ConstraintMergeConflictException(message));
+      throw (ConstraintsInvalidException(message));
     }
 
     return ThrowConstraint(

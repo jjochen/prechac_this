@@ -293,7 +293,7 @@ void main() {
           patternsBloc: patternsBloc,
         ),
         act: (bloc) => bloc.add(
-          PatternsDidNotLoad(ConstraintMergeConflictException('message')),
+          PatternsDidNotLoad(ConstraintsInvalidException('message')),
         ),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(

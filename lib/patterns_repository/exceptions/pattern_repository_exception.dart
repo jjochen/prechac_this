@@ -26,9 +26,3 @@ class NoPatternsFoundException extends PatternRepositoryException {
 class ConstraintsInvalidException extends PatternRepositoryException {
   const ConstraintsInvalidException([String message = '']) : super(message);
 }
-
-// TODO: rename
-class ConstraintMergeConflictException extends PatternRepositoryException {
-  const ConstraintMergeConflictException([String message = ''])
-      : super(message);
-}

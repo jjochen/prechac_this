@@ -36,21 +36,5 @@ void main() {
         );
       });
     });
-
-    group('ConstraintMergeConflictException', () {
-      test('supports value comparisons', () {
-        expect(
-          ConstraintMergeConflictException('message'),
-          ConstraintMergeConflictException('message'),
-        );
-      });
-
-      test('has correct string representation', () {
-        expect(
-          ConstraintMergeConflictException().toString(),
-          'ConstraintMergeConflictException',
-        );
-      });
-    });
   });
 }
