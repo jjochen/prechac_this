@@ -1,4 +1,5 @@
 import 'package:dartx/dartx.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../../core/core.dart';
 import '../models/models.dart';
@@ -49,6 +50,10 @@ class Engine {
     }
 
     final listOfPatterns = setOfPatterns.toList()..sort();
+    if (listOfPatterns.isEmpty) {
+      throw NoPatternsFoundException();
+    }
+
     return listOfPatterns;
   }
 }

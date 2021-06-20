@@ -20,9 +20,9 @@ abstract class PatternRepositoryException
 }
 
 class NoPatternsFoundException extends PatternRepositoryException {
-  const NoPatternsFoundException([String message = '']) : super(message);
+  NoPatternsFoundException([String message = '']) : super(message);
 }
 
 class ConstraintsInvalidException extends PatternRepositoryException {
-  const ConstraintsInvalidException([String message = '']) : super(message);
+  ConstraintsInvalidException([String message = '']) : super(message);
 }
