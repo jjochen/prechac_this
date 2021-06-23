@@ -19,13 +19,6 @@ class ConstraintsForm extends StatelessWidget {
               const SnackBar(content: Text('Failure')),
             );
         }
-        // else if (state.status.isSubmissionSuccess) {
-        //   final parameters = state.toSearchParameters();
-        //   Navigator.pushNamed(
-        //     context,
-        //     SearchResultsPage.routeNameWithParameters(parameters),
-        //   );
-        // }
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),
@@ -43,6 +36,7 @@ class ConstraintsForm extends StatelessWidget {
                 const SizedBox(height: 2.0),
                 _MaxHeightInput(),
                 const SizedBox(height: 2.0),
+                _ErrorMessage(),
                 _SubmitButton(),
               ],
             ),
@@ -153,6 +147,22 @@ class _MaxHeightInput extends StatelessWidget {
             helperText: '',
             errorText: state.maxHeight.invalid ? 'invalid max height' : null,
           ),
+        );
+      },
+    );
+  }
+}
+
+class _ErrorMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      buildWhen: (previous, current) =>
+          previous.errorMessage != current.errorMessage,
+      builder: (context, state) {
+        return Text(
+          state.errorMessage,
+          key: const Key('constraintsForm_errorMessage'),
         );
       },
     );

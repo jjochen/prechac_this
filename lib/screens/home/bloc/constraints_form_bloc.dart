@@ -130,6 +130,14 @@ class ConstraintsFormBloc
   }
 
   String errorMessage(Exception exception) {
+    if (exception is ConstraintsInvalidException) {
+      return 'Could not parse constraints.';
+    }
+
+    if (exception is NoPatternsFoundException) {
+      return 'No patterns found.';
+    }
+
     return 'unknown error';
   }
 

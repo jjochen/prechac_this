@@ -293,12 +293,12 @@ void main() {
           patternsBloc: patternsBloc,
         ),
         act: (bloc) => bloc.add(
-          PatternsDidNotLoad(ConstraintsInvalidException('message')),
+          PatternsDidNotLoad(ConstraintsInvalidException()),
         ),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'unknown error',
+            errorMessage: 'Could not parse constraints.',
           ),
         ],
       );
@@ -320,7 +320,7 @@ void main() {
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'unknown error',
+            errorMessage: 'No patterns found.',
           ),
         ],
       );
