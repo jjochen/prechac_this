@@ -39,6 +39,45 @@ void main() {
             }),
             completes);
       });
+
+      test('forwards NoPatternsFoundException', () async {
+        final searchParameters = SearchParameters(
+          numberOfJugglers: 2,
+          period: 4,
+          numberOfObjects: 4,
+          maxHeight: 1,
+        );
+        expect(
+            patternsRepository.patterns(searchParameters).then((pattern) {
+              assert(false); // should error
+            }).onError((error, stackTrace) {
+              expect(
+                error,
+                NoPatternsFoundException(),
+              );
+            }),
+            completes);
+      });
+
+      test('forwards ConstraintsInvalidException', () async {
+        final searchParameters = SearchParameters(
+          numberOfJugglers: 2,
+          period: 4,
+          numberOfObjects: 4,
+          maxHeight: 4,
+          contains: '3x',
+        );
+        expect(
+            patternsRepository.patterns(searchParameters).then((pattern) {
+              assert(false); // should error
+            }).onError((error, stackTrace) {
+              expect(
+                error,
+                ConstraintsInvalidException(),
+              );
+            }),
+            completes);
+      });
     });
 
     group('findPatterns()', () {
