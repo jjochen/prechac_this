@@ -31,13 +31,10 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
     yield PatternsLoading();
-    try {
-      final patterns =
-          await _patternsRepository.patterns(event.searchParameters);
-      add(PatternsUpdated(patterns));
-    } on PatternRepositoryException catch (e) {
-      add(PatternsNotUpdated(e));
-    }
+    await _patternsRepository
+        .patterns(event.searchParameters)
+        .then((patterns) => add(PatternsUpdated(patterns)))
+        .catchError((error) => add(PatternsNotUpdated(error)));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(

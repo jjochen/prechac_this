@@ -42,8 +42,9 @@ void main() {
     blocTest<PatternsBloc, PatternsState>(
       'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load',
       build: () {
-        when(() => patternsRepository.patterns(mockParameters))
-            .thenThrow(NoPatternsFoundException());
+        when(() => patternsRepository.patterns(mockParameters)).thenAnswer(
+          (_) => Future.error(NoPatternsFoundException()),
+        );
         return PatternsBloc(patternsRepository: patternsRepository);
       },
       act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
