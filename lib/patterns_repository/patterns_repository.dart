@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:isolate';
 
-import 'package:flutter/foundation.dart';
 import 'package:fraction/fraction.dart';
 
 import 'constraint_parser/parser.dart';
@@ -12,7 +12,60 @@ export 'models/models.dart';
 
 class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return await compute(findPatterns, parameters);
+    final resultPort = ReceivePort();
+    final exitPort = ReceivePort();
+    final errorPort = ReceivePort();
+
+    final isolate = await Isolate.spawn(
+      _spawn,
+      _IsolateConfiguration(
+        parameters,
+        resultPort.sendPort,
+      ),
+      onExit: exitPort.sendPort,
+      onError: errorPort.sendPort,
+    );
+
+    final completer = Completer<List<Pattern>>();
+
+    errorPort.listen((dynamic errorData) {
+      assert(errorData is List<dynamic>);
+      final errorDataList = errorData as List<dynamic>;
+      assert(errorDataList.length == 2);
+      final exception = Exception(errorDataList[0]);
+      final stack = StackTrace.fromString(errorDataList[1] as String);
+
+      if (completer.isCompleted) {
+        Zone.current.handleUncaughtError(exception, stack);
+      } else {
+        completer.completeError(exception, stack);
+      }
+    });
+
+    exitPort.listen((dynamic exitData) {
+      if (!completer.isCompleted) {
+        completer.completeError(
+            Exception('Isolate exited without result or error.'));
+      }
+    });
+
+    resultPort.listen((dynamic resultData) {
+      assert(resultData == null || resultData is List<Pattern>);
+      if (!completer.isCompleted) {
+        completer.complete(resultData as List<Pattern>);
+      }
+    });
+
+    await completer.future;
+    resultPort.close();
+    errorPort.close();
+    isolate.kill();
+    return completer.future;
+  }
+
+  static void _spawn(_IsolateConfiguration configuration) {
+    final result = findPatterns(configuration.parameters);
+    configuration.resultPort.send(result);
   }
 
   static List<Pattern> findPatterns(SearchParameters parameters) {
@@ -46,4 +99,13 @@ class PatternsRepository {
       index: index,
     );
   }
+}
+
+class _IsolateConfiguration {
+  const _IsolateConfiguration(
+    this.parameters,
+    this.resultPort,
+  );
+  final SearchParameters parameters;
+  final SendPort resultPort;
 }
