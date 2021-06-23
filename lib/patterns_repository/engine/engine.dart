@@ -1,8 +1,8 @@
 import 'package:dartx/dartx.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../../core/core.dart';
 import '../models/models.dart';
+import '../patterns_repository.dart';
 import 'engine_pattern.dart';
 import 'engine_pattern_constraint.dart';
 

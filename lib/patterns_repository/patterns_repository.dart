@@ -5,6 +5,7 @@ import 'package:fraction/fraction.dart';
 
 import 'constraint_parser/parser.dart';
 import 'engine/engine.dart';
+import 'exceptions/pattern_repository_exception.dart';
 import 'models/models.dart';
 
 export 'exceptions/pattern_repository_exception.dart';
@@ -28,11 +29,25 @@ class PatternsRepository {
 
     final completer = Completer<List<Pattern>>();
 
+    resultPort.listen((dynamic resultData) {
+      assert(resultData == null || resultData is List<Pattern>);
+      if (!completer.isCompleted) {
+        completer.complete(resultData as List<Pattern>);
+      }
+    });
+
     errorPort.listen((dynamic errorData) {
       assert(errorData is List<dynamic>);
       final errorDataList = errorData as List<dynamic>;
       assert(errorDataList.length == 2);
-      final exception = Exception(errorDataList[0]);
+
+      Exception exception;
+      try {
+        exception = PatternRepositoryException.fromErrorData(errorDataList[0]);
+      } catch (_) {
+        exception = Exception(errorDataList[0]);
+      }
+
       final stack = StackTrace.fromString(errorDataList[1] as String);
 
       if (completer.isCompleted) {
@@ -46,13 +61,6 @@ class PatternsRepository {
       if (!completer.isCompleted) {
         completer.completeError(
             Exception('Isolate exited without result or error.'));
-      }
-    });
-
-    resultPort.listen((dynamic resultData) {
-      assert(resultData == null || resultData is List<Pattern>);
-      if (!completer.isCompleted) {
-        completer.complete(resultData as List<Pattern>);
       }
     });
 

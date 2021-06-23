@@ -73,7 +73,7 @@ void main() {
             }).onError((error, stackTrace) {
               expect(
                 error,
-                ConstraintsInvalidException(),
+                ConstraintsInvalidException('end of input expected'),
               );
             }),
             completes);
