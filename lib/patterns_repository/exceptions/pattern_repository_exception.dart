@@ -1,26 +1,9 @@
-import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class PatternRepositoryException
     with EquatableMixin
     implements Exception {
   const PatternRepositoryException(this.message);
-
-  factory PatternRepositoryException.fromErrorData(dynamic data) {
-    assert(data is String);
-    final string = data as String;
-
-    final components = string.split(': ');
-    final type = components.elementAtOrNull(0);
-    final message = components.elementAtOrNull(1) ?? '';
-
-    if (type == 'NoPatternsFoundException') {
-      return NoPatternsFoundException(message);
-    }
-
-    assert(type == 'ConstraintsInvalidException');
-    return ConstraintsInvalidException(message);
-  }
 
   final String message;
 
