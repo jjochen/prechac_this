@@ -12,7 +12,7 @@ export 'models/models.dart';
 
 class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    final computer = Computer<SearchParameters, List<Pattern>>();
+    const computer = Computer<SearchParameters, List<Pattern>>();
     return await computer.run(findPatterns, parameters);
   }
 
@@ -52,6 +52,8 @@ class PatternsRepository {
 typedef ComputerCallback<M, R> = R Function(M message);
 
 class Computer<M, R> {
+  const Computer();
+
   Future<R> run(ComputerCallback<M, R> callback, M message) async {
     final resultPort = ReceivePort();
     final exitPort = ReceivePort();
@@ -71,13 +73,14 @@ class Computer<M, R> {
     final completer = Completer<R>();
 
     resultPort.listen((dynamic resultData) {
-      assert(resultData is _IsolateOutput<R>);
+      assert(resultData is _IsolateOutput);
       if (completer.isCompleted) {
         return;
       }
 
-      final output = resultData as _IsolateOutput<R>;
+      final output = resultData as _IsolateOutput;
       if (output.success) {
+        assert(output.result is R);
         completer.complete(output.result);
       } else {
         final error = output.error ?? Exception('unknown error');
