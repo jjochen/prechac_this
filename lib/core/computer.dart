@@ -11,7 +11,6 @@ class Computer<M, R> {
   Future<R> run(ComputerCallback<M, R> callback, M message) async {
     final resultPort = ReceivePort();
     final exitPort = ReceivePort();
-    final errorPort = ReceivePort();
 
     final isolate = await Isolate.spawn<IsolateInput<M, R>>(
       spawn,
@@ -21,7 +20,6 @@ class Computer<M, R> {
         resultPort.sendPort,
       ),
       onExit: exitPort.sendPort,
-      onError: errorPort.sendPort,
     );
 
     final completer = Completer<R>();
@@ -42,31 +40,12 @@ class Computer<M, R> {
       }
     });
 
-    errorPort.listen((dynamic errorData) {
-      assert(errorData is List<dynamic>);
-      final errorDataList = errorData as List<dynamic>;
-      assert(errorDataList.length == 2);
-      final exception = Exception(errorDataList[0]);
-
-      final stack = StackTrace.fromString(errorDataList[1] as String);
-
-      if (completer.isCompleted) {
-        Zone.current.handleUncaughtError(exception, stack);
-      } else {
-        completer.completeError(exception, stack);
-      }
-    });
-
-    exitPort.listen((dynamic exitData) {
-      if (!completer.isCompleted) {
-        completer.completeError(
-            Exception('Isolate exited without result or error.'));
-      }
+    exitPort.listen((message) {
+      assert(completer.isCompleted);
     });
 
     await completer.future;
     resultPort.close();
-    errorPort.close();
     isolate.kill();
     return completer.future;
   }
