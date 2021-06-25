@@ -12,11 +12,11 @@ class ConstraintsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure && state.errorMessage.isNotEmpty) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Failure')),
+              SnackBar(content: Text(state.errorMessage)),
             );
         }
       },
@@ -36,7 +36,6 @@ class ConstraintsForm extends StatelessWidget {
                 const SizedBox(height: 2.0),
                 _MaxHeightInput(),
                 const SizedBox(height: 2.0),
-                _ErrorMessage(),
                 _SubmitButton(),
               ],
             ),
@@ -147,22 +146,6 @@ class _MaxHeightInput extends StatelessWidget {
             helperText: '',
             errorText: state.maxHeight.invalid ? 'invalid max height' : null,
           ),
-        );
-      },
-    );
-  }
-}
-
-class _ErrorMessage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) =>
-          previous.errorMessage != current.errorMessage,
-      builder: (context, state) {
-        return Text(
-          state.errorMessage,
-          key: const Key('constraintsForm_errorMessage'),
         );
       },
     );
