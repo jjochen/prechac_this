@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
 
 import '../core/core.dart';
@@ -16,6 +17,7 @@ class PatternsRepository {
     return await computer.run(findPatterns, parameters);
   }
 
+  @visibleForTesting
   static List<Pattern> findPatterns(SearchParameters parameters) {
     final constraints = parameters.parse();
     const engine = Engine();

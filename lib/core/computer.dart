@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:flutter/material.dart';
+
 typedef ComputerCallback<M, R> = R Function(M message);
 
 class Computer<M, R> {
@@ -11,9 +13,9 @@ class Computer<M, R> {
     final exitPort = ReceivePort();
     final errorPort = ReceivePort();
 
-    final isolate = await Isolate.spawn<_IsolateInput<M, R>>(
-      _spawn,
-      _IsolateInput<M, R>(
+    final isolate = await Isolate.spawn<IsolateInput<M, R>>(
+      spawn,
+      IsolateInput<M, R>(
         callback,
         message,
         resultPort.sendPort,
@@ -25,12 +27,12 @@ class Computer<M, R> {
     final completer = Completer<R>();
 
     resultPort.listen((dynamic resultData) {
-      assert(resultData is _IsolateOutput);
+      assert(resultData is IsolateOutput);
       if (completer.isCompleted) {
         return;
       }
 
-      final output = resultData as _IsolateOutput;
+      final output = resultData as IsolateOutput;
       if (output.success) {
         assert(output.result is R);
         completer.complete(output.result);
@@ -69,20 +71,24 @@ class Computer<M, R> {
     return completer.future;
   }
 
-  static void _spawn<M, R>(_IsolateInput<M, R> input) {
+  // code coverage not collected for isolates
+  @visibleForTesting
+  static void spawn<M, R>(IsolateInput<M, R> input) {
     try {
       final result = input.run();
-      final output = _IsolateOutput<R>.success(result);
+      final output = IsolateOutput<R>.success(result);
       input.resultPort.send(output);
     } catch (error) {
-      final output = _IsolateOutput<R>.failure(error);
+      final output = IsolateOutput<R>.failure(error);
       input.resultPort.send(output);
     }
   }
 }
 
-class _IsolateInput<M, R> {
-  const _IsolateInput(
+@immutable
+@visibleForTesting
+class IsolateInput<M, R> {
+  const IsolateInput(
     this.callback,
     this.message,
     this.resultPort,
@@ -95,18 +101,20 @@ class _IsolateInput<M, R> {
   R run() => callback(message);
 }
 
-class _IsolateOutput<R> {
-  const _IsolateOutput(
+@immutable
+@visibleForTesting
+class IsolateOutput<R> {
+  const IsolateOutput(
     this.success,
     this.result,
     this.error,
   );
 
-  factory _IsolateOutput.success(R result) =>
-      _IsolateOutput<R>(true, result, null);
+  factory IsolateOutput.success(R result) =>
+      IsolateOutput<R>(true, result, null);
 
-  factory _IsolateOutput.failure(dynamic error) =>
-      _IsolateOutput<R>(false, null, error);
+  factory IsolateOutput.failure(dynamic error) =>
+      IsolateOutput<R>(false, null, error);
 
   final bool success;
   final R? result;
