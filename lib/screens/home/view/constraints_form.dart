@@ -12,20 +12,13 @@ class ConstraintsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure && state.errorMessage.isNotEmpty) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Failure')),
+              SnackBar(content: Text(state.errorMessage)),
             );
         }
-        // else if (state.status.isSubmissionSuccess) {
-        //   final parameters = state.toSearchParameters();
-        //   Navigator.pushNamed(
-        //     context,
-        //     SearchResultsPage.routeNameWithParameters(parameters),
-        //   );
-        // }
       },
       child: Align(
         alignment: const Alignment(0, -1 / 3),

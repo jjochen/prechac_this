@@ -42,29 +42,15 @@ void main() {
     blocTest<PatternsBloc, PatternsState>(
       'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load',
       build: () {
-        when(() => patternsRepository.patterns(mockParameters))
-            .thenThrow(ConstraintsNotValidException('message'));
+        when(() => patternsRepository.patterns(mockParameters)).thenAnswer(
+          (_) => Future.error(NoPatternsFoundException()),
+        );
         return PatternsBloc(patternsRepository: patternsRepository);
       },
       act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
       expect: () => <PatternsState>[
         PatternsLoading(),
-        PatternsNotLoaded('message'),
-      ],
-    );
-
-    blocTest<PatternsBloc, PatternsState>(
-      'emits [PatternsLoading, PatternsNotLoaded] when patterns faild to load '
-      'with unknown exception',
-      build: () {
-        when(() => patternsRepository.patterns(mockParameters))
-            .thenThrow(FormatException('some message'));
-        return PatternsBloc(patternsRepository: patternsRepository);
-      },
-      act: (bloc) => bloc.add(LoadPatterns(mockParameters)),
-      expect: () => <PatternsState>[
-        PatternsLoading(),
-        PatternsNotLoaded('unknown error'),
+        PatternsNotLoaded(NoPatternsFoundException()),
       ],
     );
   });

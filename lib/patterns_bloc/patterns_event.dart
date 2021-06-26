@@ -23,10 +23,10 @@ class PatternsUpdated extends PatternsEvent {
 }
 
 class PatternsNotUpdated extends PatternsEvent {
-  const PatternsNotUpdated(this.errorMessage);
+  const PatternsNotUpdated(this.exception);
 
-  final String errorMessage;
+  final Exception exception;
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => [exception];
 }

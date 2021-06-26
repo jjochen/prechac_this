@@ -22,7 +22,7 @@ class ConstraintsFormBloc
         if (state is PatternsLoaded) {
           add(PatternsDidLoad());
         } else if (state is PatternsNotLoaded) {
-          add(PatternsDidNotLoad(state.errorMessage));
+          add(PatternsDidNotLoad(state.exception));
         }
       },
     );
@@ -104,7 +104,7 @@ class ConstraintsFormBloc
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionFailure,
-      errorMessage: event.errorMessage,
+      errorMessage: errorMessage(event.exception),
     );
   }
 
@@ -127,6 +127,18 @@ class ConstraintsFormBloc
       ]),
       errorMessage: '',
     );
+  }
+
+  String errorMessage(Exception exception) {
+    if (exception is ConstraintsInvalidException) {
+      return 'Could not parse constraints.';
+    }
+
+    if (exception is NoPatternsFoundException) {
+      return 'No patterns found.';
+    }
+
+    return 'unknown error';
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'package:petitparser/petitparser.dart';
+
 import '../../patterns_repository.dart';
 import '../constraint_parser_definition.dart';
 import 'parser_pattern_constraint.dart';
@@ -10,7 +12,12 @@ extension ParserSearchParameters on SearchParameters {
 
   PatternConstraint parse() {
     final parser = ConstraintParserDefinition().build();
-    List<ThrowConstraint> throwSequence = parser.parse(contains).value;
+    final List<ThrowConstraint> throwSequence;
+    try {
+      throwSequence = parser.parse(contains).value;
+    } on ParserException catch (e) {
+      throw ConstraintsInvalidException(e.failure.message);
+    }
 
     final patternConstraint = PatternConstraint.placeholder(
       numberOfJugglers: numberOfJugglers,

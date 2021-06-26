@@ -138,7 +138,10 @@ void main() {
           constraintsFormBloc,
           Stream.fromIterable(const <ConstraintsFormState>[
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
-            ConstraintsFormState(status: FormzStatus.submissionFailure),
+            ConstraintsFormState(
+              status: FormzStatus.submissionFailure,
+              errorMessage: 'Message',
+            ),
           ]),
         );
         await tester.pumpApp(
@@ -150,7 +153,7 @@ void main() {
           ),
         );
         await tester.pump();
-        expect(find.text('Failure'), findsOneWidget);
+        expect(find.text('Message'), findsOneWidget);
       });
 
       testWidgets(

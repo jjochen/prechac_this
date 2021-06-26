@@ -292,11 +292,13 @@ void main() {
         build: () => ConstraintsFormBloc(
           patternsBloc: patternsBloc,
         ),
-        act: (bloc) => bloc.add(PatternsDidNotLoad('error')),
+        act: (bloc) => bloc.add(
+          PatternsDidNotLoad(ConstraintsInvalidException()),
+        ),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'error',
+            errorMessage: 'Could not parse constraints.',
           ),
         ],
       );
@@ -308,7 +310,7 @@ void main() {
             patternsBloc,
             Stream.fromIterable(<PatternsState>[
               PatternsLoading(),
-              PatternsNotLoaded('some message'),
+              PatternsNotLoaded(NoPatternsFoundException()),
             ]),
           );
           return ConstraintsFormBloc(
@@ -318,7 +320,7 @@ void main() {
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'some message',
+            errorMessage: 'No patterns found.',
           ),
         ],
       );

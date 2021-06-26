@@ -5,25 +5,36 @@ import 'package:test/test.dart';
 
 void main() {
   group('PatternRepositoryException', () {
-    test('NoPatternsFoundException', () {
-      expect(
-        NoPatternsFoundException(),
-        isNotNull,
-      );
+    group('NoPatternsFoundException', () {
+      test('supports value comparisons', () {
+        expect(
+          NoPatternsFoundException('message'),
+          NoPatternsFoundException('message'),
+        );
+      });
+
+      test('has correct string representation', () {
+        expect(
+          NoPatternsFoundException('message').toString(),
+          'NoPatternsFoundException: message',
+        );
+      });
     });
 
-    test('ConstraintsNotValidException', () {
-      expect(
-        ConstraintsNotValidException(),
-        isNotNull,
-      );
-    });
+    group('ConstraintsInvalidException', () {
+      test('supports value comparisons', () {
+        expect(
+          ConstraintsInvalidException('message'),
+          ConstraintsInvalidException('message'),
+        );
+      });
 
-    test('ConstraintMergeConflictException', () {
-      expect(
-        ConstraintMergeConflictException(),
-        isNotNull,
-      );
+      test('has correct string representation', () {
+        expect(
+          ConstraintsInvalidException('message').toString(),
+          'ConstraintsInvalidException: message',
+        );
+      });
     });
   });
 }

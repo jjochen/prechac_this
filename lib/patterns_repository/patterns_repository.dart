@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
 
+import '../core/core.dart';
 import 'constraint_parser/parser.dart';
 import 'engine/engine.dart';
 import 'models/models.dart';
@@ -12,9 +13,11 @@ export 'models/models.dart';
 
 class PatternsRepository {
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return await compute(findPatterns, parameters);
+    const computer = Computer<SearchParameters, List<Pattern>>();
+    return await computer.run(findPatterns, parameters);
   }
 
+  @visibleForTesting
   static List<Pattern> findPatterns(SearchParameters parameters) {
     final constraints = parameters.parse();
     const engine = Engine();

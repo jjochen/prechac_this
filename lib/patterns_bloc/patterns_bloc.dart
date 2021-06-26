@@ -31,15 +31,10 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
     yield PatternsLoading();
-    try {
-      final patterns =
-          await _patternsRepository.patterns(event.searchParameters);
-      add(PatternsUpdated(patterns));
-    } on PatternRepositoryException catch (e) {
-      add(PatternsNotUpdated(e.message));
-    } catch (e) {
-      add(const PatternsNotUpdated('unknown error'));
-    }
+    await _patternsRepository
+        .patterns(event.searchParameters)
+        .then((patterns) => add(PatternsUpdated(patterns)))
+        .catchError((error) => add(PatternsNotUpdated(error)));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(
@@ -49,6 +44,6 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
 
   Stream<PatternsState> _mapPatternsNotUpdatedToState(
       PatternsNotUpdated event) async* {
-    yield PatternsNotLoaded(event.errorMessage);
+    yield PatternsNotLoaded(event.exception);
   }
 }
