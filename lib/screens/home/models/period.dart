@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum PeriodValidationError { invalid }
+enum PeriodValidationError { requiredFieldMissing, outOfRange }
 
 class Period extends FormzInput<int, PeriodValidationError> {
   const Period.pure() : super.pure(defaultValue);
@@ -12,8 +12,12 @@ class Period extends FormzInput<int, PeriodValidationError> {
 
   @override
   PeriodValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : PeriodValidationError.invalid;
+    if (value == null) {
+      return PeriodValidationError.requiredFieldMissing;
+    } else if (value < minValue || value > maxValue) {
+      return PeriodValidationError.outOfRange;
+    } else {
+      return null;
+    }
   }
 }

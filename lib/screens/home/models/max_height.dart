@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum MaxHeightValidationError { invalid }
+enum MaxHeightValidationError { requiredFieldMissing, outOfRange }
 
 class MaxHeight extends FormzInput<int, MaxHeightValidationError> {
   const MaxHeight.pure() : super.pure(defaultValue);
@@ -12,8 +12,12 @@ class MaxHeight extends FormzInput<int, MaxHeightValidationError> {
 
   @override
   MaxHeightValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : MaxHeightValidationError.invalid;
+    if (value == null) {
+      return MaxHeightValidationError.requiredFieldMissing;
+    } else if (value < minValue || value > maxValue) {
+      return MaxHeightValidationError.outOfRange;
+    } else {
+      return null;
+    }
   }
 }

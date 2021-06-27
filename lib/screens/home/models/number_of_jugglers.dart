@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum NumberOfJugglersValidationError { invalid }
+enum NumberOfJugglersValidationError { requiredFieldMissing, outOfRange }
 
 class NumberOfJugglers
     extends FormzInput<int, NumberOfJugglersValidationError> {
@@ -13,8 +13,11 @@ class NumberOfJugglers
 
   @override
   NumberOfJugglersValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : NumberOfJugglersValidationError.invalid;
+    if (value == null) {
+      return NumberOfJugglersValidationError.requiredFieldMissing;
+    } else if (value < minValue || value > maxValue) {
+      return NumberOfJugglersValidationError.outOfRange;
+    }
+    return null;
   }
 }

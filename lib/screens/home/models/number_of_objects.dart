@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum NumberOfObjectsValidationError { invalid }
+enum NumberOfObjectsValidationError { requiredFieldMissing, outOfRange }
 
 class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
   const NumberOfObjects.pure() : super.pure(defaultValue);
@@ -12,8 +12,12 @@ class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
 
   @override
   NumberOfObjectsValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : NumberOfObjectsValidationError.invalid;
+    if (value == null) {
+      return NumberOfObjectsValidationError.requiredFieldMissing;
+    } else if (value < minValue || value > maxValue) {
+      return NumberOfObjectsValidationError.outOfRange;
+    } else {
+      return null;
+    }
   }
 }
