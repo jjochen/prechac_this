@@ -68,7 +68,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           max: NumberOfJugglers.maxValue.toDouble(),
           value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'jugglers',
+            labelText: 'Number of jugglers',
             helperText: '',
             errorText: state.numberOfJugglers.errorText,
           ),
@@ -119,7 +119,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           max: NumberOfObjects.maxValue.toDouble(),
           value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Objects',
+            labelText: 'Number of objects',
             helperText: '',
             errorText: state.numberOfObjects.errorText,
           ),
@@ -144,7 +144,7 @@ class _MaxHeightInput extends StatelessWidget {
           max: MaxHeight.maxValue.toDouble(),
           value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Max Height',
+            labelText: 'Max height',
             helperText: '',
             errorText: state.maxHeight.errorText,
           ),
