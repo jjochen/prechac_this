@@ -20,4 +20,20 @@ class MaxHeight extends FormzInput<int, MaxHeightValidationError> {
       return null;
     }
   }
+
+  String? get errorText {
+    final String? text;
+    switch (error) {
+      case MaxHeightValidationError.requiredFieldMissing:
+        text = 'required field';
+        break;
+      case MaxHeightValidationError.outOfRange:
+        text = 'value should be between $minValue and $maxValue';
+        break;
+      case null:
+        text = null;
+        break;
+    }
+    return text;
+  }
 }

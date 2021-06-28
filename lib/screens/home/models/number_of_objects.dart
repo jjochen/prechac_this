@@ -20,4 +20,20 @@ class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
       return null;
     }
   }
+
+  String? get errorText {
+    final String? text;
+    switch (error) {
+      case NumberOfObjectsValidationError.requiredFieldMissing:
+        text = 'required field';
+        break;
+      case NumberOfObjectsValidationError.outOfRange:
+        text = 'value should be between $minValue and $maxValue';
+        break;
+      case null:
+        text = null;
+        break;
+    }
+    return text;
+  }
 }

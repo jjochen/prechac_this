@@ -20,4 +20,17 @@ class MinNumberOfPasses
       return null;
     }
   }
+
+  String? get errorText {
+    final String? text;
+    switch (error) {
+      case MinNumberOfPassesValidationError.outOfRange:
+        text = 'value should be between $minValue and $maxValue';
+        break;
+      case null:
+        text = null;
+        break;
+    }
+    return text;
+  }
 }

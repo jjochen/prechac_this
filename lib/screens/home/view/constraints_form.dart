@@ -64,9 +64,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'jugglers',
             helperText: '',
-            errorText: state.numberOfJugglers.invalid
-                ? 'invalid number of jugglers'
-                : null,
+            errorText: state.numberOfJugglers.errorText,
           ),
         );
       },
@@ -91,7 +89,7 @@ class _PeriodInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Period',
             helperText: '',
-            errorText: state.period.invalid ? 'invalid period' : null,
+            errorText: state.period.errorText,
           ),
         );
       },
@@ -117,9 +115,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Objects',
             helperText: '',
-            errorText: state.numberOfObjects.invalid
-                ? 'invalid number of objects'
-                : null,
+            errorText: state.numberOfObjects.errorText,
           ),
         );
       },
@@ -144,7 +140,7 @@ class _MaxHeightInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Max Height',
             helperText: '',
-            errorText: state.maxHeight.invalid ? 'invalid max height' : null,
+            errorText: state.maxHeight.errorText,
           ),
         );
       },

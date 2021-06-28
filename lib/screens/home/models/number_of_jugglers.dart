@@ -20,4 +20,20 @@ class NumberOfJugglers
     }
     return null;
   }
+
+  String? get errorText {
+    final String? text;
+    switch (error) {
+      case NumberOfJugglersValidationError.requiredFieldMissing:
+        text = 'required field';
+        break;
+      case NumberOfJugglersValidationError.outOfRange:
+        text = 'value should be between $minValue and $maxValue';
+        break;
+      case null:
+        text = null;
+        break;
+    }
+    return text;
+  }
 }

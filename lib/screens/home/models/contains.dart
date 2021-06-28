@@ -12,4 +12,17 @@ class Contains extends FormzInput<String?, ContainsValidationError> {
   ContainsValidationError? validator(String? value) {
     return null;
   }
+
+  String? get errorText {
+    final String? text;
+    switch (error) {
+      case ContainsValidationError.invalid:
+        text = 'invalid';
+        break;
+      case null:
+        text = null;
+        break;
+    }
+    return text;
+  }
 }

@@ -160,7 +160,7 @@ void main() {
           'invalid number of jugglers error text '
           'when number of jugglers is invalid', (tester) async {
         final numberOfJugglers = MockNumberOfJugglers();
-        when(() => numberOfJugglers.invalid).thenReturn(true);
+        when(() => numberOfJugglers.errorText).thenReturn('Error');
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(numberOfJugglers: numberOfJugglers));
         await tester.pumpApp(
@@ -171,13 +171,13 @@ void main() {
             ),
           ),
         );
-        expect(find.text('invalid number of jugglers'), findsOneWidget);
+        expect(find.text('Error'), findsOneWidget);
       });
 
       testWidgets('invalid period error text when period is invalid',
           (tester) async {
         final period = MockPeriod();
-        when(() => period.invalid).thenReturn(true);
+        when(() => period.errorText).thenReturn('Error');
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
         await tester.pumpApp(
@@ -188,14 +188,14 @@ void main() {
             ),
           ),
         );
-        expect(find.text('invalid period'), findsOneWidget);
+        expect(find.text('Error'), findsOneWidget);
       });
 
       testWidgets(
           'invalid number of objects error text '
           'when number of objects is invalid', (tester) async {
         final numberOfObjects = MockNumberOfObjects();
-        when(() => numberOfObjects.invalid).thenReturn(true);
+        when(() => numberOfObjects.errorText).thenReturn('Error');
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
         await tester.pumpApp(
@@ -206,13 +206,13 @@ void main() {
             ),
           ),
         );
-        expect(find.text('invalid number of objects'), findsOneWidget);
+        expect(find.text('Error'), findsOneWidget);
       });
 
       testWidgets('invalid max height error text when max height is invalid',
           (tester) async {
         final maxHeight = MockMaxHeight();
-        when(() => maxHeight.invalid).thenReturn(true);
+        when(() => maxHeight.errorText).thenReturn('Error');
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
         await tester.pumpApp(
@@ -223,7 +223,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('invalid max height'), findsOneWidget);
+        expect(find.text('Error'), findsOneWidget);
       });
 
       testWidgets('disabled submit button when status is not validated',
