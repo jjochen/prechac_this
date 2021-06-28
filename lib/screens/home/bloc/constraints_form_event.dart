@@ -61,6 +61,15 @@ class MaxNumberOfPassesDidChange extends ConstraintsFormEvent {
   List<Object> get props => [maxNumberOfPasses];
 }
 
+class ContainsDidChange extends ConstraintsFormEvent {
+  const ContainsDidChange(this.contains);
+
+  final String contains;
+
+  @override
+  List<Object> get props => [contains];
+}
+
 class Submit extends ConstraintsFormEvent {}
 
 class PatternsDidLoad extends ConstraintsFormEvent {}

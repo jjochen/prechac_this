@@ -43,11 +43,33 @@ void main() {
   const validMaxHeightValue = 2;
   const validMaxHeight = MaxHeight.dirty(validMaxHeightValue);
 
+  const invalidMinNumberOfPassesValue = 25;
+  const invalidMinNumberOfPasses =
+      MinNumberOfPasses.dirty(invalidMinNumberOfPassesValue);
+
+  const validMinNumberOfPassesValue = 2;
+  const validMinNumberOfPasses =
+      MinNumberOfPasses.dirty(validMinNumberOfPassesValue);
+
+  const invalidMaxNumberOfPassesValue = 25;
+  const invalidMaxNumberOfPasses =
+      MaxNumberOfPasses.dirty(invalidMaxNumberOfPassesValue);
+
+  const validMaxNumberOfPassesValue = 5;
+  const validMaxNumberOfPasses =
+      MaxNumberOfPasses.dirty(validMaxNumberOfPassesValue);
+
+  const validContainsValue = '2p 1';
+  const validContains = Contains.dirty(validContainsValue);
+
   const validConstraintsFormState = ConstraintsFormState(
     numberOfJugglers: validNumberOfJugglers,
     period: validPeriod,
     numberOfObjects: validNumberOfObjects,
     maxHeight: validMaxHeight,
+    minNumberOfPasses: validMinNumberOfPasses,
+    maxNumberOfPasses: validMaxNumberOfPasses,
+    contains: validContains,
     status: FormzStatus.valid,
     errorMessage: '',
   );
@@ -93,6 +115,9 @@ void main() {
           period: validPeriod,
           numberOfObjects: validNumberOfObjects,
           maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
         ),
         act: (bloc) =>
             bloc.add(NumberOfJugglersDidChange(validNumberOfJugglersValue)),
@@ -126,6 +151,9 @@ void main() {
           numberOfJugglers: validNumberOfJugglers,
           numberOfObjects: validNumberOfObjects,
           maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
         ),
         act: (bloc) => bloc.add(PeriodDidChange(validPeriodValue)),
         expect: () => const <ConstraintsFormState>[
@@ -159,6 +187,9 @@ void main() {
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
           maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
         ),
         act: (bloc) =>
             bloc.add(NumberOfObjectsDidChange(validNumberOfObjectsValue)),
@@ -192,8 +223,112 @@ void main() {
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
           numberOfObjects: validNumberOfObjects,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
         ),
         act: (bloc) => bloc.add(MaxHeightDidChange(validMaxHeightValue)),
+        expect: () => const <ConstraintsFormState>[
+          validConstraintsFormState,
+        ],
+      );
+    });
+
+    group('MinNumberOfPassesDidChange', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [invalid] when minNumberOfPasses is invalid',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        act: (bloc) => bloc.add(MinNumberOfPassesDidChange(
+          invalidMinNumberOfPassesValue,
+        )),
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            minNumberOfPasses: invalidMinNumberOfPasses,
+            status: FormzStatus.invalid,
+          ),
+        ],
+      );
+
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [valid] when values are valid',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        seed: () => ConstraintsFormState(
+          numberOfJugglers: validNumberOfJugglers,
+          period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
+        ),
+        act: (bloc) => bloc.add(MinNumberOfPassesDidChange(
+          validMinNumberOfPassesValue,
+        )),
+        expect: () => const <ConstraintsFormState>[
+          validConstraintsFormState,
+        ],
+      );
+    });
+
+    group('MaxNumberOfPassesDidChange', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [invalid] when maxNumberOfPasses is invalid',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        act: (bloc) => bloc.add(MaxNumberOfPassesDidChange(
+          invalidMaxNumberOfPassesValue,
+        )),
+        expect: () => const <ConstraintsFormState>[
+          ConstraintsFormState(
+            maxNumberOfPasses: invalidMaxNumberOfPasses,
+            status: FormzStatus.invalid,
+          ),
+        ],
+      );
+
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [valid] when values are valid',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        seed: () => ConstraintsFormState(
+          numberOfJugglers: validNumberOfJugglers,
+          period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          contains: validContains,
+        ),
+        act: (bloc) => bloc.add(MaxNumberOfPassesDidChange(
+          validMaxNumberOfPassesValue,
+        )),
+        expect: () => const <ConstraintsFormState>[
+          validConstraintsFormState,
+        ],
+      );
+    });
+
+    group('Contains', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [valid] when values are valid',
+        build: () => ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ),
+        seed: () => ConstraintsFormState(
+          numberOfJugglers: validNumberOfJugglers,
+          period: validPeriod,
+          numberOfObjects: validNumberOfObjects,
+          maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+        ),
+        act: (bloc) => bloc.add(ContainsDidChange(
+          validContainsValue,
+        )),
         expect: () => const <ConstraintsFormState>[
           validConstraintsFormState,
         ],

@@ -7,6 +7,9 @@ class ConstraintsFormState extends Equatable {
     this.period = const Period.pure(),
     this.numberOfObjects = const NumberOfObjects.pure(),
     this.maxHeight = const MaxHeight.pure(),
+    this.minNumberOfPasses = const MinNumberOfPasses.pure(),
+    this.maxNumberOfPasses = const MaxNumberOfPasses.pure(),
+    this.contains = const Contains.pure(),
     this.status = FormzStatus.valid,
     this.errorMessage = '',
   });
@@ -15,6 +18,9 @@ class ConstraintsFormState extends Equatable {
   final Period period;
   final NumberOfObjects numberOfObjects;
   final MaxHeight maxHeight;
+  final MinNumberOfPasses minNumberOfPasses;
+  final MaxNumberOfPasses maxNumberOfPasses;
+  final Contains contains;
   final FormzStatus status;
   final String errorMessage;
 
@@ -24,6 +30,9 @@ class ConstraintsFormState extends Equatable {
         period,
         numberOfObjects,
         maxHeight,
+        minNumberOfPasses,
+        maxNumberOfPasses,
+        contains,
         status,
         errorMessage,
       ];
@@ -33,6 +42,9 @@ class ConstraintsFormState extends Equatable {
     Period? period,
     NumberOfObjects? numberOfObjects,
     MaxHeight? maxHeight,
+    MinNumberOfPasses? minNumberOfPasses,
+    MaxNumberOfPasses? maxNumberOfPasses,
+    Contains? contains,
     FormzStatus? status,
     String? errorMessage,
   }) {
@@ -41,6 +53,9 @@ class ConstraintsFormState extends Equatable {
       period: period ?? this.period,
       numberOfObjects: numberOfObjects ?? this.numberOfObjects,
       maxHeight: maxHeight ?? this.maxHeight,
+      minNumberOfPasses: minNumberOfPasses ?? this.minNumberOfPasses,
+      maxNumberOfPasses: maxNumberOfPasses ?? this.maxNumberOfPasses,
+      contains: contains ?? this.contains,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -51,5 +66,8 @@ class ConstraintsFormState extends Equatable {
         period: period.value,
         numberOfObjects: numberOfObjects.value,
         maxHeight: maxHeight.value,
+        minNumberOfPasses: minNumberOfPasses.value ?? -1,
+        maxNumberOfPasses: maxNumberOfPasses.value ?? -1,
+        contains: contains.value ?? '',
       );
 }

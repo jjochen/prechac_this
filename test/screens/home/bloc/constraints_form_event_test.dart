@@ -60,6 +60,15 @@ void main() {
       });
     });
 
+    group('ContaContainsDidChangeins', () {
+      test('supports value comparisons', () {
+        expect(
+          ContainsDidChange('abc'),
+          ContainsDidChange('abc'),
+        );
+      });
+    });
+
     group('Submit', () {
       test('supports value comparisons', () {
         expect(
