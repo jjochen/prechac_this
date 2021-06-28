@@ -347,6 +347,9 @@ void main() {
           period: validPeriod,
           numberOfObjects: validNumberOfObjects,
           maxHeight: validMaxHeight,
+          minNumberOfPasses: validMinNumberOfPasses,
+          maxNumberOfPasses: validMaxNumberOfPasses,
+          contains: validContains,
         ),
         act: (bloc) => bloc.add(Submit()),
         verify: (_) {
@@ -355,6 +358,9 @@ void main() {
             period: validPeriodValue,
             numberOfObjects: validNumberOfObjectsValue,
             maxHeight: validMaxHeightValue,
+            minNumberOfPasses: validMinNumberOfPassesValue,
+            maxNumberOfPasses: validMaxNumberOfPassesValue,
+            contains: validContainsValue,
           );
           verify(
             () => patternsBloc.add(
