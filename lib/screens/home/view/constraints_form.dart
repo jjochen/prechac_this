@@ -36,6 +36,12 @@ class ConstraintsForm extends StatelessWidget {
                 const SizedBox(height: 2.0),
                 _MaxHeightInput(),
                 const SizedBox(height: 2.0),
+                _MinNumberOfPassesInput(),
+                const SizedBox(height: 2.0),
+                _MaxNumberOfPassesInput(),
+                const SizedBox(height: 2.0),
+                _ContainsInput(),
+                const SizedBox(height: 2.0),
                 _SubmitButton(),
               ],
             ),
@@ -141,6 +147,80 @@ class _MaxHeightInput extends StatelessWidget {
             labelText: 'Max Height',
             helperText: '',
             errorText: state.maxHeight.errorText,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _MinNumberOfPassesInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      buildWhen: (previous, current) =>
+          previous.minNumberOfPasses != current.minNumberOfPasses,
+      builder: (context, state) {
+        return SpinBox(
+          key: const Key('constraintsForm_minNumberOfPassesInput'),
+          onChanged: (minNumberOfPasses) => context
+              .read<ConstraintsFormBloc>()
+              .add(MinNumberOfPassesDidChange(minNumberOfPasses.toInt())),
+          min: MinNumberOfPasses.minValue.toDouble(),
+          max: MinNumberOfPasses.maxValue.toDouble(),
+          value: MinNumberOfPasses.defaultValue.toDouble(),
+          decoration: InputDecoration(
+            labelText: 'Min number of passes',
+            helperText: '',
+            errorText: state.minNumberOfPasses.errorText,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _MaxNumberOfPassesInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      buildWhen: (previous, current) =>
+          previous.maxNumberOfPasses != current.maxNumberOfPasses,
+      builder: (context, state) {
+        return SpinBox(
+          key: const Key('constraintsForm_maxNumberOfPassesInput'),
+          onChanged: (maxNumberOfPasses) => context
+              .read<ConstraintsFormBloc>()
+              .add(MaxNumberOfPassesDidChange(maxNumberOfPasses.toInt())),
+          min: MaxNumberOfPasses.minValue.toDouble(),
+          max: MaxNumberOfPasses.maxValue.toDouble(),
+          value: MaxNumberOfPasses.defaultValue.toDouble(),
+          decoration: InputDecoration(
+            labelText: 'Max number of passes',
+            helperText: '',
+            errorText: state.maxNumberOfPasses.errorText,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ContainsInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      buildWhen: (previous, current) => previous.contains != current.contains,
+      builder: (context, state) {
+        return TextField(
+          key: const Key('constraintsForm_containsInput'),
+          onChanged: (contains) => context
+              .read<ConstraintsFormBloc>()
+              .add(ContainsDidChange(contains)),
+          decoration: InputDecoration(
+            labelText: 'Contains',
+            helperText: '',
+            errorText: state.maxNumberOfPasses.errorText,
           ),
         );
       },
