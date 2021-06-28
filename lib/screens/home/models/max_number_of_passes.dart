@@ -8,8 +8,8 @@ class MaxNumberOfPasses
   const MaxNumberOfPasses.dirty([int? value = defaultValue])
       : super.dirty(value);
 
-  static const int? defaultValue = null;
-  static const int minValue = 0;
+  static const int defaultValue = -1;
+  static const int minValue = -1;
   static const int maxValue = 24;
 
   @override
