@@ -220,7 +220,7 @@ class _ContainsInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Contains',
             helperText: '',
-            errorText: state.maxNumberOfPasses.error?.message,
+            errorText: state.contains.error?.message,
           ),
         );
       },
