@@ -21,18 +21,32 @@ class MockNumberOfObjects extends Mock implements NumberOfObjects {}
 
 class MockMaxHeight extends Mock implements MaxHeight {}
 
+class MockMinNumberOfPasses extends Mock implements MinNumberOfPasses {}
+
+class MockMaxNumberOfPasses extends Mock implements MaxNumberOfPasses {}
+
+class MockContains extends Mock implements Contains {}
+
 void main() {
   const submitButtonKey = Key('constraintsForm_submit_raisedButton');
   const numberOfJugglersInputKey = Key('constraintsForm_numberOfJugglersInput');
   const periodInputKey = Key('constraintsForm_periodInput');
   const numberOfObjectsInputKey = Key('constraintsForm_numberOfObjectsInput');
   const maxHeightInputKey = Key('constraintsForm_maxHeightInput');
+  const minNumberOfPassesInputKey =
+      Key('constraintsForm_minNumberOfPassesInput');
+  const maxNumberOfPassesInputKey =
+      Key('constraintsForm_maxNumberOfPassesInput');
+  const containsInputKey = Key('constraintsForm_containsInput');
   const progressIndicatorKey = Key('constraintsForm_submit_progressIndicator');
 
   const testNumberOfJugglers = 5;
   const testPeriod = 6;
   const testNumberOfObjects = 7;
   const testMaxHeight = 8;
+  const testMinNumberOfPasses = 3;
+  const testMaxNumberOfPasses = 4;
+  const testContains = '2p 1';
 
   group('ConstraintsForm', () {
     registerFallbackValue<ConstraintsFormState>(const ConstraintsFormState());
@@ -113,6 +127,58 @@ void main() {
             )).called(1);
       });
 
+      testWidgets(
+          'MinNumberOfPassesDidChange when min number of passes changes',
+          (tester) async {
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.enterText(find.byKey(minNumberOfPassesInputKey),
+            testMinNumberOfPasses.toString());
+        verify(() => constraintsFormBloc.add(
+              MinNumberOfPassesDidChange(testMinNumberOfPasses),
+            )).called(1);
+      });
+
+      testWidgets(
+          'MaxNumberOfPassesDidChange when max number of passes changes',
+          (tester) async {
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.enterText(find.byKey(maxNumberOfPassesInputKey),
+            testMaxNumberOfPasses.toString());
+        verify(() => constraintsFormBloc.add(
+              MaxNumberOfPassesDidChange(testMaxNumberOfPasses),
+            )).called(1);
+      });
+
+      testWidgets('ContainsDidChange when contains changes', (tester) async {
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.enterText(
+            find.byKey(containsInputKey), testContains.toString());
+        verify(() => constraintsFormBloc.add(
+              ContainsDidChange(testContains),
+            )).called(1);
+      });
+
       testWidgets('Submit when submit button is pressed', (tester) async {
         when(() => constraintsFormBloc.state).thenReturn(
           const ConstraintsFormState(status: FormzStatus.valid),
@@ -161,7 +227,7 @@ void main() {
           'when number of jugglers is invalid', (tester) async {
         final numberOfJugglers = MockNumberOfJugglers();
         when(() => numberOfJugglers.error).thenReturn(
-          InputOutOfRangeException('Error'),
+          InputOutOfRangeException('Error: number of jugglers'),
         );
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(numberOfJugglers: numberOfJugglers));
@@ -173,14 +239,14 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error'), findsOneWidget);
+        expect(find.text('Error: number of jugglers'), findsOneWidget);
       });
 
       testWidgets('invalid period error text when period is invalid',
           (tester) async {
         final period = MockPeriod();
         when(() => period.error).thenReturn(
-          InputOutOfRangeException('Error'),
+          InputOutOfRangeException('Error: period'),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
@@ -192,7 +258,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error'), findsOneWidget);
+        expect(find.text('Error: period'), findsOneWidget);
       });
 
       testWidgets(
@@ -200,7 +266,7 @@ void main() {
           'when number of objects is invalid', (tester) async {
         final numberOfObjects = MockNumberOfObjects();
         when(() => numberOfObjects.error).thenReturn(
-          InputOutOfRangeException('Error'),
+          InputOutOfRangeException('Error: number of objects'),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
@@ -212,14 +278,14 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error'), findsOneWidget);
+        expect(find.text('Error: number of objects'), findsOneWidget);
       });
 
       testWidgets('invalid max height error text when max height is invalid',
           (tester) async {
         final maxHeight = MockMaxHeight();
         when(() => maxHeight.error).thenReturn(
-          InputOutOfRangeException('Error'),
+          InputOutOfRangeException('Error: max height'),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
@@ -231,7 +297,47 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error'), findsOneWidget);
+        expect(find.text('Error: max height'), findsOneWidget);
+      });
+
+      testWidgets(
+          'invalid min number of passes error text '
+          'when min number of passes is invalid', (tester) async {
+        final minNumberOfPasses = MockMinNumberOfPasses();
+        when(() => minNumberOfPasses.error).thenReturn(
+          InputOutOfRangeException('Error: min number of passes'),
+        );
+        when(() => constraintsFormBloc.state).thenReturn(
+            ConstraintsFormState(minNumberOfPasses: minNumberOfPasses));
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        expect(find.text('Error: min number of passes'), findsOneWidget);
+      });
+
+      testWidgets(
+          'invalid max number of passes error text '
+          'when max number of passes is invalid', (tester) async {
+        final maxNumberOfPasses = MockMaxNumberOfPasses();
+        when(() => maxNumberOfPasses.error).thenReturn(
+          InputOutOfRangeException('Error: max number of passes'),
+        );
+        when(() => constraintsFormBloc.state).thenReturn(
+            ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses));
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        expect(find.text('Error: max number of passes'), findsOneWidget);
       });
 
       testWidgets('disabled submit button when status is not validated',
