@@ -5,10 +5,18 @@ import 'package:test/test.dart';
 
 void main() {
   group('NumberOfJugglers', () {
-    test('calculates cartesian product', () {
-      final numberOfJugglers = NumberOfJugglers.dirty(0);
+    test('error text for valid input is null', () {
+      final input = NumberOfJugglers.dirty(1);
       expect(
-        numberOfJugglers.errorText,
+        input.errorText,
+        isNull,
+      );
+    });
+
+    test('has correct error text for out of range input', () {
+      final input = NumberOfJugglers.dirty(0);
+      expect(
+        input.errorText,
         'value should be between 1 and 24',
       );
     });
