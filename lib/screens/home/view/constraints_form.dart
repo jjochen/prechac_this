@@ -70,7 +70,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Number of jugglers',
             helperText: '',
-            errorText: state.numberOfJugglers.errorText,
+            errorText: state.numberOfJugglers.error?.message,
           ),
         );
       },
@@ -95,7 +95,7 @@ class _PeriodInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Period',
             helperText: '',
-            errorText: state.period.errorText,
+            errorText: state.period.error?.message,
           ),
         );
       },
@@ -121,7 +121,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Number of objects',
             helperText: '',
-            errorText: state.numberOfObjects.errorText,
+            errorText: state.numberOfObjects.error?.message,
           ),
         );
       },
@@ -146,7 +146,7 @@ class _MaxHeightInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Max height',
             helperText: '',
-            errorText: state.maxHeight.errorText,
+            errorText: state.maxHeight.error?.message,
           ),
         );
       },
@@ -172,7 +172,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Min number of passes',
             helperText: '',
-            errorText: state.minNumberOfPasses.errorText,
+            errorText: state.minNumberOfPasses.error?.message,
           ),
         );
       },
@@ -198,7 +198,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Max number of passes',
             helperText: '',
-            errorText: state.maxNumberOfPasses.errorText,
+            errorText: state.maxNumberOfPasses.error?.message,
           ),
         );
       },
@@ -220,7 +220,7 @@ class _ContainsInput extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Contains',
             helperText: '',
-            errorText: state.maxNumberOfPasses.errorText,
+            errorText: state.maxNumberOfPasses.error?.message,
           ),
         );
       },

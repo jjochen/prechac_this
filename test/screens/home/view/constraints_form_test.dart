@@ -160,7 +160,9 @@ void main() {
           'invalid number of jugglers error text '
           'when number of jugglers is invalid', (tester) async {
         final numberOfJugglers = MockNumberOfJugglers();
-        when(() => numberOfJugglers.errorText).thenReturn('Error');
+        when(() => numberOfJugglers.error).thenReturn(
+          InputOutOfRangeException('Error'),
+        );
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(numberOfJugglers: numberOfJugglers));
         await tester.pumpApp(
@@ -177,7 +179,9 @@ void main() {
       testWidgets('invalid period error text when period is invalid',
           (tester) async {
         final period = MockPeriod();
-        when(() => period.errorText).thenReturn('Error');
+        when(() => period.error).thenReturn(
+          InputOutOfRangeException('Error'),
+        );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
         await tester.pumpApp(
@@ -195,7 +199,9 @@ void main() {
           'invalid number of objects error text '
           'when number of objects is invalid', (tester) async {
         final numberOfObjects = MockNumberOfObjects();
-        when(() => numberOfObjects.errorText).thenReturn('Error');
+        when(() => numberOfObjects.error).thenReturn(
+          InputOutOfRangeException('Error'),
+        );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
         await tester.pumpApp(
@@ -212,7 +218,9 @@ void main() {
       testWidgets('invalid max height error text when max height is invalid',
           (tester) async {
         final maxHeight = MockMaxHeight();
-        when(() => maxHeight.errorText).thenReturn('Error');
+        when(() => maxHeight.error).thenReturn(
+          InputOutOfRangeException('Error'),
+        );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
         await tester.pumpApp(

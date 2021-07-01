@@ -1,9 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum MaxNumberOfPassesValidationError { outOfRange }
+import 'form_input_exception.dart';
 
-class MaxNumberOfPasses
-    extends FormzInput<int?, MaxNumberOfPassesValidationError> {
+class MaxNumberOfPasses extends FormzInput<int?, FormInputValidationException> {
   const MaxNumberOfPasses.pure() : super.pure(defaultValue);
   const MaxNumberOfPasses.dirty([int? value = defaultValue])
       : super.dirty(value);
@@ -13,24 +12,13 @@ class MaxNumberOfPasses
   static const int maxValue = 24;
 
   @override
-  MaxNumberOfPassesValidationError? validator(int? value) {
+  FormInputValidationException? validator(int? value) {
     if (value != null && (value < minValue || value > maxValue)) {
-      return MaxNumberOfPassesValidationError.outOfRange;
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
     } else {
       return null;
     }
-  }
-
-  String? get errorText {
-    final String? text;
-    switch (error) {
-      case MaxNumberOfPassesValidationError.outOfRange:
-        text = 'value should be between $minValue and $maxValue';
-        break;
-      case null:
-        text = null;
-        break;
-    }
-    return text;
   }
 }

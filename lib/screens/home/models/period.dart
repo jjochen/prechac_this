@@ -1,8 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum PeriodValidationError { requiredFieldMissing, outOfRange }
+import 'form_input_exception.dart';
 
-class Period extends FormzInput<int, PeriodValidationError> {
+class Period extends FormzInput<int, FormInputValidationException> {
   const Period.pure() : super.pure(defaultValue);
   const Period.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -11,29 +11,13 @@ class Period extends FormzInput<int, PeriodValidationError> {
   static const int maxValue = 24;
 
   @override
-  PeriodValidationError? validator(int? value) {
-    if (value == null) {
-      return PeriodValidationError.requiredFieldMissing;
-    } else if (value < minValue || value > maxValue) {
-      return PeriodValidationError.outOfRange;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
     } else {
       return null;
     }
-  }
-
-  String? get errorText {
-    final String? text;
-    switch (error) {
-      case PeriodValidationError.requiredFieldMissing:
-        text = 'required field';
-        break;
-      case PeriodValidationError.outOfRange:
-        text = 'value should be between $minValue and $maxValue';
-        break;
-      case null:
-        text = null;
-        break;
-    }
-    return text;
   }
 }

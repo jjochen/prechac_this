@@ -1,8 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum MaxHeightValidationError { requiredFieldMissing, outOfRange }
+import 'form_input_exception.dart';
 
-class MaxHeight extends FormzInput<int, MaxHeightValidationError> {
+class MaxHeight extends FormzInput<int, FormInputValidationException> {
   const MaxHeight.pure() : super.pure(defaultValue);
   const MaxHeight.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -11,29 +11,13 @@ class MaxHeight extends FormzInput<int, MaxHeightValidationError> {
   static const int maxValue = 24;
 
   @override
-  MaxHeightValidationError? validator(int? value) {
-    if (value == null) {
-      return MaxHeightValidationError.requiredFieldMissing;
-    } else if (value < minValue || value > maxValue) {
-      return MaxHeightValidationError.outOfRange;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
     } else {
       return null;
     }
-  }
-
-  String? get errorText {
-    final String? text;
-    switch (error) {
-      case MaxHeightValidationError.requiredFieldMissing:
-        text = 'required field';
-        break;
-      case MaxHeightValidationError.outOfRange:
-        text = 'value should be between $minValue and $maxValue';
-        break;
-      case null:
-        text = null;
-        break;
-    }
-    return text;
   }
 }

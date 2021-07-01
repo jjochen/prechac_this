@@ -1,8 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum NumberOfObjectsValidationError { requiredFieldMissing, outOfRange }
+import 'form_input_exception.dart';
 
-class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
+class NumberOfObjects extends FormzInput<int, FormInputValidationException> {
   const NumberOfObjects.pure() : super.pure(defaultValue);
   const NumberOfObjects.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -11,29 +11,13 @@ class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
   static const int maxValue = 24;
 
   @override
-  NumberOfObjectsValidationError? validator(int? value) {
-    if (value == null) {
-      return NumberOfObjectsValidationError.requiredFieldMissing;
-    } else if (value < minValue || value > maxValue) {
-      return NumberOfObjectsValidationError.outOfRange;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
     } else {
       return null;
     }
-  }
-
-  String? get errorText {
-    final String? text;
-    switch (error) {
-      case NumberOfObjectsValidationError.requiredFieldMissing:
-        text = 'required field';
-        break;
-      case NumberOfObjectsValidationError.outOfRange:
-        text = 'value should be between $minValue and $maxValue';
-        break;
-      case null:
-        text = null;
-        break;
-    }
-    return text;
   }
 }

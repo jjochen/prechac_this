@@ -1,28 +1,15 @@
 import 'package:formz/formz.dart';
 
-enum ContainsValidationError { invalid }
+import 'form_input_exception.dart';
 
-class Contains extends FormzInput<String?, ContainsValidationError> {
+class Contains extends FormzInput<String?, FormInputValidationException> {
   const Contains.pure() : super.pure(defaultValue);
   const Contains.dirty([String? value = defaultValue]) : super.dirty(value);
 
   static const String? defaultValue = null;
 
   @override
-  ContainsValidationError? validator(String? value) {
+  FormInputValidationException? validator(String? value) {
     return null;
-  }
-
-  String? get errorText {
-    final String? text;
-    switch (error) {
-      case ContainsValidationError.invalid:
-        text = 'invalid';
-        break;
-      case null:
-        text = null;
-        break;
-    }
-    return text;
   }
 }
