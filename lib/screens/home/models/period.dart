@@ -1,8 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum PeriodValidationError { invalid }
+import 'form_input_exception.dart';
 
-class Period extends FormzInput<int, PeriodValidationError> {
+class Period extends FormzInput<int, FormInputValidationException> {
   const Period.pure() : super.pure(defaultValue);
   const Period.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -11,9 +11,13 @@ class Period extends FormzInput<int, PeriodValidationError> {
   static const int maxValue = 24;
 
   @override
-  PeriodValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : PeriodValidationError.invalid;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
+    } else {
+      return null;
+    }
   }
 }

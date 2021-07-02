@@ -43,6 +43,12 @@ class ConstraintsFormBloc
       yield* _mapNumberOfObjectsDidChangeToState(event);
     } else if (event is MaxHeightDidChange) {
       yield* _mapMaxHeightDidChangeToState(event);
+    } else if (event is MinNumberOfPassesDidChange) {
+      yield* _mapMinNumberOfPassesDidChangeToState(event);
+    } else if (event is MaxNumberOfPassesDidChange) {
+      yield* _mapMaxNumberOfPassesDidChangeToState(event);
+    } else if (event is ContainsDidChange) {
+      yield* _mapContainsDidChangeToState(event);
     } else if (event is Submit) {
       yield* _mapSubmitToState(event);
     } else if (event is PatternsDidLoad) {
@@ -80,6 +86,27 @@ class ConstraintsFormBloc
     yield _copyStateWithFormValues(maxHeight: value);
   }
 
+  Stream<ConstraintsFormState> _mapMinNumberOfPassesDidChangeToState(
+    MinNumberOfPassesDidChange event,
+  ) async* {
+    final value = MinNumberOfPasses.dirty(event.minNumberOfPasses);
+    yield _copyStateWithFormValues(minNumberOfPasses: value);
+  }
+
+  Stream<ConstraintsFormState> _mapMaxNumberOfPassesDidChangeToState(
+    MaxNumberOfPassesDidChange event,
+  ) async* {
+    final value = MaxNumberOfPasses.dirty(event.maxNumberOfPasses);
+    yield _copyStateWithFormValues(maxNumberOfPasses: value);
+  }
+
+  Stream<ConstraintsFormState> _mapContainsDidChangeToState(
+    ContainsDidChange event,
+  ) async* {
+    final value = Contains.dirty(event.contains);
+    yield _copyStateWithFormValues(contains: value);
+  }
+
   Stream<ConstraintsFormState> _mapSubmitToState(
     Submit event,
   ) async* {
@@ -113,17 +140,26 @@ class ConstraintsFormBloc
     Period? period,
     NumberOfObjects? numberOfObjects,
     MaxHeight? maxHeight,
+    MinNumberOfPasses? minNumberOfPasses,
+    MaxNumberOfPasses? maxNumberOfPasses,
+    Contains? contains,
   }) {
     return state.copyWith(
       numberOfJugglers: numberOfJugglers,
       period: period,
       numberOfObjects: numberOfObjects,
       maxHeight: maxHeight,
+      minNumberOfPasses: minNumberOfPasses,
+      maxNumberOfPasses: maxNumberOfPasses,
+      contains: contains,
       status: Formz.validate([
         numberOfJugglers ?? state.numberOfJugglers,
         period ?? state.period,
         numberOfObjects ?? state.numberOfObjects,
         maxHeight ?? state.maxHeight,
+        minNumberOfPasses ?? state.minNumberOfPasses,
+        maxNumberOfPasses ?? state.maxNumberOfPasses,
+        contains ?? state.contains,
       ]),
       errorMessage: '',
     );

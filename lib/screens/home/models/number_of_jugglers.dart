@@ -1,9 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum NumberOfJugglersValidationError { invalid }
+import 'form_input_exception.dart';
 
-class NumberOfJugglers
-    extends FormzInput<int, NumberOfJugglersValidationError> {
+class NumberOfJugglers extends FormzInput<int, FormInputValidationException> {
   const NumberOfJugglers.pure() : super.pure(defaultValue);
   const NumberOfJugglers.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -12,9 +11,13 @@ class NumberOfJugglers
   static const int maxValue = 24;
 
   @override
-  NumberOfJugglersValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : NumberOfJugglersValidationError.invalid;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
+    } else {
+      return null;
+    }
   }
 }

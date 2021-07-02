@@ -1,8 +1,8 @@
 import 'package:formz/formz.dart';
 
-enum NumberOfObjectsValidationError { invalid }
+import 'form_input_exception.dart';
 
-class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
+class NumberOfObjects extends FormzInput<int, FormInputValidationException> {
   const NumberOfObjects.pure() : super.pure(defaultValue);
   const NumberOfObjects.dirty([int value = defaultValue]) : super.dirty(value);
 
@@ -11,9 +11,13 @@ class NumberOfObjects extends FormzInput<int, NumberOfObjectsValidationError> {
   static const int maxValue = 24;
 
   @override
-  NumberOfObjectsValidationError? validator(int? value) {
-    return (value != null && value >= minValue && value <= maxValue)
-        ? null
-        : NumberOfObjectsValidationError.invalid;
+  FormInputValidationException? validator(int value) {
+    if (value < minValue || value > maxValue) {
+      return InputOutOfRangeException(
+        'value should be between $minValue and $maxValue',
+      );
+    } else {
+      return null;
+    }
   }
 }

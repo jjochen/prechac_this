@@ -10,6 +10,9 @@ void main() {
   const period = Period.dirty(3);
   const numberOfObjects = NumberOfObjects.dirty(6);
   const maxHeight = MaxHeight.dirty(7);
+  const minNumberOfPasses = MinNumberOfPasses.dirty(8);
+  const maxNumberOfPasses = MaxNumberOfPasses.dirty(9);
+  const contains = Contains.dirty('yo');
   const errorMessage = 'Error Error';
 
   group('ConstraintsFormState', () {
@@ -60,6 +63,33 @@ void main() {
       );
     });
 
+    test(
+        'returns object with updated minNumberOfPasses '
+        'when minNumberOfPasses is passed', () {
+      expect(
+        ConstraintsFormState().copyWith(minNumberOfPasses: minNumberOfPasses),
+        ConstraintsFormState(minNumberOfPasses: minNumberOfPasses),
+      );
+    });
+
+    test(
+        'returns object with updated maxNumberOfPasses '
+        'when maxNumberOfPasses is passed', () {
+      expect(
+        ConstraintsFormState().copyWith(maxNumberOfPasses: maxNumberOfPasses),
+        ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses),
+      );
+    });
+
+    test(
+        'returns object with updated contains '
+        'when contains is passed', () {
+      expect(
+        ConstraintsFormState().copyWith(contains: contains),
+        ConstraintsFormState(contains: contains),
+      );
+    });
+
     test('returns object with updated error message when message is passed',
         () {
       expect(
@@ -75,12 +105,18 @@ void main() {
           period: period,
           numberOfObjects: numberOfObjects,
           maxHeight: maxHeight,
+          minNumberOfPasses: minNumberOfPasses,
+          maxNumberOfPasses: maxNumberOfPasses,
+          contains: contains,
         ).toSearchParameters(),
         SearchParameters(
           numberOfJugglers: 5,
           period: 3,
           numberOfObjects: 6,
           maxHeight: 7,
+          minNumberOfPasses: 8,
+          maxNumberOfPasses: 9,
+          contains: 'yo',
         ),
       );
     });
