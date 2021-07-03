@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 
+import '../../../l10n/l10n.dart';
 import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
@@ -157,6 +158,7 @@ class _MaxHeightInput extends StatelessWidget {
 class _MinNumberOfPassesInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.minNumberOfPasses != current.minNumberOfPasses,
@@ -170,7 +172,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           max: MinNumberOfPasses.maxValue.toDouble(),
           value: MinNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Min number of passes',
+            labelText: l10n.constraintsFormMinNumberOfPassesLabel,
             helperText: '',
             errorText: state.minNumberOfPasses.error?.message,
           ),
