@@ -56,6 +56,7 @@ class ConstraintsForm extends StatelessWidget {
 class _NumberOfJugglersInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
@@ -69,7 +70,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           max: NumberOfJugglers.maxValue.toDouble(),
           value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Number of jugglers',
+            labelText: l10n.constraintsFormNumberOfJugglersLabel,
             helperText: '',
             errorText: state.numberOfJugglers.error?.message,
           ),
@@ -82,6 +83,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
 class _PeriodInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
@@ -94,7 +96,7 @@ class _PeriodInput extends StatelessWidget {
           max: Period.maxValue.toDouble(),
           value: Period.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Period',
+            labelText: l10n.constraintsFormPeriodLabel,
             helperText: '',
             errorText: state.period.error?.message,
           ),
@@ -107,6 +109,7 @@ class _PeriodInput extends StatelessWidget {
 class _NumberOfObjectsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
@@ -120,7 +123,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           max: NumberOfObjects.maxValue.toDouble(),
           value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Number of objects',
+            labelText: l10n.constraintsFormNumberOfObjectsLabel,
             helperText: '',
             errorText: state.numberOfObjects.error?.message,
           ),
@@ -133,6 +136,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
 class _MaxHeightInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
@@ -145,7 +149,7 @@ class _MaxHeightInput extends StatelessWidget {
           max: MaxHeight.maxValue.toDouble(),
           value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Max height',
+            labelText: l10n.constraintsFormMaxHeightLabel,
             helperText: '',
             errorText: state.maxHeight.error?.message,
           ),
@@ -185,6 +189,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
 class _MaxNumberOfPassesInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.maxNumberOfPasses != current.maxNumberOfPasses,
@@ -198,7 +203,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           max: MaxNumberOfPasses.maxValue.toDouble(),
           value: MaxNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Max number of passes',
+            labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
             helperText: '',
             errorText: state.maxNumberOfPasses.error?.message,
           ),
@@ -211,6 +216,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
 class _ContainsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.contains != current.contains,
       builder: (context, state) {
@@ -220,7 +226,7 @@ class _ContainsInput extends StatelessWidget {
               .read<ConstraintsFormBloc>()
               .add(ContainsDidChange(contains)),
           decoration: InputDecoration(
-            labelText: 'Contains',
+            labelText: l10n.constraintsFormContainsLabel,
             helperText: '',
             errorText: state.contains.error?.message,
           ),
@@ -233,6 +239,7 @@ class _ContainsInput extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
@@ -245,7 +252,7 @@ class _SubmitButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () => context.read<ConstraintsFormBloc>().add(Submit())
                     : null,
-                child: const Text('SUBMIT'),
+                child: const Text(l10n.constraintsFormSubmitButtonText),
               );
       },
     );
