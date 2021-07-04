@@ -252,7 +252,7 @@ class _SubmitButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () => context.read<ConstraintsFormBloc>().add(Submit())
                     : null,
-                child: const Text(l10n.constraintsFormSubmitButtonText),
+                child: Text(l10n.constraintsFormSubmitButtonText),
               );
       },
     );
