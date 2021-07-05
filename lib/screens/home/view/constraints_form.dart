@@ -15,12 +15,13 @@ class ConstraintsForm extends StatelessWidget {
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
+          final l10n = context.l10n;
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
                 key: const Key('constraintsForm_errorSnackBar'),
-                content: Text(errorMessage(state.error, context)),
+                content: Text(l10n.errorMessage(state.error)),
               ),
             );
         }
@@ -54,19 +55,6 @@ class ConstraintsForm extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String errorMessage(dynamic error, BuildContext context) {
-    final l10n = context.l10n;
-    if (error is ConstraintsInvalidException) {
-      return l10n.constraintsFormConstraintsInvalidErrorMessage;
-    }
-
-    if (error is NoPatternsFoundException) {
-      return l10n.constraintsFormNoPatternsFoundErrorMessage;
-    }
-
-    return l10n.constraintsFormUnknownErrorMessage;
   }
 }
 
@@ -273,5 +261,19 @@ class _SubmitButton extends StatelessWidget {
               );
       },
     );
+  }
+}
+
+extension _ErrorMessages on AppLocalizations {
+  String errorMessage(dynamic error) {
+    if (error is ConstraintsInvalidException) {
+      return constraintsFormConstraintsInvalidErrorMessage;
+    }
+
+    if (error is NoPatternsFoundException) {
+      return constraintsFormNoPatternsFoundErrorMessage;
+    }
+
+    return constraintsFormUnknownErrorMessage;
   }
 }
