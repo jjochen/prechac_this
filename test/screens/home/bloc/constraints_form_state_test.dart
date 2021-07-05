@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
@@ -13,7 +14,7 @@ void main() {
   const minNumberOfPasses = MinNumberOfPasses.dirty(8);
   const maxNumberOfPasses = MaxNumberOfPasses.dirty(9);
   const contains = Contains.dirty('yo');
-  const errorMessage = 'Error Error';
+  const error = 'Error';
 
   group('ConstraintsFormState', () {
     test('supports value comparisons', () {
@@ -90,12 +91,11 @@ void main() {
       );
     });
 
-    test('returns object with updated error message when message is passed',
-        () {
-      expect(
-        ConstraintsFormState().copyWith(errorMessage: errorMessage),
-        ConstraintsFormState(errorMessage: errorMessage),
-      );
+    test('returns object with updated error when error is passed', () {
+      final actual = ConstraintsFormState().copyWith(error: error);
+      final expected = ConstraintsFormState(error: error);
+      expect(actual, expected);
+      expect(actual.error, expected.error);
     });
 
     test('supports search parameter conversion', () {

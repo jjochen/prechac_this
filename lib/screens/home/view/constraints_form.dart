@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../../../l10n/l10n.dart';
 import '../home.dart';
@@ -13,11 +14,14 @@ class ConstraintsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure && state.errorMessage.isNotEmpty) {
+        if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(
+                key: const Key('constraintsForm_errorSnackBar'),
+                content: Text(errorMessage(state.error)),
+              ),
             );
         }
       },
@@ -50,6 +54,18 @@ class ConstraintsForm extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String errorMessage(dynamic error) {
+    if (error is ConstraintsInvalidException) {
+      return 'Could not parse constraints.';
+    }
+
+    if (error is NoPatternsFoundException) {
+      return 'No patterns found.';
+    }
+
+    return 'unknown error';
   }
 }
 

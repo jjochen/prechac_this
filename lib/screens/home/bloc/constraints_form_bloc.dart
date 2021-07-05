@@ -112,7 +112,7 @@ class ConstraintsFormBloc
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionInProgress,
-      errorMessage: '',
+      error: null,
     );
     _patternsBloc.add(LoadPatterns(state.toSearchParameters()));
   }
@@ -122,7 +122,7 @@ class ConstraintsFormBloc
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionSuccess,
-      errorMessage: '',
+      error: null,
     );
   }
 
@@ -131,7 +131,7 @@ class ConstraintsFormBloc
   ) async* {
     yield state.copyWith(
       status: FormzStatus.submissionFailure,
-      errorMessage: errorMessage(event.exception),
+      error: event.exception,
     );
   }
 
@@ -161,20 +161,8 @@ class ConstraintsFormBloc
         maxNumberOfPasses ?? state.maxNumberOfPasses,
         contains ?? state.contains,
       ]),
-      errorMessage: '',
+      error: null,
     );
-  }
-
-  String errorMessage(Exception exception) {
-    if (exception is ConstraintsInvalidException) {
-      return 'Could not parse constraints.';
-    }
-
-    if (exception is NoPatternsFoundException) {
-      return 'No patterns found.';
-    }
-
-    return 'unknown error';
   }
 
   @override

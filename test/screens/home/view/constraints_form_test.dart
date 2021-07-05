@@ -39,6 +39,7 @@ void main() {
       Key('constraintsForm_maxNumberOfPassesInput');
   const containsInputKey = Key('constraintsForm_containsInput');
   const progressIndicatorKey = Key('constraintsForm_submit_progressIndicator');
+  const errorSnackBarKey = Key('constraintsForm_errorSnackBar');
 
   const testNumberOfJugglers = 5;
   const testPeriod = 6;
@@ -206,7 +207,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              errorMessage: 'Message',
+              error: 'Error',
             ),
           ]),
         );
@@ -219,7 +220,7 @@ void main() {
           ),
         );
         await tester.pump();
-        expect(find.text('Message'), findsOneWidget);
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
       });
 
       testWidgets(

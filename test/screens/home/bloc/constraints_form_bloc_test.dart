@@ -71,7 +71,6 @@ void main() {
     maxNumberOfPasses: validMaxNumberOfPasses,
     contains: validContains,
     status: FormzStatus.valid,
-    errorMessage: '',
   );
 
   group('ConstraintsFormBloc', () {
@@ -436,10 +435,10 @@ void main() {
         act: (bloc) => bloc.add(
           PatternsDidNotLoad(ConstraintsInvalidException()),
         ),
-        expect: () => const <ConstraintsFormState>[
+        expect: () => <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'Could not parse constraints.',
+            error: ConstraintsInvalidException(),
           ),
         ],
       );
@@ -458,10 +457,10 @@ void main() {
             patternsBloc: patternsBloc,
           );
         },
-        expect: () => const <ConstraintsFormState>[
+        expect: () => <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionFailure,
-            errorMessage: 'No patterns found.',
+            error: NoPatternsFoundException(),
           ),
         ],
       );
