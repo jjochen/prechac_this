@@ -20,7 +20,7 @@ class ConstraintsForm extends StatelessWidget {
             ..showSnackBar(
               SnackBar(
                 key: const Key('constraintsForm_errorSnackBar'),
-                content: Text(errorMessage(state.error)),
+                content: Text(errorMessage(state.error, context)),
               ),
             );
         }
@@ -56,16 +56,17 @@ class ConstraintsForm extends StatelessWidget {
     );
   }
 
-  String errorMessage(dynamic error) {
+  String errorMessage(dynamic error, BuildContext context) {
+    final l10n = context.l10n;
     if (error is ConstraintsInvalidException) {
-      return 'Could not parse constraints.';
+      return l10n.constraintsFormConstraintsInvalidErrorMessage;
     }
 
     if (error is NoPatternsFoundException) {
-      return 'No patterns found.';
+      return l10n.constraintsFormNoPatternsFoundErrorMessage;
     }
 
-    return 'unknown error';
+    return l10n.constraintsFormUnknownErrorMessage;
   }
 }
 

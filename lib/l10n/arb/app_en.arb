@@ -35,5 +35,17 @@
     "constraintsFormSubmitButtonText": "SUBMIT",
     "@constraintsFormSubmitButtonText": {
         "description": "Text on contraints form submit button"
+    },
+    "constraintsFormConstraintsInvalidErrorMessage": "Could not parse constraints.",
+    "@constraintsFormConstraintsInvalidErrorMessage": {
+        "description": "Error message shown when constraints can not be parsed."
+    },
+    "constraintsFormNoPatternsFoundErrorMessage": "No patterns found.",
+    "@constraintsFormNoPatternsFoundErrorMessage": {
+        "description": "Error message shown when no patterns have been found."
+    },
+    "constraintsFormUnknownErrorMessage": "Unknown error.",
+    "@constraintsFormUnknownErrorMessage": {
+        "description": "Error message shown when reason for failure is unknown."
     }
 }
