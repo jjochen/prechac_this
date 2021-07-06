@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
-import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../../patterns_repository/patterns_repository.dart';
 import '../home.dart';
 
 class ConstraintsForm extends StatelessWidget {
