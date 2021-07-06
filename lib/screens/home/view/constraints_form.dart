@@ -76,8 +76,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
-            // TODO: localize
-            errorText: state.numberOfJugglers.error?.message,
+            errorText: l10n.errorMessage(state.numberOfJugglers.error),
           ),
         );
       },
@@ -102,7 +101,7 @@ class _PeriodInput extends StatelessWidget {
           value: Period.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormPeriodLabel,
-            errorText: state.period.error?.message,
+            errorText: l10n.errorMessage(state.period.error),
           ),
         );
       },
@@ -128,7 +127,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfObjectsLabel,
-            errorText: state.numberOfObjects.error?.message,
+            errorText: l10n.errorMessage(state.numberOfObjects.error),
           ),
         );
       },
@@ -153,7 +152,7 @@ class _MaxHeightInput extends StatelessWidget {
           value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxHeightLabel,
-            errorText: state.maxHeight.error?.message,
+            errorText: l10n.errorMessage(state.maxHeight.error),
           ),
         );
       },
@@ -179,7 +178,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           value: MinNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
-            errorText: state.minNumberOfPasses.error?.message,
+            errorText: l10n.errorMessage(state.minNumberOfPasses.error),
           ),
         );
       },
@@ -205,7 +204,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           value: MaxNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
-            errorText: state.maxNumberOfPasses.error?.message,
+            errorText: l10n.errorMessage(state.maxNumberOfPasses.error),
           ),
         );
       },
@@ -227,7 +226,7 @@ class _ContainsInput extends StatelessWidget {
               .add(ContainsDidChange(contains)),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormContainsLabel,
-            errorText: state.contains.error?.message,
+            errorText: l10n.errorMessage(state.contains.error),
           ),
         );
       },
@@ -266,6 +265,13 @@ extension _ErrorMessages on AppLocalizations {
 
     if (error is NoPatternsFoundException) {
       return constraintsFormNoPatternsFoundErrorMessage;
+    }
+
+    if (error is InputOutOfRangeException) {
+      return constraintsFormOutOfRangeErrorMessage(
+        error.minValue,
+        error.maxValue,
+      );
     }
 
     return constraintsFormUnknownErrorMessage;

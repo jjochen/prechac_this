@@ -47,5 +47,13 @@
     "constraintsFormUnknownErrorMessage": "Unknown error.",
     "@constraintsFormUnknownErrorMessage": {
         "description": "Error message shown when reason for failure is unknown."
+    },
+    "constraintsFormOutOfRangeErrorMessage": "value should be between {minValue} and {maxValue}",
+    "@constraintsFormOutOfRangeErrorMessage": {
+        "description": "Error message shown when input is smaller minValue or greater maxValue.",
+        "placeholders": {
+            "minValue": {},
+            "maxValue": {}
+        }
     }
 }

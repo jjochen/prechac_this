@@ -8,15 +8,8 @@ void main() {
     group('InputOutOfRangeException', () {
       test('supports value comparisons', () {
         expect(
-          InputOutOfRangeException('message'),
-          InputOutOfRangeException('message'),
-        );
-      });
-
-      test('has correct string representation', () {
-        expect(
-          InputOutOfRangeException('message').toString(),
-          'InputOutOfRangeException: message',
+          InputOutOfRangeException(1, 2),
+          InputOutOfRangeException(1, 2),
         );
       });
     });
