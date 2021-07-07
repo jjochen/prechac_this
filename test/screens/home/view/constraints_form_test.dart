@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 import '../../../helpers/helpers.dart';
@@ -221,6 +222,56 @@ void main() {
         );
         await tester.pump();
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
+      });
+
+      testWidgets('correct error message when no patterns were found',
+          (tester) async {
+        whenListen(
+          constraintsFormBloc,
+          Stream.fromIterable(<ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(
+              status: FormzStatus.submissionFailure,
+              error: NoPatternsFoundException(),
+            ),
+          ]),
+        );
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
+        expect(find.text('No patterns found.'), findsOneWidget);
+      });
+
+      testWidgets('correct error message when constraint can not be parsed',
+          (tester) async {
+        whenListen(
+          constraintsFormBloc,
+          Stream.fromIterable(<ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(
+              status: FormzStatus.submissionFailure,
+              error: ConstraintsInvalidException(),
+            ),
+          ]),
+        );
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
+        expect(find.text('Could not parse constraints.'), findsOneWidget);
       });
 
       testWidgets(
