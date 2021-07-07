@@ -4,8 +4,8 @@ import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 
 import '../../../l10n/l10n.dart';
-import '../../../patterns_repository/patterns_repository.dart';
 import '../home.dart';
+import 'error_messages.dart';
 
 class ConstraintsForm extends StatelessWidget {
   const ConstraintsForm({Key? key}) : super(key: key);
@@ -254,26 +254,5 @@ class _SubmitButton extends StatelessWidget {
               );
       },
     );
-  }
-}
-
-extension _ErrorMessages on AppLocalizations {
-  String errorMessage(dynamic error) {
-    if (error is ConstraintsInvalidException) {
-      return constraintsFormConstraintsInvalidErrorMessage;
-    }
-
-    if (error is NoPatternsFoundException) {
-      return constraintsFormNoPatternsFoundErrorMessage;
-    }
-
-    if (error is InputOutOfRangeException) {
-      return constraintsFormOutOfRangeErrorMessage(
-        error.minValue,
-        error.maxValue,
-      );
-    }
-
-    return constraintsFormUnknownErrorMessage;
   }
 }
