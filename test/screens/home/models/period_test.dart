@@ -18,9 +18,7 @@ void main() {
       final input = Period.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(
-          'value should be between 1 and 24',
-        ),
+        InputOutOfRangeException(1, 24),
       );
     });
   });

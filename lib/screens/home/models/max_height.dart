@@ -13,9 +13,7 @@ class MaxHeight extends FormzInput<int, FormInputValidationException> {
   @override
   FormInputValidationException? validator(int value) {
     if (value < minValue || value > maxValue) {
-      return InputOutOfRangeException(
-        'value should be between $minValue and $maxValue',
-      );
+      return InputOutOfRangeException(minValue, maxValue);
     } else {
       return null;
     }

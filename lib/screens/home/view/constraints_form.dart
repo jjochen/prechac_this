@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 
+import '../../../l10n/l10n.dart';
 import '../home.dart';
+import 'error_messages.dart';
 
 class ConstraintsForm extends StatelessWidget {
   const ConstraintsForm({Key? key}) : super(key: key);
@@ -12,11 +14,15 @@ class ConstraintsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure && state.errorMessage.isNotEmpty) {
+        if (state.status.isSubmissionFailure) {
+          final l10n = context.l10n;
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
+              SnackBar(
+                key: const Key('constraintsForm_errorSnackBar'),
+                content: Text(l10n.errorMessage(state.error)),
+              ),
             );
         }
       },
@@ -55,6 +61,7 @@ class ConstraintsForm extends StatelessWidget {
 class _NumberOfJugglersInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
@@ -68,9 +75,8 @@ class _NumberOfJugglersInput extends StatelessWidget {
           max: NumberOfJugglers.maxValue.toDouble(),
           value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Number of jugglers',
-            helperText: '',
-            errorText: state.numberOfJugglers.error?.message,
+            labelText: l10n.constraintsFormNumberOfJugglersLabel,
+            errorText: l10n.errorMessage(state.numberOfJugglers.error),
           ),
         );
       },
@@ -81,6 +87,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
 class _PeriodInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
@@ -93,9 +100,8 @@ class _PeriodInput extends StatelessWidget {
           max: Period.maxValue.toDouble(),
           value: Period.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Period',
-            helperText: '',
-            errorText: state.period.error?.message,
+            labelText: l10n.constraintsFormPeriodLabel,
+            errorText: l10n.errorMessage(state.period.error),
           ),
         );
       },
@@ -106,6 +112,7 @@ class _PeriodInput extends StatelessWidget {
 class _NumberOfObjectsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
@@ -119,9 +126,8 @@ class _NumberOfObjectsInput extends StatelessWidget {
           max: NumberOfObjects.maxValue.toDouble(),
           value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Number of objects',
-            helperText: '',
-            errorText: state.numberOfObjects.error?.message,
+            labelText: l10n.constraintsFormNumberOfObjectsLabel,
+            errorText: l10n.errorMessage(state.numberOfObjects.error),
           ),
         );
       },
@@ -132,6 +138,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
 class _MaxHeightInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
@@ -144,9 +151,8 @@ class _MaxHeightInput extends StatelessWidget {
           max: MaxHeight.maxValue.toDouble(),
           value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Max height',
-            helperText: '',
-            errorText: state.maxHeight.error?.message,
+            labelText: l10n.constraintsFormMaxHeightLabel,
+            errorText: l10n.errorMessage(state.maxHeight.error),
           ),
         );
       },
@@ -157,6 +163,7 @@ class _MaxHeightInput extends StatelessWidget {
 class _MinNumberOfPassesInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.minNumberOfPasses != current.minNumberOfPasses,
@@ -170,9 +177,8 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           max: MinNumberOfPasses.maxValue.toDouble(),
           value: MinNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Min number of passes',
-            helperText: '',
-            errorText: state.minNumberOfPasses.error?.message,
+            labelText: l10n.constraintsFormMinNumberOfPassesLabel,
+            errorText: l10n.errorMessage(state.minNumberOfPasses.error),
           ),
         );
       },
@@ -183,6 +189,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
 class _MaxNumberOfPassesInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.maxNumberOfPasses != current.maxNumberOfPasses,
@@ -196,9 +203,8 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           max: MaxNumberOfPasses.maxValue.toDouble(),
           value: MaxNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
-            labelText: 'Max number of passes',
-            helperText: '',
-            errorText: state.maxNumberOfPasses.error?.message,
+            labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
+            errorText: l10n.errorMessage(state.maxNumberOfPasses.error),
           ),
         );
       },
@@ -209,6 +215,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
 class _ContainsInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.contains != current.contains,
       builder: (context, state) {
@@ -218,9 +225,8 @@ class _ContainsInput extends StatelessWidget {
               .read<ConstraintsFormBloc>()
               .add(ContainsDidChange(contains)),
           decoration: InputDecoration(
-            labelText: 'Contains',
-            helperText: '',
-            errorText: state.contains.error?.message,
+            labelText: l10n.constraintsFormContainsLabel,
+            errorText: l10n.errorMessage(state.contains.error),
           ),
         );
       },
@@ -231,6 +237,7 @@ class _ContainsInput extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
@@ -243,7 +250,7 @@ class _SubmitButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () => context.read<ConstraintsFormBloc>().add(Submit())
                     : null,
-                child: const Text('SUBMIT'),
+                child: Text(l10n.constraintsFormSubmitButtonText),
               );
       },
     );

@@ -14,13 +14,11 @@ void main() {
       );
     });
 
-    test('has correct error text for out of range input', () {
+    test('has correct error for out of range input', () {
       final input = NumberOfJugglers.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(
-          'value should be between 1 and 24',
-        ),
+        InputOutOfRangeException(1, 24),
       );
     });
   });

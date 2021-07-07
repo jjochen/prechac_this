@@ -3,5 +3,57 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "constraintsFormNumberOfJugglersLabel": "Number of jugglers",
+    "@constraintsFormNumberOfJugglersLabel": {
+        "description": "Text labeling the number of jugglers input field in the contraints form"
+    },
+    "constraintsFormPeriodLabel": "Period",
+    "@constraintsFormPeriodLabel": {
+        "description": "Text labeling the period input field in the contraints form"
+    },
+    "constraintsFormNumberOfObjectsLabel": "Number of objects",
+    "@constraintsFormNumberOfObjectsLabel": {
+        "description": "Text labeling the number of objects input field in the contraints form"
+    },
+    "constraintsFormMaxHeightLabel": "Max height",
+    "@constraintsFormMaxHeightLabel": {
+        "description": "Text labeling the max height input field in the contraints form"
+    },
+    "constraintsFormMinNumberOfPassesLabel": "Min number of passes",
+    "@constraintsFormMinNumberOfPassesLabel": {
+        "description": "Text labeling the min number of passes input field in the contraints form"
+    },
+    "constraintsFormMaxNumberOfPassesLabel": "Max number of passes",
+    "@constraintsFormMaxNumberOfPassesLabel": {
+        "description": "Text labeling the max number of passes input field in the contraints form"
+    },
+    "constraintsFormContainsLabel": "Contains",
+    "@constraintsFormContainsLabel": {
+        "description": "Text labeling the contains input field in the contraints form"
+    },
+    "constraintsFormSubmitButtonText": "SUBMIT",
+    "@constraintsFormSubmitButtonText": {
+        "description": "Text on contraints form submit button"
+    },
+    "constraintsFormConstraintsInvalidErrorMessage": "Could not parse constraints.",
+    "@constraintsFormConstraintsInvalidErrorMessage": {
+        "description": "Error message shown when constraints can not be parsed."
+    },
+    "constraintsFormNoPatternsFoundErrorMessage": "No patterns found.",
+    "@constraintsFormNoPatternsFoundErrorMessage": {
+        "description": "Error message shown when no patterns have been found."
+    },
+    "constraintsFormUnknownErrorMessage": "Unknown error.",
+    "@constraintsFormUnknownErrorMessage": {
+        "description": "Error message shown when reason for failure is unknown."
+    },
+    "constraintsFormOutOfRangeErrorMessage": "value should be between {minValue} and {maxValue}",
+    "@constraintsFormOutOfRangeErrorMessage": {
+        "description": "Error message shown when input is smaller minValue or greater maxValue.",
+        "placeholders": {
+            "minValue": {},
+            "maxValue": {}
+        }
     }
 }

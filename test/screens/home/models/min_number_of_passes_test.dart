@@ -26,9 +26,7 @@ void main() {
       final input = MinNumberOfPasses.dirty(25);
       expect(
         input.error,
-        InputOutOfRangeException(
-          'value should be between 0 and 24',
-        ),
+        InputOutOfRangeException(0, 24),
       );
     });
   });

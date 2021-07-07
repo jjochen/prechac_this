@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 import '../../../helpers/helpers.dart';
@@ -39,6 +40,7 @@ void main() {
       Key('constraintsForm_maxNumberOfPassesInput');
   const containsInputKey = Key('constraintsForm_containsInput');
   const progressIndicatorKey = Key('constraintsForm_submit_progressIndicator');
+  const errorSnackBarKey = Key('constraintsForm_errorSnackBar');
 
   const testNumberOfJugglers = 5;
   const testPeriod = 6;
@@ -206,7 +208,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              errorMessage: 'Message',
+              error: 'Error',
             ),
           ]),
         );
@@ -219,7 +221,57 @@ void main() {
           ),
         );
         await tester.pump();
-        expect(find.text('Message'), findsOneWidget);
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
+      });
+
+      testWidgets('correct error message when no patterns were found',
+          (tester) async {
+        whenListen(
+          constraintsFormBloc,
+          Stream.fromIterable(<ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(
+              status: FormzStatus.submissionFailure,
+              error: NoPatternsFoundException(),
+            ),
+          ]),
+        );
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
+        expect(find.text('No patterns found.'), findsOneWidget);
+      });
+
+      testWidgets('correct error message when constraint can not be parsed',
+          (tester) async {
+        whenListen(
+          constraintsFormBloc,
+          Stream.fromIterable(<ConstraintsFormState>[
+            ConstraintsFormState(status: FormzStatus.submissionInProgress),
+            ConstraintsFormState(
+              status: FormzStatus.submissionFailure,
+              error: ConstraintsInvalidException(),
+            ),
+          ]),
+        );
+        await tester.pumpApp(
+          widget: Scaffold(
+            body: BlocProvider.value(
+              value: constraintsFormBloc,
+              child: ConstraintsForm(),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(find.byKey(errorSnackBarKey), findsOneWidget);
+        expect(find.text('Could not parse constraints.'), findsOneWidget);
       });
 
       testWidgets(
@@ -227,7 +279,7 @@ void main() {
           'when number of jugglers is invalid', (tester) async {
         final numberOfJugglers = MockNumberOfJugglers();
         when(() => numberOfJugglers.error).thenReturn(
-          InputOutOfRangeException('Error: number of jugglers'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(numberOfJugglers: numberOfJugglers));
@@ -239,14 +291,14 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: number of jugglers'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets('invalid period error text when period is invalid',
           (tester) async {
         final period = MockPeriod();
         when(() => period.error).thenReturn(
-          InputOutOfRangeException('Error: period'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
@@ -258,7 +310,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: period'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets(
@@ -266,7 +318,7 @@ void main() {
           'when number of objects is invalid', (tester) async {
         final numberOfObjects = MockNumberOfObjects();
         when(() => numberOfObjects.error).thenReturn(
-          InputOutOfRangeException('Error: number of objects'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
@@ -278,14 +330,14 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: number of objects'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets('invalid max height error text when max height is invalid',
           (tester) async {
         final maxHeight = MockMaxHeight();
         when(() => maxHeight.error).thenReturn(
-          InputOutOfRangeException('Error: max height'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
@@ -297,7 +349,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: max height'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets(
@@ -305,7 +357,7 @@ void main() {
           'when min number of passes is invalid', (tester) async {
         final minNumberOfPasses = MockMinNumberOfPasses();
         when(() => minNumberOfPasses.error).thenReturn(
-          InputOutOfRangeException('Error: min number of passes'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(minNumberOfPasses: minNumberOfPasses));
@@ -317,7 +369,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: min number of passes'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets(
@@ -325,7 +377,7 @@ void main() {
           'when max number of passes is invalid', (tester) async {
         final maxNumberOfPasses = MockMaxNumberOfPasses();
         when(() => maxNumberOfPasses.error).thenReturn(
-          InputOutOfRangeException('Error: max number of passes'),
+          InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
             ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses));
@@ -337,7 +389,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('Error: max number of passes'), findsOneWidget);
+        expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets('disabled submit button when status is not validated',
