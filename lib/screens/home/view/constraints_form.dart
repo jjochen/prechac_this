@@ -16,12 +16,13 @@ class ConstraintsForm extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           final l10n = context.l10n;
+          final message = l10n.errorMessage(state.error);
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
                 key: const Key('constraintsForm_errorSnackBar'),
-                content: Text(l10n.errorMessage(state.error)),
+                content: Text(message),
               ),
             );
         }
@@ -76,7 +77,10 @@ class _NumberOfJugglersInput extends StatelessWidget {
           value: NumberOfJugglers.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
-            errorText: l10n.errorMessage(state.numberOfJugglers.error),
+            errorText: l10n.errorMessage(
+              state.numberOfJugglers.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -101,7 +105,10 @@ class _PeriodInput extends StatelessWidget {
           value: Period.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormPeriodLabel,
-            errorText: l10n.errorMessage(state.period.error),
+            errorText: l10n.errorMessage(
+              state.period.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -127,7 +134,10 @@ class _NumberOfObjectsInput extends StatelessWidget {
           value: NumberOfObjects.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfObjectsLabel,
-            errorText: l10n.errorMessage(state.numberOfObjects.error),
+            errorText: l10n.errorMessage(
+              state.numberOfObjects.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -152,7 +162,10 @@ class _MaxHeightInput extends StatelessWidget {
           value: MaxHeight.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxHeightLabel,
-            errorText: l10n.errorMessage(state.maxHeight.error),
+            errorText: l10n.errorMessage(
+              state.maxHeight.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -178,7 +191,10 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           value: MinNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
-            errorText: l10n.errorMessage(state.minNumberOfPasses.error),
+            errorText: l10n.errorMessage(
+              state.minNumberOfPasses.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -204,7 +220,10 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           value: MaxNumberOfPasses.defaultValue.toDouble(),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
-            errorText: l10n.errorMessage(state.maxNumberOfPasses.error),
+            errorText: l10n.errorMessage(
+              state.maxNumberOfPasses.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
@@ -226,7 +245,10 @@ class _ContainsInput extends StatelessWidget {
               .add(ContainsDidChange(contains)),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormContainsLabel,
-            errorText: l10n.errorMessage(state.contains.error),
+            errorText: l10n.errorMessage(
+              state.contains.error,
+              noErrorFallback: '',
+            ),
           ),
         );
       },
