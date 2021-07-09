@@ -3,7 +3,11 @@ import '../../../patterns_repository/patterns_repository.dart';
 import '../home.dart';
 
 extension ErrorMessages on AppLocalizations {
-  String errorMessage(dynamic error) {
+  String errorMessage(dynamic error, {String? noErrorFallback}) {
+    if (error == null && noErrorFallback != null) {
+      return noErrorFallback;
+    }
+
     if (error is ConstraintsInvalidException) {
       return constraintsFormConstraintsInvalidErrorMessage;
     }
