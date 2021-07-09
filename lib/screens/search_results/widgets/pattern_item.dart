@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../app/theme.dart';
 import '../../../core/core.dart';
 import '../../../patterns_repository/patterns_repository.dart';
 
@@ -30,7 +31,7 @@ class PatternItem extends StatelessWidget {
                   .mapThrowsAsStringWithStyle(
                     (throwString, style) => TextSpan(
                       text: throwString,
-                      style: textStyleForStyle(style),
+                      style: textStyleForStyle(style, context),
                     ),
                   )
                   .joinToList(const TextSpan(text: ' ')),
@@ -41,16 +42,24 @@ class PatternItem extends StatelessWidget {
     );
   }
 
-  TextStyle? textStyleForStyle(ThrowStyle style) {
+  TextStyle? textStyleForStyle(ThrowStyle style, BuildContext context) {
     switch (style) {
       case ThrowStyle.classic:
-        return const TextStyle(color: Color(0xff0000ff));
+        return TextStyle(
+          color: Theme.of(context).colorScheme.classicThrowColor,
+        );
       case ThrowStyle.equi:
-        return const TextStyle(color: Color(0xffff0000));
+        return TextStyle(
+          color: Theme.of(context).colorScheme.equiThrowColor,
+        );
       case ThrowStyle.bi:
-        return const TextStyle(color: Color(0xff800080));
+        return TextStyle(
+          color: Theme.of(context).colorScheme.biThrowColor,
+        );
       case ThrowStyle.instantBi:
-        return const TextStyle(color: Color(0xff008000));
+        return TextStyle(
+          color: Theme.of(context).colorScheme.instantBiThrowColor,
+        );
       default:
         return null;
     }
