@@ -2,18 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final theme = ThemeData(
-  textTheme: GoogleFonts.openSansTextTheme(),
+final lightTheme = ThemeData(
+  brightness: Brightness.light,
+  textTheme: GoogleFonts.openSansTextTheme(ThemeData.light().textTheme),
   primaryColorDark: const Color(0xff1d3557),
   primaryColorLight: const Color(0xffa8dadc),
   primaryColor: const Color(0xff457b9d),
   accentColor: const Color(0xffe63946),
-  scaffoldBackgroundColor: const Color(0xfff1faee),
-  inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-  ),
+);
+
+final dartTheme = ThemeData(
+  brightness: Brightness.dark,
+  textTheme: GoogleFonts.openSansTextTheme(ThemeData.dark().textTheme),
+  primaryColorDark: const Color(0xff1d3557),
+  primaryColorLight: const Color(0xffa8dadc),
+  primaryColor: const Color(0xff457b9d),
+  accentColor: const Color(0xffe63946),
 );
 
 extension CustomColorScheme on ColorScheme {
