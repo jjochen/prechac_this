@@ -31,6 +31,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       theme: lightTheme,
       darkTheme: dartTheme,
+      themeMode: ThemeMode.system,
       initialRoute: HomePage.routeName,
       onGenerateRoute: AppRouter.generateRoute,
       localizationsDelegates: const [
