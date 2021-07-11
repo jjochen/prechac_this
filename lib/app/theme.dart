@@ -4,20 +4,36 @@ import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
-  textTheme: GoogleFonts.openSansTextTheme(ThemeData.light().textTheme),
-  primaryColorDark: const Color(0xff1d3557),
-  primaryColorLight: const Color(0xffa8dadc),
-  primaryColor: const Color(0xff457b9d),
-  accentColor: const Color(0xffe63946),
+  textTheme: GoogleFonts.openSansTextTheme(
+    ThemeData.light().textTheme,
+  ),
+  colorScheme: const ColorScheme.light(
+    primary: Color(0xff457b9d),
+    primaryVariant: Color(0xff1d3557),
+    onPrimary: Colors.white,
+    secondary: Color(0xff7a2e70),
+    secondaryVariant: Color(0xff9b3a8f),
+    onSecondary: Colors.white,
+    error: Color(0xffe63946),
+    onError: Colors.white,
+  ),
 );
 
 final dartTheme = ThemeData(
   brightness: Brightness.dark,
-  textTheme: GoogleFonts.openSansTextTheme(ThemeData.dark().textTheme),
-  primaryColorDark: const Color(0xff1d3557),
-  primaryColorLight: const Color(0xffa8dadc),
-  primaryColor: const Color(0xff457b9d),
-  accentColor: const Color(0xffe63946),
+  textTheme: GoogleFonts.openSansTextTheme(
+    ThemeData.dark().textTheme,
+  ),
+  colorScheme: const ColorScheme.dark(
+    primary: Color(0xff457b9d),
+    primaryVariant: Color(0xff1d3557),
+    onPrimary: Colors.white,
+    secondary: Color(0xff7a2e70),
+    secondaryVariant: Color(0xff9b3a8f),
+    onSecondary: Colors.white,
+    error: Color(0xffe63946),
+    onError: Colors.white,
+  ),
 );
 
 extension CustomColorScheme on ColorScheme {
