@@ -27,30 +27,33 @@ class ConstraintsForm extends StatelessWidget {
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: SingleChildScrollView(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 250),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _NumberOfJugglersInput(),
-                const SizedBox(height: 2.0),
-                _PeriodInput(),
-                const SizedBox(height: 2.0),
-                _NumberOfObjectsInput(),
-                const SizedBox(height: 2.0),
-                _MaxHeightInput(),
-                const SizedBox(height: 2.0),
-                _MinNumberOfPassesInput(),
-                const SizedBox(height: 2.0),
-                _MaxNumberOfPassesInput(),
-                const SizedBox(height: 2.0),
-                _ContainsInput(),
-                const SizedBox(height: 2.0),
-                _SubmitButton(),
-              ],
+      child: SingleChildScrollView(
+        child: Align(
+          alignment: const Alignment(0, -1 / 3),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 350),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _NumberOfJugglersInput(),
+                  const SizedBox(height: 2.0),
+                  _PeriodInput(),
+                  const SizedBox(height: 2.0),
+                  _NumberOfObjectsInput(),
+                  const SizedBox(height: 2.0),
+                  _MaxHeightInput(),
+                  const SizedBox(height: 2.0),
+                  _MinNumberOfPassesInput(),
+                  const SizedBox(height: 2.0),
+                  _MaxNumberOfPassesInput(),
+                  const SizedBox(height: 2.0),
+                  _ContainsInput(),
+                  const SizedBox(height: 2.0),
+                  _SubmitButton(),
+                ],
+              ),
             ),
           ),
         ),

@@ -45,14 +45,11 @@ class HomeView extends StatelessWidget {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: BlocProvider(
-            create: (_) => ConstraintsFormBloc(
-              patternsBloc: BlocProvider.of<PatternsBloc>(context),
-            ),
-            child: const ConstraintsForm(),
+        body: BlocProvider(
+          create: (_) => ConstraintsFormBloc(
+            patternsBloc: BlocProvider.of<PatternsBloc>(context),
           ),
+          child: const ConstraintsForm(),
         ),
       ),
     );
