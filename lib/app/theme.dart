@@ -43,5 +43,4 @@ extension CustomColorScheme on ColorScheme {
   Color get instantBiThrowColor => const Color(0xff008000);
 }
 
-
 // e63946,f1faee,a8dadc,457b9d,1d3557
