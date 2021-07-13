@@ -24,15 +24,42 @@ final darkTheme = ThemeData(
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.dark().textTheme,
   ),
-  colorScheme: const ColorScheme.dark(
-    primary: Color(0xff457b9d),
-    primaryVariant: Color(0xff1d3557),
-    onPrimary: Colors.white,
-    secondary: Color(0xff7a2e70),
-    secondaryVariant: Color(0xff9b3a8f),
-    onSecondary: Colors.white,
-    error: Color(0xffe63946),
-    onError: Colors.white,
+  // colorScheme: const ColorScheme.dark(
+  //   primary: Color(0xff457b9d),
+  //   primaryVariant: Color(0xff1d3557),
+  //   onPrimary: Colors.white,
+  //   secondary: Color(0xff7a2e70),
+  //   secondaryVariant: Color(0xff9b3a8f),
+  //   onSecondary: Colors.white,
+  //   error: Color(0xffe63946),
+  //   onError: Colors.white,
+  // ),
+  primaryColorDark: Colors.blue,
+  primaryColorLight: Colors.green,
+  primaryColor: Colors.yellow,
+  accentColor: Colors.pink,
+  hintColor: Colors.blueAccent,
+  inputDecorationTheme: const InputDecorationTheme(
+    border: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.green),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.yellow),
+    ),
+    errorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.blue),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.orange),
+    ),
+    disabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.black54),
+    ),
+    focusedErrorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.pink),
+    ),
+    labelStyle: TextStyle(color: Colors.tealAccent),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
   ),
 );
 
