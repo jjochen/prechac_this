@@ -19,7 +19,7 @@ final lightTheme = ThemeData(
   ),
 );
 
-final dartTheme = ThemeData(
+final darkTheme = ThemeData(
   brightness: Brightness.dark,
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.dark().textTheme,
