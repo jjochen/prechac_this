@@ -12,6 +12,8 @@ class ConstraintsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const interItemSpacing = 20.0;
+
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
@@ -40,19 +42,19 @@ class ConstraintsForm extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _NumberOfJugglersInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _PeriodInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _NumberOfObjectsInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _MaxHeightInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _MinNumberOfPassesInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _MaxNumberOfPassesInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _ContainsInput(),
-                  const SizedBox(height: 2.0),
+                  const SizedBox(height: interItemSpacing),
                   _SubmitButton(),
                 ],
               ),
@@ -84,7 +86,6 @@ class _NumberOfJugglersInput extends StatelessWidget {
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
             errorText: l10n.errorMessage(
               state.numberOfJugglers.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -112,7 +113,6 @@ class _PeriodInput extends StatelessWidget {
             labelText: l10n.constraintsFormPeriodLabel,
             errorText: l10n.errorMessage(
               state.period.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -141,7 +141,6 @@ class _NumberOfObjectsInput extends StatelessWidget {
             labelText: l10n.constraintsFormNumberOfObjectsLabel,
             errorText: l10n.errorMessage(
               state.numberOfObjects.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -169,7 +168,6 @@ class _MaxHeightInput extends StatelessWidget {
             labelText: l10n.constraintsFormMaxHeightLabel,
             errorText: l10n.errorMessage(
               state.maxHeight.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -198,7 +196,6 @@ class _MinNumberOfPassesInput extends StatelessWidget {
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
             errorText: l10n.errorMessage(
               state.minNumberOfPasses.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -227,7 +224,6 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
             errorText: l10n.errorMessage(
               state.maxNumberOfPasses.error,
-              noErrorFallback: '',
             ),
           ),
         );
@@ -252,7 +248,6 @@ class _ContainsInput extends StatelessWidget {
             labelText: l10n.constraintsFormContainsLabel,
             errorText: l10n.errorMessage(
               state.contains.error,
-              noErrorFallback: '',
             ),
           ),
         );
