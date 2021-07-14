@@ -17,14 +17,16 @@ class ConstraintsForm extends StatelessWidget {
         if (state.status.isSubmissionFailure) {
           final l10n = context.l10n;
           final message = l10n.errorMessage(state.error);
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                key: const Key('constraintsForm_errorSnackBar'),
-                content: Text(message),
-              ),
-            );
+          if (message != null) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  key: const Key('constraintsForm_errorSnackBar'),
+                  content: Text(message),
+                ),
+              );
+          }
         }
       },
       child: SingleChildScrollView(
