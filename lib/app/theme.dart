@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'color_from_material_color.dart';
+import '../ui_core/ui_core.dart';
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,

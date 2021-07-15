@@ -30,7 +30,7 @@ extension ColorToMaterialColor on Color {
       _moveChannel(red, ds),
       _moveChannel(green, ds),
       _moveChannel(blue, ds),
-      1,
+      opacity,
     );
     return shade;
   }
