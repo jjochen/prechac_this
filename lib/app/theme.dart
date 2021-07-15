@@ -21,6 +21,7 @@ final darkTheme = ThemeData(
 );
 
 extension CustomColorScheme on ColorScheme {
+  // TODO: dark theme colors
   Color get classicThrowColor => const Color(0xff0000ff);
   Color get equiThrowColor => const Color(0xffff0000);
   Color get biThrowColor => const Color(0xff800080);
