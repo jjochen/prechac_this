@@ -4,12 +4,22 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../ui_core/ui_core.dart';
 
-final lightTheme = ThemeData(
-  brightness: Brightness.light,
+final lightTheme = ThemeData.from(
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.light().textTheme,
   ),
-  primarySwatch: const Color(0xff457b9d).toMaterialColor(),
+  colorScheme: const ColorScheme.light(
+    primary: Color(0xff457b9d),
+    primaryVariant: Color(0xff1d3557),
+    onPrimary: Colors.white,
+    secondary: Color(0xffe63946),
+    secondaryVariant: Color(0xffa32831),
+    onSecondary: Colors.white,
+    surface: Colors.white,
+    onSurface: Colors.black,
+    background: Color(0xffe5eef4),
+    onBackground: Colors.black,
+  ),
 );
 
 final darkTheme = ThemeData(
