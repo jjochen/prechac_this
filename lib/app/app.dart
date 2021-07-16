@@ -28,7 +28,6 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: monitor brightness changes (change theme)
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
