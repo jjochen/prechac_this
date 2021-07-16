@@ -21,9 +21,23 @@ final darkTheme = ThemeData(
 );
 
 extension CustomColorScheme on ColorScheme {
-  // TODO: dark theme colors
-  Color get classicThrowColor => const Color(0xff0000ff);
-  Color get equiThrowColor => const Color(0xffff0000);
-  Color get biThrowColor => const Color(0xff800080);
-  Color get instantBiThrowColor => const Color(0xff008000);
+  Color get classicThrowColor => _currentColor(
+        const Color(0xff007aff),
+        const Color(0xff0a84ff),
+      );
+  Color get equiThrowColor => _currentColor(
+        const Color(0xffff3b30),
+        const Color(0xffff453a),
+      );
+  Color get biThrowColor => _currentColor(
+        const Color(0xff800080),
+        const Color(0xffbf5af2),
+      );
+  Color get instantBiThrowColor => _currentColor(
+        const Color(0xff008000),
+        const Color(0xff30d158),
+      );
+
+  Color _currentColor(Color lightColor, Color darkColor) =>
+      brightness == Brightness.dark ? darkColor : lightColor;
 }
