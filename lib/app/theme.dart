@@ -30,6 +30,7 @@ final darkTheme = ThemeData(
   primarySwatch: const Color(0xff457b9d).toMaterialColor(),
 );
 
+// TODO: match theme and throw colors (reuse throw colors for theme)
 extension CustomColorScheme on ColorScheme {
   Color get classicThrowColor => _currentColor(
         const Color(0xff007aff),
