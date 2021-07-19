@@ -1,5 +1,6 @@
 part of 'constraints_form_bloc.dart';
 
+@immutable
 abstract class ConstraintsFormEvent extends Equatable {
   const ConstraintsFormEvent();
 

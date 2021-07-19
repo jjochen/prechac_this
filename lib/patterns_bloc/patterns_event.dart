@@ -1,5 +1,6 @@
 part of 'patterns_bloc.dart';
 
+@immutable
 abstract class PatternsEvent extends Equatable {
   const PatternsEvent();
 }
