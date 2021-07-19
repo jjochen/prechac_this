@@ -7,8 +7,6 @@ abstract class Throwable
     with Comparable<Throwable>, Compare<Throwable>, EquatableMixin {
   const Throwable();
 
-  // TODO: handle cases like height > 2, ...
-
   Fraction? get height;
   int? get passingIndex;
 

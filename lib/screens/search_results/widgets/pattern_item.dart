@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
 import '../../../patterns_repository/patterns_repository.dart';
+import '../extensions/throw_color_scheme.dart';
 
 class PatternItem extends StatelessWidget {
   const PatternItem({
@@ -30,7 +31,10 @@ class PatternItem extends StatelessWidget {
                   .mapThrowsAsStringWithStyle(
                     (throwString, style) => TextSpan(
                       text: throwString,
-                      style: textStyleForStyle(style),
+                      style: TextStyle(
+                        color:
+                            Theme.of(context).colorScheme.colorForStyle(style),
+                      ),
                     ),
                   )
                   .joinToList(const TextSpan(text: ' ')),
@@ -39,20 +43,5 @@ class PatternItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  TextStyle? textStyleForStyle(ThrowStyle style) {
-    switch (style) {
-      case ThrowStyle.classic:
-        return const TextStyle(color: Color(0xff0000ff));
-      case ThrowStyle.equi:
-        return const TextStyle(color: Color(0xffff0000));
-      case ThrowStyle.bi:
-        return const TextStyle(color: Color(0xff800080));
-      case ThrowStyle.instantBi:
-        return const TextStyle(color: Color(0xff008000));
-      default:
-        return null;
-    }
   }
 }

@@ -28,7 +28,6 @@ class AppRouter {
   }
 
   static PageRoute<dynamic> _homeRoute(RoutingData data) {
-    // TODO: fill form with search parameters
     //final map = data.queryParameters;
     //final searchParameters = SearchParameters.fromQueryParameters(map);
 

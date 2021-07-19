@@ -29,7 +29,9 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: theme,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
       initialRoute: HomePage.routeName,
       onGenerateRoute: AppRouter.generateRoute,
       localizationsDelegates: const [
