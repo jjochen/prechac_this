@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
+@immutable
 abstract class PatternRepositoryException
     with EquatableMixin
     implements Exception {
@@ -21,9 +23,9 @@ abstract class PatternRepositoryException
 }
 
 class NoPatternsFoundException extends PatternRepositoryException {
-  NoPatternsFoundException([String message = '']) : super(message);
+  const NoPatternsFoundException([String message = '']) : super(message);
 }
 
 class ConstraintsInvalidException extends PatternRepositoryException {
-  ConstraintsInvalidException([String message = '']) : super(message);
+  const ConstraintsInvalidException([String message = '']) : super(message);
 }

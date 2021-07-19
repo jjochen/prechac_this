@@ -51,7 +51,7 @@ class Engine {
 
     final listOfPatterns = setOfPatterns.toList()..sort();
     if (listOfPatterns.isEmpty) {
-      throw NoPatternsFoundException();
+      throw const NoPatternsFoundException();
     }
 
     return listOfPatterns;

@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
 
 import 'throwable.dart';
 
+@immutable
 class Throw extends Throwable {
   const Throw({
     required this.height,
