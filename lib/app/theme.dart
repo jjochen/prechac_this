@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../ui_core/ui_core.dart';
+
 final lightTheme = ThemeData.from(
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.light().textTheme,
@@ -22,24 +24,12 @@ final lightTheme = ThemeData.from(
   ),
 );
 
-final darkTheme = ThemeData.from(
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.dark().textTheme,
   ),
-  colorScheme: ColorScheme.dark(
-    primary: const Color(0xff447212),
-    primaryVariant: Colors.black,
-    onPrimary: Colors.white,
-    secondary: const Color(0xff661872),
-    secondaryVariant: const Color(0xff3b0e42),
-    onSecondary: Colors.white,
-    surface: Colors.grey[800]!,
-    onSurface: Colors.white,
-    background: Colors.grey[700]!,
-    onBackground: Colors.white,
-    error: const Color(0xffa31a24),
-    onError: Colors.black,
-  ),
+  primarySwatch: const Color(0xff447212).toMaterialColor(),
 );
 
 extension CustomColorScheme on ColorScheme {
