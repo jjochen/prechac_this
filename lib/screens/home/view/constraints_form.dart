@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 import '../../../l10n/l10n.dart';
 import '../home.dart';
@@ -66,6 +67,43 @@ class ConstraintsForm extends StatelessWidget {
   }
 }
 
+class _DropDownFormField extends StatelessWidget {
+  const _DropDownFormField({
+    Key? key,
+    required this.minValue,
+    required this.maxValue,
+    required this.initialValue,
+    required this.labelText,
+    required this.errorText,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final int initialValue;
+  final String labelText;
+  final String? errorText;
+  final int maxValue;
+  final int minValue;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SelectFormField(
+      onChanged: (stringValue) {
+        var intValue = int.parse(stringValue);
+        return onChanged(intValue);
+      },
+      type: SelectFormFieldType.dropdown,
+      initialValue: initialValue.toString(),
+      decoration: InputDecoration(
+        labelText: labelText,
+        errorText: errorText,
+      ),
+      items: List.generate(
+          maxValue - minValue + 1, (index) => {'value': index + minValue}),
+    );
+  }
+}
+
 class _NumberOfJugglersInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -74,21 +112,18 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return SpinBox(
-          key: const Key('constraintsForm_numberOfJugglersInput'),
-          onChanged: (numberOfJugglers) => context
-              .read<ConstraintsFormBloc>()
-              .add(NumberOfJugglersDidChange(numberOfJugglers.toInt())),
-          min: NumberOfJugglers.minValue.toDouble(),
-          max: NumberOfJugglers.maxValue.toDouble(),
-          value: NumberOfJugglers.defaultValue.toDouble(),
-          decoration: InputDecoration(
+        return _DropDownFormField(
+            key: const Key('constraintsForm_numberOfJugglersInput'),
+            minValue: NumberOfJugglers.minValue,
+            maxValue: NumberOfJugglers.maxValue,
+            initialValue: NumberOfJugglers.defaultValue,
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
-            errorText: l10n.errorMessage(
-              state.numberOfJugglers.error,
-            ),
-          ),
-        );
+            errorText: l10n.errorMessage(state.numberOfJugglers.error),
+            onChanged: (value) {
+              return context
+                  .read<ConstraintsFormBloc>()
+                  .add(NumberOfJugglersDidChange(value));
+            });
       },
     );
   }
