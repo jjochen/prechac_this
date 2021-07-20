@@ -72,8 +72,12 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(find.byKey(numberOfJugglersInputKey),
-            testNumberOfJugglers.toString());
+        final inputField = find.byKey(numberOfJugglersInputKey);
+        final textField = find.descendant(
+          of: inputField,
+          matching: find.byType(FormField),
+        );
+        await tester.enterText(textField, testNumberOfJugglers.toString());
         verify(() => constraintsFormBloc.add(
               NumberOfJugglersDidChange(testNumberOfJugglers),
             )).called(1);

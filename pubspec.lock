@@ -106,13 +106,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  cupertino_icons:
-    dependency: transitive
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   dartx:
     dependency: "direct main"
     description:
@@ -165,13 +158,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_spinbox:
-    dependency: "direct main"
-    description:
-      name: flutter_spinbox
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter

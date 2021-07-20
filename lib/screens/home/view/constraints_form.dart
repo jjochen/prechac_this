@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinbox/material.dart';
 import 'package:formz/formz.dart';
 import 'package:select_form_field/select_form_field.dart';
 
@@ -67,23 +66,21 @@ class ConstraintsForm extends StatelessWidget {
   }
 }
 
-class _DropDownFormField extends StatelessWidget {
-  const _DropDownFormField({
+class _DropDownFormFieldContainer extends StatelessWidget {
+  const _DropDownFormFieldContainer({
     Key? key,
+    required this.onChanged,
     required this.minValue,
     required this.maxValue,
     required this.initialValue,
-    required this.labelText,
-    required this.errorText,
-    required this.onChanged,
+    this.decoration,
   }) : super(key: key);
 
-  final int initialValue;
-  final String labelText;
-  final String? errorText;
+  final ValueChanged<int> onChanged;
   final int maxValue;
   final int minValue;
-  final ValueChanged<int> onChanged;
+  final int initialValue;
+  final InputDecoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +91,7 @@ class _DropDownFormField extends StatelessWidget {
       },
       type: SelectFormFieldType.dropdown,
       initialValue: initialValue.toString(),
-      decoration: InputDecoration(
-        labelText: labelText,
-        errorText: errorText,
-      ),
+      decoration: decoration,
       items: List.generate(
           maxValue - minValue + 1, (index) => {'value': index + minValue}),
     );
@@ -112,18 +106,19 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return _DropDownFormField(
-            key: const Key('constraintsForm_numberOfJugglersInput'),
-            minValue: NumberOfJugglers.minValue,
-            maxValue: NumberOfJugglers.maxValue,
-            initialValue: NumberOfJugglers.defaultValue,
+        return _DropDownFormFieldContainer(
+          key: const Key('constraintsForm_numberOfJugglersInput'),
+          onChanged: (numberOfJugglers) => context
+              .read<ConstraintsFormBloc>()
+              .add(NumberOfJugglersDidChange(numberOfJugglers)),
+          minValue: NumberOfJugglers.minValue,
+          maxValue: NumberOfJugglers.maxValue,
+          initialValue: NumberOfJugglers.defaultValue,
+          decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
             errorText: l10n.errorMessage(state.numberOfJugglers.error),
-            onChanged: (value) {
-              return context
-                  .read<ConstraintsFormBloc>()
-                  .add(NumberOfJugglersDidChange(value));
-            });
+          ),
+        );
       },
     );
   }
@@ -136,19 +131,16 @@ class _PeriodInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
-        return SpinBox(
+        return _DropDownFormFieldContainer(
           key: const Key('constraintsForm_periodInput'),
-          onChanged: (period) => context
-              .read<ConstraintsFormBloc>()
-              .add(PeriodDidChange(period.toInt())),
-          min: Period.minValue.toDouble(),
-          max: Period.maxValue.toDouble(),
-          value: Period.defaultValue.toDouble(),
+          onChanged: (period) =>
+              context.read<ConstraintsFormBloc>().add(PeriodDidChange(period)),
+          minValue: Period.minValue,
+          maxValue: Period.maxValue,
+          initialValue: Period.defaultValue,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormPeriodLabel,
-            errorText: l10n.errorMessage(
-              state.period.error,
-            ),
+            errorText: l10n.errorMessage(state.period.error),
           ),
         );
       },
@@ -164,14 +156,14 @@ class _NumberOfObjectsInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
       builder: (context, state) {
-        return SpinBox(
+        return _DropDownFormFieldContainer(
           key: const Key('constraintsForm_numberOfObjectsInput'),
           onChanged: (numberOfObjects) => context
               .read<ConstraintsFormBloc>()
               .add(NumberOfObjectsDidChange(numberOfObjects.toInt())),
-          min: NumberOfObjects.minValue.toDouble(),
-          max: NumberOfObjects.maxValue.toDouble(),
-          value: NumberOfObjects.defaultValue.toDouble(),
+          minValue: NumberOfObjects.minValue,
+          maxValue: NumberOfObjects.maxValue,
+          initialValue: NumberOfObjects.defaultValue,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfObjectsLabel,
             errorText: l10n.errorMessage(
@@ -191,14 +183,14 @@ class _MaxHeightInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
-        return SpinBox(
+        return _DropDownFormFieldContainer(
           key: const Key('constraintsForm_maxHeightInput'),
           onChanged: (maxHeight) => context
               .read<ConstraintsFormBloc>()
               .add(MaxHeightDidChange(maxHeight.toInt())),
-          min: MaxHeight.minValue.toDouble(),
-          max: MaxHeight.maxValue.toDouble(),
-          value: MaxHeight.defaultValue.toDouble(),
+          minValue: MaxHeight.minValue,
+          maxValue: MaxHeight.maxValue,
+          initialValue: MaxHeight.defaultValue,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxHeightLabel,
             errorText: l10n.errorMessage(
@@ -219,19 +211,17 @@ class _MinNumberOfPassesInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.minNumberOfPasses != current.minNumberOfPasses,
       builder: (context, state) {
-        return SpinBox(
+        return _DropDownFormFieldContainer(
           key: const Key('constraintsForm_minNumberOfPassesInput'),
           onChanged: (minNumberOfPasses) => context
               .read<ConstraintsFormBloc>()
               .add(MinNumberOfPassesDidChange(minNumberOfPasses.toInt())),
-          min: MinNumberOfPasses.minValue.toDouble(),
-          max: MinNumberOfPasses.maxValue.toDouble(),
-          value: MinNumberOfPasses.defaultValue.toDouble(),
+          minValue: MinNumberOfPasses.minValue,
+          maxValue: MinNumberOfPasses.maxValue,
+          initialValue: MinNumberOfPasses.defaultValue,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
-            errorText: l10n.errorMessage(
-              state.minNumberOfPasses.error,
-            ),
+            errorText: l10n.errorMessage(state.minNumberOfPasses.error),
           ),
         );
       },
@@ -247,19 +237,17 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.maxNumberOfPasses != current.maxNumberOfPasses,
       builder: (context, state) {
-        return SpinBox(
+        return _DropDownFormFieldContainer(
           key: const Key('constraintsForm_maxNumberOfPassesInput'),
           onChanged: (maxNumberOfPasses) => context
               .read<ConstraintsFormBloc>()
-              .add(MaxNumberOfPassesDidChange(maxNumberOfPasses.toInt())),
-          min: MaxNumberOfPasses.minValue.toDouble(),
-          max: MaxNumberOfPasses.maxValue.toDouble(),
-          value: MaxNumberOfPasses.defaultValue.toDouble(),
+              .add(MaxNumberOfPassesDidChange(maxNumberOfPasses)),
+          minValue: MaxNumberOfPasses.minValue,
+          maxValue: MaxNumberOfPasses.maxValue,
+          initialValue: MaxNumberOfPasses.defaultValue,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
-            errorText: l10n.errorMessage(
-              state.maxNumberOfPasses.error,
-            ),
+            errorText: l10n.errorMessage(state.maxNumberOfPasses.error),
           ),
         );
       },
