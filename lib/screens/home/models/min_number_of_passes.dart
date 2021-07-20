@@ -11,7 +11,7 @@ class MinNumberOfPasses extends FormzInput<int?, FormInputValidationException> {
 
   static const int defaultValue = 1;
   static const int minValue = 0;
-  static const int maxValue = 24;
+  static const int maxValue = 12;
 
   @override
   FormInputValidationException? validator(int? value) {

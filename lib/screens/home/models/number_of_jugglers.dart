@@ -10,7 +10,7 @@ class NumberOfJugglers extends FormzInput<int, FormInputValidationException> {
 
   static const int defaultValue = 2;
   static const int minValue = 1;
-  static const int maxValue = 24;
+  static const int maxValue = 12;
 
   @override
   FormInputValidationException? validator(int value) {
