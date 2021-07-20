@@ -401,6 +401,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  select_form_field:
+    dependency: "direct main"
+    description:
+      name: select_form_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   shelf:
     dependency: transitive
     description:
