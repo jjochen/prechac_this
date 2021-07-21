@@ -18,7 +18,10 @@ void main() {
       final input = NumberOfJugglers.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(1, 24),
+        InputOutOfRangeException(
+          NumberOfJugglers.minValue,
+          NumberOfJugglers.maxValue,
+        ),
       );
     });
   });

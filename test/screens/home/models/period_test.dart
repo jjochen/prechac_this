@@ -18,7 +18,10 @@ void main() {
       final input = Period.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(1, 24),
+        InputOutOfRangeException(
+          Period.minValue,
+          Period.maxValue,
+        ),
       );
     });
   });

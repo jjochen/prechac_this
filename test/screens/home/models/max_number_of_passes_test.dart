@@ -26,7 +26,10 @@ void main() {
       final input = MaxNumberOfPasses.dirty(25);
       expect(
         input.error,
-        InputOutOfRangeException(-1, 24),
+        InputOutOfRangeException(
+          MaxNumberOfPasses.minValue,
+          MaxNumberOfPasses.maxValue,
+        ),
       );
     });
   });

@@ -10,7 +10,7 @@ class NumberOfObjects extends FormzInput<int, FormInputValidationException> {
 
   static const int defaultValue = 4;
   static const int minValue = 1;
-  static const int maxValue = 24;
+  static const int maxValue = 42;
 
   @override
   FormInputValidationException? validator(int value) {

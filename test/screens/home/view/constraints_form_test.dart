@@ -47,7 +47,7 @@ void main() {
   const testNumberOfObjects = 7;
   const testMaxHeight = 8;
   const testMinNumberOfPasses = 3;
-  const testMaxNumberOfPasses = 4;
+  const testMaxNumberOfPasses = 3;
   const testContains = '2p 1';
 
   group('ConstraintsForm', () {
@@ -72,8 +72,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(find.byKey(numberOfJugglersInputKey),
-            testNumberOfJugglers.toString());
+
+        final inputField = find.byKey(numberOfJugglersInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testNumberOfJugglers.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               NumberOfJugglersDidChange(testNumberOfJugglers),
             )).called(1);
@@ -88,8 +96,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(
-            find.byKey(periodInputKey), testPeriod.toString());
+
+        final inputField = find.byKey(periodInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testPeriod.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               PeriodDidChange(testPeriod),
             )).called(1);
@@ -106,8 +122,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(find.byKey(numberOfObjectsInputKey),
-            testNumberOfObjects.toString());
+
+        final inputField = find.byKey(numberOfObjectsInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testNumberOfObjects.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               NumberOfObjectsDidChange(testNumberOfObjects),
             )).called(1);
@@ -122,8 +146,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(
-            find.byKey(maxHeightInputKey), testMaxHeight.toString());
+
+        final inputField = find.byKey(maxHeightInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testMaxHeight.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               MaxHeightDidChange(testMaxHeight),
             )).called(1);
@@ -140,8 +172,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(find.byKey(minNumberOfPassesInputKey),
-            testMinNumberOfPasses.toString());
+
+        final inputField = find.byKey(minNumberOfPassesInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testMinNumberOfPasses.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               MinNumberOfPassesDidChange(testMinNumberOfPasses),
             )).called(1);
@@ -158,8 +198,16 @@ void main() {
             ),
           ),
         );
-        await tester.enterText(find.byKey(maxNumberOfPassesInputKey),
-            testMaxNumberOfPasses.toString());
+
+        final inputField = find.byKey(maxNumberOfPassesInputKey);
+        expect(inputField, findsOneWidget);
+
+        await tester.tap(inputField);
+        await tester.pumpAndSettle();
+        final dropDownItem = find.text(testMaxNumberOfPasses.toString());
+        expect(dropDownItem, findsOneWidget);
+
+        await tester.tap(dropDownItem);
         verify(() => constraintsFormBloc.add(
               MaxNumberOfPassesDidChange(testMaxNumberOfPasses),
             )).called(1);
@@ -174,6 +222,7 @@ void main() {
             ),
           ),
         );
+
         await tester.enterText(
             find.byKey(containsInputKey), testContains.toString());
         verify(() => constraintsFormBloc.add(
@@ -193,6 +242,7 @@ void main() {
             ),
           ),
         );
+
         await tester.tap(find.byKey(submitButtonKey));
         verify(() => constraintsFormBloc.add(
               Submit(),
@@ -298,8 +348,9 @@ void main() {
           (tester) async {
         final period = MockPeriod();
         when(() => period.error).thenReturn(
-          InputOutOfRangeException(1, 2),
+          InputOutOfRangeException(1, 3),
         );
+        when(() => period.value).thenReturn(2);
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
         await tester.pumpApp(
@@ -310,7 +361,7 @@ void main() {
             ),
           ),
         );
-        expect(find.text('value should be between 1 and 2'), findsOneWidget);
+        expect(find.text('value should be between 1 and 3'), findsOneWidget);
       });
 
       testWidgets(

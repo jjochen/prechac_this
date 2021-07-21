@@ -17,11 +17,11 @@ dependencies:
   equatable: ^2.0.0
   formz: ^0.4.0
   google_fonts: ^2.0.0
-  flutter_spinbox: ^0.5.2
   fraction: ^3.0.1
   trotter: ^2.0.0-dev.1
   dartx: ^0.7.1
   petitparser: ^4.1.0
+  select_form_field: ^2.1.0
 
 dev_dependencies:
   flutter_test:
