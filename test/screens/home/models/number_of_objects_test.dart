@@ -18,7 +18,10 @@ void main() {
       final input = NumberOfObjects.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(1, 24),
+        InputOutOfRangeException(
+          NumberOfObjects.minValue,
+          NumberOfObjects.maxValue,
+        ),
       );
     });
   });

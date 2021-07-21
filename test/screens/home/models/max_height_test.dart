@@ -18,7 +18,7 @@ void main() {
       final input = MaxHeight.dirty(0);
       expect(
         input.error,
-        InputOutOfRangeException(1, 24),
+        InputOutOfRangeException(MaxHeight.minValue, MaxHeight.maxValue),
       );
     });
   });
