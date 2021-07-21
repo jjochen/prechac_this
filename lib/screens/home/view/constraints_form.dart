@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -66,35 +68,56 @@ class ConstraintsForm extends StatelessWidget {
   }
 }
 
-class _DropDownFormFieldContainer extends StatelessWidget {
-  const _DropDownFormFieldContainer({
+class _DropDownFormField extends FormField<int?> {
+  _DropDownFormField({
     Key? key,
-    required this.onChanged,
-    required this.minValue,
-    required this.maxValue,
-    required this.initialValue,
-    this.decoration,
-  }) : super(key: key);
+    required ValueChanged<int> onChanged,
+    required int minValue,
+    required int maxValue,
+    int? initialValue,
+    bool isRequired = true,
+    InputDecoration? decoration,
+  }) : super(
+            key: key,
+            initialValue: initialValue,
+            builder: (state) {
+              return SelectFormField(
+                onChanged: (stringValue) {
+                  var intValue = int.parse(stringValue);
+                  return onChanged(intValue);
+                },
+                type: SelectFormFieldType.dropdown,
+                initialValue: initialValue.toString(),
+                decoration: decoration,
+                items: _items(
+                  minValue,
+                  maxValue,
+                  isRequired,
+                ),
+              );
+            });
 
-  final ValueChanged<int> onChanged;
-  final int maxValue;
-  final int minValue;
-  final int initialValue;
-  final InputDecoration? decoration;
+  static List<Map<String, dynamic>> _items(
+    int minValue,
+    int maxValue,
+    bool isRequired,
+  ) {
+    var items = <Map<String, dynamic>>[];
+    if (!isRequired) {
+      items.add({
+        'value': null,
+        'label': '',
+      });
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return SelectFormField(
-      onChanged: (stringValue) {
-        var intValue = int.parse(stringValue);
-        return onChanged(intValue);
-      },
-      type: SelectFormFieldType.dropdown,
-      initialValue: initialValue.toString(),
-      decoration: decoration,
-      items: List.generate(
-          maxValue - minValue + 1, (index) => {'value': index + minValue}),
+    items.addAll(
+      List.generate(
+        maxValue - minValue + 1,
+        (index) => {'value': index + minValue},
+      ),
     );
+
+    return items;
   }
 }
 
@@ -106,7 +129,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_numberOfJugglersInput'),
           onChanged: (numberOfJugglers) => context
               .read<ConstraintsFormBloc>()
@@ -131,7 +154,7 @@ class _PeriodInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.period != current.period,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_periodInput'),
           onChanged: (period) =>
               context.read<ConstraintsFormBloc>().add(PeriodDidChange(period)),
@@ -156,7 +179,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfObjects != current.numberOfObjects,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_numberOfObjectsInput'),
           onChanged: (numberOfObjects) => context
               .read<ConstraintsFormBloc>()
@@ -183,7 +206,7 @@ class _MaxHeightInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_maxHeightInput'),
           onChanged: (maxHeight) => context
               .read<ConstraintsFormBloc>()
@@ -209,16 +232,17 @@ class _MinNumberOfPassesInput extends StatelessWidget {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
-          previous.minNumberOfPasses != current.minNumberOfPasses,
+          previous.minNumberOfPasses != current.minNumberOfPasses ||
+          previous.period != current.period,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_minNumberOfPassesInput'),
           onChanged: (minNumberOfPasses) => context
               .read<ConstraintsFormBloc>()
               .add(MinNumberOfPassesDidChange(minNumberOfPasses.toInt())),
           minValue: MinNumberOfPasses.minValue,
-          maxValue: MinNumberOfPasses.maxValue,
-          initialValue: MinNumberOfPasses.defaultValue,
+          maxValue: min(MinNumberOfPasses.maxValue, state.period.value),
+          initialValue: min(MinNumberOfPasses.defaultValue, state.period.value),
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
             errorText: l10n.errorMessage(state.minNumberOfPasses.error),
@@ -235,16 +259,18 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
-          previous.maxNumberOfPasses != current.maxNumberOfPasses,
+          previous.maxNumberOfPasses != current.maxNumberOfPasses ||
+          previous.period != current.period,
       builder: (context, state) {
-        return _DropDownFormFieldContainer(
+        return _DropDownFormField(
           key: const Key('constraintsForm_maxNumberOfPassesInput'),
           onChanged: (maxNumberOfPasses) => context
               .read<ConstraintsFormBloc>()
               .add(MaxNumberOfPassesDidChange(maxNumberOfPasses)),
           minValue: MaxNumberOfPasses.minValue,
-          maxValue: MaxNumberOfPasses.maxValue,
+          maxValue: min(MaxNumberOfPasses.maxValue, state.period.value),
           initialValue: MaxNumberOfPasses.defaultValue,
+          isRequired: false,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
             errorText: l10n.errorMessage(state.maxNumberOfPasses.error),
