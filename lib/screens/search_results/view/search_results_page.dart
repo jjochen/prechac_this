@@ -21,6 +21,7 @@ class SearchResultsPage extends StatelessWidget {
             title: const Text('Results'),
           ),
           body: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             itemCount: patterns.length,
             itemBuilder: (context, index) {
               final pattern = patterns[index];

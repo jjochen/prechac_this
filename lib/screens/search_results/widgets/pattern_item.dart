@@ -18,7 +18,7 @@ class PatternItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
         key: Key('__pattern_item_${pattern.id}'),
         onTap: onTap,
