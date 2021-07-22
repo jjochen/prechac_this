@@ -134,19 +134,17 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return Card(
-          child: _DropDownFormField(
-            key: const Key('constraintsForm_numberOfJugglersInput'),
-            onChanged: (numberOfJugglers) => context
-                .read<ConstraintsFormBloc>()
-                .add(NumberOfJugglersDidChange(numberOfJugglers)),
-            minValue: NumberOfJugglers.minValue,
-            maxValue: NumberOfJugglers.maxValue,
-            initialValue: NumberOfJugglers.defaultValue,
-            decoration: InputDecoration(
-              labelText: l10n.constraintsFormNumberOfJugglersLabel,
-              errorText: l10n.errorMessage(state.numberOfJugglers.error),
-            ),
+        return _DropDownFormField(
+          key: const Key('constraintsForm_numberOfJugglersInput'),
+          onChanged: (numberOfJugglers) => context
+              .read<ConstraintsFormBloc>()
+              .add(NumberOfJugglersDidChange(numberOfJugglers)),
+          minValue: NumberOfJugglers.minValue,
+          maxValue: NumberOfJugglers.maxValue,
+          initialValue: NumberOfJugglers.defaultValue,
+          decoration: InputDecoration(
+            labelText: l10n.constraintsFormNumberOfJugglersLabel,
+            errorText: l10n.errorMessage(state.numberOfJugglers.error),
           ),
         );
       },
