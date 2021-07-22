@@ -17,27 +17,32 @@ class PatternItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      key: Key('__pattern_item_${pattern.id}'),
-      onTap: onTap,
-      title: Hero(
-        tag: '${pattern.id}__heroTag',
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: RichText(
-            text: TextSpan(
-              style: Theme.of(context).textTheme.headline6,
-              children: pattern
-                  .mapThrowsAsStringWithStyle(
-                    (throwString, style) => TextSpan(
-                      text: throwString,
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).colorScheme.colorForStyle(style),
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      child: ListTile(
+        key: Key('__pattern_item_${pattern.id}'),
+        onTap: onTap,
+        dense: true,
+        title: Hero(
+          tag: '${pattern.id}__heroTag',
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.headline6,
+                children: pattern
+                    .mapThrowsAsStringWithStyle(
+                      (throwString, style) => TextSpan(
+                        text: throwString,
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .colorForStyle(style),
+                        ),
                       ),
-                    ),
-                  )
-                  .joinToList(const TextSpan(text: ' ')),
+                    )
+                    .joinToList(const TextSpan(text: ' ')),
+              ),
             ),
           ),
         ),
