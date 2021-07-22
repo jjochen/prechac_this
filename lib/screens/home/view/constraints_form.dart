@@ -14,7 +14,7 @@ class ConstraintsForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const interItemSpacing = 20.0;
+    const interItemSpacing = 16.0;
 
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
@@ -37,28 +37,33 @@ class ConstraintsForm extends StatelessWidget {
         child: Align(
           alignment: const Alignment(0, -1 / 3),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             child: Container(
-              constraints: const BoxConstraints(maxWidth: 350),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _NumberOfJugglersInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _PeriodInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _NumberOfObjectsInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _MaxHeightInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _MinNumberOfPassesInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _MaxNumberOfPassesInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _ContainsInput(),
-                  const SizedBox(height: interItemSpacing),
-                  _SubmitButton(),
-                ],
+              constraints: const BoxConstraints(maxWidth: 400),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _NumberOfJugglersInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _PeriodInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _NumberOfObjectsInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _MaxHeightInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _MinNumberOfPassesInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _MaxNumberOfPassesInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _ContainsInput(),
+                      const SizedBox(height: interItemSpacing),
+                      _SubmitButton(),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -129,17 +134,19 @@ class _NumberOfJugglersInput extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.numberOfJugglers != current.numberOfJugglers,
       builder: (context, state) {
-        return _DropDownFormField(
-          key: const Key('constraintsForm_numberOfJugglersInput'),
-          onChanged: (numberOfJugglers) => context
-              .read<ConstraintsFormBloc>()
-              .add(NumberOfJugglersDidChange(numberOfJugglers)),
-          minValue: NumberOfJugglers.minValue,
-          maxValue: NumberOfJugglers.maxValue,
-          initialValue: NumberOfJugglers.defaultValue,
-          decoration: InputDecoration(
-            labelText: l10n.constraintsFormNumberOfJugglersLabel,
-            errorText: l10n.errorMessage(state.numberOfJugglers.error),
+        return Card(
+          child: _DropDownFormField(
+            key: const Key('constraintsForm_numberOfJugglersInput'),
+            onChanged: (numberOfJugglers) => context
+                .read<ConstraintsFormBloc>()
+                .add(NumberOfJugglersDidChange(numberOfJugglers)),
+            minValue: NumberOfJugglers.minValue,
+            maxValue: NumberOfJugglers.maxValue,
+            initialValue: NumberOfJugglers.defaultValue,
+            decoration: InputDecoration(
+              labelText: l10n.constraintsFormNumberOfJugglersLabel,
+              errorText: l10n.errorMessage(state.numberOfJugglers.error),
+            ),
           ),
         );
       },
