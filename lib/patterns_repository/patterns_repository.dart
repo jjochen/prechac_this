@@ -12,8 +12,12 @@ export 'exceptions/pattern_repository_exception.dart';
 export 'models/models.dart';
 
 class PatternsRepository {
+  const PatternsRepository()
+      : computer = const Computer<SearchParameters, List<Pattern>>();
+
+  final Computer<SearchParameters, List<Pattern>> computer;
+
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    const computer = Computer<SearchParameters, List<Pattern>>();
     return await computer.run(findPatterns, parameters);
   }
 

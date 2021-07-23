@@ -9,6 +9,8 @@ class Computer<M, R> {
   const Computer();
 
   Future<R> run(ComputerCallback<M, R> callback, M message) async {
+    // TODO: cancel previous computation
+
     final resultPort = ReceivePort();
     final exitPort = ReceivePort();
 
