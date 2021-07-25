@@ -12,8 +12,7 @@ export 'exceptions/pattern_repository_exception.dart';
 export 'models/models.dart';
 
 class PatternsRepository {
-  const PatternsRepository()
-      : computer = const Computer<SearchParameters, List<Pattern>>();
+  const PatternsRepository({required this.computer});
 
   final Computer<SearchParameters, List<Pattern>> computer;
 

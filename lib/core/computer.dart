@@ -6,27 +6,31 @@ import 'package:flutter/material.dart';
 typedef ComputerCallback<M, R> = R Function(M message);
 
 class Computer<M, R> {
-  const Computer();
+  Computer();
+
+  ReceivePort? _resultPort;
+  ReceivePort? _exitPort;
+  Isolate? _isolate;
 
   Future<R> run(ComputerCallback<M, R> callback, M message) async {
-    // TODO: cancel previous computation
+    _cancelComputation();
 
-    final resultPort = ReceivePort();
-    final exitPort = ReceivePort();
+    _resultPort = ReceivePort();
+    _exitPort = ReceivePort();
 
-    final isolate = await Isolate.spawn<IsolateInput<M, R>>(
+    _isolate = await Isolate.spawn<IsolateInput<M, R>>(
       spawn,
       IsolateInput<M, R>(
         callback,
         message,
-        resultPort.sendPort,
+        _resultPort!.sendPort,
       ),
-      onExit: exitPort.sendPort,
+      onExit: _exitPort!.sendPort,
     );
 
     final completer = Completer<R>();
 
-    resultPort.listen((dynamic resultData) {
+    _resultPort?.listen((dynamic resultData) {
       assert(resultData is IsolateOutput);
       if (completer.isCompleted) {
         return;
@@ -42,13 +46,12 @@ class Computer<M, R> {
       }
     });
 
-    exitPort.listen((message) {
+    _exitPort?.listen((message) {
       assert(completer.isCompleted);
     });
 
     await completer.future;
-    resultPort.close();
-    isolate.kill();
+    _cancelComputation();
     return completer.future;
   }
 
@@ -63,6 +66,15 @@ class Computer<M, R> {
       final output = IsolateOutput<R>.failure(error);
       input.resultPort.send(output);
     }
+  }
+
+  void _cancelComputation() {
+    _resultPort?.close();
+    _exitPort?.close();
+    _isolate?.kill();
+    _resultPort = null;
+    _exitPort = null;
+    _isolate = null;
   }
 }
 

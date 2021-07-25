@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:prechac_this/core/computer.dart';
 
 import '../l10n/l10n.dart';
 import '../patterns_bloc/patterns_bloc.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => PatternsBloc(
-        patternsRepository: PatternsRepository(),
+        patternsRepository: PatternsRepository(computer: Computer()),
       ),
       child: const AppView(),
     );
