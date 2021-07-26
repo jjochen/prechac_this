@@ -33,21 +33,25 @@ final darkTheme = ThemeData(
 );
 
 extension CustomColorScheme on ColorScheme {
+  Color get selfThrowColor => _currentColor(
+        const Color(0xff0D0D0D),
+        const Color(0xffF2F2F2),
+      );
   Color get classicThrowColor => _currentColor(
-        const Color(0xff2133a7),
-        const Color(0xff2133a7),
+        const Color(0xff2929CC),
+        const Color(0xff5959FF),
       );
   Color get equiThrowColor => _currentColor(
-        const Color(0xffa31a24),
-        const Color(0xffa31a24),
+        const Color(0xffCC2929),
+        const Color(0xffE63939),
       );
   Color get biThrowColor => _currentColor(
-        const Color(0xff661872),
-        const Color(0xff661872),
+        const Color(0xff801A6F),
+        const Color(0xffB32C9C),
       );
   Color get instantBiThrowColor => _currentColor(
-        const Color(0xff447212),
-        const Color(0xff447212),
+        const Color(0xff2B801A),
+        const Color(0xff399926),
       );
 
   Color _currentColor(Color lightColor, Color darkColor) =>
