@@ -9,17 +9,17 @@ final lightTheme = ThemeData.from(
     ThemeData.light().textTheme,
   ),
   colorScheme: const ColorScheme.light(
-    primary: Color(0xff447212),
-    primaryVariant: Color(0xff26410a),
+    primary: Color(0xff2b801a),
+    primaryVariant: Color(0xff15400d),
     onPrimary: Colors.white,
-    secondary: Color(0xff661872),
-    secondaryVariant: Color(0xff3b0e42),
+    secondary: Color(0xff801a6f),
+    secondaryVariant: Color(0xff3e0c36),
     onSecondary: Colors.white,
     surface: Colors.white,
     onSurface: Colors.black,
-    background: Color(0xfff8fff1),
+    background: Color(0xfff5fff3),
     onBackground: Colors.black,
-    error: Color(0xffa31a24),
+    error: Color(0xffcc2944),
     onError: Colors.white,
   ),
 );
@@ -29,7 +29,7 @@ final darkTheme = ThemeData(
   textTheme: GoogleFonts.openSansTextTheme(
     ThemeData.dark().textTheme,
   ),
-  primarySwatch: const Color(0xff447212).toMaterialColor(),
+  primarySwatch: const Color(0xff399926).toMaterialColor(),
 );
 
 extension CustomColorScheme on ColorScheme {
