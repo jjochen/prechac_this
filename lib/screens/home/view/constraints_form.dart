@@ -79,6 +79,7 @@ class _DropDownFormField extends FormField<int?> {
     required ValueChanged<int> onChanged,
     required int minValue,
     required int maxValue,
+    bool enabled = true,
     int? initialValue,
     bool isRequired = true,
     InputDecoration? decoration,
@@ -93,6 +94,7 @@ class _DropDownFormField extends FormField<int?> {
                 },
                 type: SelectFormFieldType.dropdown,
                 initialValue: initialValue.toString(),
+                enabled: enabled,
                 decoration: decoration,
                 items: _items(
                   minValue,
@@ -132,7 +134,8 @@ class _NumberOfJugglersInput extends StatelessWidget {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
-          previous.numberOfJugglers != current.numberOfJugglers,
+          previous.numberOfJugglers != current.numberOfJugglers ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_numberOfJugglersInput'),
@@ -142,6 +145,7 @@ class _NumberOfJugglersInput extends StatelessWidget {
           minValue: NumberOfJugglers.minValue,
           maxValue: NumberOfJugglers.maxValue,
           initialValue: NumberOfJugglers.defaultValue,
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfJugglersLabel,
             errorText: l10n.errorMessage(state.numberOfJugglers.error),
@@ -157,7 +161,9 @@ class _PeriodInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) => previous.period != current.period,
+      buildWhen: (previous, current) =>
+          previous.period != current.period ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_periodInput'),
@@ -166,6 +172,7 @@ class _PeriodInput extends StatelessWidget {
           minValue: Period.minValue,
           maxValue: Period.maxValue,
           initialValue: Period.defaultValue,
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormPeriodLabel,
             errorText: l10n.errorMessage(state.period.error),
@@ -182,7 +189,8 @@ class _NumberOfObjectsInput extends StatelessWidget {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
-          previous.numberOfObjects != current.numberOfObjects,
+          previous.numberOfObjects != current.numberOfObjects ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_numberOfObjectsInput'),
@@ -192,6 +200,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           minValue: NumberOfObjects.minValue,
           maxValue: NumberOfObjects.maxValue,
           initialValue: NumberOfObjects.defaultValue,
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormNumberOfObjectsLabel,
             errorText: l10n.errorMessage(
@@ -209,7 +218,9 @@ class _MaxHeightInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) => previous.maxHeight != current.maxHeight,
+      buildWhen: (previous, current) =>
+          previous.maxHeight != current.maxHeight ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_maxHeightInput'),
@@ -219,6 +230,7 @@ class _MaxHeightInput extends StatelessWidget {
           minValue: MaxHeight.minValue,
           maxValue: MaxHeight.maxValue,
           initialValue: MaxHeight.defaultValue,
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxHeightLabel,
             errorText: l10n.errorMessage(
@@ -238,7 +250,8 @@ class _MinNumberOfPassesInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.minNumberOfPasses != current.minNumberOfPasses ||
-          previous.period != current.period,
+          previous.period != current.period ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_minNumberOfPassesInput'),
@@ -248,6 +261,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           minValue: MinNumberOfPasses.minValue,
           maxValue: min(MinNumberOfPasses.maxValue, state.period.value),
           initialValue: min(MinNumberOfPasses.defaultValue, state.period.value),
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMinNumberOfPassesLabel,
             errorText: l10n.errorMessage(state.minNumberOfPasses.error),
@@ -265,7 +279,8 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) =>
           previous.maxNumberOfPasses != current.maxNumberOfPasses ||
-          previous.period != current.period,
+          previous.period != current.period ||
+          previous.status != current.status,
       builder: (context, state) {
         return _DropDownFormField(
           key: const Key('constraintsForm_maxNumberOfPassesInput'),
@@ -275,6 +290,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
           minValue: MaxNumberOfPasses.minValue,
           maxValue: min(MaxNumberOfPasses.maxValue, state.period.value),
           initialValue: MaxNumberOfPasses.defaultValue,
+          enabled: !state.status.isSubmissionInProgress,
           isRequired: false,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormMaxNumberOfPassesLabel,
@@ -291,13 +307,16 @@ class _ContainsInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) => previous.contains != current.contains,
+      buildWhen: (previous, current) =>
+          previous.contains != current.contains ||
+          previous.status != current.status,
       builder: (context, state) {
         return TextField(
           key: const Key('constraintsForm_containsInput'),
           onChanged: (contains) => context
               .read<ConstraintsFormBloc>()
               .add(ContainsDidChange(contains)),
+          enabled: !state.status.isSubmissionInProgress,
           decoration: InputDecoration(
             labelText: l10n.constraintsFormContainsLabel,
             errorText: l10n.errorMessage(
