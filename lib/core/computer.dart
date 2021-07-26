@@ -71,7 +71,7 @@ class Computer<M, R> {
   void _cancelComputation() {
     _resultPort?.close();
     _exitPort?.close();
-    _isolate?.kill();
+    _isolate?.kill(priority: Isolate.immediate);
     _resultPort = null;
     _exitPort = null;
     _isolate = null;
