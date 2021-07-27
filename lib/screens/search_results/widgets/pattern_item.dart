@@ -38,6 +38,7 @@ class PatternItem extends StatelessWidget {
                           color: Theme.of(context)
                               .colorScheme
                               .colorForStyle(style),
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     )

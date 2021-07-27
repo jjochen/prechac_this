@@ -7,7 +7,7 @@ extension ThrowColorScheme on ColorScheme {
   Color colorForStyle(ThrowStyle style) {
     switch (style) {
       case ThrowStyle.self:
-        return onBackground;
+        return selfThrowColor;
 
       case ThrowStyle.classic:
         return classicThrowColor;
