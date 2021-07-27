@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:prechac_this/core/computer.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
@@ -9,7 +10,7 @@ void main() {
   group('PatternsRepository', () {
     late PatternsRepository patternsRepository;
     setUp(() {
-      patternsRepository = PatternsRepository();
+      patternsRepository = PatternsRepository(computer: Computer());
     });
 
     group('patterns()', () {
