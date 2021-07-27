@@ -17,7 +17,7 @@ void main() {
       test('self', () {
         expect(
           scheme.colorForStyle(ThrowStyle.self),
-          scheme.onBackground,
+          scheme.selfThrowColor,
         );
       });
 
@@ -59,7 +59,7 @@ void main() {
       test('self', () {
         expect(
           scheme.colorForStyle(ThrowStyle.self),
-          scheme.onBackground,
+          scheme.selfThrowColor,
         );
       });
 
