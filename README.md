@@ -8,7 +8,7 @@ Juggling Pattern Generator
 
 ----
 
-Rewrite of [prechacthis.org][prechac_this_link].
+Rewrite of [prechacthis.org][prechac_this_link] as a Flutter App.
 
 [coverage_badge]: https://codecov.io/gh/jjochen/prechac_this/branch/main/graph/badge.svg?token=g31exHQG4P
 [coverage_link]: https://codecov.io/gh/jjochen/prechac_this
