@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
-
-import 'throwable.dart';
+import 'package:prechac_this/patterns_repository/models/throwable.dart';
 
 @immutable
 class Throw extends Throwable {

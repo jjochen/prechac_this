@@ -1,6 +1,5 @@
 import 'package:fraction/fraction.dart';
-
-import '../../patterns_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension ParserThrowConstraint on ThrowConstraint {
   ThrowConstraint merge(ThrowConstraint other) {

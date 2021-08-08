@@ -3,9 +3,8 @@ import 'dart:collection';
 import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
-
-import '../../core/core.dart';
-import 'throwable.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/models/throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {

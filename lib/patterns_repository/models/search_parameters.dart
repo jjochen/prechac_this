@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/core.dart';
+import 'package:prechac_this/core/core.dart';
 
 @immutable
 class SearchParameters extends Equatable {

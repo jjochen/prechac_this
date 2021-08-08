@@ -1,11 +1,10 @@
 import 'package:fraction/fraction.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_throw.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/engine/landing_sites.dart';
+import 'package:prechac_this/patterns_repository/models/pattern_constraint.dart';
+import 'package:prechac_this/patterns_repository/models/throw.dart';
 import 'package:trotter/trotter.dart';
-
-import '../models/pattern_constraint.dart';
-import '../models/throw.dart';
-import 'engine_throw.dart';
-import 'engine_throw_constraint.dart';
-import 'landing_sites.dart';
 
 extension EnginePatternConstraint on PatternConstraint {
   Iterable<List<int>> permutationsOfPossibleLandingSites() {

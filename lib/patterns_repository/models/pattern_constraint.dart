@@ -1,6 +1,6 @@
-import '../../core/core.dart';
-import 'patternable.dart';
-import 'throw_constraint.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/models/patternable.dart';
+import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
 
 class PatternConstraint
     extends Patternable<PatternConstraint, ThrowConstraint> {

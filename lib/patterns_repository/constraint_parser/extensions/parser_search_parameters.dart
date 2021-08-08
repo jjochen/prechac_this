@@ -1,8 +1,7 @@
 import 'package:petitparser/petitparser.dart';
-
-import '../../patterns_repository.dart';
-import '../constraint_parser_definition.dart';
-import 'parser_pattern_constraint.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/constraint_parser_definition.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/extensions/parser_pattern_constraint.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension ParserSearchParameters on SearchParameters {
   int get unwrappedMinNumberOfPasses =>

@@ -1,7 +1,6 @@
 import 'package:dartx/dartx.dart';
-
-import '../../patterns_repository.dart';
-import 'parser_throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/extensions/parser_throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension ParserPatternConstraint on PatternConstraint {
   PatternConstraint mergeThrowSequence(List<ThrowConstraint> otherSequence) {

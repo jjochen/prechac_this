@@ -1,7 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:petitparser/petitparser.dart';
-
-import '../patterns_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 class ConstraintParserDefinition extends GrammarDefinition {
   @override

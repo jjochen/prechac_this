@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../patterns_bloc/patterns_bloc.dart';
-import '../search_results.dart';
+import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
+import 'package:prechac_this/screens/search_results/search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
   const SearchResultsPage({Key? key}) : super(key: key);
