@@ -26,7 +26,7 @@ class PatternsUpdated extends PatternsEvent {
 class PatternsNotUpdated extends PatternsEvent {
   const PatternsNotUpdated(this.exception);
 
-  final Exception exception;
+  final Object exception;
 
   @override
   List<Object> get props => [exception];

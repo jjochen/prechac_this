@@ -1,15 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../screens/attributions/attributions.dart';
-import '../screens/home/home.dart';
+import 'package:prechac_this/screens/attributions/attributions.dart';
+import 'package:prechac_this/screens/home/home.dart';
 
 class AppRouter {
   static PageRoute pageRoute(
     Widget child,
     RoutingData data,
   ) =>
-      MaterialPageRoute(
+      MaterialPageRoute<dynamic>(
         builder: (context) => child,
         settings: RouteSettings(
           name: data.fullRoute,

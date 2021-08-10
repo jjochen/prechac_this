@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
-import '../../../patterns_repository/patterns_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 part 'patterns_event.dart';
 part 'patterns_state.dart';
@@ -35,7 +34,7 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
     await _patternsRepository
         .patterns(event.searchParameters)
         .then((patterns) => add(PatternsUpdated(patterns)))
-        .catchError((error) => add(PatternsNotUpdated(error)));
+        .catchError((Object error) => add(PatternsNotUpdated(error)));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(

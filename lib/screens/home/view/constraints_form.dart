@@ -3,11 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:prechac_this/l10n/l10n.dart';
+import 'package:prechac_this/screens/home/home.dart';
 import 'package:select_form_field/select_form_field.dart';
-
-import '../../../l10n/l10n.dart';
-import '../home.dart';
-import 'error_messages.dart';
 
 class ConstraintsForm extends StatelessWidget {
   const ConstraintsForm({Key? key}) : super(key: key);
@@ -89,9 +87,10 @@ class _DropDownFormField extends FormField<int?> {
             builder: (state) {
               return SelectFormField(
                 onChanged: (stringValue) {
-                  var intValue = int.parse(stringValue);
+                  final intValue = int.parse(stringValue);
                   return onChanged(intValue);
                 },
+                // ignore: avoid_redundant_argument_values
                 type: SelectFormFieldType.dropdown,
                 initialValue: initialValue.toString(),
                 enabled: enabled,
@@ -109,7 +108,7 @@ class _DropDownFormField extends FormField<int?> {
     int maxValue,
     bool isRequired,
   ) {
-    var items = <Map<String, dynamic>>[];
+    final items = <Map<String, Object?>>[];
     if (!isRequired) {
       items.add({
         'value': null,
@@ -289,6 +288,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
               .add(MaxNumberOfPassesDidChange(maxNumberOfPasses)),
           minValue: MaxNumberOfPasses.minValue,
           maxValue: min(MaxNumberOfPasses.maxValue, state.period.value),
+          // ignore: avoid_redundant_argument_values
           initialValue: MaxNumberOfPasses.defaultValue,
           enabled: !state.status.isSubmissionInProgress,
           isRequired: false,

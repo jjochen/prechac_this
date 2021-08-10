@@ -39,14 +39,14 @@ class Computer<M, R> {
       final output = resultData as IsolateOutput;
       if (output.success) {
         assert(output.result is R);
-        completer.complete(output.result);
+        completer.complete(output.result as R);
       } else {
         final error = output.error ?? Exception('unknown error');
         completer.completeError(error);
       }
     });
 
-    _exitPort?.listen((message) {
+    _exitPort?.listen((dynamic message) {
       assert(completer.isCompleted);
     });
 

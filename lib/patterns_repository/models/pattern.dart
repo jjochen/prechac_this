@@ -1,9 +1,8 @@
 import 'package:fraction/fraction.dart';
-
-import '../../core/core.dart';
-import '../patterns_repository.dart';
-import 'patternable.dart';
-import 'throw.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/models/patternable.dart';
+import 'package:prechac_this/patterns_repository/models/throw.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 enum ThrowStyle { self, classic, equi, bi, instantBi }
 
@@ -29,7 +28,7 @@ class Pattern extends Patternable<Pattern, Throw> {
     required Throw newThrow,
     required int index,
   }) {
-    var newSequence = List<Throw>.from(throwSequence);
+    final newSequence = List<Throw>.from(throwSequence);
     newSequence[index] = newThrow;
     return Pattern(
       numberOfJugglers: numberOfJugglers,
@@ -40,7 +39,7 @@ class Pattern extends Patternable<Pattern, Throw> {
   late Fraction numberOfObjects = _getNumberOfObjects();
   Fraction _getNumberOfObjects() {
     var sumOfHeights = 0.toFraction();
-    for (var aThrow in this) {
+    for (final aThrow in this) {
       sumOfHeights += aThrow.height;
     }
 
@@ -51,7 +50,7 @@ class Pattern extends Patternable<Pattern, Throw> {
     final components = id.split(_idSeparator);
 
     final int numberOfJugglers;
-    var throwSequence = <Throw>[];
+    final throwSequence = <Throw>[];
     try {
       numberOfJugglers = int.parse(components.removeAt(0));
       for (final throwId in components) {
@@ -73,7 +72,7 @@ class Pattern extends Patternable<Pattern, Throw> {
 
   late String id = _getId();
   String _getId() {
-    var components = <String>[
+    final components = <String>[
       numberOfJugglers.toString(),
       ...throwSequence.map((aThrow) => aThrow.id)
     ];

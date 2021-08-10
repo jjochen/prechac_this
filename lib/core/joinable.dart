@@ -1,11 +1,11 @@
 extension Joinable<E> on Iterable<E> {
   List<E> joinToList(E separator) {
-    var iterator = this.iterator;
+    final iterator = this.iterator;
     if (!iterator.moveNext()) {
       return [];
     }
 
-    var list = <E>[iterator.current];
+    final list = <E>[iterator.current];
     while (iterator.moveNext()) {
       list..add(separator)..add(iterator.current);
     }

@@ -1,6 +1,6 @@
-import '../../core/core.dart';
-import 'patternable.dart';
-import 'throw_constraint.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/models/patternable.dart';
+import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
 
 class PatternConstraint
     extends Patternable<PatternConstraint, ThrowConstraint> {
@@ -71,7 +71,7 @@ class PatternConstraint
     required ThrowConstraint newThrow,
     required int index,
   }) {
-    var newSequence = List<ThrowConstraint>.from(throwSequence);
+    final newSequence = List<ThrowConstraint>.from(throwSequence);
     newSequence[index] = newThrow;
     return copyWith(
       throwSequence: newSequence,

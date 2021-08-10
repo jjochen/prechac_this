@@ -3,9 +3,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-
-import 'app/app.dart';
-import 'app/app_bloc_observer.dart';
+import 'package:prechac_this/app/app.dart';
+import 'package:prechac_this/app/app_bloc_observer.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();

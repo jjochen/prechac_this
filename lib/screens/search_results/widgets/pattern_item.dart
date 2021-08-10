@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/core.dart';
-import '../../../patterns_repository/patterns_repository.dart';
-import '../extensions/throw_color_scheme.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+import 'package:prechac_this/screens/search_results/extensions/throw_color_scheme.dart';
 
 class PatternItem extends StatelessWidget {
   const PatternItem({

@@ -11,8 +11,8 @@ void main() {
         [1, 0, 2, 0, 3],
       );
       expect(
-        [].joinToList(0),
-        [],
+        <int>[].joinToList(0),
+        <int>[],
       );
     });
   });

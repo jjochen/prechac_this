@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/core.dart';
+import 'package:prechac_this/core/core.dart';
 
 @immutable
 class SearchParameters extends Equatable {
@@ -66,7 +65,7 @@ class SearchParameters extends Equatable {
   }
 
   Map<String, String> toQueryParameters() {
-    var queryParameters = <String, String>{}
+    final queryParameters = <String, String>{}
       ..setNonNegativeIntForKey(numberOfJugglers, 'number_of_jugglers')
       ..setNonNegativeIntForKey(period, 'period')
       ..setNonNegativeIntForKey(numberOfObjects, 'number_of_objects')

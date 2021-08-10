@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
-
-import '../core/core.dart';
-import 'constraint_parser/parser.dart';
-import 'engine/engine.dart';
-import 'models/models.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/constraint_parser/parser.dart';
+import 'package:prechac_this/patterns_repository/engine/engine.dart';
+import 'package:prechac_this/patterns_repository/models/models.dart';
 
 export 'exceptions/pattern_repository_exception.dart';
 export 'models/models.dart';
@@ -17,7 +16,7 @@ class PatternsRepository {
   final Computer<SearchParameters, List<Pattern>> computer;
 
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return await computer.run(findPatterns, parameters);
+    return computer.run(findPatterns, parameters);
   }
 
   @visibleForTesting

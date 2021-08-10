@@ -3,9 +3,8 @@ import 'dart:collection';
 import 'package:dartx/dartx.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
-
-import '../../core/core.dart';
-import 'throwable.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/models/throwable.dart';
 
 abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     with Comparable<P>, Compare<P>, EquatableMixin, IterableMixin<T> {
@@ -30,7 +29,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   late int numberOfPasses = _getNumberOfPasses();
   int _getNumberOfPasses() {
     var numberOfPasses = 0;
-    for (var aThrow in this) {
+    for (final aThrow in this) {
       if (aThrow.isPass) {
         numberOfPasses++;
       }
@@ -45,7 +44,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
   P rotate([int numberOfThrows = 1]);
 
   List<P> allRotations() {
-    var rotations = <P>[];
+    final rotations = <P>[];
     for (var i = 0; i < period; i++) {
       rotations.add(rotate(i));
     }
@@ -101,7 +100,7 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
     }
 
     var index = 0;
-    for (var thisThrow in this) {
+    for (final thisThrow in this) {
       final otherThrow = other.throwAtIndex(index);
       final throwComparator = thisThrow.compareTo(otherThrow);
       if (throwComparator != 0) {

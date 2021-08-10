@@ -1,10 +1,9 @@
 import 'package:dartx/dartx.dart';
-
-import '../../core/core.dart';
-import '../models/models.dart';
-import '../patterns_repository.dart';
-import 'engine_pattern.dart';
-import 'engine_pattern_constraint.dart';
+import 'package:prechac_this/core/core.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_pattern.dart';
+import 'package:prechac_this/patterns_repository/engine/engine_pattern_constraint.dart';
+import 'package:prechac_this/patterns_repository/models/models.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 class Engine {
   const Engine();
@@ -26,7 +25,7 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
-    var setOfPatterns = <Pattern>{};
+    final setOfPatterns = <Pattern>{};
 
     final permutations = patternConstraint.permutationsOfPossibleLandingSites();
     for (final landingSites in permutations) {

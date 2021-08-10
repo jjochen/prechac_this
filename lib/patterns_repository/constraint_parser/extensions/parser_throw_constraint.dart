@@ -1,6 +1,5 @@
 import 'package:fraction/fraction.dart';
-
-import '../../patterns_repository.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension ParserThrowConstraint on ThrowConstraint {
   ThrowConstraint merge(ThrowConstraint other) {
@@ -12,15 +11,15 @@ extension ParserThrowConstraint on ThrowConstraint {
     } else if (passingIndex == null) {
       mergedPassingIndex = other.passingIndex;
     } else {
-      final message = '$this and $other can\'t be merged.';
-      throw (ConstraintsInvalidException(message));
+      final message = "$this and $other can't be merged.";
+      throw ConstraintsInvalidException(message);
     }
 
     final mergedLimitToPass = limitToPass || other.limitToPass;
 
     if (mergedLimitToPass && mergedPassingIndex == 0) {
-      final message = '$this and $other can\'t be merged.';
-      throw (ConstraintsInvalidException(message));
+      final message = "$this and $other can't be merged.";
+      throw ConstraintsInvalidException(message);
     }
 
     final Fraction? mergedHeight;
@@ -31,8 +30,8 @@ extension ParserThrowConstraint on ThrowConstraint {
     } else if (height == null) {
       mergedHeight = other.height;
     } else {
-      final message = '$this and $other can\'t be merged.';
-      throw (ConstraintsInvalidException(message));
+      final message = "$this and $other can't be merged.";
+      throw ConstraintsInvalidException(message);
     }
 
     return ThrowConstraint(

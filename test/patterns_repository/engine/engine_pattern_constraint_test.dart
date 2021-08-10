@@ -257,7 +257,7 @@ void main() {
             index: 3,
             landingSite: 3,
           ),
-          [],
+          <Throw>[],
         );
       });
 
@@ -272,7 +272,7 @@ void main() {
             index: 3,
             landingSite: 2,
           ),
-          [],
+          <Throw>[],
         );
       });
     });

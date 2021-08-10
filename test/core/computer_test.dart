@@ -21,7 +21,7 @@ void main() {
         expect(
             computer.run(validMethod, 1).then((output) {
               expect(output, '1');
-            }).catchError((error) {
+            }).catchError((Object error) {
               assert(false);
             }),
             completes);
@@ -31,7 +31,7 @@ void main() {
         expect(
             computer.run(throwingMethod, 1).then((output) {
               assert(false);
-            }).catchError((error) {
+            }).catchError((Object error) {
               expect(error, isA<Exception>());
             }),
             completes);

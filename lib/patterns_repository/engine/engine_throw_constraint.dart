@@ -1,6 +1,5 @@
 import 'package:fraction/fraction.dart';
-
-import '../models/throw_constraint.dart';
+import 'package:prechac_this/patterns_repository/models/throw_constraint.dart';
 
 extension EngineThrowConstraint on ThrowConstraint {
   int landingSite({

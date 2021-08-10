@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   group('CartesianProductIterable', () {
     test('calculates cartesian product', () {
-      final iterable = CartesianProductIterable([
+      final iterable = CartesianProductIterable<int?>([
         [1, null, 3],
         [4],
         [5, 6],
@@ -25,22 +25,22 @@ void main() {
     });
 
     test('does not fail with empty list', () {
-      final iterable = CartesianProductIterable([
+      final iterable = CartesianProductIterable<int>([
         [1, 2, 3],
         [],
         [5, 6],
       ]);
       expect(
         iterable.toList(),
-        [],
+        <int>[],
       );
     });
 
     test('does not fail with no lists', () {
-      final iterable = CartesianProductIterable([]);
+      final iterable = CartesianProductIterable<int>([]);
       expect(
         iterable.toList(),
-        [],
+        <int>[],
       );
     });
   });

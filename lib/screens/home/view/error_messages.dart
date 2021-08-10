@@ -1,6 +1,6 @@
-import '../../../l10n/l10n.dart';
-import '../../../patterns_repository/patterns_repository.dart';
-import '../home.dart';
+import 'package:prechac_this/l10n/l10n.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+import 'package:prechac_this/screens/home/home.dart';
 
 extension ErrorMessages on AppLocalizations {
   String? errorMessage(dynamic error) {

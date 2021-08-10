@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../ui_core/ui_core.dart';
+import 'package:prechac_this/ui_core/ui_core.dart';
 
 final lightTheme = ThemeData.from(
   textTheme: GoogleFonts.openSansTextTheme(

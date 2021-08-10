@@ -18,13 +18,13 @@ void main() {
         late Parser parser;
 
         setUp(() {
-          parser = definition.build();
+          parser = definition.build<List<ThrowConstraint>>();
         });
 
         test('empty string', () {
           expect(
             parser.parse('').value,
-            [],
+            <ThrowConstraint>[],
           );
         });
 
@@ -57,7 +57,7 @@ void main() {
 
         setUp(() {
           Parser start() => definition.throwConstraint().end();
-          parser = definition.build(start: start);
+          parser = definition.build<ThrowConstraint>(start: start);
         });
 
         group('self', () {
@@ -94,21 +94,21 @@ void main() {
           test('4.5p', () {
             expect(
               parser.parse('4.5p').value,
-              ThrowConstraint.pass(height: 4.5, passingIndex: null),
+              ThrowConstraint.pass(height: 4.5),
             );
           });
 
           test('4p', () {
             expect(
               parser.parse('4p').value,
-              ThrowConstraint.pass(height: 4, passingIndex: null),
+              ThrowConstraint.pass(height: 4),
             );
           });
 
           test('4p_', () {
             expect(
               parser.parse('4p_').value,
-              ThrowConstraint.pass(height: 4, passingIndex: null),
+              ThrowConstraint.pass(height: 4),
             );
           });
 
@@ -122,7 +122,7 @@ void main() {
           test('_p_', () {
             expect(
               parser.parse('_p_').value,
-              ThrowConstraint.pass(height: null, passingIndex: null),
+              ThrowConstraint.pass(height: null),
             );
           });
         });
@@ -156,7 +156,7 @@ void main() {
 
         setUp(() {
           Parser start() => definition.integerOrPlaceholder().end();
-          parser = definition.build(start: start);
+          parser = definition.build<int?>(start: start);
         });
 
         group('valid', () {
@@ -204,7 +204,7 @@ void main() {
 
         setUp(() {
           Parser start() => definition.floatOrPlaceholder().end();
-          parser = definition.build(start: start);
+          parser = definition.build<double?>(start: start);
         });
 
         group('valid', () {

@@ -1,7 +1,6 @@
 import 'package:fraction/fraction.dart';
-
-import '../models/pattern.dart';
-import '../patterns_repository.dart';
+import 'package:prechac_this/patterns_repository/models/pattern.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension EnginePattern on Pattern {
   bool satisfiesConstraint(PatternConstraint constraint) {

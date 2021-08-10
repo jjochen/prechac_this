@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../app/theme.dart';
-import '../../../patterns_repository/patterns_repository.dart';
+import 'package:prechac_this/app/theme.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension ThrowColorScheme on ColorScheme {
   Color colorForStyle(ThrowStyle style) {

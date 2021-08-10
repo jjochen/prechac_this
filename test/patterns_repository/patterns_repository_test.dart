@@ -10,7 +10,9 @@ void main() {
   group('PatternsRepository', () {
     late PatternsRepository patternsRepository;
     setUp(() {
-      patternsRepository = PatternsRepository(computer: Computer());
+      patternsRepository = PatternsRepository(
+        computer: Computer<SearchParameters, List<Pattern>>(),
+      );
     });
 
     group('patterns()', () {
