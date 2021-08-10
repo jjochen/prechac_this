@@ -1,6 +1,6 @@
 extension ConfigMap on Map<String, dynamic> {
   V? tryValueForKey<V>(String key) {
-    final value = this[key];
+    final dynamic value = this[key];
 
     if (value == null) {
       return null;
@@ -14,7 +14,7 @@ extension ConfigMap on Map<String, dynamic> {
   }
 
   V valueForKey<V>(String key, {required V fallback}) {
-    final value = this[key];
+    final dynamic value = this[key];
 
     if (value == null) {
       return fallback;
@@ -49,7 +49,7 @@ extension ConfigMap on Map<String, dynamic> {
   }
 
   bool boolForKey(String key, {required bool fallback}) {
-    final value = tryValueForKey<dynamic>(key);
+    final dynamic value = tryValueForKey<dynamic>(key);
 
     if (value == null) {
       return fallback;
@@ -83,7 +83,7 @@ extension ConfigMap on Map<String, dynamic> {
   }
 
   int intForKey(String key, {required int fallback}) {
-    final value = tryValueForKey<dynamic>(key);
+    final dynamic value = tryValueForKey<dynamic>(key);
 
     if (value == null) {
       return fallback;
@@ -101,7 +101,7 @@ extension ConfigMap on Map<String, dynamic> {
   }
 
   double doubleForKey(String key, {required double fallback}) {
-    final value = tryValueForKey<dynamic>(key);
+    final dynamic value = tryValueForKey<dynamic>(key);
 
     if (value == null) {
       return fallback;

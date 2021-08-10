@@ -46,7 +46,7 @@ class Computer<M, R> {
       }
     });
 
-    _exitPort?.listen((message) {
+    _exitPort?.listen((dynamic message) {
       assert(completer.isCompleted);
     });
 

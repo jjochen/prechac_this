@@ -24,7 +24,7 @@ class PatternsLoaded extends PatternsState {
 class PatternsNotLoaded extends PatternsState {
   const PatternsNotLoaded(this.exception);
 
-  final Exception exception;
+  final Object exception;
 
   @override
   List<Object> get props => [exception];

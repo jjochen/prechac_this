@@ -71,7 +71,7 @@ class PatternConstraint
     required ThrowConstraint newThrow,
     required int index,
   }) {
-    var newSequence = List<ThrowConstraint>.from(throwSequence);
+    final newSequence = List<ThrowConstraint>.from(throwSequence);
     newSequence[index] = newThrow;
     return copyWith(
       throwSequence: newSequence,

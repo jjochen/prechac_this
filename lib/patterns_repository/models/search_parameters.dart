@@ -65,7 +65,7 @@ class SearchParameters extends Equatable {
   }
 
   Map<String, String> toQueryParameters() {
-    var queryParameters = <String, String>{}
+    final queryParameters = <String, String>{}
       ..setNonNegativeIntForKey(numberOfJugglers, 'number_of_jugglers')
       ..setNonNegativeIntForKey(period, 'period')
       ..setNonNegativeIntForKey(numberOfObjects, 'number_of_objects')

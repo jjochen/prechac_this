@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
     return BlocListener<PatternsBloc, PatternsState>(
       listener: (context, state) {
         if (state is PatternsLoaded) {
-          Navigator.push(
+          Navigator.push<void>(
             context,
             SearchResultsPage.route(),
           );

@@ -16,7 +16,7 @@ class PatternsRepository {
   final Computer<SearchParameters, List<Pattern>> computer;
 
   Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return await computer.run(findPatterns, parameters);
+    return computer.run(findPatterns, parameters);
   }
 
   @visibleForTesting

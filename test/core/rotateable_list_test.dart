@@ -7,7 +7,7 @@ void main() {
   group('RotateableList', () {
     late List list;
     setUp(() {
-      list = [1, 2, 3];
+      list = <int>[1, 2, 3];
     });
 
     test('rotates 1', () {

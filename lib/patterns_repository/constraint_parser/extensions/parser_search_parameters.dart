@@ -10,7 +10,7 @@ extension ParserSearchParameters on SearchParameters {
       maxNumberOfPasses < 0 ? period : maxNumberOfPasses;
 
   PatternConstraint parse() {
-    final parser = ConstraintParserDefinition().build();
+    final parser = ConstraintParserDefinition().build<List<ThrowConstraint>>();
     final List<ThrowConstraint> throwSequence;
     try {
       throwSequence = parser.parse(contains).value;

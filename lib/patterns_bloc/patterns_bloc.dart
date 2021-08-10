@@ -34,7 +34,7 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
     await _patternsRepository
         .patterns(event.searchParameters)
         .then((patterns) => add(PatternsUpdated(patterns)))
-        .catchError((error) => add(PatternsNotUpdated(error)));
+        .catchError((Object error) => add(PatternsNotUpdated(error)));
   }
 
   Stream<PatternsState> _mapPatternsUpdatedToState(

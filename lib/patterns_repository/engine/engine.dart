@@ -25,7 +25,7 @@ class Engine {
     //   > 4 2p1 1 1p1
     //   (second permutation has too many objects)
 
-    var setOfPatterns = <Pattern>{};
+    final setOfPatterns = <Pattern>{};
 
     final permutations = patternConstraint.permutationsOfPossibleLandingSites();
     for (final landingSites in permutations) {

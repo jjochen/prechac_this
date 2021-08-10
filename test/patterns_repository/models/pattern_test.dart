@@ -360,7 +360,7 @@ void main() {
     });
 
     test(
-        'throwAtIndexToString returns correct string representation'
+        'throwAtIndexToString returns correct string representation '
         'for 4 jugglers', () {
       final pattern = Pattern(
         numberOfJugglers: 4,
@@ -377,7 +377,7 @@ void main() {
     });
 
     test(
-        'throwAtIndexToString returns correct string representation'
+        'throwAtIndexToString returns correct string representation '
         'for 2 jugglers', () {
       final pattern = Pattern(
         numberOfJugglers: 2,
@@ -452,7 +452,7 @@ void main() {
         numberOfJugglers: 4,
         throwSequence: [
           Throw.self(height: 4),
-          Throw(height: (3.5).toFraction(), passingIndex: 3),
+          Throw(height: 3.5.toFraction(), passingIndex: 3),
           Throw.pass(height: 4.5),
         ],
       );

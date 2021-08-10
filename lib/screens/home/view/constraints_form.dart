@@ -87,9 +87,10 @@ class _DropDownFormField extends FormField<int?> {
             builder: (state) {
               return SelectFormField(
                 onChanged: (stringValue) {
-                  var intValue = int.parse(stringValue);
+                  final intValue = int.parse(stringValue);
                   return onChanged(intValue);
                 },
+                // ignore: avoid_redundant_argument_values
                 type: SelectFormFieldType.dropdown,
                 initialValue: initialValue.toString(),
                 enabled: enabled,
@@ -107,7 +108,7 @@ class _DropDownFormField extends FormField<int?> {
     int maxValue,
     bool isRequired,
   ) {
-    var items = <Map<String, dynamic>>[];
+    final items = <Map<String, Object?>>[];
     if (!isRequired) {
       items.add({
         'value': null,
@@ -287,6 +288,7 @@ class _MaxNumberOfPassesInput extends StatelessWidget {
               .add(MaxNumberOfPassesDidChange(maxNumberOfPasses)),
           minValue: MaxNumberOfPasses.minValue,
           maxValue: min(MaxNumberOfPasses.maxValue, state.period.value),
+          // ignore: avoid_redundant_argument_values
           initialValue: MaxNumberOfPasses.defaultValue,
           enabled: !state.status.isSubmissionInProgress,
           isRequired: false,

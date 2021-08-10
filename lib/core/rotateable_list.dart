@@ -4,7 +4,7 @@ extension RotateableList<T> on List<T> {
       return this;
     }
 
-    var i = v % length;
+    final i = v % length;
     return sublist(i)..addAll(sublist(0, i));
   }
 }

@@ -48,7 +48,7 @@ class CartesianProductIterator<E> extends Iterator<List<E>> {
 
   @override
   List<E> get current {
-    var elements = <E>[];
+    final elements = <E>[];
     var indexOfList = 0;
 
     for (final list in lists) {

@@ -48,7 +48,7 @@ extension EnginePatternConstraint on PatternConstraint {
       negativeSelfHeight = landingSite - index;
     }
 
-    var results = <Throw>[];
+    final results = <Throw>[];
     var possibleHeight = negativeSelfHeight.toFraction();
     var possiblePassingIndex = 0;
     while (possibleHeight <= maxHeight.toFraction()) {

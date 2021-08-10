@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 class SearchResultsPage extends StatelessWidget {
   const SearchResultsPage({Key? key}) : super(key: key);
 
-  static Route route() {
+  static Route<void> route() {
     return MaterialPageRoute<void>(builder: (_) => const SearchResultsPage());
   }
 
@@ -14,7 +15,7 @@ class SearchResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PatternsBloc, PatternsState>(
       builder: (context, state) {
-        final patterns = state is PatternsLoaded ? state.patterns : [];
+        final patterns = state is PatternsLoaded ? state.patterns : <Pattern>[];
         return Scaffold(
           appBar: AppBar(
             title: const Text('Results'),
