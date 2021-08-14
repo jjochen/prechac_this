@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.prechacThis">
+    package="com.jochenpfeiffer.prechac_this">
    <application
         android:label="PrechacThis"
         android:icon="@mipmap/ic_launcher">

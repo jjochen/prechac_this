@@ -23,9 +23,9 @@ class AttributionsPage extends LicensePage {
   @override
   Widget? get applicationIcon {
     return Image.asset(
-      'assets/icon_transparent.png',
+      'assets/ic_launcher.png',
       key: const Key('application_icon_image'),
-      width: 100,
+      width: 96,
     );
   }
 }
