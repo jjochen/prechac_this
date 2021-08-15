@@ -1,3 +1,18 @@
+### Custom ###
+
+# account related fastlane config
+fastlane/Appfile
+fastlane/Matchfile
+fastlane/README.md
+
+# build output
+*.dSYM.zip
+*.ipa
+
+# Google Firebase / Firestore related
+**/ios/Runner/GoogleService-Info.plist
+**/android/app/google-services.json
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/flutter,fastlane,macos,visualstudiocode,androidstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter,fastlane,macos,visualstudiocode,androidstudio
