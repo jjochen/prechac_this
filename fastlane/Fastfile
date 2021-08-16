@@ -95,7 +95,7 @@ end
 
 def test(subdir)
   UI.message("test #{ subdir }")
-  run_flutter_command'test', subdir: subdir
+  run_flutter_command 'test --coverage --test-randomize-ordering-seed random', subdir: subdir
 end
 
 def run_flutter_command(command, subdir: '.')
