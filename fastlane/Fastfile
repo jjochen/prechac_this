@@ -42,7 +42,7 @@ end
 platform :ios do
   desc 'Push a new beta build to TestFlight'
   lane :beta do
-    xcversion(version: '~> 12.4')
+    xcversion(version: '~> 12.5')
 
     match(type: 'appstore')
 
