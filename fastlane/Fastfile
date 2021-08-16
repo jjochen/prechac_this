@@ -64,7 +64,7 @@ end
 platform :android do
   desc 'Submit a new version to the Google Play with given track'
   lane :submit do |options|
-    increment_build_number
+    increment_build_number!
 
     UI.message('Build flutter library')
     run_flutter_command 'clean'
