@@ -46,7 +46,7 @@ platform :ios do
 
     match(type: 'appstore')
 
-    increment_build_number
+    increment_build_number!
 
     UI.message 'Build flutter library'
     run_flutter_command 'clean'
