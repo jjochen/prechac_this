@@ -1,0 +1,149 @@
+fastlane_require 'semantic'
+
+
+desc 'Analyze and test all packages'
+lane :test do |options|
+  check_formatting
+  analyze '.'
+  test '.'
+end
+
+desc 'Format'
+lane :format do
+  format
+end
+
+desc 'Install dependencies'
+lane :install_dependencies do
+  run_command 'bundle'
+  run_flutter_command 'pub get'
+end
+
+desc 'Update dependencies'
+lane :update_dependencies do
+  run_command 'bundle update'
+  run_flutter_command 'clean'
+  run_flutter_command 'pub upgrade'
+  run_flutter_command 'pub outdated'
+end
+
+desc 'Bump version'
+lane :bump_version do |options|
+  term = options[:term] || 'patch'
+  increment_version! term
+end
+
+desc 'Bump build number'
+lane :bump_build_number do
+  increment_build_number!
+end
+
+
+platform :ios do
+  desc 'Push a new beta build to TestFlight'
+  lane :beta do
+    xcversion(version: '~> 12.5')
+
+    match(type: 'appstore')
+
+    increment_build_number!
+
+    UI.message 'Build flutter library'
+    run_flutter_command 'clean'
+    run_flutter_command 'doctor'
+    run_flutter_command 'pub get'
+    run_flutter_command 'build ios --release --no-codesign'
+
+    build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
+
+    upload_to_testflight
+  end
+end
+
+
+platform :android do
+  desc 'Submit a new version to the Google Play with given track'
+  lane :submit do |options|
+    increment_build_number!
+
+    UI.message('Build android app bundle')
+    run_flutter_command 'clean'
+    run_flutter_command 'doctor'
+    run_flutter_command 'pub get'
+    run_flutter_command 'build appbundle'
+
+    track = options['track'] || 'internal'
+    upload_to_play_store(track: track, release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
+  end
+end
+
+
+def format()
+  UI.message 'format .'
+  run_flutter_command 'format .'
+end
+
+def check_formatting()
+  UI.message 'check formatting'
+  run_flutter_command 'format --dry-run --set-exit-if-changed .'
+end
+
+def analyze(subdir)
+  UI.message "analyze #{ subdir }"
+  run_flutter_command 'analyze', subdir: subdir
+end
+
+def test(subdir)
+  UI.message("test #{ subdir }")
+  run_flutter_command 'test --coverage --test-randomize-ordering-seed random', subdir: subdir
+end
+
+def run_flutter_command(command, subdir: '.')
+  run_command "fvm flutter #{ command }", subdir: subdir
+end
+
+def run_command(command, subdir: '.')
+  path = File.join('..', subdir)
+  Dir.chdir(path) do
+    sh command
+  end
+end
+
+def increment_version! term
+  pubspec = PubSpec.new '../pubspec.yaml'
+  version = Semantic::Version.new pubspec.version
+  new_version = version.increment!(term)
+  new_version.build = version.build
+  pubspec.version = new_version.to_s
+  pubspec.write!
+end
+
+def increment_build_number!
+  pubspec = PubSpec.new '../pubspec.yaml'
+  version = Semantic::Version.new pubspec.version
+  version.build = (version.build.to_i + 1).to_s
+  pubspec.version = version.to_s
+  pubspec.write!
+end
+
+class PubSpec
+  VERSION_REGEX = %r{^\w*version\:\w*(?<version>.*)\w*$}
+
+  def initialize path
+    @path = path
+    @content = File.read(@path)
+  end
+
+  def write!
+    File.open(@path, 'w') { |file| file.write(@content) }
+  end
+
+  def version
+    match = @content.match(VERSION_REGEX)
+    return match[:version].strip!
+  end
+
+  def version=(v)
+    @content = @content.gsub(VERSION_REGEX, "version: #{ v }")
+  end
+end
