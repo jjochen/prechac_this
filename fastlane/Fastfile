@@ -66,14 +66,14 @@ platform :android do
   lane :submit do |options|
     increment_build_number!
 
-    UI.message('Build flutter library')
+    UI.message('Build android app bundle')
     run_flutter_command 'clean'
     run_flutter_command 'doctor'
     run_flutter_command 'pub get'
     run_flutter_command 'build appbundle'
 
     track = options['track'] || 'internal'
-    upload_to_play_store(track: track, aab: 'build/app/outputs/bundle/release/app-release.aab')
+    upload_to_play_store(track: track, release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
   end
 end
 
