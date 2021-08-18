@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/core/core.dart';
 import 'package:prechac_this/patterns_repository/models/patternable.dart';
@@ -118,4 +119,33 @@ class Pattern extends Patternable<Pattern, Throw> {
       yield f(throwAtIndexToString(index), styleOfThrowAtIndex(index));
     }
   }
+
+  List<Fraction> pointsInTime() {
+    final points = <Fraction>{};
+    for (var juggler = 0; juggler < numberOfJugglers; juggler++) {
+      for (var index = 0; index < period; index++) {
+        points.add(
+          (index.toFraction() + juggler.toFraction() * prechator).reduce(),
+        );
+      }
+    }
+    return points.sorted();
+  }
+
+  // PointInTime
+  // ThrowingJuggler
+  // ThrowingSiteswapPosition
+  // Throw
+  // LandingTime
+  // CatchingJuggler
+  // LandingSiteswapPosition
+
+  // clubs in right hand:
+  // clubs in left hand:
+  // throwing hand:
+  // throw:
+  // tramline:
+  // catching hand:
+  // caused by:
+
 }
