@@ -8,6 +8,29 @@ import '../../helpers/helpers.dart';
 
 void main() {
   group('ThrowInfo', () {
+    test('supports value comparisons', () {
+      expect(
+        ThrowInfo(
+          pointInTime: Fraction(1, 2),
+          throwingJuggler: 1,
+          throwingSiteswapPosition: 3,
+          theThrow: Throw.pass(height: 4),
+          landingTime: Fraction(3),
+          catchingJuggler: 0,
+          numberOfThrownObjects: 1,
+        ),
+        ThrowInfo(
+          pointInTime: Fraction(1, 2),
+          throwingJuggler: 1,
+          throwingSiteswapPosition: 3,
+          theThrow: Throw.pass(height: 4),
+          landingTime: Fraction(3),
+          catchingJuggler: 0,
+          numberOfThrownObjects: 1,
+        ),
+      );
+    });
+
     group('4 2p 1 1p', () {
       late Pattern pattern;
       setUp(() {

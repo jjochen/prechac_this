@@ -13,7 +13,9 @@ class PatternInfo {
   // catching hand:
   // caused by:
 
-  PatternInfo({required this.pattern});
+  PatternInfo({
+    required this.pattern,
+  });
 
   final Pattern pattern;
 

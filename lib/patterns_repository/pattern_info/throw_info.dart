@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
-class ThrowInfo {
+class ThrowInfo with EquatableMixin {
   ThrowInfo({
     required this.pointInTime,
     required this.throwingJuggler,
@@ -48,4 +49,37 @@ class ThrowInfo {
       numberOfThrownObjects: numberOfThrownObjects,
     );
   }
+
+  ThrowInfo copyWith({
+    Fraction? pointInTime,
+    int? throwingJuggler,
+    int? throwingSiteswapPosition,
+    Throw? theThrow,
+    Fraction? landingTime,
+    int? catchingJuggler,
+    int? numberOfThrownObjects,
+  }) {
+    return ThrowInfo(
+      pointInTime: pointInTime ?? this.pointInTime,
+      throwingJuggler: throwingJuggler ?? this.throwingJuggler,
+      throwingSiteswapPosition:
+          throwingSiteswapPosition ?? this.throwingSiteswapPosition,
+      theThrow: theThrow ?? this.theThrow,
+      landingTime: landingTime ?? this.landingTime,
+      catchingJuggler: catchingJuggler ?? this.catchingJuggler,
+      numberOfThrownObjects:
+          numberOfThrownObjects ?? this.numberOfThrownObjects,
+    );
+  }
+
+  @override
+  List<Object> get props => [
+        pointInTime,
+        throwingJuggler,
+        throwingSiteswapPosition,
+        theThrow,
+        landingTime,
+        catchingJuggler,
+        numberOfThrownObjects,
+      ];
 }
