@@ -8,10 +8,16 @@ import '../../helpers/helpers.dart';
 
 void main() {
   group('PatternInfo', () {
-    group('pointsInTime', () {
-      test('4 2p 1 1p', () {
+    late PatternInfo patternInfo;
+
+    group('4 2p 1 1p', () {
+      setUp(() {
+        patternInfo = PatternInfo(pattern: mockPattern);
+      });
+
+      test('pointsInTime', () {
         expect(
-          PatternInfo(pattern: mockPattern).pointsInTime(),
+          patternInfo.pointsInTime(),
           [
             0.toFraction(),
             1.toFraction(),
@@ -21,8 +27,26 @@ void main() {
         );
       });
 
-      test('2.5p 2.5p 2 1.5p 1.5p', () {
-        final pattern = Pattern(
+      test('throwInfo', () {
+        expect(
+          patternInfo.throwInfo[1]?[0],
+          ThrowInfo(
+            pointInTime: 0.toFraction(),
+            throwingJuggler: 1,
+            throwingSiteswapPosition: 2,
+            theThrow: Throw.self(height: 1),
+            landingTime: 1.toFraction(),
+            catchingJuggler: 1,
+            numberOfThrownObjects: 1,
+          ),
+        );
+      });
+    });
+
+    group('2.5p 2.5p 2 1.5p 1.5p', () {
+      setUp(() {
+        patternInfo = PatternInfo(
+            pattern: Pattern(
           numberOfJugglers: 2,
           throwSequence: [
             Throw.pass(height: 2.5),
@@ -31,9 +55,12 @@ void main() {
             Throw.pass(height: 1.5),
             Throw.pass(height: 1.5),
           ],
-        );
+        ));
+      });
+
+      test('pointsInTime', () {
         expect(
-          PatternInfo(pattern: pattern).pointsInTime(),
+          patternInfo.pointsInTime(),
           [
             0.toFraction(),
             0.5.toFraction(),
@@ -48,9 +75,12 @@ void main() {
           ],
         );
       });
+    });
 
-      test('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
-        final pattern = Pattern(
+    group('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
+      setUp(() {
+        patternInfo = PatternInfo(
+            pattern: Pattern(
           numberOfJugglers: 3,
           throwSequence: [
             Throw(height: Fraction(10, 3), passingIndex: 2),
@@ -59,9 +89,12 @@ void main() {
             Throw(height: Fraction(5, 3), passingIndex: 1),
             Throw(height: Fraction(5, 3), passingIndex: 1),
           ],
-        );
+        ));
+      });
+
+      test('pointsInTime', () {
         expect(
-          PatternInfo(pattern: pattern).pointsInTime(),
+          patternInfo.pointsInTime(),
           [
             Fraction(0, 3),
             Fraction(1, 3),
@@ -81,9 +114,11 @@ void main() {
           ],
         );
       });
-
-      test('2.5p3 1.5p1 1 2p2 1 1', () {
-        final pattern = Pattern(
+    });
+    group('2.5p3 1.5p1 1 2p2 1 1', () {
+      setUp(() {
+        patternInfo = PatternInfo(
+            pattern: Pattern(
           numberOfJugglers: 4,
           throwSequence: [
             Throw(height: Fraction(5, 2), passingIndex: 3),
@@ -93,9 +128,12 @@ void main() {
             Throw(height: Fraction(2, 2), passingIndex: 0),
             Throw(height: Fraction(2, 2), passingIndex: 0),
           ],
-        );
+        ));
+      });
+
+      test('pointsInTime', () {
         expect(
-          PatternInfo(pattern: pattern).pointsInTime(),
+          patternInfo.pointsInTime(),
           [
             Fraction(0, 2),
             Fraction(1, 2),

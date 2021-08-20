@@ -61,7 +61,7 @@ class ThrowInfo with EquatableMixin {
     if (!indexFraction.isWhole) {
       return null;
     }
-    final index = indexFraction.numerator;
+    final index = indexFraction.numerator % pattern.period;
     final theThrow = pattern.throwAtIndex(index);
     final landingTime = pointInTime + theThrow.height;
     final catchingJuggler =

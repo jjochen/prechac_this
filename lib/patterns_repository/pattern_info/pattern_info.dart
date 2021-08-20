@@ -18,6 +18,21 @@ class PatternInfo {
   });
 
   final Pattern pattern;
+  late Map<int, List<ThrowInfo?>> throwInfo = _throwInfo();
+  Map<int, List<ThrowInfo?>> _throwInfo() {
+    final points = pointsInTime();
+    final map = <int, List<ThrowInfo?>>{};
+    for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {
+      map[juggler] = points
+          .map((point) => ThrowInfo.atPointInTime(
+                pattern: pattern,
+                juggler: juggler,
+                pointInTime: point,
+              ))
+          .toList();
+    }
+    return map;
+  }
 
   List<Fraction> pointsInTime() {
     final points = <Fraction>{};
