@@ -79,28 +79,6 @@ class ThrowInfo with EquatableMixin {
     );
   }
 
-  ThrowInfo copyWith({
-    Fraction? pointInTime,
-    int? throwingJuggler,
-    int? throwingSiteswapPosition,
-    Throw? theThrow,
-    Fraction? landingTime,
-    int? catchingJuggler,
-    int? numberOfObjectsThrown,
-  }) {
-    return ThrowInfo(
-      pointInTime: pointInTime ?? this.pointInTime,
-      throwingJuggler: throwingJuggler ?? this.throwingJuggler,
-      throwingSiteswapPosition:
-          throwingSiteswapPosition ?? this.throwingSiteswapPosition,
-      theThrow: theThrow ?? this.theThrow,
-      landingTime: landingTime ?? this.landingTime,
-      catchingJuggler: catchingJuggler ?? this.catchingJuggler,
-      numberOfObjectsThrown:
-          numberOfObjectsThrown ?? this.numberOfObjectsThrown,
-    );
-  }
-
   @override
   List<Object> get props => [
         pointInTime,
