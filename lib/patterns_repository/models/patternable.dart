@@ -23,7 +23,12 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
   late Fraction prechator = _getPrechator();
   Fraction _getPrechator() {
-    return Fraction(period, numberOfJugglers);
+    return Fraction(period, numberOfJugglers).reduce();
+  }
+
+  Fraction timeBetweenThrows() {
+    final fractionalPart = prechator.toMixedFraction().fractionalPart;
+    return fractionalPart > Fraction(0) ? fractionalPart : Fraction(1);
   }
 
   late int numberOfPasses = _getNumberOfPasses();

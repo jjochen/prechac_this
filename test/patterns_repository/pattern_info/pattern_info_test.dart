@@ -44,6 +44,16 @@ void main() {
           ),
         );
       });
+
+      test('numberOfObjectsInHands', () {
+        expect(
+          patternInfo.numberOfObjectsInHands(),
+          [
+            [1, 1],
+            [2, 0],
+          ],
+        );
+      });
     });
 
     group('2.5p 2.5p 2 1.5p 1.5p', () {
@@ -75,6 +85,16 @@ void main() {
             3.5.toFraction(),
             4.toFraction(),
             4.5.toFraction(),
+          ],
+        );
+      });
+
+      test('numberOfObjectsInHands', () {
+        expect(
+          patternInfo.numberOfObjectsInHands(),
+          [
+            [1, 1],
+            [1, 1],
           ],
         );
       });

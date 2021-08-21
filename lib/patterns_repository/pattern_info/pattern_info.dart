@@ -19,6 +19,47 @@ class PatternInfo {
 
   final Pattern pattern;
 
+  //TODO: add class for jugglerInfo (firstHand, secondHand, startsWithRightHand)
+
+  //TODO: split into multiple methods
+  List<List<int>> numberOfObjectsInHands() {
+    final listOfHands = List<List<int>>.generate(
+      pattern.numberOfJugglers,
+      (juggler) => [0, 0],
+    );
+    var objectCount = 0;
+    var pointInTime = Fraction(0);
+    final timeDelta = pattern.timeBetweenThrows();
+    while (objectCount.toFraction() < pattern.numberOfObjects) {
+      for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {
+        final throwInfo = juggersThrowInfoAtPointInTime(
+          juggler: juggler,
+          pointInTime: pointInTime,
+        );
+        if (throwInfo == null || throwInfo.numberOfObjectsThrown == 0) {
+          continue;
+        }
+
+        if (throwInfo.throwType == ThrowType.unknown) {
+          throwInfo.throwType = ThrowType.initalObject;
+          final hands = listOfHands[juggler];
+          final handIndex = throwInfo.throwIndex.isEven ? 0 : 1;
+          hands[handIndex]++;
+          objectCount++;
+        }
+
+        final catchInfo = juggersThrowInfoAtPointInTime(
+          juggler: throwInfo.catchingJuggler,
+          pointInTime: throwInfo.landingTime,
+        );
+        catchInfo?.throwType = ThrowType.coughtObject;
+      }
+      pointInTime += timeDelta;
+    }
+    return listOfHands;
+  }
+
+  //TODO: needed?
   List<Fraction> pointsInTime() {
     final points = <Fraction>{};
     for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {

@@ -27,6 +27,9 @@ class ThrowInfo with EquatableMixin {
   ThrowType throwType = ThrowType.unknown;
   Hand hand = Hand.unknown;
 
+  //TODO: needs tests
+  int get throwIndex => pointInTime.toDouble().floor();
+
   static ThrowInfo atIndex({
     required Pattern pattern,
     required int juggler,
