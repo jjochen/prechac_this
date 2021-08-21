@@ -29,7 +29,10 @@ void main() {
 
       test('throwInfo', () {
         expect(
-          patternInfo.throwInfo[1]?[0],
+          patternInfo.juggersThrowInfoAtPointInTime(
+            juggler: 1,
+            pointInTime: 0.toFraction(),
+          ),
           ThrowInfo(
             pointInTime: 0.toFraction(),
             throwingJuggler: 1,

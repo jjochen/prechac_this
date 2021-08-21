@@ -18,21 +18,6 @@ class PatternInfo {
   });
 
   final Pattern pattern;
-  late Map<int, List<ThrowInfo?>> throwInfo = _throwInfo();
-  Map<int, List<ThrowInfo?>> _throwInfo() {
-    final points = pointsInTime();
-    final map = <int, List<ThrowInfo?>>{};
-    for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {
-      map[juggler] = points
-          .map((point) => ThrowInfo.atPointInTime(
-                pattern: pattern,
-                juggler: juggler,
-                pointInTime: point,
-              ))
-          .toList();
-    }
-    return map;
-  }
 
   List<Fraction> pointsInTime() {
     final points = <Fraction>{};
@@ -48,4 +33,34 @@ class PatternInfo {
     }
     return points.sorted();
   }
+
+  ThrowInfo? juggersThrowInfoAtPointInTime({
+    required int juggler,
+    required Fraction pointInTime,
+  }) {
+    final throwInfos = _cachedThrowInfosAtPointInTime(pointInTime: pointInTime);
+    var throwInfo = throwInfos[juggler];
+    if (throwInfo == null) {
+      throwInfo = ThrowInfo.atPointInTime(
+        pattern: pattern,
+        juggler: juggler,
+        pointInTime: pointInTime,
+      );
+      throwInfos[juggler] = throwInfo;
+    }
+    return throwInfo;
+  }
+
+  Map<int, ThrowInfo?> _cachedThrowInfosAtPointInTime({
+    required Fraction pointInTime,
+  }) {
+    var map = _throwInfoCache[pointInTime];
+    if (map == null) {
+      map = <int, ThrowInfo?>{};
+      _throwInfoCache[pointInTime] = map;
+    }
+    return map;
+  }
+
+  final _throwInfoCache = <Fraction, Map<int, ThrowInfo?>>{};
 }
