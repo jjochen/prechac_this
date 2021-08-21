@@ -1,11 +1,18 @@
 fastlane_require 'semantic'
 
+desc 'Format, analyze and test'
+lane :format_and_test do |options|
+  format
+  analyze
+  test
+  generate_coverage_report
+end
 
-desc 'Analyze and test all packages'
+desc 'Analyze and test'
 lane :test do |options|
   check_formatting
-  analyze '.'
-  test '.'
+  analyze
+  test
 end
 
 desc 'Format'
@@ -88,14 +95,20 @@ def check_formatting()
   run_flutter_command 'format --dry-run --set-exit-if-changed .'
 end
 
-def analyze(subdir)
+def analyze(subdir: '.')
   UI.message "analyze #{ subdir }"
   run_flutter_command 'analyze', subdir: subdir
 end
 
-def test(subdir)
+def test(subdir: '.')
   UI.message("test #{ subdir }")
-  run_flutter_command 'test --coverage --test-randomize-ordering-seed random', subdir: subdir
+  run_flutter_command 'test --no-pub --coverage --test-randomize-ordering-seed random', subdir: subdir
+end
+
+def generate_coverage_report()
+  UI.message("generate coverage report")
+  run_command 'genhtml coverage/lcov.info -o coverage/'
+  run_command 'open coverage/index.html'
 end
 
 def run_flutter_command(command, subdir: '.')
