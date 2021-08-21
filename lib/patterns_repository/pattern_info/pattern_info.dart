@@ -37,10 +37,11 @@ class PatternInfo {
   ThrowInfo? juggersThrowInfoAtPointInTime({
     required int juggler,
     required Fraction pointInTime,
+    bool createIfMissing = true,
   }) {
     final throwInfos = _cachedThrowInfosAtPointInTime(pointInTime: pointInTime);
     var throwInfo = throwInfos[juggler];
-    if (throwInfo == null) {
+    if (throwInfo == null && createIfMissing) {
       throwInfo = ThrowInfo.atPointInTime(
         pattern: pattern,
         juggler: juggler,
