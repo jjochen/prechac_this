@@ -10,7 +10,7 @@ class ThrowInfo with EquatableMixin {
     required this.theThrow,
     required this.landingTime,
     required this.catchingJuggler,
-    required this.numberOfThrownObjects,
+    required this.numberOfObjectsThrown,
   });
 
   final Fraction pointInTime;
@@ -19,7 +19,7 @@ class ThrowInfo with EquatableMixin {
   final Throw theThrow;
   final Fraction landingTime;
   final int catchingJuggler;
-  final int numberOfThrownObjects;
+  final int numberOfObjectsThrown;
 
   static ThrowInfo atIndex({
     required Pattern pattern,
@@ -38,7 +38,7 @@ class ThrowInfo with EquatableMixin {
     final landingTime = pointInTime + theThrow.height;
     final catchingJuggler =
         (juggler + theThrow.passingIndex) % pattern.numberOfJugglers;
-    final numberOfThrownObjects = theThrow.height == 0.toFraction() ? 0 : 1;
+    final numberOfObjectsThrown = theThrow.height == 0.toFraction() ? 0 : 1;
 
     return ThrowInfo(
       pointInTime: pointInTime.reduce(),
@@ -47,7 +47,7 @@ class ThrowInfo with EquatableMixin {
       theThrow: theThrow,
       landingTime: landingTime.reduce(),
       catchingJuggler: catchingJuggler,
-      numberOfThrownObjects: numberOfThrownObjects,
+      numberOfObjectsThrown: numberOfObjectsThrown,
     );
   }
 
@@ -66,7 +66,7 @@ class ThrowInfo with EquatableMixin {
     final landingTime = pointInTime + theThrow.height;
     final catchingJuggler =
         (juggler + theThrow.passingIndex) % pattern.numberOfJugglers;
-    final numberOfThrownObjects = theThrow.height == 0.toFraction() ? 0 : 1;
+    final numberOfObjectsThrown = theThrow.height == 0.toFraction() ? 0 : 1;
 
     return ThrowInfo(
       pointInTime: pointInTime.reduce(),
@@ -75,7 +75,7 @@ class ThrowInfo with EquatableMixin {
       theThrow: theThrow,
       landingTime: landingTime.reduce(),
       catchingJuggler: catchingJuggler,
-      numberOfThrownObjects: numberOfThrownObjects,
+      numberOfObjectsThrown: numberOfObjectsThrown,
     );
   }
 
@@ -86,7 +86,7 @@ class ThrowInfo with EquatableMixin {
     Throw? theThrow,
     Fraction? landingTime,
     int? catchingJuggler,
-    int? numberOfThrownObjects,
+    int? numberOfObjectsThrown,
   }) {
     return ThrowInfo(
       pointInTime: pointInTime ?? this.pointInTime,
@@ -96,8 +96,8 @@ class ThrowInfo with EquatableMixin {
       theThrow: theThrow ?? this.theThrow,
       landingTime: landingTime ?? this.landingTime,
       catchingJuggler: catchingJuggler ?? this.catchingJuggler,
-      numberOfThrownObjects:
-          numberOfThrownObjects ?? this.numberOfThrownObjects,
+      numberOfObjectsThrown:
+          numberOfObjectsThrown ?? this.numberOfObjectsThrown,
     );
   }
 
@@ -109,6 +109,6 @@ class ThrowInfo with EquatableMixin {
         theThrow,
         landingTime,
         catchingJuggler,
-        numberOfThrownObjects,
+        numberOfObjectsThrown,
       ];
 }

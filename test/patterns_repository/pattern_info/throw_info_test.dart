@@ -17,7 +17,7 @@ void main() {
           theThrow: Throw.pass(height: 4),
           landingTime: Fraction(3),
           catchingJuggler: 0,
-          numberOfThrownObjects: 1,
+          numberOfObjectsThrown: 1,
         ),
         ThrowInfo(
           pointInTime: Fraction(1, 2),
@@ -26,7 +26,7 @@ void main() {
           theThrow: Throw.pass(height: 4),
           landingTime: Fraction(3),
           catchingJuggler: 0,
-          numberOfThrownObjects: 1,
+          numberOfObjectsThrown: 1,
         ),
       );
     });
@@ -47,7 +47,7 @@ void main() {
             theThrow: Throw.self(height: 4),
             landingTime: 4.toFraction(),
             catchingJuggler: 0,
-            numberOfThrownObjects: 1,
+            numberOfObjectsThrown: 1,
           ),
         );
       });
@@ -62,7 +62,7 @@ void main() {
             theThrow: Throw.self(height: 4),
             landingTime: 6.toFraction(),
             catchingJuggler: 1,
-            numberOfThrownObjects: 1,
+            numberOfObjectsThrown: 1,
           ),
         );
       });
@@ -77,7 +77,7 @@ void main() {
             theThrow: Throw.pass(height: 1),
             landingTime: 2.toFraction(),
             catchingJuggler: 0,
-            numberOfThrownObjects: 1,
+            numberOfObjectsThrown: 1,
           ),
         );
       });
@@ -96,7 +96,7 @@ void main() {
             theThrow: Throw.pass(height: 1),
             landingTime: 6.toFraction(),
             catchingJuggler: 0,
-            numberOfThrownObjects: 1,
+            numberOfObjectsThrown: 1,
           ),
         );
       });

@@ -40,7 +40,7 @@ void main() {
             theThrow: Throw.self(height: 1),
             landingTime: 1.toFraction(),
             catchingJuggler: 1,
-            numberOfThrownObjects: 1,
+            numberOfObjectsThrown: 1,
           ),
         );
       });
