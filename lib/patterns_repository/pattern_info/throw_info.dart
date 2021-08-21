@@ -2,6 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
+enum ThrowType { unknown, initalObject, coughtObject }
+enum Hand { unknown, left, right }
+
 class ThrowInfo with EquatableMixin {
   ThrowInfo({
     required this.pointInTime,
@@ -20,6 +23,9 @@ class ThrowInfo with EquatableMixin {
   final Fraction landingTime;
   final int catchingJuggler;
   final int numberOfObjectsThrown;
+
+  ThrowType throwType = ThrowType.unknown;
+  Hand hand = Hand.unknown;
 
   static ThrowInfo atIndex({
     required Pattern pattern,
