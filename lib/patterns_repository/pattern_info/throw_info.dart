@@ -29,6 +29,7 @@ class ThrowInfo with EquatableMixin {
 
   //TODO: needs tests
   int get throwIndex => pointInTime.toDouble().floor();
+  bool get isStartingHand => throwIndex.isEven;
 
   static ThrowInfo atIndex({
     required Pattern pattern,

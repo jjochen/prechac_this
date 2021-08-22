@@ -43,7 +43,7 @@ class PatternInfo {
         if (throwInfo.throwType == ThrowType.unknown) {
           throwInfo.throwType = ThrowType.initalObject;
           final hands = listOfHands[juggler];
-          final handIndex = throwInfo.throwIndex.isEven ? 0 : 1;
+          final handIndex = throwInfo.isStartingHand ? 0 : 1;
           hands[handIndex]++;
           objectCount++;
         }

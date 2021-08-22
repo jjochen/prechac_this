@@ -100,6 +100,17 @@ void main() {
           ),
         );
       });
+
+      test('isStartingHand', () {
+        expect(
+          ThrowInfo.atPointInTime(
+            pattern: pattern,
+            juggler: 1,
+            pointInTime: 5.toFraction(),
+          )?.isStartingHand,
+          isFalse,
+        );
+      });
     });
   });
 }
