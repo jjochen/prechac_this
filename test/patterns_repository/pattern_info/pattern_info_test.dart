@@ -133,6 +133,25 @@ void main() {
         expect(juggler1.numberOfObjectsInHand(Hand.right), 1);
         expect(juggler1.numberOfObjectsInHand(Hand.left), 1);
       });
+
+      test('throwingHandAtPointInTime', () {
+        final juggler1 = patternInfo.infoForJuggler(1);
+        expect(
+          juggler1.throwingHandAtPointInTime(3.5.toFraction()),
+          Hand.left,
+        );
+        juggler1.toggleStartingHand();
+        expect(
+          juggler1.throwingHandAtPointInTime(3.5.toFraction()),
+          Hand.right,
+        );
+
+        final juggler0 = patternInfo.infoForJuggler(0);
+        expect(
+          juggler0.throwingHandAtPointInTime(3.5.toFraction()),
+          isNull,
+        );
+      });
     });
 
     group('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
