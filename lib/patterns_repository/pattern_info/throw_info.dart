@@ -3,7 +3,6 @@ import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 enum ThrowType { unknown, initalObject, coughtObject }
-enum Hand { unknown, left, right }
 
 class ThrowInfo with EquatableMixin {
   ThrowInfo({
@@ -25,8 +24,6 @@ class ThrowInfo with EquatableMixin {
   final int numberOfObjectsThrown;
 
   ThrowType throwType = ThrowType.unknown;
-  //TODO: needed?
-  Hand hand = Hand.unknown;
 
   int get throwIndex => pointInTime.toDouble().floor();
   bool get isStartingHand => throwIndex.isEven;

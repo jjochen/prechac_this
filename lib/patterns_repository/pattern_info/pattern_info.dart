@@ -1,7 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:fraction/fraction.dart';
+import 'package:prechac_this/patterns_repository/pattern_info/juggler_info.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
+export 'juggler_info.dart';
 export 'throw_info.dart';
 
 class PatternInfo {
@@ -15,51 +17,11 @@ class PatternInfo {
 
   PatternInfo({
     required this.pattern,
-  });
+  }) : _jugglerInfoCache = _gatherInformation(pattern: pattern);
 
   final Pattern pattern;
+  final List<JugglerInfo> _jugglerInfoCache;
 
-  //TODO: add class for jugglerInfo (firstHand, secondHand, startsWithRightHand)
-
-  //TODO: split into multiple methods
-  List<List<int>> numberOfObjectsInHands() {
-    final listOfHands = List<List<int>>.generate(
-      pattern.numberOfJugglers,
-      (juggler) => [0, 0],
-    );
-    var objectCount = 0;
-    var pointInTime = Fraction(0);
-    final timeDelta = pattern.timeBetweenThrows();
-    while (objectCount.toFraction() < pattern.numberOfObjects) {
-      for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {
-        final throwInfo = juggersThrowInfoAtPointInTime(
-          juggler: juggler,
-          pointInTime: pointInTime,
-        );
-        if (throwInfo == null || throwInfo.numberOfObjectsThrown == 0) {
-          continue;
-        }
-
-        if (throwInfo.throwType == ThrowType.unknown) {
-          throwInfo.throwType = ThrowType.initalObject;
-          final hands = listOfHands[juggler];
-          final handIndex = throwInfo.isStartingHand ? 0 : 1;
-          hands[handIndex]++;
-          objectCount++;
-        }
-
-        final catchInfo = juggersThrowInfoAtPointInTime(
-          juggler: throwInfo.catchingJuggler,
-          pointInTime: throwInfo.landingTime,
-        );
-        catchInfo?.throwType = ThrowType.coughtObject;
-      }
-      pointInTime += timeDelta;
-    }
-    return listOfHands;
-  }
-
-  //TODO: needed?
   List<Fraction> pointsInTime() {
     final points = <Fraction>{};
     for (var juggler = 0; juggler < pattern.numberOfJugglers; juggler++) {
@@ -75,26 +37,76 @@ class PatternInfo {
     return points.sorted();
   }
 
-  ThrowInfo? juggersThrowInfoAtPointInTime({
-    required int juggler,
+  JugglerInfo infoForJuggler(int index) {
+    return _jugglerInfoCache[index];
+  }
+
+  // methods used by the initializer
+  static List<JugglerInfo> _gatherInformation({required Pattern pattern}) {
+    final jugglersInformation = List.generate(
+      pattern.numberOfJugglers,
+      (index) => JugglerInfo(index),
+    );
+
+    var initialObjectCount = 0;
+    var pointInTime = Fraction(0);
+    final timeDelta = pattern.timeBetweenThrows();
+    while (initialObjectCount.toFraction() < pattern.numberOfObjects &&
+        pointInTime < pattern.period.toFraction()) {
+      for (final jugglerInfo in jugglersInformation) {
+        final throwInfo = _throwInfoAtPointInTime(
+          jugglerInfo: jugglerInfo,
+          pointInTime: pointInTime,
+          pattern: pattern,
+        );
+        if (throwInfo == null || throwInfo.numberOfObjectsThrown == 0) {
+          continue;
+        }
+
+        if (throwInfo.throwType == ThrowType.unknown) {
+          throwInfo.throwType = ThrowType.initalObject;
+          jugglerInfo.incremetNumberOfObjects(
+            startingHand: throwInfo.isStartingHand,
+          );
+          initialObjectCount++;
+        }
+
+        final catchingJugglerInfo =
+            jugglersInformation[throwInfo.catchingJuggler];
+        final catchInfo = _throwInfoAtPointInTime(
+          jugglerInfo: catchingJugglerInfo,
+          pointInTime: throwInfo.landingTime,
+          pattern: pattern,
+        );
+        catchInfo?.throwType = ThrowType.coughtObject;
+      }
+      pointInTime += timeDelta;
+    }
+
+    return jugglersInformation;
+  }
+
+  static ThrowInfo? _throwInfoAtPointInTime({
+    required JugglerInfo jugglerInfo,
     required Fraction pointInTime,
-    bool createIfMissing = true,
+    required Pattern pattern,
   }) {
-    final throwInfos = _cachedThrowInfosAtPointInTime(pointInTime: pointInTime);
-    var throwInfo = throwInfos[juggler];
-    if (throwInfo == null && createIfMissing) {
+    var throwInfo = jugglerInfo.throwInfoAtPointInTime(pointInTime);
+    if (throwInfo == null) {
       throwInfo = _gatherJugglersThrowInfoAtPointInTime(
-        juggler: juggler,
+        juggler: jugglerInfo.index,
         pointInTime: pointInTime,
+        pattern: pattern,
       );
-      throwInfos[juggler] = throwInfo;
+      jugglerInfo.setThrowInfo(throwInfo: throwInfo, pointInTime: pointInTime);
     }
     return throwInfo;
   }
 
-  ThrowInfo? _gatherJugglersThrowInfoAtPointInTime({
+  static ThrowInfo? _gatherJugglersThrowInfoAtPointInTime({
     required int juggler,
     required Fraction pointInTime,
+    required Pattern pattern,
   }) {
     final jugglersOffset = pattern.prechator * juggler.toFraction();
     final indexFraction = (pointInTime - jugglersOffset).reduce();
@@ -118,17 +130,4 @@ class PatternInfo {
       numberOfObjectsThrown: numberOfObjectsThrown,
     );
   }
-
-  Map<int, ThrowInfo?> _cachedThrowInfosAtPointInTime({
-    required Fraction pointInTime,
-  }) {
-    var map = _throwInfoCache[pointInTime];
-    if (map == null) {
-      map = <int, ThrowInfo?>{};
-      _throwInfoCache[pointInTime] = map;
-    }
-    return map;
-  }
-
-  final _throwInfoCache = <Fraction, Map<int, ThrowInfo?>>{};
 }

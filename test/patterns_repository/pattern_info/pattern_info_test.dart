@@ -27,14 +27,11 @@ void main() {
         );
       });
 
-      group('juggersThrowInfoAtPointInTime', () {
+      group('throwInfoAtPointInTime', () {
         group('juggler 0', () {
           test('point in time 1', () {
             expect(
-              patternInfo.juggersThrowInfoAtPointInTime(
-                juggler: 0,
-                pointInTime: Fraction(1),
-              ),
+              patternInfo.infoForJuggler(0).throwInfoAtPointInTime(Fraction(1)),
               ThrowInfo(
                 pointInTime: 1.toFraction(),
                 throwingJuggler: 0,
@@ -51,10 +48,7 @@ void main() {
         group('juggler 1', () {
           test('point in time 0', () {
             expect(
-              patternInfo.juggersThrowInfoAtPointInTime(
-                juggler: 1,
-                pointInTime: Fraction(0),
-              ),
+              patternInfo.infoForJuggler(1).throwInfoAtPointInTime(Fraction(0)),
               ThrowInfo(
                 pointInTime: 0.toFraction(),
                 throwingJuggler: 1,
@@ -67,19 +61,16 @@ void main() {
             );
           });
 
-          test('point in time 5', () {
+          test('point in time 6', () {
             expect(
-              patternInfo.juggersThrowInfoAtPointInTime(
-                juggler: 1,
-                pointInTime: Fraction(5),
-              ),
+              patternInfo.infoForJuggler(1).throwInfoAtPointInTime(Fraction(6)),
               ThrowInfo(
-                pointInTime: 5.toFraction(),
+                pointInTime: 6.toFraction(),
                 throwingJuggler: 1,
-                throwingSiteswapPosition: 3,
-                theThrow: Throw.pass(height: 1),
-                landingTime: 6.toFraction(),
-                catchingJuggler: 0,
+                throwingSiteswapPosition: 0,
+                theThrow: Throw.self(height: 4),
+                landingTime: 10.toFraction(),
+                catchingJuggler: 1,
                 numberOfObjectsThrown: 1,
               ),
             );
@@ -88,13 +79,14 @@ void main() {
       });
 
       test('numberOfObjectsInHands', () {
-        expect(
-          patternInfo.numberOfObjectsInHands(),
-          [
-            [1, 1],
-            [2, 0],
-          ],
-        );
+        final juggler0 = patternInfo.infoForJuggler(0)
+          ..startingHand = Hand.right;
+        final juggler1 = patternInfo.infoForJuggler(1)
+          ..startingHand = Hand.left;
+        expect(juggler0.numberOfObjectsInHand(Hand.right), 1);
+        expect(juggler0.numberOfObjectsInHand(Hand.left), 1);
+        expect(juggler1.numberOfObjectsInHand(Hand.right), 0);
+        expect(juggler1.numberOfObjectsInHand(Hand.left), 2);
       });
     });
 
@@ -132,13 +124,14 @@ void main() {
       });
 
       test('numberOfObjectsInHands', () {
-        expect(
-          patternInfo.numberOfObjectsInHands(),
-          [
-            [1, 1],
-            [1, 1],
-          ],
-        );
+        final juggler0 = patternInfo.infoForJuggler(0)
+          ..startingHand = Hand.right;
+        final juggler1 = patternInfo.infoForJuggler(1)
+          ..startingHand = Hand.left;
+        expect(juggler0.numberOfObjectsInHand(Hand.right), 1);
+        expect(juggler0.numberOfObjectsInHand(Hand.left), 1);
+        expect(juggler1.numberOfObjectsInHand(Hand.right), 1);
+        expect(juggler1.numberOfObjectsInHand(Hand.left), 1);
       });
     });
 
