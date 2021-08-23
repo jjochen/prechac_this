@@ -27,22 +27,64 @@ void main() {
         );
       });
 
-      test('throwInfo', () {
-        expect(
-          patternInfo.juggersThrowInfoAtPointInTime(
-            juggler: 1,
-            pointInTime: 0.toFraction(),
-          ),
-          ThrowInfo(
-            pointInTime: 0.toFraction(),
-            throwingJuggler: 1,
-            throwingSiteswapPosition: 2,
-            theThrow: Throw.self(height: 1),
-            landingTime: 1.toFraction(),
-            catchingJuggler: 1,
-            numberOfObjectsThrown: 1,
-          ),
-        );
+      group('juggersThrowInfoAtPointInTime', () {
+        group('juggler 0', () {
+          test('point in time 1', () {
+            expect(
+              patternInfo.juggersThrowInfoAtPointInTime(
+                juggler: 0,
+                pointInTime: Fraction(1),
+              ),
+              ThrowInfo(
+                pointInTime: 1.toFraction(),
+                throwingJuggler: 0,
+                throwingSiteswapPosition: 1,
+                theThrow: Throw.pass(height: 2),
+                landingTime: 3.toFraction(),
+                catchingJuggler: 1,
+                numberOfObjectsThrown: 1,
+              ),
+            );
+          });
+        });
+
+        group('juggler 1', () {
+          test('point in time 0', () {
+            expect(
+              patternInfo.juggersThrowInfoAtPointInTime(
+                juggler: 1,
+                pointInTime: Fraction(0),
+              ),
+              ThrowInfo(
+                pointInTime: 0.toFraction(),
+                throwingJuggler: 1,
+                throwingSiteswapPosition: 2,
+                theThrow: Throw.self(height: 1),
+                landingTime: 1.toFraction(),
+                catchingJuggler: 1,
+                numberOfObjectsThrown: 1,
+              ),
+            );
+          });
+
+          test('point in time 5', () {
+            expect(
+              patternInfo.juggersThrowInfoAtPointInTime(
+                juggler: 1,
+                pointInTime: Fraction(5),
+              ),
+              ThrowInfo(
+                pointInTime: 5.toFraction(),
+                throwingJuggler: 1,
+                throwingSiteswapPosition: 3,
+                theThrow: Throw.pass(height: 1),
+                landingTime: 6.toFraction(),
+                catchingJuggler: 0,
+                numberOfObjectsThrown: 1,
+              ),
+            );
+          });
+        });
       });
 
       test('numberOfObjectsInHands', () {

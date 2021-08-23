@@ -83,14 +83,40 @@ class PatternInfo {
     final throwInfos = _cachedThrowInfosAtPointInTime(pointInTime: pointInTime);
     var throwInfo = throwInfos[juggler];
     if (throwInfo == null && createIfMissing) {
-      throwInfo = ThrowInfo.atPointInTime(
-        pattern: pattern,
+      throwInfo = _gatherJugglersThrowInfoAtPointInTime(
         juggler: juggler,
         pointInTime: pointInTime,
       );
       throwInfos[juggler] = throwInfo;
     }
     return throwInfo;
+  }
+
+  ThrowInfo? _gatherJugglersThrowInfoAtPointInTime({
+    required int juggler,
+    required Fraction pointInTime,
+  }) {
+    final jugglersOffset = pattern.prechator * juggler.toFraction();
+    final indexFraction = (pointInTime - jugglersOffset).reduce();
+    if (!indexFraction.isWhole) {
+      return null;
+    }
+    final index = indexFraction.numerator % pattern.period;
+    final theThrow = pattern.throwAtIndex(index);
+    final landingTime = pointInTime + theThrow.height;
+    final catchingJuggler =
+        (juggler + theThrow.passingIndex) % pattern.numberOfJugglers;
+    final numberOfObjectsThrown = theThrow.height == 0.toFraction() ? 0 : 1;
+
+    return ThrowInfo(
+      pointInTime: pointInTime.reduce(),
+      throwingJuggler: juggler,
+      throwingSiteswapPosition: index,
+      theThrow: theThrow,
+      landingTime: landingTime.reduce(),
+      catchingJuggler: catchingJuggler,
+      numberOfObjectsThrown: numberOfObjectsThrown,
+    );
   }
 
   Map<int, ThrowInfo?> _cachedThrowInfosAtPointInTime({
