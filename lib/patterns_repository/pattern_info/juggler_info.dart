@@ -42,7 +42,7 @@ class JugglerInfo {
   }
 
   ThrowInfo? throwInfoAtPointInTime(Fraction pointInTime) {
-    final throwInfo = _throwInfoCache[pointInTime];
+    final throwInfo = _throwInfoCache[pointInTime.reduce()];
     return throwInfo;
   }
 
@@ -50,7 +50,7 @@ class JugglerInfo {
     required ThrowInfo? throwInfo,
     required Fraction pointInTime,
   }) {
-    _throwInfoCache[pointInTime] = throwInfo;
+    _throwInfoCache[pointInTime.reduce()] = throwInfo;
   }
 
   final _throwInfoCache = <Fraction, ThrowInfo?>{};
