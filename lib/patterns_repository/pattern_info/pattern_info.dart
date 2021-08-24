@@ -51,7 +51,7 @@ class PatternInfo {
     var initialObjectCount = 0;
     var pointInTime = Fraction(0);
     final timeDelta = pattern.timeBetweenThrows();
-    while (initialObjectCount.toFraction() < pattern.numberOfObjects &&
+    while (initialObjectCount.toFraction() < pattern.numberOfObjects ||
         pointInTime < pattern.period.toFraction()) {
       for (final jugglerInfo in jugglersInformation) {
         final throwInfo = _throwInfoAtPointInTime(
@@ -80,7 +80,7 @@ class PatternInfo {
         );
         catchInfo?.throwType = ThrowType.coughtObject;
       }
-      pointInTime += timeDelta;
+      pointInTime = (pointInTime + timeDelta).reduce();
     }
 
     return jugglersInformation;
