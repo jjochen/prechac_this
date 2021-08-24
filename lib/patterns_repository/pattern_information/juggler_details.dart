@@ -3,8 +3,8 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 enum Hand { left, right }
 
-class JugglerInfo {
-  JugglerInfo(this.index);
+class JugglerDetails {
+  JugglerDetails(this.index);
 
   final int index;
 
@@ -17,11 +17,11 @@ class JugglerInfo {
   }
 
   Hand? throwingHandAtPointInTime(Fraction pointInTime) {
-    final throwInfo = throwInfoAtPointInTime(pointInTime);
-    if (throwInfo == null) {
+    final throwDetails = throwDetailsAtPointInTime(pointInTime);
+    if (throwDetails == null) {
       return null;
     }
-    return throwInfo.isStartingHand ? startingHand : noneStartingHand;
+    return throwDetails.isStartingHand ? startingHand : noneStartingHand;
   }
 
   int _numberOfObjectsInFirstHand = 0;
@@ -41,17 +41,17 @@ class JugglerInfo {
     }
   }
 
-  ThrowInfo? throwInfoAtPointInTime(Fraction pointInTime) {
-    final throwInfo = _throwInfoCache[pointInTime.reduce()];
-    return throwInfo;
+  ThrowDetails? throwDetailsAtPointInTime(Fraction pointInTime) {
+    final throwDetails = _throwDetailsCache[pointInTime.reduce()];
+    return throwDetails;
   }
 
-  void setThrowInfo({
-    required ThrowInfo? throwInfo,
+  void setThrowDetails({
+    required ThrowDetails? throwDetails,
     required Fraction pointInTime,
   }) {
-    _throwInfoCache[pointInTime.reduce()] = throwInfo;
+    _throwDetailsCache[pointInTime.reduce()] = throwDetails;
   }
 
-  final _throwInfoCache = <Fraction, ThrowInfo?>{};
+  final _throwDetailsCache = <Fraction, ThrowDetails?>{};
 }

@@ -4,8 +4,8 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 enum ThrowType { unknown, initalObject, coughtObject }
 
-class ThrowInfo with EquatableMixin {
-  ThrowInfo({
+class ThrowDetails with EquatableMixin {
+  ThrowDetails({
     required this.pointInTime,
     required this.throwingJuggler,
     required this.throwingSiteswapPosition,

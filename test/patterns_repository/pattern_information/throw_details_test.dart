@@ -5,10 +5,10 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('ThrowInfo', () {
+  group('ThrowDetails', () {
     test('supports value comparisons', () {
       expect(
-        ThrowInfo(
+        ThrowDetails(
           pointInTime: Fraction(1, 2),
           throwingJuggler: 1,
           throwingSiteswapPosition: 3,
@@ -17,7 +17,7 @@ void main() {
           catchingJuggler: 0,
           numberOfObjectsThrown: 1,
         ),
-        ThrowInfo(
+        ThrowDetails(
           pointInTime: Fraction(1, 2),
           throwingJuggler: 1,
           throwingSiteswapPosition: 3,
@@ -31,7 +31,7 @@ void main() {
 
     test('isStartingHand', () {
       expect(
-        ThrowInfo(
+        ThrowDetails(
           pointInTime: 5.toFraction(),
           throwingJuggler: 1,
           throwingSiteswapPosition: 3,

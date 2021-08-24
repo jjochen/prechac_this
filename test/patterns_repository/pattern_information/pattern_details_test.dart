@@ -7,17 +7,17 @@ import 'package:test/test.dart';
 import '../../helpers/helpers.dart';
 
 void main() {
-  group('PatternInfo', () {
-    late PatternInfo patternInfo;
+  group('PatternDetails', () {
+    late PatternDetails patternDetails;
 
     group('4 2p 1 1p', () {
       setUp(() {
-        patternInfo = PatternInfo(pattern: mockPattern);
+        patternDetails = PatternDetails(pattern: mockPattern);
       });
 
       test('pointsInTime', () {
         expect(
-          patternInfo.pointsInTime(),
+          patternDetails.pointsInTime(),
           [
             0.toFraction(),
             1.toFraction(),
@@ -27,12 +27,14 @@ void main() {
         );
       });
 
-      group('throwInfoAtPointInTime', () {
+      group('throwDetailsAtPointInTime', () {
         group('juggler 0', () {
           test('point in time 1', () {
             expect(
-              patternInfo.infoForJuggler(0).throwInfoAtPointInTime(Fraction(1)),
-              ThrowInfo(
+              patternDetails
+                  .infoForJuggler(0)
+                  .throwDetailsAtPointInTime(Fraction(1)),
+              ThrowDetails(
                 pointInTime: 1.toFraction(),
                 throwingJuggler: 0,
                 throwingSiteswapPosition: 1,
@@ -48,8 +50,10 @@ void main() {
         group('juggler 1', () {
           test('point in time 0', () {
             expect(
-              patternInfo.infoForJuggler(1).throwInfoAtPointInTime(Fraction(0)),
-              ThrowInfo(
+              patternDetails
+                  .infoForJuggler(1)
+                  .throwDetailsAtPointInTime(Fraction(0)),
+              ThrowDetails(
                 pointInTime: 0.toFraction(),
                 throwingJuggler: 1,
                 throwingSiteswapPosition: 2,
@@ -63,8 +67,10 @@ void main() {
 
           test('point in time 6', () {
             expect(
-              patternInfo.infoForJuggler(1).throwInfoAtPointInTime(Fraction(6)),
-              ThrowInfo(
+              patternDetails
+                  .infoForJuggler(1)
+                  .throwDetailsAtPointInTime(Fraction(6)),
+              ThrowDetails(
                 pointInTime: 6.toFraction(),
                 throwingJuggler: 1,
                 throwingSiteswapPosition: 0,
@@ -79,9 +85,9 @@ void main() {
       });
 
       test('numberOfObjectsInHands', () {
-        final juggler0 = patternInfo.infoForJuggler(0)
+        final juggler0 = patternDetails.infoForJuggler(0)
           ..startingHand = Hand.right;
-        final juggler1 = patternInfo.infoForJuggler(1)
+        final juggler1 = patternDetails.infoForJuggler(1)
           ..startingHand = Hand.left;
         expect(juggler0.numberOfObjectsInHand(Hand.right), 1);
         expect(juggler0.numberOfObjectsInHand(Hand.left), 1);
@@ -92,7 +98,7 @@ void main() {
 
     group('2.5p 2.5p 2 1.5p 1.5p', () {
       setUp(() {
-        patternInfo = PatternInfo(
+        patternDetails = PatternDetails(
             pattern: Pattern(
           numberOfJugglers: 2,
           throwSequence: [
@@ -107,7 +113,7 @@ void main() {
 
       test('pointsInTime', () {
         expect(
-          patternInfo.pointsInTime(),
+          patternDetails.pointsInTime(),
           [
             0.toFraction(),
             0.5.toFraction(),
@@ -124,9 +130,9 @@ void main() {
       });
 
       test('numberOfObjectsInHands', () {
-        final juggler0 = patternInfo.infoForJuggler(0)
+        final juggler0 = patternDetails.infoForJuggler(0)
           ..startingHand = Hand.right;
-        final juggler1 = patternInfo.infoForJuggler(1)
+        final juggler1 = patternDetails.infoForJuggler(1)
           ..startingHand = Hand.left;
         expect(juggler0.numberOfObjectsInHand(Hand.right), 1);
         expect(juggler0.numberOfObjectsInHand(Hand.left), 1);
@@ -135,7 +141,7 @@ void main() {
       });
 
       test('throwingHandAtPointInTime', () {
-        final juggler1 = patternInfo.infoForJuggler(1);
+        final juggler1 = patternDetails.infoForJuggler(1);
         expect(
           juggler1.throwingHandAtPointInTime(3.5.toFraction()),
           Hand.left,
@@ -146,7 +152,7 @@ void main() {
           Hand.right,
         );
 
-        final juggler0 = patternInfo.infoForJuggler(0);
+        final juggler0 = patternDetails.infoForJuggler(0);
         expect(
           juggler0.throwingHandAtPointInTime(3.5.toFraction()),
           isNull,
@@ -156,7 +162,7 @@ void main() {
 
     group('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
       setUp(() {
-        patternInfo = PatternInfo(
+        patternDetails = PatternDetails(
             pattern: Pattern(
           numberOfJugglers: 3,
           throwSequence: [
@@ -171,7 +177,7 @@ void main() {
 
       test('pointsInTime', () {
         expect(
-          patternInfo.pointsInTime(),
+          patternDetails.pointsInTime(),
           [
             Fraction(0, 3),
             Fraction(1, 3),
@@ -194,7 +200,7 @@ void main() {
     });
     group('2.5p3 1.5p1 1 2p2 1 1', () {
       setUp(() {
-        patternInfo = PatternInfo(
+        patternDetails = PatternDetails(
             pattern: Pattern(
           numberOfJugglers: 4,
           throwSequence: [
@@ -210,7 +216,7 @@ void main() {
 
       test('pointsInTime', () {
         expect(
-          patternInfo.pointsInTime(),
+          patternDetails.pointsInTime(),
           [
             Fraction(0, 2),
             Fraction(1, 2),
@@ -231,7 +237,7 @@ void main() {
 
     group('0 3p2 1.5p1 1 2p2 3p2', () {
       setUp(() {
-        patternInfo = PatternInfo(
+        patternDetails = PatternDetails(
             pattern: Pattern(
           numberOfJugglers: 4,
           throwSequence: [
@@ -247,7 +253,7 @@ void main() {
 
       test('pointsInTime', () {
         expect(
-          patternInfo.pointsInTime(),
+          patternDetails.pointsInTime(),
           [
             Fraction(0, 2),
             Fraction(1, 2),
@@ -265,58 +271,58 @@ void main() {
         );
       });
 
-      group('JugglerInfo', () {
-        late JugglerInfo jugglerInfo;
+      group('JugglerDetails', () {
+        late JugglerDetails jugglerDetails;
 
         group('juggler 0', () {
           setUp(() {
-            jugglerInfo = patternInfo.infoForJuggler(0);
+            jugglerDetails = patternDetails.infoForJuggler(0);
           });
 
           test('numberOfObjectsInHand', () {
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 0);
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 1);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.right), 0);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.left), 1);
           });
 
-          test('throwInfoAtPointInTime', () {
+          test('throwDetailsAtPointInTime', () {
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(0))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(0))!
                   .theThrow
                   .toString(),
               '0',
             );
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(1))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(1))!
                   .theThrow
                   .toString(),
               '3p₂',
             );
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(2))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(2))!
                   .theThrow
                   .toString(),
               '1.5p₁',
             );
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(3))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(3))!
                   .theThrow
                   .toString(),
               '1',
             );
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(4))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(4))!
                   .theThrow
                   .toString(),
               '2p₂',
             );
             expect(
-              jugglerInfo
-                  .throwInfoAtPointInTime(Fraction(5))!
+              jugglerDetails
+                  .throwDetailsAtPointInTime(Fraction(5))!
                   .theThrow
                   .toString(),
               '3p₂',
@@ -326,34 +332,34 @@ void main() {
 
         group('juggler 1', () {
           setUp(() {
-            jugglerInfo = patternInfo.infoForJuggler(1);
+            jugglerDetails = patternDetails.infoForJuggler(1);
           });
 
           test('numberOfObjectsInHand', () {
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 2);
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 0);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.right), 2);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.left), 0);
           });
         });
 
         group('juggler 2', () {
           setUp(() {
-            jugglerInfo = patternInfo.infoForJuggler(2);
+            jugglerDetails = patternDetails.infoForJuggler(2);
           });
 
           test('numberOfObjectsInHand', () {
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 2);
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 0);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.right), 2);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.left), 0);
           });
         });
 
         group('juggler 3', () {
           setUp(() {
-            jugglerInfo = patternInfo.infoForJuggler(3);
+            jugglerDetails = patternDetails.infoForJuggler(3);
           });
 
           test('numberOfObjectsInHand', () {
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 1);
-            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 1);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.right), 1);
+            expect(jugglerDetails.numberOfObjectsInHand(Hand.left), 1);
           });
         });
       });
