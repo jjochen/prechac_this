@@ -228,5 +228,135 @@ void main() {
         );
       });
     });
+
+    group('0 3p2 1.5p1 1 2p2 3p2', () {
+      setUp(() {
+        patternInfo = PatternInfo(
+            pattern: Pattern(
+          numberOfJugglers: 4,
+          throwSequence: [
+            Throw(height: Fraction(0, 2), passingIndex: 0),
+            Throw(height: Fraction(6, 2), passingIndex: 2),
+            Throw(height: Fraction(3, 2), passingIndex: 1),
+            Throw(height: Fraction(2, 2), passingIndex: 0),
+            Throw(height: Fraction(4, 2), passingIndex: 2),
+            Throw(height: Fraction(6, 2), passingIndex: 2),
+          ],
+        ));
+      });
+
+      test('pointsInTime', () {
+        expect(
+          patternInfo.pointsInTime(),
+          [
+            Fraction(0, 2),
+            Fraction(1, 2),
+            Fraction(2, 2),
+            Fraction(3, 2),
+            Fraction(4, 2),
+            Fraction(5, 2),
+            Fraction(6, 2),
+            Fraction(7, 2),
+            Fraction(8, 2),
+            Fraction(9, 2),
+            Fraction(10, 2),
+            Fraction(11, 2),
+          ],
+        );
+      });
+
+      group('JugglerInfo', () {
+        late JugglerInfo jugglerInfo;
+
+        group('juggler 0', () {
+          setUp(() {
+            jugglerInfo = patternInfo.infoForJuggler(0);
+          });
+
+          test('numberOfObjectsInHand', () {
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 0);
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 1);
+          });
+
+          test('throwInfoAtPointInTime', () {
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(0))!
+                  .theThrow
+                  .toString(),
+              '0',
+            );
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(1))!
+                  .theThrow
+                  .toString(),
+              '3p₂',
+            );
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(2))!
+                  .theThrow
+                  .toString(),
+              '1.5p₁',
+            );
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(3))!
+                  .theThrow
+                  .toString(),
+              '1',
+            );
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(4))!
+                  .theThrow
+                  .toString(),
+              '2p₂',
+            );
+            expect(
+              jugglerInfo
+                  .throwInfoAtPointInTime(Fraction(5))!
+                  .theThrow
+                  .toString(),
+              '3p₂',
+            );
+          });
+        });
+
+        group('juggler 1', () {
+          setUp(() {
+            jugglerInfo = patternInfo.infoForJuggler(1);
+          });
+
+          test('numberOfObjectsInHand', () {
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 2);
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 0);
+          });
+        });
+
+        group('juggler 2', () {
+          setUp(() {
+            jugglerInfo = patternInfo.infoForJuggler(2);
+          });
+
+          test('numberOfObjectsInHand', () {
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 2);
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 0);
+          });
+        });
+
+        group('juggler 3', () {
+          setUp(() {
+            jugglerInfo = patternInfo.infoForJuggler(3);
+          });
+
+          test('numberOfObjectsInHand', () {
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.right), 1);
+            expect(jugglerInfo.numberOfObjectsInHand(Hand.left), 1);
+          });
+        });
+      });
+    });
   });
 }
