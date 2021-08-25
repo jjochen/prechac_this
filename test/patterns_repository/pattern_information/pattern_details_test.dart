@@ -94,6 +94,30 @@ void main() {
         expect(juggler1.numberOfObjectsInHand(Hand.right), 0);
         expect(juggler1.numberOfObjectsInHand(Hand.left), 2);
       });
+
+      test('throwDirectionAtPointInTime', () {
+        expect(
+          patternDetails.throwDirectionAtPointInTime(
+            juggler: 0,
+            pointInTime: Fraction(1),
+          ),
+          ThrowDirection.cross,
+        );
+        expect(
+          patternDetails.throwDirectionAtPointInTime(
+            juggler: 1,
+            pointInTime: Fraction(2),
+          ),
+          ThrowDirection.self,
+        );
+        expect(
+          patternDetails.throwDirectionAtPointInTime(
+            juggler: 1,
+            pointInTime: Fraction(1),
+          ),
+          ThrowDirection.tramline,
+        );
+      });
     });
 
     group('2.5p 2.5p 2 1.5p 1.5p', () {

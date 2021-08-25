@@ -2,6 +2,8 @@ import 'package:dartx/dartx.dart';
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
+enum ThrowDirection { self, tramline, cross }
+
 class PatternDetails {
   PatternDetails({
     required this.pattern,
@@ -27,6 +29,55 @@ class PatternDetails {
 
   JugglerDetails infoForJuggler(int index) {
     return _jugglerDetailsCache[index];
+  }
+
+  Hand? throwingHandAtPointInTime({
+    required int juggler,
+    required Fraction pointInTime,
+  }) {
+    return infoForJuggler(juggler).throwingHandAtPointInTime(pointInTime);
+  }
+
+  Hand? catchingHandAtPointInTime({
+    required int juggler,
+    required Fraction pointInTime,
+  }) {
+    final throwInfo =
+        infoForJuggler(juggler).throwDetailsAtPointInTime(pointInTime);
+    if (throwInfo == null) {
+      return null;
+    }
+    return throwingHandAtPointInTime(
+      juggler: throwInfo.catchingJuggler,
+      pointInTime: throwInfo.landingTime,
+    );
+  }
+
+  ThrowDirection? throwDirectionAtPointInTime({
+    required int juggler,
+    required Fraction pointInTime,
+  }) {
+    final throwInfo =
+        infoForJuggler(juggler).throwDetailsAtPointInTime(pointInTime);
+    if (throwInfo == null) {
+      return null;
+    }
+
+    if (throwInfo.theThrow.isSelf) {
+      return ThrowDirection.self;
+    }
+
+    final throwingHand = throwingHandAtPointInTime(
+      juggler: juggler,
+      pointInTime: pointInTime,
+    );
+    final catchingHand = catchingHandAtPointInTime(
+      juggler: juggler,
+      pointInTime: pointInTime,
+    );
+    return throwingHand == catchingHand
+        ? ThrowDirection.cross
+        : ThrowDirection.tramline;
   }
 
   // methods used by the initializer
