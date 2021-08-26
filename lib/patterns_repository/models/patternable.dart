@@ -23,7 +23,19 @@ abstract class Patternable<P extends Patternable<P, T>, T extends Throwable>
 
   late Fraction prechator = _getPrechator();
   Fraction _getPrechator() {
-    return Fraction(period, numberOfJugglers);
+    return Fraction(period, numberOfJugglers).reduce();
+  }
+
+  Fraction timeBetweenThrows() {
+    var time = Fraction(1);
+    for (var juggler = 0; juggler < numberOfJugglers; juggler++) {
+      final offset = prechator * juggler.toFraction();
+      final fractionalPart = offset.toMixedFraction().fractionalPart;
+      if (fractionalPart > Fraction(0) && fractionalPart < time) {
+        time = fractionalPart;
+      }
+    }
+    return time;
   }
 
   late int numberOfPasses = _getNumberOfPasses();

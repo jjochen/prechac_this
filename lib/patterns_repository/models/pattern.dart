@@ -1,7 +1,6 @@
 import 'package:fraction/fraction.dart';
 import 'package:prechac_this/core/core.dart';
 import 'package:prechac_this/patterns_repository/models/patternable.dart';
-import 'package:prechac_this/patterns_repository/models/throw.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 enum ThrowStyle { self, classic, equi, bi, instantBi }

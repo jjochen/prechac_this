@@ -48,7 +48,7 @@ abstract class Throwable
   }
 
   String heightToString() {
-    final height = this.height;
+    final height = this.height?.reduce();
     if (height == null) {
       return '_';
     }

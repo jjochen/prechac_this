@@ -9,6 +9,7 @@ import 'package:prechac_this/patterns_repository/models/models.dart';
 
 export 'exceptions/pattern_repository_exception.dart';
 export 'models/models.dart';
+export 'pattern_information/pattern_information.dart';
 
 class PatternsRepository {
   const PatternsRepository({required this.computer});

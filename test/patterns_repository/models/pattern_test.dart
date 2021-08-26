@@ -525,5 +525,38 @@ void main() {
         );
       });
     });
+
+    group('timeBetweenThrows', () {
+      test('3 1p 1p 3', () {
+        expect(
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.self(height: 3),
+              Throw.pass(height: 1),
+              Throw.pass(height: 1),
+              Throw.self(height: 3),
+            ],
+          ).timeBetweenThrows(),
+          1.toFraction(),
+        );
+      });
+
+      test('3.3p 2.6p 2.3p 1.6p 1.6p', () {
+        expect(
+          Pattern(
+            numberOfJugglers: 3,
+            throwSequence: [
+              Throw(height: Fraction(10, 3), passingIndex: 2),
+              Throw(height: Fraction(8, 3), passingIndex: 1),
+              Throw(height: Fraction(7, 3), passingIndex: 2),
+              Throw(height: Fraction(5, 3), passingIndex: 1),
+              Throw(height: Fraction(5, 3), passingIndex: 1),
+            ],
+          ).timeBetweenThrows(),
+          Fraction(1, 3),
+        );
+      });
+    });
   });
 }
