@@ -340,12 +340,15 @@ class _SubmitButton extends StatelessWidget {
             ? const CircularProgressIndicator(
                 key: Key('constraintsForm_submit_progressIndicator'),
               )
-            : ElevatedButton(
-                key: const Key('constraintsForm_submit_raisedButton'),
-                onPressed: state.status.isValidated
-                    ? () => context.read<ConstraintsFormBloc>().add(Submit())
-                    : null,
-                child: Text(l10n.constraintsFormSubmitButtonText),
+            : Container(
+                constraints: const BoxConstraints(minWidth: 200),
+                child: ElevatedButton(
+                  key: const Key('constraintsForm_submit_raisedButton'),
+                  onPressed: state.status.isValidated
+                      ? () => context.read<ConstraintsFormBloc>().add(Submit())
+                      : null,
+                  child: Text(l10n.constraintsFormSubmitButtonText),
+                ),
               );
       },
     );
