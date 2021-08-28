@@ -48,6 +48,27 @@ lane :bump_build_number do
 end
 
 
+desc 'Push a new beta build to TestFlight and Google Play'
+lane :beta do
+  increment_build_number!
+
+  run_flutter_command 'clean'
+  run_flutter_command 'doctor'
+  run_flutter_command 'pub get'
+
+  UI.message 'Build Android App'
+  run_flutter_command 'build appbundle'
+  upload_to_play_store(track: 'alpha', release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
+
+  UI.message 'Build iOS App'
+  xcversion(version: '~> 12.5')
+  match(type: 'appstore')
+  run_flutter_command 'build ios --release --no-codesign'
+  build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
+  upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
+end
+
+
 platform :ios do
   desc 'Push a new beta build to TestFlight'
   lane :beta do
@@ -65,14 +86,14 @@ platform :ios do
 
     build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
 
-    upload_to_testflight
+    upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
   end
 end
 
 
 platform :android do
-  desc 'Submit a new version to the Google Play with given track'
-  lane :submit do |options|
+  desc 'Submit a new beta version to the Google Play'
+  lane :beta do |options|
     increment_build_number!
 
     UI.message('Build android app bundle')
@@ -81,8 +102,7 @@ platform :android do
     run_flutter_command 'pub get'
     run_flutter_command 'build appbundle'
 
-    track = options['track'] || 'internal'
-    upload_to_play_store(track: track, release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
+    upload_to_play_store(track: 'internal', release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
   end
 end
 
