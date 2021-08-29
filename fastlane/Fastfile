@@ -47,65 +47,64 @@ lane :bump_build_number do
   increment_build_number!
 end
 
-
 desc 'Push a new beta build to TestFlight and Google Play'
 lane :beta do
   increment_build_number!
-
-  run_flutter_command 'clean'
-  run_flutter_command 'doctor'
-  run_flutter_command 'pub get'
-
-  UI.message 'Build Android App'
-  run_flutter_command 'build appbundle'
-  upload_to_play_store(track: 'alpha', release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
-
-  UI.message 'Build iOS App'
-  xcversion(version: '~> 12.5')
-  match(type: 'appstore')
-  run_flutter_command 'build ios --release --no-codesign'
-  build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
-  upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
+  configure_flutter
+  build_android
+  upload_android(track: 'alpha')
+  build_ios
+  upload_ios_beta
 end
-
 
 platform :ios do
   desc 'Push a new beta build to TestFlight'
   lane :beta do
-    xcversion(version: '~> 12.5')
-
-    match(type: 'appstore')
-
     increment_build_number!
-
-    UI.message 'Build flutter library'
-    run_flutter_command 'clean'
-    run_flutter_command 'doctor'
-    run_flutter_command 'pub get'
-    run_flutter_command 'build ios --release --no-codesign'
-
-    build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
-
-    upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
+    configure_flutter
+    build_ios
+    upload_ios_beta
   end
 end
-
 
 platform :android do
   desc 'Submit a new beta version to the Google Play'
   lane :beta do |options|
     increment_build_number!
-
-    UI.message('Build android app bundle')
-    run_flutter_command 'clean'
-    run_flutter_command 'doctor'
-    run_flutter_command 'pub get'
-    run_flutter_command 'build appbundle'
-
-    upload_to_play_store(track: 'internal', release_status: 'draft', aab: 'build/app/outputs/bundle/release/app-release.aab')
+    configure_flutter
+    build_android
+    upload_android(track: 'alpha')
   end
 end
 
+
+def configure_flutter()
+  run_flutter_command 'clean'
+  run_flutter_command 'doctor'
+  run_flutter_command 'pub get'
+end
+
+def build_ios()
+  UI.message 'Build iOS App'
+  xcversion(version: '~> 12.5')
+  match(type: 'appstore')
+  run_flutter_command 'build ios --release --no-codesign'
+  build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
+end
+
+def upload_ios_beta()
+  upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
+end
+
+def build_android()
+  UI.message 'Build Android App'
+  run_flutter_command 'build appbundle'
+end
+
+def upload_android(track: 'internal')
+  UI.message "Upload to Play Store (#{ track })"
+  upload_to_play_store(track: track, aab: 'build/app/outputs/bundle/release/app-release.aab')
+end
 
 def format()
   UI.message 'format .'
