@@ -4,6 +4,7 @@
 fastlane/Appfile
 fastlane/Matchfile
 fastlane/README.md
+fastlane/metadata/ios/review_information/
 
 # build output
 *.dSYM.zip
