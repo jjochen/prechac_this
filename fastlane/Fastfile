@@ -52,7 +52,7 @@ lane :beta do
   increment_build_number!
   configure_flutter
   build_android
-  upload_android(track: 'alpha')
+  upload_android(track: 'internal')
   build_ios
   upload_ios_beta
 end
@@ -73,7 +73,7 @@ platform :android do
     increment_build_number!
     configure_flutter
     build_android
-    upload_android(track: 'alpha')
+    upload_android(track: 'internal')
   end
 end
 
@@ -89,11 +89,19 @@ def build_ios()
   xcversion(version: '~> 12.5')
   match(type: 'appstore')
   run_flutter_command 'build ios --release --no-codesign'
-  build_app(workspace: 'ios/Runner.xcworkspace', scheme: 'Runner')
+  build_app(
+    workspace: 'ios/Runner.xcworkspace', 
+    scheme: 'Runner'
+  )
 end
 
 def upload_ios_beta()
-  upload_to_testflight(distribute_external: true, groups: ['Devs', 'Beta Testers'], notify_external_testers: true)
+  upload_to_testflight(
+    distribute_external: true, 
+    groups: ['Devs', 'Beta Testers'], 
+    notify_external_testers: true,
+    changelog: 'new build'
+  )
 end
 
 def build_android()
@@ -103,7 +111,10 @@ end
 
 def upload_android(track: 'internal')
   UI.message "Upload to Play Store (#{ track })"
-  upload_to_play_store(track: track, aab: 'build/app/outputs/bundle/release/app-release.aab')
+  upload_to_play_store(
+    track: track, 
+    aab: 'build/app/outputs/bundle/release/app-release.aab'
+  )
 end
 
 def format()
