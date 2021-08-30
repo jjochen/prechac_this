@@ -1,0 +1,19 @@
+tests:
+  - lib/main.dart
+
+staging: /tmp/screenshots
+
+locales:
+  - en-US
+
+devices:
+  ios:
+    iPhone 8 Plus:
+    iPhone XS:
+    iPad Pro (12.9-inch) (2nd generation):
+    iPad Pro (12.9-inch) (3rd generation):
+  android:
+    Nexus 6P:
+    Nexus 9:
+
+frame: true

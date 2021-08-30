@@ -30,6 +30,7 @@ desc 'Update dependencies'
 lane :update_dependencies do
   run_command 'bundle update'
   run_flutter_command 'pub global activate fvm'
+  run_flutter_command 'pub global activate screenshots'
   run_flutter_command 'upgrade'
   run_flutter_command 'clean'
   run_flutter_command 'pub upgrade'
