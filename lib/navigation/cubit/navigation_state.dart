@@ -1,5 +1,6 @@
 part of 'navigation_cubit.dart';
 
+@immutable
 class NavigationState extends Equatable {
   const NavigationState({
     this.listOfPatterns,

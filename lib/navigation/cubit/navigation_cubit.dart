@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 part 'navigation_state.dart';
 
@@ -15,6 +17,16 @@ class NavigationCubit extends Cubit<NavigationState> {
       NavigationState(
         listOfPatterns: state.listOfPatterns,
         currentPattern: pattern,
+      ),
+    );
+  }
+
+  void navigateToAttributions() {
+    emit(
+      NavigationState(
+        listOfPatterns: state.listOfPatterns,
+        currentPattern: state.currentPattern,
+        showAttributions: true,
       ),
     );
   }
