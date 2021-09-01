@@ -19,13 +19,4 @@ class AttributionsPage extends LicensePage {
   String? get applicationLegalese {
     return '©2021 Jochen Pfeiffer';
   }
-
-  @override
-  Widget? get applicationIcon {
-    return Image.asset(
-      'assets/ic_launcher.png',
-      key: const Key('application_icon_image'),
-      width: 96,
-    );
-  }
 }
