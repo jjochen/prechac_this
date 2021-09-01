@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
@@ -27,7 +28,9 @@ class SearchResultsPage extends StatelessWidget {
               final pattern = patterns[index];
               return PatternItem(
                 pattern: pattern,
-                //   onTap: () => Navigator.pushNamed(context, route),
+                onTap: () => context
+                    .read<NavigationCubit>()
+                    .navigateToPatternDetailView(pattern),
               );
             },
           ),
