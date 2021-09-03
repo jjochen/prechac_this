@@ -12,13 +12,19 @@ class AppNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
+      final listOfPatterns = state.listOfPatterns;
+      // final currentPattern = state.currentPattern;
       return Navigator(
         pages: [
           const MaterialPage<dynamic>(child: HomePage()),
-          if (state.listOfPatterns != null)
-            const MaterialPage<dynamic>(child: SearchResultsPage()),
-          // if (state.currentPattern != null)
-          //   const MaterialPage<dynamic>(child: PatternDetailsPage()),
+          if (listOfPatterns != null)
+            MaterialPage<dynamic>(
+              child: SearchResultsPage(patterns: listOfPatterns),
+            ),
+          // if (currentPattern != null)
+          //   MaterialPage<dynamic>(
+          //     child: PatternDetailsPage(pattern: currentPattern),
+          //   ),
           if (state.showAttributions)
             const MaterialPage<dynamic>(child: AttributionsPage()),
         ],
