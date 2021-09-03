@@ -15,12 +15,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => NavigationCubit(),
-        ),
-        BlocProvider(
-          create: (_) => PatternsBloc(
+        BlocProvider<PatternsBloc>(
+          create: (context) => PatternsBloc(
             patternsRepository: PatternsRepository(computer: Computer()),
+          ),
+        ),
+        BlocProvider<NavigationCubit>(
+          create: (context) => NavigationCubit(
+            patternsBloc: context.read<PatternsBloc>(),
           ),
         ),
       ],

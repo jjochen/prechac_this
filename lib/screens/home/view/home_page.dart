@@ -20,32 +20,23 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PatternsBloc, PatternsState>(
-      listener: (context, state) {
-        if (state is PatternsLoaded) {
-          context
-              .read<NavigationCubit>()
-              .navigateToListOfPatterns(state.patterns);
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('PrechacThis'),
-          actions: <Widget>[
-            IconButton(
-              key: const Key('homePage_attributions_iconButton'),
-              icon: const Icon(Icons.info_outline),
-              onPressed: () =>
-                  context.read<NavigationCubit>().navigateToAttributions(),
-            ),
-          ],
-        ),
-        body: BlocProvider(
-          create: (_) => ConstraintsFormBloc(
-            patternsBloc: BlocProvider.of<PatternsBloc>(context),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('PrechacThis'),
+        actions: <Widget>[
+          IconButton(
+            key: const Key('homePage_attributions_iconButton'),
+            icon: const Icon(Icons.info_outline),
+            onPressed: () =>
+                context.read<NavigationCubit>().navigateToAttributions(),
           ),
-          child: const ConstraintsForm(),
+        ],
+      ),
+      body: BlocProvider(
+        create: (_) => ConstraintsFormBloc(
+          patternsBloc: BlocProvider.of<PatternsBloc>(context),
         ),
+        child: const ConstraintsForm(),
       ),
     );
   }
