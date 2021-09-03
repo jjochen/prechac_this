@@ -29,7 +29,7 @@ class AppNavigator extends StatelessWidget {
             const MaterialPage<dynamic>(child: AttributionsPage()),
         ],
         onPopPage: (Route<dynamic> route, dynamic result) {
-          BlocProvider.of<NavigationCubit>(context).pop();
+          context.read<NavigationCubit>().pop();
           return route.didPop(result);
         },
       );
