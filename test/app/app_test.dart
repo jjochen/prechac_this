@@ -3,6 +3,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/app/app.dart';
+import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -18,19 +19,26 @@ void main() {
 
   group('AppView', () {
     late PatternsBloc patternsBloc;
+    late NavigationCubit navigationCubit;
 
     setUp(() {
       registerFallbackValue(FakePatternsEvent());
       registerFallbackValue(PatternsInitial());
+      registerFallbackValue(NavigationState());
       patternsBloc = MockPatternsBloc();
+      navigationCubit = MockNavigationCubit();
     });
 
     testWidgets('renders HomePage', (tester) async {
       when(() => patternsBloc.state).thenReturn(
         PatternsInitial(),
       );
+      when(() => navigationCubit.state).thenReturn(
+        NavigationState(),
+      );
       await tester.pumpApp(
         patternsBloc: patternsBloc,
+        navigationCubit: navigationCubit,
         widget: AppView(),
       );
       expect(find.byType(HomePage), findsOneWidget);

@@ -38,15 +38,13 @@ class AppView extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      //initialRoute: HomePage.routeName,
-      //onGenerateRoute: AppRouter.generateRoute,
-      home: Router(routerDelegate: AppRouterDelegate()),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
+      home: const AppNavigator(),
     );
   }
 }

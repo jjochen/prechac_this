@@ -4,36 +4,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/l10n/l10n.dart';
-import 'package:prechac_this/navigation/app_router.dart';
+import 'package:prechac_this/navigation/app_navigator.dart';
+import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 
 extension PumpApp on WidgetTester {
   Future<void> pumpApp({
     Widget? widget,
-    String? route,
     PatternsBloc? patternsBloc,
+    NavigationCubit? navigationCubit,
   }) {
-    final app = _app(widget: widget, route: route);
-    final appWidget = patternsBloc == null
-        ? app
-        : BlocProvider(
-            create: (_) => patternsBloc,
-            child: app,
-          );
+    final app = MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: widget ?? const AppNavigator(),
+    );
 
-    return pumpWidget(appWidget);
+    if (patternsBloc == null && navigationCubit == null) {
+      return pumpWidget(app);
+    }
+
+    return pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          if (patternsBloc != null)
+            BlocProvider<PatternsBloc>(create: (_) => patternsBloc),
+          if (navigationCubit != null)
+            BlocProvider<NavigationCubit>(create: (_) => navigationCubit),
+        ],
+        child: app,
+      ),
+    );
   }
-}
-
-MaterialApp _app({Widget? widget, String? route}) {
-  return MaterialApp(
-    localizationsDelegates: const [
-      AppLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-    ],
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: widget,
-    onGenerateRoute: AppRouter.generateRoute,
-    initialRoute: route,
-  );
 }
