@@ -8,10 +8,6 @@ import 'package:prechac_this/screens/search_results/search_results.dart';
 class SearchResultsPage extends StatelessWidget {
   const SearchResultsPage({Key? key}) : super(key: key);
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const SearchResultsPage());
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PatternsBloc, PatternsState>(
