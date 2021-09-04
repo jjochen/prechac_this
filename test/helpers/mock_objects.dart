@@ -2,11 +2,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
     implements PatternsBloc {}
+
+class MockNavigationCubit extends MockCubit<NavigationState>
+    implements NavigationCubit {}
 
 class FakePatternsEvent extends Fake implements PatternsEvent {}
 

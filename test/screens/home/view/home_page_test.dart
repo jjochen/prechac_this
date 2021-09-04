@@ -1,13 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
-import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
-import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../../../helpers/helpers.dart';
 
@@ -15,20 +13,27 @@ void main() {
   const attributionsButtonKey = Key('homePage_attributions_iconButton');
 
   late PatternsBloc patternsBloc;
+  late NavigationCubit navigationCubit;
 
   setUp(() {
     registerFallbackValue(FakePatternsEvent());
     registerFallbackValue(PatternsInitial());
+    registerFallbackValue(NavigationState());
     patternsBloc = MockPatternsBloc();
+    navigationCubit = MockNavigationCubit();
   });
 
   group('HomePage', () {
-    testWidgets('renders a ConstraintsForm', (tester) async {
+    testWidgets('renders a HomeView', (tester) async {
       when(() => patternsBloc.state).thenReturn(
         PatternsInitial(),
       );
+      when(() => navigationCubit.state).thenReturn(
+        NavigationState(),
+      );
       await tester.pumpApp(
         patternsBloc: patternsBloc,
+        navigationCubit: navigationCubit,
         widget: HomePage(),
       );
       expect(find.byType(HomeView), findsOneWidget);
@@ -40,47 +45,34 @@ void main() {
       when(() => patternsBloc.state).thenReturn(
         PatternsInitial(),
       );
+      when(() => navigationCubit.state).thenReturn(
+        NavigationState(),
+      );
       await tester.pumpApp(
         patternsBloc: patternsBloc,
+        navigationCubit: navigationCubit,
         widget: HomeView(),
       );
       expect(find.byType(ConstraintsForm), findsOneWidget);
     });
 
-    group('navigates', () {
-      testWidgets('to Attributions when attributions icon is pressed',
-          (tester) async {
-        when(() => patternsBloc.state).thenReturn(
-          PatternsInitial(),
-        );
-        await tester.pumpApp(
-          patternsBloc: patternsBloc,
-          widget: HomeView(),
-        );
-        await tester.tap(find.byKey(attributionsButtonKey));
-        await tester.pumpAndSettle();
-        expect(find.byType(AttributionsPage), findsOneWidget);
-      });
+    testWidgets(
+        'calls navigateToAttributions when attributions button is tapped',
+        (tester) async {
+      when(() => patternsBloc.state).thenReturn(
+        PatternsInitial(),
+      );
+      when(() => navigationCubit.state).thenReturn(
+        NavigationState(),
+      );
+      await tester.pumpApp(
+        patternsBloc: patternsBloc,
+        navigationCubit: navigationCubit,
+        widget: HomeView(),
+      );
 
-      testWidgets('to search results page when patterns did load',
-          (tester) async {
-        whenListen(
-          patternsBloc,
-          Stream.fromIterable(<PatternsState>[
-            PatternsLoading(),
-            PatternsLoaded([mockPattern]),
-          ]),
-        );
-        when(() => patternsBloc.state).thenReturn(
-          PatternsLoaded([mockPattern]),
-        );
-        await tester.pumpApp(
-          patternsBloc: patternsBloc,
-          widget: HomeView(),
-        );
-        await tester.pumpAndSettle();
-        expect(find.byType(SearchResultsPage), findsOneWidget);
-      });
+      await tester.tap(find.byKey(attributionsButtonKey));
+      verify(() => navigationCubit.navigateToAttributions()).called(1);
     });
   });
 }
