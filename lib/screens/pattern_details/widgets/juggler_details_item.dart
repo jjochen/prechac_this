@@ -10,6 +10,8 @@ class JugglerDetailsItem extends StatelessWidget {
 
   final JugglerDetails jugglerDetails;
 
+  // TODO: needs tests
+
   @override
   Widget build(BuildContext context) {
     final rightHand = jugglerDetails.numberOfObjectsInHand(Hand.right);

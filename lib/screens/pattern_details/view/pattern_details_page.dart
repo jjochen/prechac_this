@@ -11,6 +11,8 @@ class PatternDetailsPage extends StatelessWidget {
 
   final PatternDetails patternDetails;
 
+  // TODO: needs tests
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

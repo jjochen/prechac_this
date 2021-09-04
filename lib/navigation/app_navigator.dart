@@ -23,6 +23,7 @@ class AppNavigator extends StatelessWidget {
               child: SearchResultsPage(patterns: listOfPatterns),
             ),
           if (currentPattern != null)
+            // TODO: needs tests
             MaterialPage<dynamic>(
               child: PatternDetailsPage(pattern: currentPattern),
             ),
