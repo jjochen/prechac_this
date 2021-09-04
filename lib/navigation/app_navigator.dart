@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prechac_this/navigation/navigation.dart';
 import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
+import 'package:prechac_this/screens/pattern_details/pattern_details.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 class AppNavigator extends StatelessWidget {
@@ -13,7 +14,7 @@ class AppNavigator extends StatelessWidget {
     return BlocBuilder<NavigationCubit, NavigationState>(
         builder: (context, state) {
       final listOfPatterns = state.listOfPatterns;
-      // final currentPattern = state.currentPattern;
+      final currentPattern = state.currentPattern;
       return Navigator(
         pages: [
           const MaterialPage<dynamic>(child: HomePage()),
@@ -21,10 +22,10 @@ class AppNavigator extends StatelessWidget {
             MaterialPage<dynamic>(
               child: SearchResultsPage(patterns: listOfPatterns),
             ),
-          // if (currentPattern != null)
-          //   MaterialPage<dynamic>(
-          //     child: PatternDetailsPage(pattern: currentPattern),
-          //   ),
+          if (currentPattern != null)
+            MaterialPage<dynamic>(
+              child: PatternDetailsPage(pattern: currentPattern),
+            ),
           if (state.showAttributions)
             const MaterialPage<dynamic>(child: AttributionsPage()),
         ],

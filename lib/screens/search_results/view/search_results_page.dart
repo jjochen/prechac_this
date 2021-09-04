@@ -16,6 +16,7 @@ class SearchResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // TODO: needs localization
         title: const Text('Results'),
       ),
       body: ListView.builder(

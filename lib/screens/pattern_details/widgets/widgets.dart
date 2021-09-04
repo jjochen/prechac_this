@@ -1,1 +1,1 @@
-export 'juggler_details_card.dart';
+export 'juggler_details_item.dart';

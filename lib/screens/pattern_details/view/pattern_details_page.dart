@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:prechac_this/patterns_repository/patterns_repository.dart';
+import 'package:prechac_this/screens/pattern_details/pattern_details.dart';
 
 class PatternDetailsPage extends StatelessWidget {
-  const PatternDetailsPage({Key? key}) : super(key: key);
+  PatternDetailsPage({
+    Key? key,
+    required Pattern pattern,
+  })  : patternDetails = PatternDetails(pattern: pattern),
+        super(key: key);
 
-  static const routeName = 'pattern';
-
-  @override
-  Widget build(BuildContext context) {
-    return const PatternDetailsView();
-  }
-}
-
-class PatternDetailsView extends StatelessWidget {
-  const PatternDetailsView({Key? key}) : super(key: key);
+  final PatternDetails patternDetails;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        // TODO: needs localization
+        title: const Text('Details'),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        itemCount: patternDetails.pattern.numberOfJugglers,
+        itemBuilder: (context, index) {
+          final jugglerDetails = patternDetails.infoForJuggler(index);
+          return JugglerDetailsItem(jugglerDetails: jugglerDetails);
+        },
+      ),
+    );
   }
 }
