@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/navigation/app_navigator.dart';
 import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/attributions/attributions.dart';
+import 'package:prechac_this/screens/home/home.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../helpers/helpers.dart';
@@ -89,5 +91,37 @@ void main() {
       await tester.pumpAndSettle();
       //expect(find.byType(PatternDetailPage), findsOneWidget);
     });
+  });
+
+  testWidgets('navigates back and calls pop()', (tester) async {
+    final state = NavigationState(showAttributions: true);
+    whenListen(
+      navigationCubit,
+      Stream.fromIterable(<NavigationState>[
+        NavigationState(),
+        state,
+      ]),
+    );
+    when(() => navigationCubit.state).thenReturn(
+      state,
+    );
+
+    await tester.pumpApp(
+      patternsBloc: patternsBloc,
+      navigationCubit: navigationCubit,
+      widget: AppNavigator(),
+    );
+    await tester.pumpAndSettle();
+    var backButton = find.byTooltip('Back');
+    if (backButton.evaluate().isEmpty) {
+      backButton = find.byType(CupertinoNavigationBarBackButton);
+    }
+    expectSync(backButton, findsOneWidget);
+
+    expect(find.byType(ConstraintsForm), findsNothing);
+    await tester.tap(backButton);
+    await tester.pumpAndSettle();
+    expect(find.byType(ConstraintsForm), findsOneWidget);
+    verify(() => navigationCubit.pop()).called(1);
   });
 }
