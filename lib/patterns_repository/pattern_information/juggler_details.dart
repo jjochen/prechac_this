@@ -4,9 +4,19 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 enum Hand { left, right }
 
 class JugglerDetails {
-  JugglerDetails(this.index);
+  JugglerDetails({
+    required this.index,
+    required Pattern pattern,
+  }) {
+    timeOffset = pattern.prechator * index.toFraction();
+    offset = timeOffset.toDouble().floor() % pattern.period;
+    localPattern = pattern.rotate(-offset);
+  }
 
   final int index;
+  late final int offset;
+  late final Fraction timeOffset;
+  late final Pattern localPattern;
 
   Hand startingHand = Hand.right;
   Hand get noneStartingHand =>

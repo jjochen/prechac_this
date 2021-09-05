@@ -84,7 +84,7 @@ class PatternDetails {
   static List<JugglerDetails> _gatherInformation({required Pattern pattern}) {
     final jugglersInformation = List.generate(
       pattern.numberOfJugglers,
-      (index) => JugglerDetails(index),
+      (index) => JugglerDetails(index: index, pattern: pattern),
     );
 
     var initialObjectCount = 0;
