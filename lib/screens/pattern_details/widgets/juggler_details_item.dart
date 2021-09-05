@@ -19,7 +19,7 @@ class JugglerDetailsItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 16),
       child: ListTile(
-        key: Key('__juggler_details_item_${jugglerDetails.index}'),
+        key: Key('__juggler_details_item_${jugglerDetails.jugglerIndex}'),
         title: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Text(
