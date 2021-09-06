@@ -27,63 +27,6 @@ void main() {
         );
       });
 
-      group('throwDetailsAtPointInTime', () {
-        group('juggler 0', () {
-          test('point in time 1', () {
-            expect(
-              patternDetails
-                  .infoForJuggler(0)
-                  .throwDetailsAtPointInTime(Fraction(1)),
-              ThrowDetails(
-                pointInTime: 1.toFraction(),
-                throwingJuggler: 0,
-                throwingSiteswapPosition: 1,
-                theThrow: Throw.pass(height: 2),
-                landingTime: 3.toFraction(),
-                catchingJuggler: 1,
-                numberOfObjectsThrown: 1,
-              ),
-            );
-          });
-        });
-
-        group('juggler 1', () {
-          test('point in time 0', () {
-            expect(
-              patternDetails
-                  .infoForJuggler(1)
-                  .throwDetailsAtPointInTime(Fraction(0)),
-              ThrowDetails(
-                pointInTime: 0.toFraction(),
-                throwingJuggler: 1,
-                throwingSiteswapPosition: 2,
-                theThrow: Throw.self(height: 1),
-                landingTime: 1.toFraction(),
-                catchingJuggler: 1,
-                numberOfObjectsThrown: 1,
-              ),
-            );
-          });
-
-          test('point in time 6', () {
-            expect(
-              patternDetails
-                  .infoForJuggler(1)
-                  .throwDetailsAtPointInTime(Fraction(6)),
-              ThrowDetails(
-                pointInTime: 6.toFraction(),
-                throwingJuggler: 1,
-                throwingSiteswapPosition: 0,
-                theThrow: Throw.self(height: 4),
-                landingTime: 10.toFraction(),
-                catchingJuggler: 1,
-                numberOfObjectsThrown: 1,
-              ),
-            );
-          });
-        });
-      });
-
       test('numberOfObjectsInHands', () {
         final juggler0 = patternDetails.infoForJuggler(0)
           ..startingHand = Hand.right;
