@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prechac_this/l10n/l10n.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/pattern_details/pattern_details.dart';
 
@@ -15,10 +16,10 @@ class PatternDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        // TODO: needs localization
-        title: const Text('Details'),
+        title: Text(l10n.patternDetailsAppBarTitle),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
