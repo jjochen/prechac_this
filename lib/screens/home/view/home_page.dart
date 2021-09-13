@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/l10n/l10n.dart';
 import 'package:prechac_this/navigation/navigation.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/home/home.dart';
@@ -20,9 +21,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PrechacThis'),
+        title: Text(l10n.homeAppBarTitle),
         actions: <Widget>[
           IconButton(
             key: const Key('homePage_attributions_iconButton'),

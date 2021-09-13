@@ -84,7 +84,7 @@ class PatternDetails {
   static List<JugglerDetails> _gatherInformation({required Pattern pattern}) {
     final jugglersInformation = List.generate(
       pattern.numberOfJugglers,
-      (index) => JugglerDetails(index),
+      (index) => JugglerDetails(jugglerIndex: index, pattern: pattern),
     );
 
     var initialObjectCount = 0;
@@ -93,11 +93,8 @@ class PatternDetails {
     while (initialObjectCount.toFraction() < pattern.numberOfObjects ||
         pointInTime < pattern.period.toFraction()) {
       for (final jugglerDetails in jugglersInformation) {
-        final throwDetails = _throwDetailsAtPointInTime(
-          jugglerDetails: jugglerDetails,
-          pointInTime: pointInTime,
-          pattern: pattern,
-        );
+        final throwDetails =
+            jugglerDetails.throwDetailsAtPointInTime(pointInTime);
         if (throwDetails == null || throwDetails.numberOfObjectsThrown == 0) {
           continue;
         }
@@ -112,62 +109,13 @@ class PatternDetails {
 
         final catchingJugglerDetails =
             jugglersInformation[throwDetails.catchingJuggler];
-        final catchInfo = _throwDetailsAtPointInTime(
-          jugglerDetails: catchingJugglerDetails,
-          pointInTime: throwDetails.landingTime,
-          pattern: pattern,
-        );
+        final catchInfo = catchingJugglerDetails
+            .throwDetailsAtPointInTime(throwDetails.landingTime);
         catchInfo?.throwType = ThrowType.coughtObject;
       }
       pointInTime = (pointInTime + timeDelta).reduce();
     }
 
     return jugglersInformation;
-  }
-
-  static ThrowDetails? _throwDetailsAtPointInTime({
-    required JugglerDetails jugglerDetails,
-    required Fraction pointInTime,
-    required Pattern pattern,
-  }) {
-    var throwDetails = jugglerDetails.throwDetailsAtPointInTime(pointInTime);
-    if (throwDetails == null) {
-      throwDetails = _gatherJugglersThrowDetailsAtPointInTime(
-        juggler: jugglerDetails.index,
-        pointInTime: pointInTime,
-        pattern: pattern,
-      );
-      jugglerDetails.setThrowDetails(
-          throwDetails: throwDetails, pointInTime: pointInTime);
-    }
-    return throwDetails;
-  }
-
-  static ThrowDetails? _gatherJugglersThrowDetailsAtPointInTime({
-    required int juggler,
-    required Fraction pointInTime,
-    required Pattern pattern,
-  }) {
-    final jugglersOffset = pattern.prechator * juggler.toFraction();
-    final indexFraction = (pointInTime - jugglersOffset).reduce();
-    if (!indexFraction.isWhole) {
-      return null;
-    }
-    final index = indexFraction.numerator % pattern.period;
-    final theThrow = pattern.throwAtIndex(index);
-    final landingTime = pointInTime + theThrow.height;
-    final catchingJuggler =
-        (juggler + theThrow.passingIndex) % pattern.numberOfJugglers;
-    final numberOfObjectsThrown = theThrow.height == 0.toFraction() ? 0 : 1;
-
-    return ThrowDetails(
-      pointInTime: pointInTime.reduce(),
-      throwingJuggler: juggler,
-      throwingSiteswapPosition: index,
-      theThrow: theThrow,
-      landingTime: landingTime.reduce(),
-      catchingJuggler: catchingJuggler,
-      numberOfObjectsThrown: numberOfObjectsThrown,
-    );
   }
 }

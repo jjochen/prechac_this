@@ -9,6 +9,7 @@ import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/attributions/attributions.dart';
 import 'package:prechac_this/screens/home/home.dart';
+import 'package:prechac_this/screens/pattern_details/pattern_details.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
 import '../helpers/helpers.dart';
@@ -89,7 +90,7 @@ void main() {
         widget: AppNavigator(),
       );
       await tester.pumpAndSettle();
-      //expect(find.byType(PatternDetailPage), findsOneWidget);
+      expect(find.byType(PatternDetailsPage), findsOneWidget);
     });
   });
 
