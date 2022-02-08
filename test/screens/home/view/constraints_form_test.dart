@@ -51,7 +51,7 @@ void main() {
   const testContains = '2p 1';
 
   group('ConstraintsForm', () {
-    registerFallbackValue<ConstraintsFormState>(const ConstraintsFormState());
+    registerFallbackValue(const ConstraintsFormState());
 
     late ConstraintsFormBloc constraintsFormBloc;
 

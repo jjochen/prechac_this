@@ -1,0 +1,29 @@
+{
+  "editor.tabSize": 2,
+  "dart.lineLength": 80,
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  "search.exclude": {
+    "**/.fvm": true
+  },
+  "files.watcherExclude": {
+    "**/.fvm": true
+  },
+  "[dart]": {
+    "editor.rulers": [
+      80,
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true,
+    },
+  },
+  "[shellscript]": {
+    "editor.rulers": [
+      80,
+    ],
+    "editor.formatOnSave": true,
+  },
+  "dart.debugExternalPackageLibraries": true,
+}
