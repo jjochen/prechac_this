@@ -66,16 +66,17 @@ void main() {
     group('2.5p 2.5p 2 1.5p 1.5p', () {
       setUp(() {
         patternDetails = PatternDetails(
-            pattern: Pattern(
-          numberOfJugglers: 2,
-          throwSequence: [
-            Throw.pass(height: 2.5),
-            Throw.pass(height: 2.5),
-            Throw.self(height: 2),
-            Throw.pass(height: 1.5),
-            Throw.pass(height: 1.5),
-          ],
-        ));
+          pattern: Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [
+              Throw.pass(height: 2.5),
+              Throw.pass(height: 2.5),
+              Throw.self(height: 2),
+              Throw.pass(height: 1.5),
+              Throw.pass(height: 1.5),
+            ],
+          ),
+        );
       });
 
       test('pointsInTime', () {
@@ -130,16 +131,17 @@ void main() {
     group('3.3p2 2.6p1 2.3p2 1.6p1 1.6p1', () {
       setUp(() {
         patternDetails = PatternDetails(
-            pattern: Pattern(
-          numberOfJugglers: 3,
-          throwSequence: [
-            Throw(height: Fraction(10, 3), passingIndex: 2),
-            Throw(height: Fraction(8, 3), passingIndex: 1),
-            Throw(height: Fraction(7, 3), passingIndex: 2),
-            Throw(height: Fraction(5, 3), passingIndex: 1),
-            Throw(height: Fraction(5, 3), passingIndex: 1),
-          ],
-        ));
+          pattern: Pattern(
+            numberOfJugglers: 3,
+            throwSequence: [
+              Throw(height: Fraction(10, 3), passingIndex: 2),
+              Throw(height: Fraction(8, 3), passingIndex: 1),
+              Throw(height: Fraction(7, 3), passingIndex: 2),
+              Throw(height: Fraction(5, 3), passingIndex: 1),
+              Throw(height: Fraction(5, 3), passingIndex: 1),
+            ],
+          ),
+        );
       });
 
       test('pointsInTime', () {
@@ -168,17 +170,18 @@ void main() {
     group('2.5p3 1.5p1 1 2p2 1 1', () {
       setUp(() {
         patternDetails = PatternDetails(
-            pattern: Pattern(
-          numberOfJugglers: 4,
-          throwSequence: [
-            Throw(height: Fraction(5, 2), passingIndex: 3),
-            Throw(height: Fraction(3, 2), passingIndex: 1),
-            Throw(height: Fraction(2, 2), passingIndex: 0),
-            Throw(height: Fraction(4, 2), passingIndex: 2),
-            Throw(height: Fraction(2, 2), passingIndex: 0),
-            Throw(height: Fraction(2, 2), passingIndex: 0),
-          ],
-        ));
+          pattern: Pattern(
+            numberOfJugglers: 4,
+            throwSequence: [
+              Throw(height: Fraction(5, 2), passingIndex: 3),
+              Throw(height: Fraction(3, 2), passingIndex: 1),
+              Throw(height: Fraction(2, 2), passingIndex: 0),
+              Throw(height: Fraction(4, 2), passingIndex: 2),
+              Throw(height: Fraction(2, 2), passingIndex: 0),
+              Throw(height: Fraction(2, 2), passingIndex: 0),
+            ],
+          ),
+        );
       });
 
       test('pointsInTime', () {
@@ -205,17 +208,18 @@ void main() {
     group('0 3p2 1.5p1 1 2p2 3p2', () {
       setUp(() {
         patternDetails = PatternDetails(
-            pattern: Pattern(
-          numberOfJugglers: 4,
-          throwSequence: [
-            Throw(height: Fraction(0, 2), passingIndex: 0),
-            Throw(height: Fraction(6, 2), passingIndex: 2),
-            Throw(height: Fraction(3, 2), passingIndex: 1),
-            Throw(height: Fraction(2, 2), passingIndex: 0),
-            Throw(height: Fraction(4, 2), passingIndex: 2),
-            Throw(height: Fraction(6, 2), passingIndex: 2),
-          ],
-        ));
+          pattern: Pattern(
+            numberOfJugglers: 4,
+            throwSequence: [
+              Throw(height: Fraction(0, 2), passingIndex: 0),
+              Throw(height: Fraction(6, 2), passingIndex: 2),
+              Throw(height: Fraction(3, 2), passingIndex: 1),
+              Throw(height: Fraction(2, 2), passingIndex: 0),
+              Throw(height: Fraction(4, 2), passingIndex: 2),
+              Throw(height: Fraction(6, 2), passingIndex: 2),
+            ],
+          ),
+        );
       });
 
       test('pointsInTime', () {

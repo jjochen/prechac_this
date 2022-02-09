@@ -37,11 +37,14 @@ class Engine {
       }).toList();
 
       final cartesianProduct = CartesianProductIterable<Throw>(
-              bagsOfPossibleThrows)
-          .map((throwSequence) => Pattern(
-                numberOfJugglers: patternConstraint.numberOfJugglers,
-                throwSequence: throwSequence,
-              ))
+        bagsOfPossibleThrows,
+      )
+          .map(
+            (throwSequence) => Pattern(
+              numberOfJugglers: patternConstraint.numberOfJugglers,
+              throwSequence: throwSequence,
+            ),
+          )
           .where((pattern) => pattern.satisfiesConstraint(patternConstraint))
           .map((pattern) => pattern.normalize());
       setOfPatterns.addAll(cartesianProduct);

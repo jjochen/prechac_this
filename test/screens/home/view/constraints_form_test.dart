@@ -82,9 +82,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              NumberOfJugglersDidChange(testNumberOfJugglers),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            NumberOfJugglersDidChange(testNumberOfJugglers),
+          ),
+        ).called(1);
       });
 
       testWidgets('PeriodDidChange when period changes', (tester) async {
@@ -106,9 +108,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              PeriodDidChange(testPeriod),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            PeriodDidChange(testPeriod),
+          ),
+        ).called(1);
       });
 
       testWidgets(
@@ -132,9 +136,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              NumberOfObjectsDidChange(testNumberOfObjects),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            NumberOfObjectsDidChange(testNumberOfObjects),
+          ),
+        ).called(1);
       });
 
       testWidgets('MaxHeightDidChange when max height changes', (tester) async {
@@ -156,9 +162,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              MaxHeightDidChange(testMaxHeight),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            MaxHeightDidChange(testMaxHeight),
+          ),
+        ).called(1);
       });
 
       testWidgets(
@@ -182,9 +190,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              MinNumberOfPassesDidChange(testMinNumberOfPasses),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            MinNumberOfPassesDidChange(testMinNumberOfPasses),
+          ),
+        ).called(1);
       });
 
       testWidgets(
@@ -208,9 +218,11 @@ void main() {
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
-        verify(() => constraintsFormBloc.add(
-              MaxNumberOfPassesDidChange(testMaxNumberOfPasses),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            MaxNumberOfPassesDidChange(testMaxNumberOfPasses),
+          ),
+        ).called(1);
       });
 
       testWidgets('ContainsDidChange when contains changes', (tester) async {
@@ -224,10 +236,14 @@ void main() {
         );
 
         await tester.enterText(
-            find.byKey(containsInputKey), testContains.toString());
-        verify(() => constraintsFormBloc.add(
-              ContainsDidChange(testContains),
-            )).called(1);
+          find.byKey(containsInputKey),
+          testContains,
+        );
+        verify(
+          () => constraintsFormBloc.add(
+            ContainsDidChange(testContains),
+          ),
+        ).called(1);
       });
 
       testWidgets('Submit when submit button is pressed', (tester) async {
@@ -244,9 +260,11 @@ void main() {
         );
 
         await tester.tap(find.byKey(submitButtonKey));
-        verify(() => constraintsFormBloc.add(
-              Submit(),
-            )).called(1);
+        verify(
+          () => constraintsFormBloc.add(
+            Submit(),
+          ),
+        ).called(1);
       });
     });
 
@@ -332,7 +350,8 @@ void main() {
           InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
-            ConstraintsFormState(numberOfJugglers: numberOfJugglers));
+          ConstraintsFormState(numberOfJugglers: numberOfJugglers),
+        );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
@@ -411,7 +430,8 @@ void main() {
           InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
-            ConstraintsFormState(minNumberOfPasses: minNumberOfPasses));
+          ConstraintsFormState(minNumberOfPasses: minNumberOfPasses),
+        );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
@@ -431,7 +451,8 @@ void main() {
           InputOutOfRangeException(1, 2),
         );
         when(() => constraintsFormBloc.state).thenReturn(
-            ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses));
+          ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses),
+        );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(
@@ -484,7 +505,8 @@ void main() {
       testWidgets('progress indicator when status is in progress',
           (tester) async {
         when(() => constraintsFormBloc.state).thenReturn(
-            ConstraintsFormState(status: FormzStatus.submissionInProgress));
+          ConstraintsFormState(status: FormzStatus.submissionInProgress),
+        );
         await tester.pumpApp(
           widget: Scaffold(
             body: BlocProvider.value(

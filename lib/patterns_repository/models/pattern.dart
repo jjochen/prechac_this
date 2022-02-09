@@ -89,7 +89,7 @@ class Pattern extends Patternable<Pattern, Throw> {
     final originFraction =
         (theThrow.height - (theThrow.passingIndex.toFraction() * prechator))
             .reduce();
-    assert(originFraction.isWhole);
+    assert(originFraction.isWhole, 'originFraction is not whole');
     final origin = originFraction.numerator;
     final passingIndex = theThrow.passingIndex;
 
@@ -112,7 +112,8 @@ class Pattern extends Patternable<Pattern, Throw> {
   }
 
   Iterable<E> mapThrowsAsStringWithStyle<E>(
-      E Function(String string, ThrowStyle style) f) sync* {
+    E Function(String string, ThrowStyle style) f,
+  ) sync* {
     for (var index = 0; index < period; index++) {
       yield f(throwAtIndexToString(index), styleOfThrowAtIndex(index));
     }

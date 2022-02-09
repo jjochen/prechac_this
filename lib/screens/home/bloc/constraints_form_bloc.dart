@@ -100,10 +100,12 @@ class ConstraintsFormBloc
     Submit event,
     Emitter<ConstraintsFormState> emit,
   ) async {
-    emit(state.copyWith(
-      status: FormzStatus.submissionInProgress,
-      error: null,
-    ));
+    emit(
+      state.copyWith(
+        status: FormzStatus.submissionInProgress,
+        error: null,
+      ),
+    );
     _patternsBloc.add(LoadPatterns(state.toSearchParameters()));
   }
 
@@ -111,20 +113,24 @@ class ConstraintsFormBloc
     PatternsDidLoad event,
     Emitter<ConstraintsFormState> emit,
   ) async {
-    emit(state.copyWith(
-      status: FormzStatus.submissionSuccess,
-      error: null,
-    ));
+    emit(
+      state.copyWith(
+        status: FormzStatus.submissionSuccess,
+        error: null,
+      ),
+    );
   }
 
   Future<void> _onPatternsDidNotLoadToState(
     PatternsDidNotLoad event,
     Emitter<ConstraintsFormState> emit,
   ) async {
-    emit(state.copyWith(
-      status: FormzStatus.submissionFailure,
-      error: event.exception,
-    ));
+    emit(
+      state.copyWith(
+        status: FormzStatus.submissionFailure,
+        error: event.exception,
+      ),
+    );
   }
 
   ConstraintsFormState _copyStateWithFormValues({

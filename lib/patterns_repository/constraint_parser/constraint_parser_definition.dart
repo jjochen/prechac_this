@@ -15,8 +15,9 @@ class ConstraintParserDefinition extends GrammarDefinition {
 
   Parser<List<ThrowConstraint>> throwSequence() =>
       (throwConstraint() & whitespaceAndThrowConstraint().star()).trim().map(
-          (values) =>
-              <ThrowConstraint>[values[0] as ThrowConstraint, ...values[1]]);
+            (values) =>
+                <ThrowConstraint>[values[0] as ThrowConstraint, ...values[1]],
+          );
 
   Parser<ThrowConstraint> whitespaceAndThrowConstraint() =>
       (whitespace().plus() & throwConstraint())
@@ -33,11 +34,12 @@ class ConstraintParserDefinition extends GrammarDefinition {
   Parser<ThrowConstraint> self() =>
       integer().map((height) => ThrowConstraint.self(height: height));
 
-  Parser<ThrowConstraint> pass() => (floatOrPlaceholder() & passingIndex())
-      .map((values) => ThrowConstraint.pass(
-            height: values.elementAt(0) as double?,
-            passingIndex: values.elementAt(1) as int?,
-          ));
+  Parser<ThrowConstraint> pass() => (floatOrPlaceholder() & passingIndex()).map(
+        (values) => ThrowConstraint.pass(
+          height: values.elementAt(0) as double?,
+          passingIndex: values.elementAt(1) as int?,
+        ),
+      );
 
   Parser<int?> passingIndex() =>
       (pWithIndex() | pWithoutIndex()).map((dynamic value) => value as int?);

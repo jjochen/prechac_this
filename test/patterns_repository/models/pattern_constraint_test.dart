@@ -182,7 +182,9 @@ void main() {
     );
     expect(
       patternConstraint.copyWithThrow(
-          newThrow: ThrowConstraint.self(height: 2), index: 1),
+        newThrow: ThrowConstraint.self(height: 2),
+        index: 1,
+      ),
       PatternConstraint(
         numberOfJugglers: 2,
         numberOfObjects: 4,
