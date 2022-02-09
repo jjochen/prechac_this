@@ -6,14 +6,20 @@ import 'package:flutter/widgets.dart';
 import 'package:prechac_this/app/app.dart';
 import 'package:prechac_this/app/app_bloc_observer.dart';
 
-void main() {
-  Bloc.observer = AppBlocObserver();
+Future<void> main() async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  runZonedGuarded(
-    () => runApp(const App()),
+  await runZonedGuarded(
+    () async {
+      await BlocOverrides.runZoned(
+        () async => runApp(
+          const App(),
+        ),
+        blocObserver: AppBlocObserver(),
+      );
+    },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }

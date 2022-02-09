@@ -25,113 +25,106 @@ class ConstraintsFormBloc
         }
       },
     );
+    on<NumberOfJugglersDidChange>(_onNumbersOfJugglersDidChangeToState);
+    on<PeriodDidChange>(_onPeriodDidChangeToState);
+    on<NumberOfObjectsDidChange>(_onNumberOfObjectsDidChangeToState);
+    on<MaxHeightDidChange>(_onMaxHeightDidChangeToState);
+    on<MinNumberOfPassesDidChange>(_onMinNumberOfPassesDidChangeToState);
+    on<MaxNumberOfPassesDidChange>(_onMaxNumberOfPassesDidChangeToState);
+    on<ContainsDidChange>(_onContainsDidChangeToState);
+    on<Submit>(_onSubmitToState);
+    on<PatternsDidLoad>(_onPatternsDidLoadToState);
+    on<PatternsDidNotLoad>(_onPatternsDidNotLoadToState);
   }
 
   final PatternsBloc _patternsBloc;
   StreamSubscription? _patternsSubscription;
 
-  @override
-  Stream<ConstraintsFormState> mapEventToState(
-    ConstraintsFormEvent event,
-  ) async* {
-    if (event is NumberOfJugglersDidChange) {
-      yield* _mapNumbersOfJugglersDidChangeToState(event);
-    } else if (event is PeriodDidChange) {
-      yield* _mapPeriodDidChangeToState(event);
-    } else if (event is NumberOfObjectsDidChange) {
-      yield* _mapNumberOfObjectsDidChangeToState(event);
-    } else if (event is MaxHeightDidChange) {
-      yield* _mapMaxHeightDidChangeToState(event);
-    } else if (event is MinNumberOfPassesDidChange) {
-      yield* _mapMinNumberOfPassesDidChangeToState(event);
-    } else if (event is MaxNumberOfPassesDidChange) {
-      yield* _mapMaxNumberOfPassesDidChangeToState(event);
-    } else if (event is ContainsDidChange) {
-      yield* _mapContainsDidChangeToState(event);
-    } else if (event is Submit) {
-      yield* _mapSubmitToState(event);
-    } else if (event is PatternsDidLoad) {
-      yield* _mapPatternsDidLoadToState(event);
-    } else if (event is PatternsDidNotLoad) {
-      yield* _mapPatternsDidNotLoadToState(event);
-    }
-  }
-
-  Stream<ConstraintsFormState> _mapNumbersOfJugglersDidChangeToState(
+  Future<void> _onNumbersOfJugglersDidChangeToState(
     NumberOfJugglersDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = NumberOfJugglers.dirty(event.numberOfJugglers);
-    yield _copyStateWithFormValues(numberOfJugglers: value);
+    emit(_copyStateWithFormValues(numberOfJugglers: value));
   }
 
-  Stream<ConstraintsFormState> _mapPeriodDidChangeToState(
+  Future<void> _onPeriodDidChangeToState(
     PeriodDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = Period.dirty(event.period);
-    yield _copyStateWithFormValues(period: value);
+    emit(_copyStateWithFormValues(period: value));
   }
 
-  Stream<ConstraintsFormState> _mapNumberOfObjectsDidChangeToState(
+  Future<void> _onNumberOfObjectsDidChangeToState(
     NumberOfObjectsDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = NumberOfObjects.dirty(event.numberOfObjects);
-    yield _copyStateWithFormValues(numberOfObjects: value);
+    emit(_copyStateWithFormValues(numberOfObjects: value));
   }
 
-  Stream<ConstraintsFormState> _mapMaxHeightDidChangeToState(
+  Future<void> _onMaxHeightDidChangeToState(
     MaxHeightDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = MaxHeight.dirty(event.maxHeight);
-    yield _copyStateWithFormValues(maxHeight: value);
+    emit(_copyStateWithFormValues(maxHeight: value));
   }
 
-  Stream<ConstraintsFormState> _mapMinNumberOfPassesDidChangeToState(
+  Future<void> _onMinNumberOfPassesDidChangeToState(
     MinNumberOfPassesDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = MinNumberOfPasses.dirty(event.minNumberOfPasses);
-    yield _copyStateWithFormValues(minNumberOfPasses: value);
+    emit(_copyStateWithFormValues(minNumberOfPasses: value));
   }
 
-  Stream<ConstraintsFormState> _mapMaxNumberOfPassesDidChangeToState(
+  Future<void> _onMaxNumberOfPassesDidChangeToState(
     MaxNumberOfPassesDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = MaxNumberOfPasses.dirty(event.maxNumberOfPasses);
-    yield _copyStateWithFormValues(maxNumberOfPasses: value);
+    emit(_copyStateWithFormValues(maxNumberOfPasses: value));
   }
 
-  Stream<ConstraintsFormState> _mapContainsDidChangeToState(
+  Future<void> _onContainsDidChangeToState(
     ContainsDidChange event,
-  ) async* {
+    Emitter<ConstraintsFormState> emit,
+  ) async {
     final value = Contains.dirty(event.contains);
-    yield _copyStateWithFormValues(contains: value);
+    emit(_copyStateWithFormValues(contains: value));
   }
 
-  Stream<ConstraintsFormState> _mapSubmitToState(
+  Future<void> _onSubmitToState(
     Submit event,
-  ) async* {
-    yield state.copyWith(
+    Emitter<ConstraintsFormState> emit,
+  ) async {
+    emit(state.copyWith(
       status: FormzStatus.submissionInProgress,
       error: null,
-    );
+    ));
     _patternsBloc.add(LoadPatterns(state.toSearchParameters()));
   }
 
-  Stream<ConstraintsFormState> _mapPatternsDidLoadToState(
+  Future<void> _onPatternsDidLoadToState(
     PatternsDidLoad event,
-  ) async* {
-    yield state.copyWith(
+    Emitter<ConstraintsFormState> emit,
+  ) async {
+    emit(state.copyWith(
       status: FormzStatus.submissionSuccess,
       error: null,
-    );
+    ));
   }
 
-  Stream<ConstraintsFormState> _mapPatternsDidNotLoadToState(
+  Future<void> _onPatternsDidNotLoadToState(
     PatternsDidNotLoad event,
-  ) async* {
-    yield state.copyWith(
+    Emitter<ConstraintsFormState> emit,
+  ) async {
+    emit(state.copyWith(
       status: FormzStatus.submissionFailure,
       error: event.exception,
-    );
+    ));
   }
 
   ConstraintsFormState _copyStateWithFormValues({

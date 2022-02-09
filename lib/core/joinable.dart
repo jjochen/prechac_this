@@ -7,7 +7,9 @@ extension Joinable<E> on Iterable<E> {
 
     final list = <E>[iterator.current];
     while (iterator.moveNext()) {
-      list..add(separator)..add(iterator.current);
+      list
+        ..add(separator)
+        ..add(iterator.current);
     }
 
     return list;

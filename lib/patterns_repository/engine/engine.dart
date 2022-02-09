@@ -2,7 +2,6 @@ import 'package:dartx/dartx.dart';
 import 'package:prechac_this/core/core.dart';
 import 'package:prechac_this/patterns_repository/engine/engine_pattern.dart';
 import 'package:prechac_this/patterns_repository/engine/engine_pattern_constraint.dart';
-import 'package:prechac_this/patterns_repository/models/models.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 class Engine {
