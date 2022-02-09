@@ -1,5 +1,4 @@
 import 'package:fraction/fraction.dart';
-import 'package:prechac_this/patterns_repository/models/pattern.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 extension EnginePattern on Pattern {

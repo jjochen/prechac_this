@@ -168,14 +168,18 @@ void main() {
 
     test('set of patterns does not contain duplicates', () {
       final set = <Pattern>{}
-        ..add(Pattern(
-          numberOfJugglers: 2,
-          throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
-        ))
-        ..add(Pattern(
-          numberOfJugglers: 2,
-          throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
-        ));
+        ..add(
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+          ),
+        )
+        ..add(
+          Pattern(
+            numberOfJugglers: 2,
+            throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+          ),
+        );
       expect(
         set,
         {

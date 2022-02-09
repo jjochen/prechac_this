@@ -28,19 +28,20 @@ void main() {
           contains: '_p',
         );
         expect(
-            patternsRepository.patterns(searchParameters).then((pattern) {
-              expect(pattern, [
-                Pattern(
-                  numberOfJugglers: 2,
-                  throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
-                ),
-                Pattern(
-                  numberOfJugglers: 2,
-                  throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
-                ),
-              ]);
-            }),
-            completes);
+          patternsRepository.patterns(searchParameters).then((pattern) {
+            expect(pattern, [
+              Pattern(
+                numberOfJugglers: 2,
+                throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
+              ),
+              Pattern(
+                numberOfJugglers: 2,
+                throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
+              ),
+            ]);
+          }),
+          completes,
+        );
       });
 
       test('forwards NoPatternsFoundException', () async {
@@ -51,15 +52,16 @@ void main() {
           maxHeight: 1,
         );
         expect(
-            patternsRepository.patterns(searchParameters).then((pattern) {
-              assert(false); // should error
-            }).onError((error, stackTrace) {
-              expect(
-                error,
-                NoPatternsFoundException(),
-              );
-            }),
-            completes);
+          patternsRepository.patterns(searchParameters).then((pattern) {
+            assert(false, 'should not complete');
+          }).onError((error, stackTrace) {
+            expect(
+              error,
+              NoPatternsFoundException(),
+            );
+          }),
+          completes,
+        );
       });
 
       test('forwards ConstraintsInvalidException', () async {
@@ -71,15 +73,16 @@ void main() {
           contains: '3x',
         );
         expect(
-            patternsRepository.patterns(searchParameters).then((pattern) {
-              assert(false); // should error
-            }).onError((error, stackTrace) {
-              expect(
-                error,
-                ConstraintsInvalidException('end of input expected'),
-              );
-            }),
-            completes);
+          patternsRepository.patterns(searchParameters).then((pattern) {
+            assert(false, 'should not complete');
+          }).onError((error, stackTrace) {
+            expect(
+              error,
+              ConstraintsInvalidException('end of input expected'),
+            );
+          }),
+          completes,
+        );
       });
     });
 

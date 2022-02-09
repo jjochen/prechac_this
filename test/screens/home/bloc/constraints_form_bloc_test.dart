@@ -84,10 +84,11 @@ void main() {
 
     test('initial state is ConstraintsFormState', () {
       expect(
-          ConstraintsFormBloc(
-            patternsBloc: patternsBloc,
-          ).state,
-          ConstraintsFormState());
+        ConstraintsFormBloc(
+          patternsBloc: patternsBloc,
+        ).state,
+        ConstraintsFormState(),
+      );
     });
 
     group('NumberOfObjectsDidChange', () {
@@ -100,8 +101,9 @@ void main() {
             bloc.add(NumberOfJugglersDidChange(invalidNumberOfJugglersValue)),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
-              numberOfJugglers: invalidNumberOfJugglers,
-              status: FormzStatus.invalid),
+            numberOfJugglers: invalidNumberOfJugglers,
+            status: FormzStatus.invalid,
+          ),
         ],
       );
 
@@ -239,9 +241,11 @@ void main() {
         build: () => ConstraintsFormBloc(
           patternsBloc: patternsBloc,
         ),
-        act: (bloc) => bloc.add(MinNumberOfPassesDidChange(
-          invalidMinNumberOfPassesValue,
-        )),
+        act: (bloc) => bloc.add(
+          MinNumberOfPassesDidChange(
+            invalidMinNumberOfPassesValue,
+          ),
+        ),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             minNumberOfPasses: invalidMinNumberOfPasses,
@@ -263,9 +267,11 @@ void main() {
           maxNumberOfPasses: validMaxNumberOfPasses,
           contains: validContains,
         ),
-        act: (bloc) => bloc.add(MinNumberOfPassesDidChange(
-          validMinNumberOfPassesValue,
-        )),
+        act: (bloc) => bloc.add(
+          MinNumberOfPassesDidChange(
+            validMinNumberOfPassesValue,
+          ),
+        ),
         expect: () => const <ConstraintsFormState>[
           validConstraintsFormState,
         ],
@@ -278,9 +284,11 @@ void main() {
         build: () => ConstraintsFormBloc(
           patternsBloc: patternsBloc,
         ),
-        act: (bloc) => bloc.add(MaxNumberOfPassesDidChange(
-          invalidMaxNumberOfPassesValue,
-        )),
+        act: (bloc) => bloc.add(
+          MaxNumberOfPassesDidChange(
+            invalidMaxNumberOfPassesValue,
+          ),
+        ),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             maxNumberOfPasses: invalidMaxNumberOfPasses,
@@ -302,9 +310,11 @@ void main() {
           minNumberOfPasses: validMinNumberOfPasses,
           contains: validContains,
         ),
-        act: (bloc) => bloc.add(MaxNumberOfPassesDidChange(
-          validMaxNumberOfPassesValue,
-        )),
+        act: (bloc) => bloc.add(
+          MaxNumberOfPassesDidChange(
+            validMaxNumberOfPassesValue,
+          ),
+        ),
         expect: () => const <ConstraintsFormState>[
           validConstraintsFormState,
         ],
@@ -325,9 +335,11 @@ void main() {
           minNumberOfPasses: validMinNumberOfPasses,
           maxNumberOfPasses: validMaxNumberOfPasses,
         ),
-        act: (bloc) => bloc.add(ContainsDidChange(
-          validContainsValue,
-        )),
+        act: (bloc) => bloc.add(
+          ContainsDidChange(
+            validContainsValue,
+          ),
+        ),
         expect: () => const <ConstraintsFormState>[
           validConstraintsFormState,
         ],

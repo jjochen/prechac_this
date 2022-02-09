@@ -28,10 +28,10 @@ abstract class Throwable
 
   @override
   String toString() {
-    return toStringShowingPassingIndex(true);
+    return toStringShowingPassingIndex(showPassingIndex: true);
   }
 
-  String toStringShowingPassingIndex(bool showPassingIndex) {
+  String toStringShowingPassingIndex({required bool showPassingIndex}) {
     if (isPlaceholder) {
       return '_';
     }

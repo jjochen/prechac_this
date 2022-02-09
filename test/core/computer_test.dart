@@ -19,22 +19,24 @@ void main() {
     group('run()', () {
       test('completes', () async {
         expect(
-            computer.run(validMethod, 1).then((output) {
-              expect(output, '1');
-            }).catchError((Object error) {
-              assert(false);
-            }),
-            completes);
+          computer.run(validMethod, 1).then((output) {
+            expect(output, '1');
+          }).catchError((Object error) {
+            assert(false, 'should not throw');
+          }),
+          completes,
+        );
       });
 
       test('passes error', () async {
         expect(
-            computer.run(throwingMethod, 1).then((output) {
-              assert(false);
-            }).catchError((Object error) {
-              expect(error, isA<Exception>());
-            }),
-            completes);
+          computer.run(throwingMethod, 1).then((output) {
+            assert(false, 'should not complete');
+          }).catchError((Object error) {
+            expect(error, isA<Exception>());
+          }),
+          completes,
+        );
       });
     });
 

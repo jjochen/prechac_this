@@ -48,7 +48,7 @@ fastlane/FastlaneRunner
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.fvm/
+.fvm/flutter_sdk
 .packages
 .pub-cache/
 .pub/
@@ -288,3 +288,4 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,fastlane,macos,visualstudiocode,androidstudio
+Brewfile.lock.json

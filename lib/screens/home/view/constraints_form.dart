@@ -82,26 +82,27 @@ class _DropDownFormField extends FormField<int?> {
     bool isRequired = true,
     InputDecoration? decoration,
   }) : super(
-            key: key,
-            initialValue: initialValue,
-            builder: (state) {
-              return SelectFormField(
-                onChanged: (stringValue) {
-                  final intValue = int.parse(stringValue);
-                  return onChanged(intValue);
-                },
-                // ignore: avoid_redundant_argument_values
-                type: SelectFormFieldType.dropdown,
-                initialValue: initialValue.toString(),
-                enabled: enabled,
-                decoration: decoration,
-                items: _items(
-                  minValue,
-                  maxValue,
-                  isRequired,
-                ),
-              );
-            });
+          key: key,
+          initialValue: initialValue,
+          builder: (state) {
+            return SelectFormField(
+              onChanged: (stringValue) {
+                final intValue = int.parse(stringValue);
+                return onChanged(intValue);
+              },
+              // ignore: avoid_redundant_argument_values
+              type: SelectFormFieldType.dropdown,
+              initialValue: initialValue.toString(),
+              enabled: enabled,
+              decoration: decoration,
+              items: _items(
+                minValue,
+                maxValue,
+                isRequired,
+              ),
+            );
+          },
+        );
 
   static List<Map<String, dynamic>> _items(
     int minValue,
@@ -195,7 +196,7 @@ class _NumberOfObjectsInput extends StatelessWidget {
           key: const Key('constraintsForm_numberOfObjectsInput'),
           onChanged: (numberOfObjects) => context
               .read<ConstraintsFormBloc>()
-              .add(NumberOfObjectsDidChange(numberOfObjects.toInt())),
+              .add(NumberOfObjectsDidChange(numberOfObjects)),
           minValue: NumberOfObjects.minValue,
           maxValue: NumberOfObjects.maxValue,
           initialValue: NumberOfObjects.defaultValue,
@@ -225,7 +226,7 @@ class _MaxHeightInput extends StatelessWidget {
           key: const Key('constraintsForm_maxHeightInput'),
           onChanged: (maxHeight) => context
               .read<ConstraintsFormBloc>()
-              .add(MaxHeightDidChange(maxHeight.toInt())),
+              .add(MaxHeightDidChange(maxHeight)),
           minValue: MaxHeight.minValue,
           maxValue: MaxHeight.maxValue,
           initialValue: MaxHeight.defaultValue,
@@ -256,7 +257,7 @@ class _MinNumberOfPassesInput extends StatelessWidget {
           key: const Key('constraintsForm_minNumberOfPassesInput'),
           onChanged: (minNumberOfPasses) => context
               .read<ConstraintsFormBloc>()
-              .add(MinNumberOfPassesDidChange(minNumberOfPasses.toInt())),
+              .add(MinNumberOfPassesDidChange(minNumberOfPasses)),
           minValue: MinNumberOfPasses.minValue,
           maxValue: min(MinNumberOfPasses.maxValue, state.period.value),
           initialValue: min(MinNumberOfPasses.defaultValue, state.period.value),

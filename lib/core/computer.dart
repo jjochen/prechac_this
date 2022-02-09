@@ -31,14 +31,14 @@ class Computer<M, R> {
     final completer = Completer<R>();
 
     _resultPort?.listen((dynamic resultData) {
-      assert(resultData is IsolateOutput);
+      assert(resultData is IsolateOutput, 'Expected IsolateOutput');
       if (completer.isCompleted) {
         return;
       }
 
       final output = resultData as IsolateOutput;
       if (output.success) {
-        assert(output.result is R);
+        assert(output.result is R, 'Expected result of type R');
         completer.complete(output.result as R);
       } else {
         final error = output.error ?? Exception('unknown error');
@@ -47,7 +47,7 @@ class Computer<M, R> {
     });
 
     _exitPort?.listen((dynamic message) {
-      assert(completer.isCompleted);
+      assert(completer.isCompleted, 'Expected computation to be completed');
     });
 
     await completer.future;
@@ -97,17 +97,17 @@ class IsolateInput<M, R> {
 @immutable
 @visibleForTesting
 class IsolateOutput<R> {
-  const IsolateOutput(
-    this.success,
-    this.result,
-    this.error,
-  );
+  const IsolateOutput({
+    required this.success,
+    required this.result,
+    required this.error,
+  });
 
   factory IsolateOutput.success(R result) =>
-      IsolateOutput<R>(true, result, null);
+      IsolateOutput<R>(success: true, result: result, error: null);
 
   factory IsolateOutput.failure(dynamic error) =>
-      IsolateOutput<R>(false, null, error);
+      IsolateOutput<R>(success: false, result: null, error: error);
 
   final bool success;
   final R? result;

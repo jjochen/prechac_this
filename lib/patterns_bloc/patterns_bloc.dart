@@ -12,38 +12,36 @@ class PatternsBloc extends Bloc<PatternsEvent, PatternsState> {
   PatternsBloc({
     required PatternsRepository patternsRepository,
   })  : _patternsRepository = patternsRepository,
-        super(PatternsInitial());
+        super(PatternsInitial()) {
+    on<LoadPatterns>(_onLoadPatterns);
+    on<PatternsUpdated>(_onPatternsUpdated);
+    on<PatternsNotUpdated>(_onPatternsNotUpdated);
+  }
 
   final PatternsRepository _patternsRepository;
 
-  @override
-  Stream<PatternsState> mapEventToState(
-    PatternsEvent event,
-  ) async* {
-    if (event is LoadPatterns) {
-      yield* _mapLoadPatternsToState(event);
-    } else if (event is PatternsUpdated) {
-      yield* _mapPatternsUpdatedToState(event);
-    } else if (event is PatternsNotUpdated) {
-      yield* _mapPatternsNotUpdatedToState(event);
-    }
-  }
-
-  Stream<PatternsState> _mapLoadPatternsToState(LoadPatterns event) async* {
-    yield PatternsLoading();
+  Future<void> _onLoadPatterns(
+    LoadPatterns event,
+    Emitter<PatternsState> emit,
+  ) async {
+    emit(PatternsLoading());
     await _patternsRepository
         .patterns(event.searchParameters)
         .then((patterns) => add(PatternsUpdated(patterns)))
         .catchError((Object error) => add(PatternsNotUpdated(error)));
   }
 
-  Stream<PatternsState> _mapPatternsUpdatedToState(
-      PatternsUpdated event) async* {
-    yield PatternsLoaded(event.patterns);
+  Future<void> _onPatternsUpdated(
+    PatternsUpdated event,
+    Emitter<PatternsState> emit,
+  ) async {
+    emit(PatternsLoaded(event.patterns));
   }
 
-  Stream<PatternsState> _mapPatternsNotUpdatedToState(
-      PatternsNotUpdated event) async* {
-    yield PatternsNotLoaded(event.exception);
+  Future<void> _onPatternsNotUpdated(
+    PatternsNotUpdated event,
+    Emitter<PatternsState> emit,
+  ) async {
+    emit(PatternsNotLoaded(event.exception));
   }
 }

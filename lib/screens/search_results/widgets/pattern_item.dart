@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:prechac_this/core/core.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
