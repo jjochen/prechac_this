@@ -3,3 +3,4 @@ tap 'leoafarias/fvm'
 
 brew 'dart'
 brew 'fvm'
+brew 'java'
