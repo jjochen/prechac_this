@@ -1,4 +1,4 @@
-part of 'home_flow.dart';
+part of 'app_flow.dart';
 
 @immutable
 class AppFlowState extends Equatable {
@@ -18,4 +18,32 @@ class AppFlowState extends Equatable {
         currentPattern,
         showAttributions,
       ];
+
+  AppFlowState copyWith({
+    List<Pattern>? listOfPatterns,
+    Pattern? currentPattern,
+    bool? showAttributions,
+  }) {
+    return AppFlowState(
+      listOfPatterns: listOfPatterns ?? this.listOfPatterns,
+      currentPattern: currentPattern ?? this.currentPattern,
+      showAttributions: showAttributions ?? this.showAttributions,
+    );
+  }
+
+  AppFlowState copyByRemovingCurrentPattern() {
+    return AppFlowState(
+      listOfPatterns: listOfPatterns,
+      currentPattern: null,
+      showAttributions: showAttributions,
+    );
+  }
+
+  AppFlowState copyByRemovingListOfPatterns() {
+    return AppFlowState(
+      listOfPatterns: null,
+      currentPattern: currentPattern,
+      showAttributions: showAttributions,
+    );
+  }
 }

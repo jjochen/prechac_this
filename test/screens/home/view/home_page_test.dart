@@ -13,7 +13,7 @@ void main() {
   const attributionsButtonKey = Key('homePage_attributions_iconButton');
 
   late PatternsBloc patternsBloc;
-  late NavigationCubit navigationCubit;
+  late AppFlow navigationCubit;
 
   setUp(() {
     registerFallbackValue(FakePatternsEvent());

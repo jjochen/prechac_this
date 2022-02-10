@@ -32,6 +32,7 @@ class AppFlow extends StatelessWidget {
             const MaterialPage<dynamic>(child: AttributionsPage()),
         ];
       },
+      state: const AppFlowState(),
     );
   }
 }
