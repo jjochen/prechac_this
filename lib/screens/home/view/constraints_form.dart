@@ -42,7 +42,7 @@ class ConstraintsForm extends StatelessWidget {
             if (patternsState is PatternsLoaded) {
               context.flow<AppFlowState>().update(
                     (flowState) => flowState.copyWith(
-                      listOfPatterns: flowState.listOfPatterns,
+                      listOfPatterns: patternsState.patterns,
                     ),
                   );
             }
