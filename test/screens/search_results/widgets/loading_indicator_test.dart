@@ -9,7 +9,7 @@ import '../../../helpers/helpers.dart';
 void main() {
   group('LoadingIndicator', () {
     testWidgets('renders SearchResultsView', (tester) async {
-      await tester.pumpApp(widget: LoadingIndicator());
+      await tester.pumpApp(child: LoadingIndicator());
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
   });

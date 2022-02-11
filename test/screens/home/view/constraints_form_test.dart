@@ -1,32 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 import '../../../helpers/helpers.dart';
-
-class MockConstraintsFormBloc extends MockCubit<ConstraintsFormState>
-    implements ConstraintsFormBloc {}
-
-class MockNumberOfJugglers extends Mock implements NumberOfJugglers {}
-
-class MockPeriod extends Mock implements Period {}
-
-class MockNumberOfObjects extends Mock implements NumberOfObjects {}
-
-class MockMaxHeight extends Mock implements MaxHeight {}
-
-class MockMinNumberOfPasses extends Mock implements MinNumberOfPasses {}
-
-class MockMaxNumberOfPasses extends Mock implements MaxNumberOfPasses {}
-
-class MockContains extends Mock implements Contains {}
 
 void main() {
   const submitButtonKey = Key('constraintsForm_submit_raisedButton');
@@ -51,25 +36,24 @@ void main() {
   const testContains = '2p 1';
 
   group('ConstraintsForm', () {
-    registerFallbackValue(const ConstraintsFormState());
-
-    late ConstraintsFormBloc constraintsFormBloc;
+    late MockConstraintsFormBloc constraintsFormBloc;
+    late List<BlocProvider> providers;
+    late FlowController<AppFlowState> flowController;
 
     setUp(() {
       constraintsFormBloc = MockConstraintsFormBloc();
-      when(() => constraintsFormBloc.state)
-          .thenReturn(const ConstraintsFormState());
+      providers = [BlocProvider(create: (_) => constraintsFormBloc)];
+      flowController = FakeFlowController<AppFlowState>(AppFlowState());
     });
 
     group('adds', () {
       testWidgets('NumberOfJugglersDidChange when number of jugglers changes',
           (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -91,11 +75,10 @@ void main() {
 
       testWidgets('PeriodDidChange when period changes', (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -119,11 +102,10 @@ void main() {
           'NumberOfObjectsDidChange '
           'when number of objects changes', (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -145,11 +127,10 @@ void main() {
 
       testWidgets('MaxHeightDidChange when max height changes', (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -173,11 +154,10 @@ void main() {
           'MinNumberOfPassesDidChange when min number of passes changes',
           (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -201,11 +181,10 @@ void main() {
           'MaxNumberOfPassesDidChange when max number of passes changes',
           (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -227,11 +206,10 @@ void main() {
 
       testWidgets('ContainsDidChange when contains changes', (tester) async {
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -251,11 +229,10 @@ void main() {
           const ConstraintsFormState(status: FormzStatus.valid),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
 
@@ -281,11 +258,10 @@ void main() {
           ]),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         await tester.pump();
@@ -305,11 +281,10 @@ void main() {
           ]),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         await tester.pump();
@@ -330,11 +305,10 @@ void main() {
           ]),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         await tester.pump();
@@ -353,11 +327,10 @@ void main() {
           ConstraintsFormState(numberOfJugglers: numberOfJugglers),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
@@ -373,11 +346,10 @@ void main() {
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(period: period));
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 3'), findsOneWidget);
@@ -393,11 +365,10 @@ void main() {
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
@@ -412,11 +383,10 @@ void main() {
         when(() => constraintsFormBloc.state)
             .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
@@ -433,11 +403,10 @@ void main() {
           ConstraintsFormState(minNumberOfPasses: minNumberOfPasses),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
@@ -454,11 +423,10 @@ void main() {
           ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
@@ -470,11 +438,10 @@ void main() {
           const ConstraintsFormState(status: FormzStatus.invalid),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         final homeButton = tester.widget<ElevatedButton>(
@@ -489,11 +456,10 @@ void main() {
           const ConstraintsFormState(status: FormzStatus.valid),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         final submitButton = tester.widget<ElevatedButton>(
@@ -508,11 +474,10 @@ void main() {
           ConstraintsFormState(status: FormzStatus.submissionInProgress),
         );
         await tester.pumpApp(
-          widget: Scaffold(
-            body: BlocProvider.value(
-              value: constraintsFormBloc,
-              child: ConstraintsForm(),
-            ),
+          providers: providers,
+          flowController: flowController,
+          child: Scaffold(
+            body: ConstraintsForm(),
           ),
         );
         expect(find.byKey(progressIndicatorKey), findsOneWidget);

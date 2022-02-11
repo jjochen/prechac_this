@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/app/app.dart';
-import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -19,13 +19,9 @@ void main() {
 
   group('AppView', () {
     late PatternsBloc patternsBloc;
-    late AppFlow appFlow;
 
     setUp(() {
-      registerFallbackValue(FakePatternsEvent());
-      registerFallbackValue(PatternsInitial());
       patternsBloc = MockPatternsBloc();
-      appFlow = MockAppFlow();
     });
 
     testWidgets('renders HomePage', (tester) async {
@@ -33,8 +29,8 @@ void main() {
         PatternsInitial(),
       );
       await tester.pumpApp(
-        patternsBloc: patternsBloc,
-        widget: AppView(),
+        providers: [BlocProvider(create: (_) => patternsBloc)],
+        child: AppView(),
       );
       expect(find.byType(HomePage), findsOneWidget);
     });

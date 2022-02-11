@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -13,28 +14,19 @@ void main() {
   const attributionsButtonKey = Key('homePage_attributions_iconButton');
 
   late PatternsBloc patternsBloc;
-  late AppFlow navigationCubit;
+  late FlowController<AppFlowState> flowController;
 
   setUp(() {
-    registerFallbackValue(FakePatternsEvent());
-    registerFallbackValue(PatternsInitial());
-    registerFallbackValue(NavigationState());
+    flowController = FakeFlowController<AppFlowState>(AppFlowState());
     patternsBloc = MockPatternsBloc();
-    navigationCubit = MockNavigationCubit();
   });
 
   group('HomePage', () {
     testWidgets('renders a HomeView', (tester) async {
-      when(() => patternsBloc.state).thenReturn(
-        PatternsInitial(),
-      );
-      when(() => navigationCubit.state).thenReturn(
-        NavigationState(),
-      );
       await tester.pumpApp(
-        patternsBloc: patternsBloc,
-        navigationCubit: navigationCubit,
-        widget: HomePage(),
+        providers: [BlocProvider(create: (_) => patternsBloc)],
+        flowController: flowController,
+        child: HomePage(),
       );
       expect(find.byType(HomeView), findsOneWidget);
     });
@@ -42,16 +34,10 @@ void main() {
 
   group('HomeView', () {
     testWidgets('renders a ConstraintsForm', (tester) async {
-      when(() => patternsBloc.state).thenReturn(
-        PatternsInitial(),
-      );
-      when(() => navigationCubit.state).thenReturn(
-        NavigationState(),
-      );
       await tester.pumpApp(
-        patternsBloc: patternsBloc,
-        navigationCubit: navigationCubit,
-        widget: HomeView(),
+        providers: [BlocProvider(create: (_) => patternsBloc)],
+        flowController: flowController,
+        child: HomeView(),
       );
       expect(find.byType(ConstraintsForm), findsOneWidget);
     });
@@ -59,20 +45,13 @@ void main() {
     testWidgets(
         'calls navigateToAttributions when attributions button is tapped',
         (tester) async {
-      when(() => patternsBloc.state).thenReturn(
-        PatternsInitial(),
-      );
-      when(() => navigationCubit.state).thenReturn(
-        NavigationState(),
-      );
       await tester.pumpApp(
-        patternsBloc: patternsBloc,
-        navigationCubit: navigationCubit,
-        widget: HomeView(),
+        providers: [BlocProvider(create: (_) => patternsBloc)],
+        flowController: flowController,
+        child: HomeView(),
       );
-
       await tester.tap(find.byKey(attributionsButtonKey));
-      verify(() => navigationCubit.navigateToAttributions()).called(1);
+      expect(flowController.state, AppFlowState(showAttributions: true));
     });
   });
 }
