@@ -12,7 +12,7 @@ class ConstraintsFormState extends Equatable {
     this.contains = const Contains.pure(),
     this.status = FormzStatus.valid,
     this.listOfPatterns = const [],
-    this.error,
+    this.exception,
   });
 
   final NumberOfJugglers numberOfJugglers;
@@ -24,7 +24,7 @@ class ConstraintsFormState extends Equatable {
   final Contains contains;
   final FormzStatus status;
   final List<Pattern> listOfPatterns;
-  final dynamic error;
+  final Exception? exception;
 
   @override
   List<Object?> get props => [
@@ -37,7 +37,7 @@ class ConstraintsFormState extends Equatable {
         contains,
         status,
         listOfPatterns,
-        error,
+        exception,
       ];
 
   ConstraintsFormState copyWith({
@@ -50,7 +50,7 @@ class ConstraintsFormState extends Equatable {
     Contains? contains,
     FormzStatus? status,
     List<Pattern>? listOfPatterns,
-    dynamic error = '###!!!###',
+    dynamic exception = 'not an Exception',
   }) {
     return ConstraintsFormState(
       numberOfJugglers: numberOfJugglers ?? this.numberOfJugglers,
@@ -62,7 +62,7 @@ class ConstraintsFormState extends Equatable {
       contains: contains ?? this.contains,
       status: status ?? this.status,
       listOfPatterns: listOfPatterns ?? this.listOfPatterns,
-      error: error != '###!!!###' ? error : this.error,
+      exception: exception is Exception ? exception : this.exception,
     );
   }
 

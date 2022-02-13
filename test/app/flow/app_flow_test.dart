@@ -2,10 +2,8 @@
 
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/flow/app_flow.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/attributions/view/attributions_page.dart';
 import 'package:prechac_this/screens/home/home.dart';
 import 'package:prechac_this/screens/pattern_details/view/view.dart';
@@ -15,22 +13,12 @@ import '../../helpers/helpers.dart';
 
 void main() {
   group('AppFlow', () {
-    late AppFlow appFlow;
-    late MockConstraintsFormBloc constraintsFormBloc;
-    late PatternsBloc patternsBloc;
     late TestApp testApp;
 
     setUp(() {
-      constraintsFormBloc = MockConstraintsFormBloc();
-      patternsBloc = MockPatternsBloc();
-      appFlow = AppFlow();
       testApp = TestApp(
-        providers: [
-          BlocProvider<PatternsBloc>(create: (_) => patternsBloc),
-          BlocProvider<ConstraintsFormBloc>(create: (_) => constraintsFormBloc),
-        ],
         child: Scaffold(
-          body: appFlow,
+          body: AppFlow(),
         ),
       );
     });

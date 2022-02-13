@@ -5,7 +5,7 @@ abstract class ConstraintsFormEvent extends Equatable {
   const ConstraintsFormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class NumberOfJugglersDidChange extends ConstraintsFormEvent {
@@ -85,7 +85,7 @@ class PatternsDidLoad extends ConstraintsFormEvent {
 class PatternsDidNotLoad extends ConstraintsFormEvent {
   const PatternsDidNotLoad(this.exception);
 
-  final Object exception;
+  final Exception exception;
 
   @override
   List<Object> get props => [exception];

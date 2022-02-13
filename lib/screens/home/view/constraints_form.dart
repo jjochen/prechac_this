@@ -26,7 +26,7 @@ class ConstraintsForm extends StatelessWidget {
               );
         } else if (state.status.isSubmissionFailure) {
           final l10n = context.l10n;
-          final message = l10n.errorMessage(state.error);
+          final message = l10n.errorMessage(state.exception);
           if (message != null) {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()

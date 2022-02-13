@@ -14,7 +14,7 @@ void main() {
   const minNumberOfPasses = MinNumberOfPasses.dirty(8);
   const maxNumberOfPasses = MaxNumberOfPasses.dirty(9);
   const contains = Contains.dirty('yo');
-  const error = 'Error';
+  final exception = Exception('Error');
 
   group('ConstraintsFormState', () {
     test('supports value comparisons', () {
@@ -92,10 +92,10 @@ void main() {
     });
 
     test('returns object with updated error when error is passed', () {
-      final actual = ConstraintsFormState().copyWith(error: error);
-      final expected = ConstraintsFormState(error: error);
+      final actual = ConstraintsFormState().copyWith(exception: exception);
+      final expected = ConstraintsFormState(exception: exception);
       expect(actual, expected);
-      expect(actual.error, expected.error);
+      expect(actual.exception, expected.exception);
     });
 
     test('supports search parameter conversion', () {

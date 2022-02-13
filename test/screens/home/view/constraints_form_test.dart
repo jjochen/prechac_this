@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/app/flow/app_flow.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -38,7 +37,6 @@ void main() {
 
   group('ConstraintsForm', () {
     late MockConstraintsFormBloc constraintsFormBloc;
-    late PatternsBloc patternsBloc;
     late FlowController<AppFlowState> flowController;
     late TestApp testApp;
 
@@ -49,16 +47,10 @@ void main() {
         Stream<ConstraintsFormState>.empty(),
         initialState: ConstraintsFormState(),
       );
-      patternsBloc = MockPatternsBloc();
-      whenListen(
-        patternsBloc,
-        Stream<PatternsState>.empty(),
-        initialState: PatternsInitial(),
-      );
+
       flowController = FakeFlowController<AppFlowState>(AppFlowState());
       testApp = TestApp(
         providers: [
-          BlocProvider<PatternsBloc>(create: (_) => patternsBloc),
           BlocProvider<ConstraintsFormBloc>(create: (_) => constraintsFormBloc),
         ],
         flowController: flowController,
@@ -249,11 +241,11 @@ void main() {
       testWidgets('Failure SnackBar when submission fails', (tester) async {
         whenListen(
           constraintsFormBloc,
-          Stream.fromIterable(const <ConstraintsFormState>[
+          Stream.fromIterable(<ConstraintsFormState>[
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: 'Error',
+              exception: Exception('Error'),
             ),
           ]),
         );
@@ -271,7 +263,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: NoPatternsFoundException(),
+              exception: NoPatternsFoundException(),
             ),
           ]),
         );
@@ -290,7 +282,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: ConstraintsInvalidException(),
+              exception: ConstraintsInvalidException(),
             ),
           ]),
         );

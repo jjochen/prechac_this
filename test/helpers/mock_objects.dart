@@ -2,16 +2,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
-
-class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
-    implements PatternsBloc {}
 
 class MockConstraintsFormBloc
     extends MockBloc<ConstraintsFormEvent, ConstraintsFormState>
     implements ConstraintsFormBloc {}
+
+class MockPatternsRepository extends Mock implements PatternsRepository {}
 
 class MockNumberOfJugglers extends Mock implements NumberOfJugglers {}
 
