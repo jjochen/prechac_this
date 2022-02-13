@@ -30,20 +30,4 @@ class AppFlowState extends Equatable {
       showAttributions: showAttributions ?? this.showAttributions,
     );
   }
-
-  AppFlowState copyByRemovingCurrentPattern() {
-    return AppFlowState(
-      listOfPatterns: listOfPatterns,
-      currentPattern: null,
-      showAttributions: showAttributions,
-    );
-  }
-
-  AppFlowState copyByRemovingListOfPatterns() {
-    return AppFlowState(
-      listOfPatterns: null,
-      currentPattern: currentPattern,
-      showAttributions: showAttributions,
-    );
-  }
 }
