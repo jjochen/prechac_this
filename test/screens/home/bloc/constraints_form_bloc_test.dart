@@ -366,7 +366,7 @@ void main() {
           ),
           validConstraintsFormState.copyWith(
             status: FormzStatus.submissionFailure,
-            error: NoPatternsFoundException(),
+            exception: NoPatternsFoundException(),
           ),
         ],
         verify: (_) {

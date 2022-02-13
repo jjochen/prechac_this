@@ -83,10 +83,10 @@ class PatternsDidLoad extends ConstraintsFormEvent {
 }
 
 class PatternsDidNotLoad extends ConstraintsFormEvent {
-  const PatternsDidNotLoad(this.error);
+  const PatternsDidNotLoad(this.exception);
 
-  final Object? error;
+  final Exception exception;
 
   @override
-  List<Object?> get props => [error];
+  List<Object> get props => [exception];
 }

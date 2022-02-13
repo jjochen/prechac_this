@@ -241,11 +241,11 @@ void main() {
       testWidgets('Failure SnackBar when submission fails', (tester) async {
         whenListen(
           constraintsFormBloc,
-          Stream.fromIterable(const <ConstraintsFormState>[
+          Stream.fromIterable(<ConstraintsFormState>[
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: 'Error',
+              exception: Exception('Error'),
             ),
           ]),
         );
@@ -263,7 +263,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: NoPatternsFoundException(),
+              exception: NoPatternsFoundException(),
             ),
           ]),
         );
@@ -282,7 +282,7 @@ void main() {
             ConstraintsFormState(status: FormzStatus.submissionInProgress),
             ConstraintsFormState(
               status: FormzStatus.submissionFailure,
-              error: ConstraintsInvalidException(),
+              exception: ConstraintsInvalidException(),
             ),
           ]),
         );

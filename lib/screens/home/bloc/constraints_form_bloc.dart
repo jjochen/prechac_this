@@ -92,14 +92,21 @@ class ConstraintsFormBloc
       state.copyWith(
         status: FormzStatus.submissionInProgress,
         listOfPatterns: null,
-        error: null,
+        exception: null,
       ),
     );
     await patternsRepository
         .patterns(state.toSearchParameters())
-        .then((patterns) => add(PatternsDidLoad(patterns)))
-        .onError((error, stackTrace) => add(PatternsDidNotLoad(error)))
-        .catchError((Object error) => add(PatternsDidNotLoad(error)));
+        .then(
+          (patterns) => add(
+            PatternsDidLoad(patterns),
+          ),
+        )
+        .onError<Exception>(
+          (Exception exception, StackTrace stackTrace) => add(
+            PatternsDidNotLoad(exception),
+          ),
+        );
   }
 
   Future<void> _onPatternsDidLoad(
@@ -110,7 +117,7 @@ class ConstraintsFormBloc
       state.copyWith(
         status: FormzStatus.submissionSuccess,
         listOfPatterns: event.patterns,
-        error: null,
+        exception: null,
       ),
     );
   }
@@ -122,7 +129,7 @@ class ConstraintsFormBloc
     emit(
       state.copyWith(
         status: FormzStatus.submissionFailure,
-        error: event.error,
+        exception: event.exception,
       ),
     );
   }
@@ -153,7 +160,8 @@ class ConstraintsFormBloc
         maxNumberOfPasses ?? state.maxNumberOfPasses,
         contains ?? state.contains,
       ]),
-      error: null,
+      exception: null,
+      listOfPatterns: null,
     );
   }
 }
