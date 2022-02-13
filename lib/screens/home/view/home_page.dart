@@ -9,17 +9,6 @@ import 'package:prechac_this/screens/home/home.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  static const routeName = '';
-
-  @override
-  Widget build(BuildContext context) {
-    return const HomeView();
-  }
-}
-
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
