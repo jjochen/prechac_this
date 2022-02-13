@@ -22,8 +22,6 @@ class ConstraintsFormBloc
     on<MaxNumberOfPassesDidChange>(_onMaxNumberOfPassesDidChange);
     on<ContainsDidChange>(_onContainsDidChange);
     on<Submit>(_onSubmit);
-    on<PatternsDidLoad>(_onPatternsDidLoad);
-    on<PatternsDidNotLoad>(_onPatternsDidNotLoad);
   }
 
   final PatternsRepository patternsRepository;
@@ -98,40 +96,22 @@ class ConstraintsFormBloc
     await patternsRepository
         .patterns(state.toSearchParameters())
         .then(
-          (patterns) => add(
-            PatternsDidLoad(patterns),
+          (patterns) => emit(
+            state.copyWith(
+              status: FormzStatus.submissionSuccess,
+              listOfPatterns: patterns,
+              exception: null,
+            ),
           ),
         )
         .onError<Exception>(
-          (Exception exception, StackTrace stackTrace) => add(
-            PatternsDidNotLoad(exception),
+          (Exception exception, StackTrace stackTrace) => emit(
+            state.copyWith(
+              status: FormzStatus.submissionFailure,
+              exception: exception,
+            ),
           ),
         );
-  }
-
-  Future<void> _onPatternsDidLoad(
-    PatternsDidLoad event,
-    Emitter<ConstraintsFormState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        status: FormzStatus.submissionSuccess,
-        listOfPatterns: event.patterns,
-        exception: null,
-      ),
-    );
-  }
-
-  Future<void> _onPatternsDidNotLoad(
-    PatternsDidNotLoad event,
-    Emitter<ConstraintsFormState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        status: FormzStatus.submissionFailure,
-        exception: event.exception,
-      ),
-    );
   }
 
   ConstraintsFormState _copyStateWithFormValues({
