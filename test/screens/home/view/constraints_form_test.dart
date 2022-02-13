@@ -68,6 +68,31 @@ void main() {
       );
     });
 
+    group('navigates', () {
+      testWidgets('to search results when patterns are loaded', (tester) async {
+        whenListen(
+          constraintsFormBloc,
+          Stream.fromIterable(
+            <ConstraintsFormState>[
+              ConstraintsFormState(status: FormzStatus.submissionInProgress),
+              ConstraintsFormState(
+                status: FormzStatus.submissionSuccess,
+                listOfPatterns: [mockPattern],
+              ),
+            ],
+          ),
+          initialState: ConstraintsFormState(),
+        );
+
+        await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+        expect(
+          flowController.state,
+          AppFlowState(listOfPatterns: [mockPattern]),
+        );
+      });
+    });
+
     group('adds', () {
       testWidgets('NumberOfJugglersDidChange when number of jugglers changes',
           (tester) async {
@@ -234,7 +259,7 @@ void main() {
         );
 
         await tester.pumpWidget(testApp);
-        await tester.pump();
+        await tester.pumpAndSettle();
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
       });
 
@@ -271,7 +296,7 @@ void main() {
         );
 
         await tester.pumpWidget(testApp);
-        await tester.pump();
+        await tester.pumpAndSettle();
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
         expect(find.text('Could not parse constraints.'), findsOneWidget);
       });

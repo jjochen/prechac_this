@@ -73,7 +73,14 @@ class ContainsDidChange extends ConstraintsFormEvent {
 
 class Submit extends ConstraintsFormEvent {}
 
-class PatternsDidLoad extends ConstraintsFormEvent {}
+class PatternsDidLoad extends ConstraintsFormEvent {
+  const PatternsDidLoad(this.patterns);
+
+  final List<Pattern> patterns;
+
+  @override
+  List<Object> get props => [patterns];
+}
 
 class PatternsDidNotLoad extends ConstraintsFormEvent {
   const PatternsDidNotLoad(this.exception);
