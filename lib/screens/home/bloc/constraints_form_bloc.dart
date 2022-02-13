@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -13,34 +12,23 @@ part 'constraints_form_state.dart';
 
 class ConstraintsFormBloc
     extends Bloc<ConstraintsFormEvent, ConstraintsFormState> {
-  ConstraintsFormBloc({required PatternsBloc patternsBloc})
-      : _patternsBloc = patternsBloc,
-        super(const ConstraintsFormState()) {
-    _patternsSubscription = patternsBloc.stream.listen(
-      (state) {
-        if (state is PatternsLoaded) {
-          add(PatternsDidLoad(state.patterns));
-        } else if (state is PatternsNotLoaded) {
-          add(PatternsDidNotLoad(state.exception));
-        }
-      },
-    );
-    on<NumberOfJugglersDidChange>(_onNumbersOfJugglersDidChangeToState);
-    on<PeriodDidChange>(_onPeriodDidChangeToState);
-    on<NumberOfObjectsDidChange>(_onNumberOfObjectsDidChangeToState);
-    on<MaxHeightDidChange>(_onMaxHeightDidChangeToState);
-    on<MinNumberOfPassesDidChange>(_onMinNumberOfPassesDidChangeToState);
-    on<MaxNumberOfPassesDidChange>(_onMaxNumberOfPassesDidChangeToState);
-    on<ContainsDidChange>(_onContainsDidChangeToState);
-    on<Submit>(_onSubmitToState);
-    on<PatternsDidLoad>(_onPatternsDidLoadToState);
-    on<PatternsDidNotLoad>(_onPatternsDidNotLoadToState);
+  ConstraintsFormBloc({required this.patternsRepository})
+      : super(const ConstraintsFormState()) {
+    on<NumberOfJugglersDidChange>(_onNumbersOfJugglersDidChange);
+    on<PeriodDidChange>(_onPeriodDidChange);
+    on<NumberOfObjectsDidChange>(_onNumberOfObjectsDidChange);
+    on<MaxHeightDidChange>(_onMaxHeightDidChange);
+    on<MinNumberOfPassesDidChange>(_onMinNumberOfPassesDidChange);
+    on<MaxNumberOfPassesDidChange>(_onMaxNumberOfPassesDidChange);
+    on<ContainsDidChange>(_onContainsDidChange);
+    on<Submit>(_onSubmit);
+    on<PatternsDidLoad>(_onPatternsDidLoad);
+    on<PatternsDidNotLoad>(_onPatternsDidNotLoad);
   }
 
-  final PatternsBloc _patternsBloc;
-  StreamSubscription? _patternsSubscription;
+  final PatternsRepository patternsRepository;
 
-  Future<void> _onNumbersOfJugglersDidChangeToState(
+  Future<void> _onNumbersOfJugglersDidChange(
     NumberOfJugglersDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -48,7 +36,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(numberOfJugglers: value));
   }
 
-  Future<void> _onPeriodDidChangeToState(
+  Future<void> _onPeriodDidChange(
     PeriodDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -56,7 +44,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(period: value));
   }
 
-  Future<void> _onNumberOfObjectsDidChangeToState(
+  Future<void> _onNumberOfObjectsDidChange(
     NumberOfObjectsDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -64,7 +52,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(numberOfObjects: value));
   }
 
-  Future<void> _onMaxHeightDidChangeToState(
+  Future<void> _onMaxHeightDidChange(
     MaxHeightDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -72,7 +60,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(maxHeight: value));
   }
 
-  Future<void> _onMinNumberOfPassesDidChangeToState(
+  Future<void> _onMinNumberOfPassesDidChange(
     MinNumberOfPassesDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -80,7 +68,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(minNumberOfPasses: value));
   }
 
-  Future<void> _onMaxNumberOfPassesDidChangeToState(
+  Future<void> _onMaxNumberOfPassesDidChange(
     MaxNumberOfPassesDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -88,7 +76,7 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(maxNumberOfPasses: value));
   }
 
-  Future<void> _onContainsDidChangeToState(
+  Future<void> _onContainsDidChange(
     ContainsDidChange event,
     Emitter<ConstraintsFormState> emit,
   ) async {
@@ -96,39 +84,45 @@ class ConstraintsFormBloc
     emit(_copyStateWithFormValues(contains: value));
   }
 
-  Future<void> _onSubmitToState(
+  Future<void> _onSubmit(
     Submit event,
     Emitter<ConstraintsFormState> emit,
   ) async {
     emit(
       state.copyWith(
         status: FormzStatus.submissionInProgress,
+        listOfPatterns: null,
         error: null,
       ),
     );
-    _patternsBloc.add(LoadPatterns(state.toSearchParameters()));
+    await patternsRepository
+        .patterns(state.toSearchParameters())
+        .then((patterns) => add(PatternsDidLoad(patterns)))
+        .onError((error, stackTrace) => add(PatternsDidNotLoad(error)))
+        .catchError((Object error) => add(PatternsDidNotLoad(error)));
   }
 
-  Future<void> _onPatternsDidLoadToState(
+  Future<void> _onPatternsDidLoad(
     PatternsDidLoad event,
     Emitter<ConstraintsFormState> emit,
   ) async {
     emit(
       state.copyWith(
         status: FormzStatus.submissionSuccess,
+        listOfPatterns: event.patterns,
         error: null,
       ),
     );
   }
 
-  Future<void> _onPatternsDidNotLoadToState(
+  Future<void> _onPatternsDidNotLoad(
     PatternsDidNotLoad event,
     Emitter<ConstraintsFormState> emit,
   ) async {
     emit(
       state.copyWith(
         status: FormzStatus.submissionFailure,
-        error: event.exception,
+        error: event.error,
       ),
     );
   }
@@ -161,11 +155,5 @@ class ConstraintsFormBloc
       ]),
       error: null,
     );
-  }
-
-  @override
-  Future<void> close() {
-    _patternsSubscription?.cancel();
-    return super.close();
   }
 }

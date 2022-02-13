@@ -13,6 +13,8 @@ class MockConstraintsFormBloc
     extends MockBloc<ConstraintsFormEvent, ConstraintsFormState>
     implements ConstraintsFormBloc {}
 
+class MockPatternsRepository extends Mock implements PatternsRepository {}
+
 class MockNumberOfJugglers extends Mock implements NumberOfJugglers {}
 
 class MockPeriod extends Mock implements Period {}

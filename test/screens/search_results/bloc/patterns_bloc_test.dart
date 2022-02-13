@@ -8,8 +8,6 @@ import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
 import '../../../helpers/helpers.dart';
 
-class MockPatternsRepository extends Mock implements PatternsRepository {}
-
 void main() {
   group('PatternsBloc', () {
     late PatternsRepository patternsRepository;

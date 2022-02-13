@@ -4,16 +4,10 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
 import '../../../helpers/helpers.dart';
-
-class MockPatternsBloc extends MockBloc<PatternsEvent, PatternsState>
-    implements PatternsBloc {}
-
-class FakePatternsEvent extends Fake implements PatternsEvent {}
 
 void main() {
   const invalidNumberOfJugglersValue = 0;
@@ -73,20 +67,30 @@ void main() {
     status: FormzStatus.valid,
   );
 
+  const validSearchParameters = SearchParameters(
+    numberOfJugglers: validNumberOfJugglersValue,
+    period: validPeriodValue,
+    numberOfObjects: validNumberOfObjectsValue,
+    maxHeight: validMaxHeightValue,
+    minNumberOfPasses: validMinNumberOfPassesValue,
+    maxNumberOfPasses: validMaxNumberOfPassesValue,
+    contains: validContainsValue,
+  );
+
   group('ConstraintsFormBloc', () {
-    late PatternsBloc patternsBloc;
+    late PatternsRepository patternsRepository;
+
+    ConstraintsFormBloc buildConstraintsFormBloc() => ConstraintsFormBloc(
+          patternsRepository: patternsRepository,
+        );
 
     setUp(() {
-      registerFallbackValue(FakePatternsEvent());
-      registerFallbackValue(PatternsInitial());
-      patternsBloc = MockPatternsBloc();
+      patternsRepository = MockPatternsRepository();
     });
 
     test('initial state is ConstraintsFormState', () {
       expect(
-        ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ).state,
+        buildConstraintsFormBloc().state,
         ConstraintsFormState(),
       );
     });
@@ -94,9 +98,7 @@ void main() {
     group('NumberOfObjectsDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when numberOfJugglers is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) =>
             bloc.add(NumberOfJugglersDidChange(invalidNumberOfJugglersValue)),
         expect: () => const <ConstraintsFormState>[
@@ -109,9 +111,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           period: validPeriod,
           numberOfObjects: validNumberOfObjects,
@@ -131,9 +131,7 @@ void main() {
     group('PeriodDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when period is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) => bloc.add(PeriodDidChange(invalidPeriodValue)),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
@@ -145,9 +143,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           numberOfObjects: validNumberOfObjects,
@@ -166,9 +162,7 @@ void main() {
     group('NumberOfObjectsDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when numberOfObjects is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) =>
             bloc.add(NumberOfObjectsDidChange(invalidNumberOfObjectsValue)),
         expect: () => const <ConstraintsFormState>[
@@ -181,9 +175,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
@@ -203,9 +195,7 @@ void main() {
     group('MaxHeightDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when maxHeight is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) => bloc.add(MaxHeightDidChange(invalidMaxHeightValue)),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
@@ -217,9 +207,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
@@ -238,9 +226,7 @@ void main() {
     group('MinNumberOfPassesDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when minNumberOfPasses is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) => bloc.add(
           MinNumberOfPassesDidChange(
             invalidMinNumberOfPassesValue,
@@ -256,9 +242,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
@@ -281,9 +265,7 @@ void main() {
     group('MaxNumberOfPassesDidChange', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [invalid] when maxNumberOfPasses is invalid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         act: (bloc) => bloc.add(
           MaxNumberOfPassesDidChange(
             invalidMaxNumberOfPassesValue,
@@ -299,9 +281,7 @@ void main() {
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
@@ -324,9 +304,7 @@ void main() {
     group('Contains', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
         'emits [valid] when values are valid',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
+        build: buildConstraintsFormBloc,
         seed: () => ConstraintsFormState(
           numberOfJugglers: validNumberOfJugglers,
           period: validPeriod,
@@ -348,133 +326,53 @@ void main() {
 
     group('Submit', () {
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'add LoadPatterns with correct search parameters',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
-        seed: () => ConstraintsFormState(
-          status: FormzStatus.valid,
-          numberOfJugglers: validNumberOfJugglers,
-          period: validPeriod,
-          numberOfObjects: validNumberOfObjects,
-          maxHeight: validMaxHeight,
-          minNumberOfPasses: validMinNumberOfPasses,
-          maxNumberOfPasses: validMaxNumberOfPasses,
-          contains: validContains,
-        ),
-        act: (bloc) => bloc.add(Submit()),
-        verify: (_) {
-          final searchParameters = SearchParameters(
-            numberOfJugglers: validNumberOfJugglersValue,
-            period: validPeriodValue,
-            numberOfObjects: validNumberOfObjectsValue,
-            maxHeight: validMaxHeightValue,
-            minNumberOfPasses: validMinNumberOfPassesValue,
-            maxNumberOfPasses: validMaxNumberOfPassesValue,
-            contains: validContainsValue,
-          );
-          verify(
-            () => patternsBloc.add(
-              LoadPatterns(searchParameters),
-            ),
-          ).called(1);
+        'emits [submissionInProgress, submissionSuccess] '
+        'when form is valid',
+        setUp: () {
+          when(() => patternsRepository.patterns(validSearchParameters))
+              .thenAnswer((_) => Future.value([mockPattern]));
         },
-      );
-
-      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'emits [submissionInProgress]',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
-        seed: () => ConstraintsFormState(
-          status: FormzStatus.valid,
-          numberOfJugglers: validNumberOfJugglers,
-          period: validPeriod,
-        ),
+        build: buildConstraintsFormBloc,
+        seed: () => validConstraintsFormState,
         act: (bloc) => bloc.add(Submit()),
-        expect: () => const <ConstraintsFormState>[
-          ConstraintsFormState(
+        expect: () => <ConstraintsFormState>[
+          validConstraintsFormState.copyWith(
             status: FormzStatus.submissionInProgress,
-            numberOfJugglers: validNumberOfJugglers,
-            period: validPeriod,
           ),
-        ],
-      );
-    });
-
-    group('PatternsDidLoad', () {
-      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'emits [submissionSuccess] when patterns did load',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
-        act: (bloc) => bloc.add(PatternsDidLoad([mockPattern])),
-        expect: () => const <ConstraintsFormState>[
-          ConstraintsFormState(
+          validConstraintsFormState.copyWith(
             status: FormzStatus.submissionSuccess,
+            listOfPatterns: [mockPattern],
           ),
         ],
-      );
-
-      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'PatternLoaded is passed on from patterns bloc',
-        build: () {
-          whenListen(
-            patternsBloc,
-            Stream.fromIterable(<PatternsState>[
-              PatternsLoading(),
-              PatternsLoaded([mockPattern]),
-            ]),
-          );
-          return ConstraintsFormBloc(
-            patternsBloc: patternsBloc,
-          );
+        verify: (_) {
+          verify(() => patternsRepository.patterns(validSearchParameters))
+              .called(1);
         },
-        expect: () => const <ConstraintsFormState>[
-          ConstraintsFormState(
-            status: FormzStatus.submissionSuccess,
-          ),
-        ],
-      );
-    });
-
-    group('PatternsDidNotLoad', () {
-      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'emits [submissionFailure] when patterns did not load',
-        build: () => ConstraintsFormBloc(
-          patternsBloc: patternsBloc,
-        ),
-        act: (bloc) => bloc.add(
-          PatternsDidNotLoad(ConstraintsInvalidException()),
-        ),
-        expect: () => <ConstraintsFormState>[
-          ConstraintsFormState(
-            status: FormzStatus.submissionFailure,
-            error: ConstraintsInvalidException(),
-          ),
-        ],
       );
 
       blocTest<ConstraintsFormBloc, ConstraintsFormState>(
-        'PatternsNotLoaded is passed on from patterns bloc',
-        build: () {
-          whenListen(
-            patternsBloc,
-            Stream.fromIterable(<PatternsState>[
-              PatternsLoading(),
-              PatternsNotLoaded(NoPatternsFoundException()),
-            ]),
-          );
-          return ConstraintsFormBloc(
-            patternsBloc: patternsBloc,
-          );
+        'emits [submissionInProgress, submissionFailure] '
+        'when patternsRepository throws',
+        setUp: () {
+          when(() => patternsRepository.patterns(validSearchParameters))
+              .thenAnswer((_) => Future.error(NoPatternsFoundException()));
         },
+        build: buildConstraintsFormBloc,
+        seed: () => validConstraintsFormState,
+        act: (bloc) => bloc.add(Submit()),
         expect: () => <ConstraintsFormState>[
-          ConstraintsFormState(
+          validConstraintsFormState.copyWith(
+            status: FormzStatus.submissionInProgress,
+          ),
+          validConstraintsFormState.copyWith(
             status: FormzStatus.submissionFailure,
             error: NoPatternsFoundException(),
           ),
         ],
+        verify: (_) {
+          verify(() => patternsRepository.patterns(validSearchParameters))
+              .called(1);
+        },
       );
     });
   });
