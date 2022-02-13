@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/app/theme.dart';
 import 'package:prechac_this/core/computer.dart';
 import 'package:prechac_this/l10n/l10n.dart';
-import 'package:prechac_this/navigation/navigation.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 
@@ -18,11 +18,6 @@ class App extends StatelessWidget {
         BlocProvider<PatternsBloc>(
           create: (context) => PatternsBloc(
             patternsRepository: PatternsRepository(computer: Computer()),
-          ),
-        ),
-        BlocProvider<NavigationCubit>(
-          create: (context) => NavigationCubit(
-            patternsBloc: context.read<PatternsBloc>(),
           ),
         ),
       ],
@@ -46,7 +41,7 @@ class AppView extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-      home: const AppNavigator(),
+      home: const AppFlow(),
     );
   }
 }

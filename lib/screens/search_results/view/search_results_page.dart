@@ -1,7 +1,7 @@
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/l10n/l10n.dart';
-import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/search_results/search_results.dart';
 
@@ -28,8 +28,8 @@ class SearchResultsPage extends StatelessWidget {
           return PatternItem(
             pattern: pattern,
             onTap: () => context
-                .read<NavigationCubit>()
-                .navigateToPatternDetailView(pattern),
+                .flow<AppFlowState>()
+                .update((state) => state.copyWith(currentPattern: pattern)),
           );
         },
       ),

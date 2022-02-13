@@ -408,7 +408,7 @@ void main() {
         build: () => ConstraintsFormBloc(
           patternsBloc: patternsBloc,
         ),
-        act: (bloc) => bloc.add(PatternsDidLoad()),
+        act: (bloc) => bloc.add(PatternsDidLoad([mockPattern])),
         expect: () => const <ConstraintsFormState>[
           ConstraintsFormState(
             status: FormzStatus.submissionSuccess,

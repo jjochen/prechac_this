@@ -8,7 +8,7 @@ import '../../../helpers/helpers.dart';
 void main() {
   group('AttributionsPage', () {
     testWidgets('renders title', (tester) async {
-      await tester.pumpApp(widget: AttributionsPage());
+      await tester.pumpApp(child: AttributionsPage());
       expect(find.text('PrechacThis'), findsOneWidget);
     });
   });

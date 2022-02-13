@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/l10n/l10n.dart';
 import 'package:prechac_this/screens/home/home.dart';
 import 'package:select_form_field/select_form_field.dart';
@@ -16,7 +18,13 @@ class ConstraintsForm extends StatelessWidget {
 
     return BlocListener<ConstraintsFormBloc, ConstraintsFormState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionSuccess) {
+          context.flow<AppFlowState>().update(
+                (flowState) => flowState.copyWith(
+                  listOfPatterns: state.listOfPatterns,
+                ),
+              );
+        } else if (state.status.isSubmissionFailure) {
           final l10n = context.l10n;
           final message = l10n.errorMessage(state.error);
           if (message != null) {

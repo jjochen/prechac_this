@@ -10,7 +10,7 @@ void main() {
   group('PatternDetailsPage', () {
     testWidgets('renders list of juggler details', (tester) async {
       await tester.pumpApp(
-        widget: PatternDetailsPage(pattern: mockPattern),
+        child: PatternDetailsPage(pattern: mockPattern),
       );
       expect(
         find.byKey(Key('__juggler_details_item_0')),

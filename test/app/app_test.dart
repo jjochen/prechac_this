@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flow_builder/flow_builder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/app/app.dart';
-import 'package:prechac_this/navigation/cubit/navigation_cubit.dart';
+import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/patterns_bloc/patterns_bloc.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
@@ -19,27 +21,23 @@ void main() {
 
   group('AppView', () {
     late PatternsBloc patternsBloc;
-    late NavigationCubit navigationCubit;
+    late FlowController<AppFlowState> flowController;
 
     setUp(() {
-      registerFallbackValue(FakePatternsEvent());
-      registerFallbackValue(PatternsInitial());
-      registerFallbackValue(NavigationState());
+      flowController = FakeFlowController<AppFlowState>(AppFlowState());
       patternsBloc = MockPatternsBloc();
-      navigationCubit = MockNavigationCubit();
+      whenListen(
+        patternsBloc,
+        Stream<PatternsState>.empty(),
+        initialState: PatternsInitial(),
+      );
     });
 
     testWidgets('renders HomePage', (tester) async {
-      when(() => patternsBloc.state).thenReturn(
-        PatternsInitial(),
-      );
-      when(() => navigationCubit.state).thenReturn(
-        NavigationState(),
-      );
       await tester.pumpApp(
-        patternsBloc: patternsBloc,
-        navigationCubit: navigationCubit,
-        widget: AppView(),
+        providers: [BlocProvider<PatternsBloc>(create: (_) => patternsBloc)],
+        flowController: flowController,
+        child: AppView(),
       );
       expect(find.byType(HomePage), findsOneWidget);
     });

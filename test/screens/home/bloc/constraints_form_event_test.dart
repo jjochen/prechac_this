@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:prechac_this/screens/home/home.dart';
 
+import '../../../helpers/helpers.dart';
+
 void main() {
   group('ConstraintsFormEvent', () {
     group('NumberOfJugglersDidChange', () {
@@ -81,8 +83,8 @@ void main() {
     group('PatternsDidLoad', () {
       test('supports value comparisons', () {
         expect(
-          PatternsDidLoad(),
-          PatternsDidLoad(),
+          PatternsDidLoad([mockPattern]),
+          PatternsDidLoad([mockPattern]),
         );
       });
     });

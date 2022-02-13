@@ -19,7 +19,7 @@ class ConstraintsFormBloc
     _patternsSubscription = patternsBloc.stream.listen(
       (state) {
         if (state is PatternsLoaded) {
-          add(PatternsDidLoad());
+          add(PatternsDidLoad(state.patterns));
         } else if (state is PatternsNotLoaded) {
           add(PatternsDidNotLoad(state.exception));
         }

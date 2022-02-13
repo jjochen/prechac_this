@@ -24,6 +24,7 @@ desc 'Install dependencies'
 lane :install_dependencies do
   run_command 'bundle'
   run_flutter_command 'pub get'
+  run_flutter_command 'gen-l10n'
 end
 
 desc 'Update dependencies'
