@@ -86,7 +86,7 @@ end
 
 def build_ios()
   UI.message 'Build iOS App'
-  xcversion(version: '~> 12.5')
+  xcversion
   match(type: 'appstore')
   run_flutter_command 'build ios --release --no-codesign'
   build_app(
