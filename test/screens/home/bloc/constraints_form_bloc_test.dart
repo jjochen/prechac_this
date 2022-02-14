@@ -329,8 +329,11 @@ void main() {
         'emits [submissionInProgress, submissionSuccess] '
         'when form is valid',
         setUp: () {
-          when(() => patternsRepository.patterns(validSearchParameters))
-              .thenAnswer((_) => Future.value([mockPattern]));
+          when(
+            () => patternsRepository.findPatterns(
+              parameters: validSearchParameters,
+            ),
+          ).thenAnswer((_) => Future.value([mockPattern]));
         },
         build: buildConstraintsFormBloc,
         seed: () => validConstraintsFormState,
@@ -345,8 +348,11 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(() => patternsRepository.patterns(validSearchParameters))
-              .called(1);
+          verify(
+            () => patternsRepository.findPatterns(
+              parameters: validSearchParameters,
+            ),
+          ).called(1);
         },
       );
 
@@ -354,8 +360,11 @@ void main() {
         'emits [submissionInProgress, submissionFailure] '
         'when patternsRepository throws',
         setUp: () {
-          when(() => patternsRepository.patterns(validSearchParameters))
-              .thenAnswer((_) => Future.error(NoPatternsFoundException()));
+          when(
+            () => patternsRepository.findPatterns(
+              parameters: validSearchParameters,
+            ),
+          ).thenAnswer((_) => Future.error(NoPatternsFoundException()));
         },
         build: buildConstraintsFormBloc,
         seed: () => validConstraintsFormState,
@@ -370,8 +379,11 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(() => patternsRepository.patterns(validSearchParameters))
-              .called(1);
+          verify(
+            () => patternsRepository.findPatterns(
+              parameters: validSearchParameters,
+            ),
+          ).called(1);
         },
       );
     });

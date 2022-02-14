@@ -94,7 +94,7 @@ class ConstraintsFormBloc
       ),
     );
     await patternsRepository
-        .patterns(state.toSearchParameters())
+        .findPatterns(parameters: state.toSearchParameters())
         .then(
           (patterns) => emit(
             state.copyWith(

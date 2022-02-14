@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 typedef ComputerCallback<M, R> = R Function(M message);
 
-// TODO(jjochen): Make immutable.
 class Computer<M, R> {
   Computer();
 

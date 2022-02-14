@@ -16,12 +16,14 @@ class PatternsRepository {
 
   final Computer<SearchParameters, List<Pattern>> computer;
 
-  Future<List<Pattern>> patterns(SearchParameters parameters) async {
-    return computer.run(findPatterns, parameters);
+  Future<List<Pattern>> findPatterns({
+    required SearchParameters parameters,
+  }) {
+    return computer.run(findPatternsSync, parameters);
   }
 
   @visibleForTesting
-  static List<Pattern> findPatterns(SearchParameters parameters) {
+  static List<Pattern> findPatternsSync(SearchParameters parameters) {
     final constraints = parameters.parse();
     const engine = Engine();
     return engine.fillConstraint(patternConstraint: constraints);
