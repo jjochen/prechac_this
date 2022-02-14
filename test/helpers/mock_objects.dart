@@ -2,8 +2,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:prechac_this/home/home.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
-import 'package:prechac_this/screens/home/home.dart';
 
 class MockConstraintsFormBloc
     extends MockBloc<ConstraintsFormEvent, ConstraintsFormState>

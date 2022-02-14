@@ -4,10 +4,10 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/flow/app_flow.dart';
-import 'package:prechac_this/screens/attributions/view/attributions_page.dart';
-import 'package:prechac_this/screens/home/home.dart';
-import 'package:prechac_this/screens/pattern_details/view/view.dart';
-import 'package:prechac_this/screens/search_results/search_results.dart';
+import 'package:prechac_this/attributions/view/attributions_page.dart';
+import 'package:prechac_this/home/home.dart';
+import 'package:prechac_this/pattern_details/view/view.dart';
+import 'package:prechac_this/search_results/search_results.dart';
 
 import '../../helpers/helpers.dart';
 
