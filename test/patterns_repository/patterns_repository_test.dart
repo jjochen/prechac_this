@@ -28,7 +28,9 @@ void main() {
           contains: '_p',
         );
         expect(
-          patternsRepository.patterns(searchParameters).then((pattern) {
+          patternsRepository
+              .findPatterns(parameters: searchParameters)
+              .then((pattern) {
             expect(pattern, [
               Pattern(
                 numberOfJugglers: 2,
@@ -52,7 +54,9 @@ void main() {
           maxHeight: 1,
         );
         expect(
-          patternsRepository.patterns(searchParameters).then((pattern) {
+          patternsRepository
+              .findPatterns(parameters: searchParameters)
+              .then((pattern) {
             assert(false, 'should not complete');
           }).onError((error, stackTrace) {
             expect(
@@ -73,7 +77,9 @@ void main() {
           contains: '3x',
         );
         expect(
-          patternsRepository.patterns(searchParameters).then((pattern) {
+          patternsRepository
+              .findPatterns(parameters: searchParameters)
+              .then((pattern) {
             assert(false, 'should not complete');
           }).onError((error, stackTrace) {
             expect(
@@ -96,7 +102,7 @@ void main() {
           maxHeight: 4,
         );
         expect(
-          PatternsRepository.findPatterns(searchParameters),
+          PatternsRepository.findPatternsSync(searchParameters),
           [
             Pattern(
               numberOfJugglers: 2,
@@ -122,7 +128,7 @@ void main() {
           contains: '3p _ _p',
         );
         expect(
-          PatternsRepository.findPatterns(searchParameters).length,
+          PatternsRepository.findPatternsSync(searchParameters).length,
           6,
         );
       });
@@ -141,7 +147,7 @@ void main() {
               contains: '3x',
             );
             expect(
-              () => PatternsRepository.findPatterns(searchParameters),
+              () => PatternsRepository.findPatternsSync(searchParameters),
               throwsA(isA<ConstraintsInvalidException>()),
             );
           });
@@ -160,7 +166,7 @@ void main() {
               contains: '4p 4p',
             );
             expect(
-              () => PatternsRepository.findPatterns(searchParameters),
+              () => PatternsRepository.findPatternsSync(searchParameters),
               throwsA(isA<NoPatternsFoundException>()),
             );
           });
@@ -177,7 +183,7 @@ void main() {
               contains: '3 2 _',
             );
             expect(
-              () => PatternsRepository.findPatterns(searchParameters),
+              () => PatternsRepository.findPatternsSync(searchParameters),
               throwsA(isA<NoPatternsFoundException>()),
             );
           });
