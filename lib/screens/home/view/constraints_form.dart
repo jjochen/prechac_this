@@ -379,7 +379,6 @@ class _CancelButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
-      buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return Container(
           constraints: const BoxConstraints(minWidth: 200),
