@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:prechac_this/app/flow/app_flow.dart';
 import 'package:prechac_this/app/theme.dart';
+// ignore: unused_import
 import 'package:prechac_this/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -16,6 +17,8 @@ class App extends StatelessWidget {
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
