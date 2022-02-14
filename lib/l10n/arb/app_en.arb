@@ -40,6 +40,10 @@
     "@constraintsFormSubmitButtonText": {
         "description": "Text on contraints form submit button"
     },
+    "constraintsFormCancelButtonText": "CANCEL",
+    "@constraintsFormCancelButtonText": {
+        "description": "Text on contraints form cancel button"
+    },
     "constraintsFormConstraintsInvalidErrorMessage": "Could not parse constraints.",
     "@constraintsFormConstraintsInvalidErrorMessage": {
         "description": "Error message shown when constraints can not be parsed."

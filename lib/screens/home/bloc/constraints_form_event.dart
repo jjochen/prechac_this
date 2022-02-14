@@ -73,6 +73,8 @@ class ContainsDidChange extends ConstraintsFormEvent {
 
 class Submit extends ConstraintsFormEvent {}
 
+class Cancel extends ConstraintsFormEvent {}
+
 class PatternsDidLoad extends ConstraintsFormEvent {
   const PatternsDidLoad(this.patterns);
 
