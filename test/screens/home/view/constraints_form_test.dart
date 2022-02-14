@@ -15,6 +15,7 @@ import '../../../helpers/helpers.dart';
 
 void main() {
   const submitButtonKey = Key('constraintsForm_submit_raisedButton');
+  const cancelButtonKey = Key('constraintsForm_cancel_raisedButton');
   const numberOfJugglersInputKey = Key('constraintsForm_numberOfJugglersInput');
   const periodInputKey = Key('constraintsForm_periodInput');
   const numberOfObjectsInputKey = Key('constraintsForm_numberOfObjectsInput');
@@ -235,6 +236,21 @@ void main() {
           ),
         ).called(1);
       });
+
+      testWidgets('Cancel when cancel button is pressed', (tester) async {
+        when(() => constraintsFormBloc.state).thenReturn(
+          const ConstraintsFormState(status: FormzStatus.valid),
+        );
+
+        await tester.pumpWidget(testApp);
+
+        await tester.tap(find.byKey(cancelButtonKey));
+        verify(
+          () => constraintsFormBloc.add(
+            Cancel(),
+          ),
+        ).called(1);
+      });
     });
 
     group('renders', () {
@@ -413,6 +429,15 @@ void main() {
 
         await tester.pumpWidget(testApp);
         expect(find.byKey(progressIndicatorKey), findsOneWidget);
+      });
+
+      testWidgets('cancel button when status is in progress', (tester) async {
+        when(() => constraintsFormBloc.state).thenReturn(
+          ConstraintsFormState(status: FormzStatus.submissionInProgress),
+        );
+
+        await tester.pumpWidget(testApp);
+        expect(find.byKey(cancelButtonKey), findsOneWidget);
       });
     });
   });
