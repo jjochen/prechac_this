@@ -79,6 +79,7 @@ void main() {
 
         await tester.pumpWidget(testApp);
         await tester.pumpAndSettle();
+
         expect(
           flowController.state,
           AppFlowState(listOfPatterns: [mockPattern]),
@@ -90,16 +91,19 @@ void main() {
       testWidgets('NumberOfJugglersDidChange when number of jugglers changes',
           (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(numberOfJugglersInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testNumberOfJugglers.toString());
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
+
         verify(
           () => constraintsFormBloc.add(
             NumberOfJugglersDidChange(testNumberOfJugglers),
@@ -109,16 +113,19 @@ void main() {
 
       testWidgets('PeriodDidChange when period changes', (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(periodInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testPeriod.toString());
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
+
         verify(
           () => constraintsFormBloc.add(
             PeriodDidChange(testPeriod),
@@ -130,16 +137,19 @@ void main() {
           'NumberOfObjectsDidChange '
           'when number of objects changes', (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(numberOfObjectsInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testNumberOfObjects.toString());
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
+
         verify(
           () => constraintsFormBloc.add(
             NumberOfObjectsDidChange(testNumberOfObjects),
@@ -149,12 +159,14 @@ void main() {
 
       testWidgets('MaxHeightDidChange when max height changes', (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(maxHeightInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testMaxHeight.toString());
         expect(dropDownItem, findsOneWidget);
 
@@ -170,16 +182,19 @@ void main() {
           'MinNumberOfPassesDidChange when min number of passes changes',
           (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(minNumberOfPassesInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testMinNumberOfPasses.toString());
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
+
         verify(
           () => constraintsFormBloc.add(
             MinNumberOfPassesDidChange(testMinNumberOfPasses),
@@ -191,16 +206,19 @@ void main() {
           'MaxNumberOfPassesDidChange when max number of passes changes',
           (tester) async {
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
 
         final inputField = find.byKey(maxNumberOfPassesInputKey);
         expect(inputField, findsOneWidget);
 
         await tester.tap(inputField);
         await tester.pumpAndSettle();
+
         final dropDownItem = find.text(testMaxNumberOfPasses.toString());
         expect(dropDownItem, findsOneWidget);
 
         await tester.tap(dropDownItem);
+
         verify(
           () => constraintsFormBloc.add(
             MaxNumberOfPassesDidChange(testMaxNumberOfPasses),
@@ -210,11 +228,12 @@ void main() {
 
       testWidgets('ContainsDidChange when contains changes', (tester) async {
         await tester.pumpWidget(testApp);
-
+        await tester.pumpAndSettle();
         await tester.enterText(
           find.byKey(containsInputKey),
           testContains,
         );
+
         verify(
           () => constraintsFormBloc.add(
             ContainsDidChange(testContains),
@@ -223,13 +242,19 @@ void main() {
       });
 
       testWidgets('Submit when submit button is pressed', (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          const ConstraintsFormState(status: FormzStatus.valid),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.valid,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
-
+        await tester.pumpAndSettle();
         await tester.tap(find.byKey(submitButtonKey));
+
         verify(
           () => constraintsFormBloc.add(
             Submit(),
@@ -238,13 +263,19 @@ void main() {
       });
 
       testWidgets('Cancel when cancel button is pressed', (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          const ConstraintsFormState(status: FormzStatus.valid),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.submissionInProgress,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
-
+        await tester.pump();
         await tester.tap(find.byKey(cancelButtonKey));
+
         verify(
           () => constraintsFormBloc.add(
             Cancel(),
@@ -268,6 +299,7 @@ void main() {
 
         await tester.pumpWidget(testApp);
         await tester.pumpAndSettle();
+
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
       });
 
@@ -286,6 +318,7 @@ void main() {
 
         await tester.pumpWidget(testApp);
         await tester.pump();
+
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
         expect(find.text('No patterns found.'), findsOneWidget);
       });
@@ -305,6 +338,7 @@ void main() {
 
         await tester.pumpWidget(testApp);
         await tester.pumpAndSettle();
+
         expect(find.byKey(errorSnackBarKey), findsOneWidget);
         expect(find.text('Could not parse constraints.'), findsOneWidget);
       });
@@ -316,11 +350,18 @@ void main() {
         when(() => numberOfJugglers.error).thenReturn(
           InputOutOfRangeException(1, 2),
         );
-        when(() => constraintsFormBloc.state).thenReturn(
-          ConstraintsFormState(numberOfJugglers: numberOfJugglers),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              numberOfJugglers: numberOfJugglers,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
@@ -331,10 +372,18 @@ void main() {
           InputOutOfRangeException(1, 3),
         );
         when(() => period.value).thenReturn(2);
-        when(() => constraintsFormBloc.state)
-            .thenReturn(ConstraintsFormState(period: period));
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              period: period,
+            ),
+          ),
+        );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 3'), findsOneWidget);
       });
 
@@ -345,10 +394,18 @@ void main() {
         when(() => numberOfObjects.error).thenReturn(
           InputOutOfRangeException(1, 2),
         );
-        when(() => constraintsFormBloc.state)
-            .thenReturn(ConstraintsFormState(numberOfObjects: numberOfObjects));
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              numberOfObjects: numberOfObjects,
+            ),
+          ),
+        );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
@@ -358,10 +415,18 @@ void main() {
         when(() => maxHeight.error).thenReturn(
           InputOutOfRangeException(1, 2),
         );
-        when(() => constraintsFormBloc.state)
-            .thenReturn(ConstraintsFormState(maxHeight: maxHeight));
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              maxHeight: maxHeight,
+            ),
+          ),
+        );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
@@ -372,11 +437,18 @@ void main() {
         when(() => minNumberOfPasses.error).thenReturn(
           InputOutOfRangeException(1, 2),
         );
-        when(() => constraintsFormBloc.state).thenReturn(
-          ConstraintsFormState(minNumberOfPasses: minNumberOfPasses),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              minNumberOfPasses: minNumberOfPasses,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
@@ -387,21 +459,35 @@ void main() {
         when(() => maxNumberOfPasses.error).thenReturn(
           InputOutOfRangeException(1, 2),
         );
-        when(() => constraintsFormBloc.state).thenReturn(
-          ConstraintsFormState(maxNumberOfPasses: maxNumberOfPasses),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              maxNumberOfPasses: maxNumberOfPasses,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         expect(find.text('value should be between 1 and 2'), findsOneWidget);
       });
 
       testWidgets('disabled submit button when status is not validated',
           (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          const ConstraintsFormState(status: FormzStatus.invalid),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.invalid,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         final homeButton = tester.widget<ElevatedButton>(
           find.byKey(submitButtonKey),
         );
@@ -410,11 +496,18 @@ void main() {
 
       testWidgets('enabled submit button when status is validated',
           (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          const ConstraintsFormState(status: FormzStatus.valid),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.valid,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pumpAndSettle();
+
         final submitButton = tester.widget<ElevatedButton>(
           find.byKey(submitButtonKey),
         );
@@ -423,20 +516,34 @@ void main() {
 
       testWidgets('progress indicator when status is in progress',
           (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          ConstraintsFormState(status: FormzStatus.submissionInProgress),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.submissionInProgress,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pump();
+
         expect(find.byKey(progressIndicatorKey), findsOneWidget);
       });
 
       testWidgets('cancel button when status is in progress', (tester) async {
-        when(() => constraintsFormBloc.state).thenReturn(
-          ConstraintsFormState(status: FormzStatus.submissionInProgress),
+        whenListen(
+          constraintsFormBloc,
+          Stream<ConstraintsFormState>.value(
+            ConstraintsFormState(
+              status: FormzStatus.submissionInProgress,
+            ),
+          ),
         );
 
         await tester.pumpWidget(testApp);
+        await tester.pump();
+
         expect(find.byKey(cancelButtonKey), findsOneWidget);
       });
     });
