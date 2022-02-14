@@ -1,98 +1,61 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
+import 'package:mocktail/mocktail.dart';
 import 'package:prechac_this/core/computer.dart';
 import 'package:prechac_this/patterns_repository/patterns_repository.dart';
 import 'package:test/test.dart';
 
 import '../helpers/helpers.dart';
 
+class MockComputer extends Mock
+    implements Computer<SearchParameters, List<Pattern>> {}
+
 void main() {
   group('PatternsRepository', () {
     late PatternsRepository patternsRepository;
+    late Computer<SearchParameters, List<Pattern>> computer;
     setUp(() {
+      computer = MockComputer();
       patternsRepository = PatternsRepository(
-        computer: Computer<SearchParameters, List<Pattern>>(),
+        computer: computer,
       );
     });
 
-    group('patterns()', () {
+    group('findPatterns()', () {
+      final searchParameters = SearchParameters(
+        numberOfJugglers: 2,
+        period: 4,
+        numberOfObjects: 4,
+        maxHeight: 1,
+      );
+
       test('findes correct for search parameters on separate isolate',
           () async {
-        final searchParameters = SearchParameters(
-          numberOfJugglers: 2,
-          period: 2,
-          numberOfObjects: 4,
-          maxHeight: 4,
-          minNumberOfPasses: 2,
-          maxNumberOfPasses: 2,
-          contains: '_p',
-        );
+        when(() => computer.run(any(), searchParameters))
+            .thenAnswer((_) => Future.value([mockPattern]));
         expect(
-          patternsRepository
-              .findPatterns(parameters: searchParameters)
-              .then((pattern) {
-            expect(pattern, [
-              Pattern(
-                numberOfJugglers: 2,
-                throwSequence: [Throw.pass(height: 2), Throw.pass(height: 2)],
-              ),
-              Pattern(
-                numberOfJugglers: 2,
-                throwSequence: [Throw.pass(height: 3), Throw.pass(height: 1)],
-              ),
-            ]);
-          }),
-          completes,
+          patternsRepository.findPatterns(parameters: searchParameters),
+          completion(equals([mockPattern])),
+        );
+        verify(() => computer.run(any(), searchParameters)).called(1);
+      });
+
+      test('forwards Exception', () async {
+        when(() => computer.run(any(), searchParameters))
+            .thenThrow(NoPatternsFoundException());
+        expect(
+          () => patternsRepository.findPatterns(parameters: searchParameters),
+          throwsA(NoPatternsFoundException()),
         );
       });
 
-      test('forwards NoPatternsFoundException', () async {
-        final searchParameters = SearchParameters(
-          numberOfJugglers: 2,
-          period: 4,
-          numberOfObjects: 4,
-          maxHeight: 1,
-        );
-        expect(
-          patternsRepository
-              .findPatterns(parameters: searchParameters)
-              .then((pattern) {
-            assert(false, 'should not complete');
-          }).onError((error, stackTrace) {
-            expect(
-              error,
-              NoPatternsFoundException(),
-            );
-          }),
-          completes,
-        );
-      });
-
-      test('forwards ConstraintsInvalidException', () async {
-        final searchParameters = SearchParameters(
-          numberOfJugglers: 2,
-          period: 4,
-          numberOfObjects: 4,
-          maxHeight: 4,
-          contains: '3x',
-        );
-        expect(
-          patternsRepository
-              .findPatterns(parameters: searchParameters)
-              .then((pattern) {
-            assert(false, 'should not complete');
-          }).onError((error, stackTrace) {
-            expect(
-              error,
-              ConstraintsInvalidException('end of input expected'),
-            );
-          }),
-          completes,
-        );
+      test('cancel()', () async {
+        patternsRepository.cancel();
+        verify(() => computer.cancelComputation()).called(1);
       });
     });
 
-    group('findPatterns()', () {
+    group('findPatternsSync()', () {
       test('findes correct for search parameters', () {
         // bug in flutter: compute doesn't gather coverage
         final searchParameters = SearchParameters(

@@ -22,6 +22,7 @@ class ConstraintsFormBloc
     on<MaxNumberOfPassesDidChange>(_onMaxNumberOfPassesDidChange);
     on<ContainsDidChange>(_onContainsDidChange);
     on<Submit>(_onSubmit);
+    on<Cancel>(_onCancel);
   }
 
   final PatternsRepository patternsRepository;
@@ -112,6 +113,20 @@ class ConstraintsFormBloc
             ),
           ),
         );
+  }
+
+  Future<void> _onCancel(
+    Cancel event,
+    Emitter<ConstraintsFormState> emit,
+  ) async {
+    patternsRepository.cancel();
+    emit(
+      state.copyWith(
+        status: FormzStatus.submissionCanceled,
+        exception: null,
+        listOfPatterns: null,
+      ),
+    );
   }
 
   ConstraintsFormState _copyStateWithFormValues({

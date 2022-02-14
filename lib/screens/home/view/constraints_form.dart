@@ -66,7 +66,7 @@ class ConstraintsForm extends StatelessWidget {
                       const SizedBox(height: interItemSpacing),
                       _ContainsInput(),
                       const SizedBox(height: interItemSpacing),
-                      _SubmitButton(),
+                      _SubmitOrCancelButton(),
                     ],
                   ),
                 ),
@@ -338,6 +338,20 @@ class _ContainsInput extends StatelessWidget {
   }
 }
 
+class _SubmitOrCancelButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      buildWhen: (previous, current) => previous.status != current.status,
+      builder: (context, state) {
+        return state.status.isSubmissionInProgress
+            ? _CancelButton()
+            : _SubmitButton();
+      },
+    );
+  }
+}
+
 class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -345,20 +359,56 @@ class _SubmitButton extends StatelessWidget {
     return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
-        return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator(
-                key: Key('constraintsForm_submit_progressIndicator'),
-              )
-            : Container(
-                constraints: const BoxConstraints(minWidth: 200),
-                child: ElevatedButton(
-                  key: const Key('constraintsForm_submit_raisedButton'),
-                  onPressed: state.status.isValidated
-                      ? () => context.read<ConstraintsFormBloc>().add(Submit())
-                      : null,
-                  child: Text(l10n.constraintsFormSubmitButtonText),
-                ),
-              );
+        return Container(
+          constraints: const BoxConstraints(minWidth: 200),
+          child: ElevatedButton(
+            key: const Key('constraintsForm_submit_raisedButton'),
+            onPressed: state.status.isValidated
+                ? () => context.read<ConstraintsFormBloc>().add(Submit())
+                : null,
+            child: Text(l10n.constraintsFormSubmitButtonText),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _CancelButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return BlocBuilder<ConstraintsFormBloc, ConstraintsFormState>(
+      builder: (context, state) {
+        return Container(
+          constraints: const BoxConstraints(minWidth: 200),
+          child: ElevatedButton(
+            key: const Key('constraintsForm_cancel_raisedButton'),
+            onPressed: () => context.read<ConstraintsFormBloc>().add(Cancel()),
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      key:
+                          const Key('constraintsForm_submit_progressIndicator'),
+                      strokeWidth: 2,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  Text(l10n.constraintsFormCancelButtonText),
+                ],
+              ),
+            ),
+          ),
+        );
       },
     );
   }

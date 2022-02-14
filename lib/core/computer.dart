@@ -13,7 +13,7 @@ class Computer<M, R> {
   Isolate? _isolate;
 
   Future<R> run(ComputerCallback<M, R> callback, M message) async {
-    _cancelComputation();
+    cancelComputation();
 
     _resultPort = ReceivePort();
     _exitPort = ReceivePort();
@@ -51,7 +51,7 @@ class Computer<M, R> {
     });
 
     await completer.future;
-    _cancelComputation();
+    cancelComputation();
     return completer.future;
   }
 
@@ -68,7 +68,7 @@ class Computer<M, R> {
     }
   }
 
-  void _cancelComputation() {
+  void cancelComputation() {
     _resultPort?.close();
     _exitPort?.close();
     _isolate?.kill(priority: Isolate.immediate);

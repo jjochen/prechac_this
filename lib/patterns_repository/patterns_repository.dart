@@ -22,6 +22,8 @@ class PatternsRepository {
     return computer.run(findPatternsSync, parameters);
   }
 
+  void cancel() => computer.cancelComputation();
+
   @visibleForTesting
   static List<Pattern> findPatternsSync(SearchParameters parameters) {
     final constraints = parameters.parse();

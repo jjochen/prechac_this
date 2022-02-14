@@ -387,5 +387,26 @@ void main() {
         },
       );
     });
+
+    group('Cancel', () {
+      blocTest<ConstraintsFormBloc, ConstraintsFormState>(
+        'emits [submissionCanceled]',
+        build: buildConstraintsFormBloc,
+        seed: () => validConstraintsFormState.copyWith(
+          status: FormzStatus.submissionInProgress,
+        ),
+        act: (bloc) => bloc.add(Cancel()),
+        expect: () => <ConstraintsFormState>[
+          validConstraintsFormState.copyWith(
+            status: FormzStatus.submissionCanceled,
+          ),
+        ],
+        verify: (_) {
+          verify(
+            () => patternsRepository.cancel(),
+          ).called(1);
+        },
+      );
+    });
   });
 }
