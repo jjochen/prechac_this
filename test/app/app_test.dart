@@ -4,7 +4,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prechac_this/app/app.dart';
 import 'package:prechac_this/app/flow/app_flow.dart';
-import 'package:prechac_this/screens/home/home.dart';
+import 'package:prechac_this/home/home.dart';
 
 import '../helpers/helpers.dart';
 
